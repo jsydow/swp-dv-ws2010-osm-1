@@ -8,6 +8,8 @@ Some thoughts about the treading concept, and what have to be kept in mind.
   * To allow getting GPS data only when needed, it would be good to have the GPS service as a bound service, to allow it to deliver its data via RPC.
   A bound service typically lives only while it serves another application component and does *not run in the background indefinitely*. _check if it stays there if there is no request for some time._
   * The core should bind this service while tracking, so it will not be suspended if the UI gets suspended.
+
+Maybe the roles can be swapped. *In any case* the UI has to start something that runs indefinitely *for sure*!
   * The UI starts the core as service, so it is allowed to run indefinitely
 
 
