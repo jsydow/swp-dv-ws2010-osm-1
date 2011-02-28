@@ -6,10 +6,8 @@ Some thoughts about the treading concept, and what have to be kept in mind.
 
 = Details =
   * To allow getting GPS data only when needed, it would be good to have the GPS service as a bound service, to allow it to deliver its data via RPC.
-  A bound service typically lives only while it serves another application component and does *not run in the background indefinitely*. _check if it stays there if there is no request for some time._
-  * The core should bind this service while tracking, so it will not be suspended if the UI gets suspended.
+  * A bound service typically lives until all clients have unbound
+  * The core should be also a bind service, so it can accept commands from the ui (start/stop track, attach photo, create POI)
 
-Maybe the roles can be swapped. *In any case* the UI has to start something that runs indefinitely *for sure*!
-
-other possibility: Messengers
+other possibility: Messengers, e.g. for telling the core to attach a photo to the next/last node
   * http://developer.android.com/reference/android/os/Messenger.html
