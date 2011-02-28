@@ -7,19 +7,19 @@
 == Node ==
 
 In general every node we get from the gps has:
-* latitude
-* longitude
-* timestamp
+  * latitude
+  * longitude
+  * timestamp
 
 These are the data every node has at a minimum.
 There are also the data a Node in osm xml format has.
 Additionally osm-nodes have tags.
 
 The dataformat for all these metadata according to osm-specificaion is:
-* latitude: Interval [-90, 90], 7 digits precision => float
-* longitude: Interval [-180, 180], 7 digits precision => float
-* timestamp: http://www.w3.org/TR/NOTE-datetime
-* tags: key (k) and value (v) are Strings: `<tag k="str" v="str" />`
+  * latitude: Interval [-90, 90], 7 digits precision => float
+  * longitude: Interval [-180, 180], 7 digits precision => float
+  * timestamp: http://www.w3.org/TR/NOTE-datetime
+  * tags: key (k) and value (v) are Strings: `<tag k="str" v="str" />`
 
 == Way ==
 
