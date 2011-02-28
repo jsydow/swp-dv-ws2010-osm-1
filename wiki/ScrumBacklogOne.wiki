@@ -1,0 +1,14 @@
+#Here you will find a summary of our first scrum backlog.
+
+= Introduction =
+
+Today we discussed our main goals for our first scrum sprint which will end on Thursday. We will implement a first rudimentary version of our OSM-Mapper. Below you will find details of our goals and who is assigned to it.
+
+
+= Details =
+
+Goal list:
+ GPS ( Global Positioning System )
+  * Initializations 
+  * Receiving of GPS Data
+  * Data format  
