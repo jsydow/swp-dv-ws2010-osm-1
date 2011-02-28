@@ -1,4 +1,4 @@
-#summary Some thoughts about the treading concept, and what has to be kept in mind.
+#summary Some thoughts about the threading concept, and what has to be kept in mind.
 
 
 = Introduction =
