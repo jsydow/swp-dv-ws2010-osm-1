@@ -5,8 +5,8 @@ Today we discussed our main goals for our first scrum sprint which will end on T
 
 = Details =
 
-Goal list: ( *Huy* )
- GPS ( Global Positioning System )
+Goal list: 
+ GPS ( Global Positioning System ) ( *Huy* )
   * Initializations 
   * Receiving of GPS Data
   * Data format
