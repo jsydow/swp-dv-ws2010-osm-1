@@ -19,7 +19,7 @@ The dataformat for all these metadata according to osm-specificaion is:
 - latitude: Interval [-90, 90], 7 digits precision => float
 - longitude: Interval [-180, 180], 7 digits precision => float
 - timestamp: http://www.w3.org/TR/NOTE-datetime
-- tags: key (k) and value (v) are Strings: <tag k="str" v="str" />
+- tags: key (k) and value (v) are Strings: `<tag k="str" v="str" />`
 
 == Way ==
 
