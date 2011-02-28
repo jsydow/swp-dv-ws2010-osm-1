@@ -11,3 +11,4 @@ Some thoughts about the treading concept, and what have to be kept in mind.
 
 other possibility: Messengers, e.g. for telling the core to attach a photo to the next/last node
   * http://developer.android.com/reference/android/os/Messenger.html
+  * Pro: Messages dont wait for an answer, the message gets queued and processed when ready to
