@@ -1,8 +1,15 @@
 #summary Some thoughts on the Tracking-Data and metadata
 
-= Summary =
+= General =
 
-= Detail = 
+We have following hierarchy:
+ * a *Track* is a "session", it contains a set of POI's, Ways, Areas and Media the user collects in one or multiple app-uses.
+ * Media are textmemos, photos, audiorecordings that help to remember things
+ * POI's are a gps-node with certain tags
+ * Ways are a list of gps-nodes with certain tags. Mind that the list can have some specially tagged nodes like traffic lights and barriers.
+ * Areas are closed Ways.
+
+= Dataformat = 
 
 == Node ==
 
@@ -28,3 +35,12 @@ Ways are a list of Nodes + Timestamp + Tags according to osm format.
 == Areas ==
 
 Areas are in osm simply Ways with a landuse-tag and possibly a area=yes-tag
+
+= Implementation =
+
+The User should be able to:
+ * Start/End a Way
+ * Add a special point to the currently tracked way. (Should only be usable if there is a Way which is currently tracked)
+ * Create a POI
+ * Start/End an Area
+ * 
