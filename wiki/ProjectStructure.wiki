@@ -1,0 +1,28 @@
+= Introduction =
+
+Here you will see the structural design for the project.
+
+
+= Details =
+
+The project is divided in different packages which correspondent to different parts of the application logic.
+
+Here a list of the package names and their usage:
+
+ * core
+  * Node defintion
+  * Track definition 
+  * data storage
+  
+ * gps
+  * gps data collector
+  * gps pooling service
+  * gps listener
+ 
+ * gui
+  * all activitys
+
+ * osm 
+  * osm login information storage
+  * osm uploader
+  * josm uploader
