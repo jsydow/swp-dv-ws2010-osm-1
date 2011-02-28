@@ -5,17 +5,22 @@ Today we discussed our main goals for our first scrum sprint which will end on T
 
 = Details =
 
-Goal list:
+Goal list: ( Huy )
  GPS ( Global Positioning System )
   * Initializations 
   * Receiving of GPS Data
   * Data format
   * Interface design of our GPS Tracking module
-  * Track Vs Services
+  * Track Vs Services ( Bejamin ) 
 
- Evaluation of internal tracking Format
+ Evaluation of internal tracking Format ( Jan )
   * definition and representation
   * Track Group 
    * way
    * area
    * poi
+
+ GUI ( Marc )
+  * Layout definition  
+  * Find a way to easy select tags 
+  *
