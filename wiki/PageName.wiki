@@ -44,3 +44,6 @@ The User should be able to:
  * Create a POI
  * Start/End an Area
  * Record Media (photos, audio recordings, text) and then assign it to one or more previously created POI's or Ways or Areas
+
+On the devices memory there is a folder which contains all data.
+Each track gets a folder. In this folder all Media are saved plus the way data (POI, Way, Area).
