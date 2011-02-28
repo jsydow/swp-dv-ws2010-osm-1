@@ -12,8 +12,4 @@ Some thoughts about the treading concept, and what have to be kept in mind.
 Maybe the roles can be swapped. *In any case* the UI has to start something that runs indefinitely *for sure*!
 
 other possibility: Messengers
-  *http://developer.android.com/reference/android/os/Messenger.html
-
-
-
-tomatic links to other wiki pages
+  * http://developer.android.com/reference/android/os/Messenger.html
