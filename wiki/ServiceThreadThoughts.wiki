@@ -10,7 +10,9 @@ Some thoughts about the treading concept, and what have to be kept in mind.
   * The core should bind this service while tracking, so it will not be suspended if the UI gets suspended.
 
 Maybe the roles can be swapped. *In any case* the UI has to start something that runs indefinitely *for sure*!
-  * The UI starts the core as service, so it is allowed to run indefinitely
+
+other possibility: Messengers
+  *http://developer.android.com/reference/android/os/Messenger.html
 
 
 
