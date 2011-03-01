@@ -39,4 +39,19 @@ public class DataNode extends DataMapObject{
 	 * List of all media that belong to that object.
 	 */
 	List<DataMedia> media;
+	
+	/**
+	 * This method loads a Node from the devices memory. It uses the 
+	 * appropriate ContentProvider.
+	 * Note: Currently a stub.
+	 * Note: The parameter id may change if another name is better suited
+	 * for retrieving the Node correctly.
+	 *  
+	 * @param id The id of the Node. It is not clear yet if what id or name is needed to load the Node correctly. 
+	 * @return The deserialised DataNode object.
+	 */
+	static DataNode deserialise(String id){
+		/* STUB */
+		return null;
+	}
 }
