@@ -13,7 +13,7 @@ public class NewTrackActivity extends TabActivity{
 	        
 	        TabHost tabHost = getTabHost();
 	        
-	        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(getResources().getString(R.string.map_tab)).setContent(R.id.details1));
+	        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(getResources().getString(R.string.map_tab)).setContent(R.id.map_tab));
 	        tabHost.addTab(tabHost.newTabSpec("new_tab").setIndicator(getResources().getString(R.string.new_tab)).setContent(R.id.new_tab));
 	        tabHost.addTab(tabHost.newTabSpec("edit_tab").setIndicator(getResources().getString(R.string.edit_tab)).setContent(R.id.edit_tab));
 	        

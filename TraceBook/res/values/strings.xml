@@ -7,5 +7,8 @@
     <string name="preferences_opt">Einstellungen</string>
     <string name="map_tab">Karte</string>
     <string name="new_tab">Neu</string>
-    <string name="edit_tab">Aendern</string>
+    <string name="edit_tab">Ändern</string>
+    <string name="streetOn_btn">Straßenanfang</string>
+    <string name="streetOff_btn">Straßenende</string>
+    <string name="addPoint_btn">Add Point of intrest</string>
 </resources>
