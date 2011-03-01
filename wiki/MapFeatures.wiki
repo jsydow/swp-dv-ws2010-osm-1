@@ -1,6 +1,6 @@
 #summary Map features in an XML file.
 
-A (not yet complete or "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
+A (neither complete, nor "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
 
 = Code =
 
