@@ -1,1 +1,61 @@
 A (not yet complete or "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
+
+= Code (tags.rb) =
+
+{{{
+module OsmMapFeatures
+    require 'net/http'
+
+    @tags = Hash.new
+
+    def get_page(uri)
+        uri = URI.parse(uri)
+        Net::HTTP.get(uri)
+    end
+
+    def parse_keys_and_values()
+        f = get_page('http://wiki.openstreetmap.org/wiki/Map_Features')
+        tags = f.scan(/<tr>\s+<td>(.*?)<\/td><td>(.*?)<\/td>/m)
+
+        tags.each do |tag|
+            key = tag[0].gsub(/<.*?>/, '').strip
+            value = tag[1].gsub(/<.*?>/, '').strip
+            value_details = tag[1].strip
+
+            @tags[key] ||= Hash.new
+            @tags[key][value] = value_details
+        end
+    end
+
+    def p_xml
+        puts "<map_features>"
+
+        @tags.keys.each do |key|
+            puts "  <key v=\"#{key}\">"
+
+            @tags[key].keys.each do |value|
+                value.split('/').each do |v|
+                    puts "    <value v=\"#{v.strip}\">"
+                    if (not @tags[key][value].match(/class="new"/))
+                        href = @tags[key][value].scan(/href="(.*?)"/)
+                            if (href)
+                                href = href.to_s.strip
+
+                                useful_page = get_page("http://wiki.openstreetmap.org#{href}")
+                                useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
+                                useful_tags.each do |useful_tag|
+                                    useful_tag = useful_tag.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip
+                                    puts "      <useful v=\"#{useful_tag}\" />"
+                                end
+                            end
+                    end
+                    puts "    </value>"
+                end
+            end
+            
+            puts "  </key>"
+        end
+
+        puts "</map_features>"
+    end
+end
