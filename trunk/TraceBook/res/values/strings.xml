@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, main!</string>
+    <string name="welcome">Willkommen bei TraceBook.</string>
     <string name="app_name">TraceBook</string>
+    <string name="newTrack">Neuer Track</string>
+    <string name="loadTrack">Lade Track</string>
+    <string name="preferences_opt">Einstellungen</string>
+    <string name="map_tab">Karte</string>
+    <string name="new_tab">Neu</string>
+    <string name="edit_tab">Aendern</string>
 </resources>
