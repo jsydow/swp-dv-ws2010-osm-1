@@ -27,7 +27,7 @@ LocationListener locationListener = new LocationListener() {
 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 }}}
 
-works using the LocationListener#onLocationChanged method.
+works using the !LocationListener#onLocationChanged method.
 
 {{{
 public void onLocationChanged(Location location) {
