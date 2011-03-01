@@ -29,7 +29,7 @@ class DataWay extends DataWayPointList implements SerialisableContent {
 		/* TODO STUB */
 		return null;
 	}
-
+	
 	public void serialise() {
 		// TODO Auto-generated method stub
 		

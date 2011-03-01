@@ -40,6 +40,7 @@ class DataMedia {
 	 * default constructor
 	 */
 	DataMedia() {
+		// nothing to do
 	}
 	
 	/**
