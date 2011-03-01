@@ -16,5 +16,10 @@ interface SerialisableContent {
 	 * a ContentProvider.
 	 */
 	void serialise();
+	
+	/**
+	 * delete() will delete this Object on the devices memory. Afterwards
+	 * the object does only exist in the current working memory. 
+	 */
 	void delete();
 }
