@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-public class DualService extends Service implements LocationListener {
-	private static final String LOG_TAG = "DUALSERVICE";
+public class LogService extends Service implements LocationListener {
+	private static final String LOG_TAG = "LOGSERVICE";
 	private List<Location> fixes = new LinkedList<Location>();
 	
 	boolean tracking = false;
@@ -48,7 +48,7 @@ public class DualService extends Service implements LocationListener {
 	/**
 	 * The IAdderService is defined through IDL
 	 */
-	private final ICounterService.Stub binder = new ICounterService.Stub() {
+	private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 		public List<Location> getPoints() {
 			return fixes;
 		}

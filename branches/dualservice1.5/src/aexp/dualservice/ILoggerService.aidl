@@ -1,6 +1,6 @@
 package aexp.dualservice;
 
-interface ICounterService {
+interface ILoggerService {
 	/**
 	 * returns List of so far received fixes
 	 */
