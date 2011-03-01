@@ -64,3 +64,13 @@ module OsmMapFeatures
         puts "</map_features>"
     end
 end
+}}}
+
+= Usage =
+
+{{{
+include OsmMapFeatures
+
+OsmMapFeatures.parse_keys_and_values
+OsmMapFeatures.p_xml
+}}}
