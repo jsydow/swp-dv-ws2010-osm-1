@@ -21,10 +21,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DualServiceClient extends Activity {
-	private static final String LOG_TAG = "DUALSERVICECLIENT";
-	private ICounterService counterService;
-	private CounterServiceConnection conn;
+public class LogServiceClient extends Activity {
+	private static final String LOG_TAG = "LOGSERVICECLIENT";
+	private ILoggerService loggerService = null;
+	private LoggerServiceConnection conn = null;
 	private boolean started = false;
 
 	/** Called when the activity is first created. */
@@ -65,9 +65,9 @@ public class DualServiceClient extends Activity {
 
 	private void initService() {
 		if (conn == null) {
-			conn = new CounterServiceConnection();
+			conn = new LoggerServiceConnection();
 			Intent i = new Intent();
-			i.setClassName("aexp.dualservice", "aexp.dualservice.DualService");
+			i.setClassName(this.getPackageName(), LogService.class.getName());
 			bindService(i, conn, Context.BIND_AUTO_CREATE);
 			updateServiceStatus();
 			Log.d(LOG_TAG, "bindService()");
@@ -92,7 +92,7 @@ public class DualServiceClient extends Activity {
 			Toast.makeText(this, "Service already started", Toast.LENGTH_SHORT).show();
 		} else {
 			Intent i = new Intent();
-			i.setClassName("aexp.dualservice", "aexp.dualservice.DualService");
+			i.setClassName(this.getPackageName(), LogService.class.getName());
 			startService(i);
 			Log.d(LOG_TAG, "startService()");
 			started = true;
@@ -104,15 +104,15 @@ public class DualServiceClient extends Activity {
 		if (!started) {
 			Toast.makeText(this, "Service not yet started", Toast.LENGTH_SHORT).show();
 		} else {
-			if(counterService != null)
+			if(loggerService != null)
 				try {
-					counterService.clearList();
+					loggerService.clearList();
 				} catch (RemoteException e) {
 					Log.e(LOG_TAG, e.getMessage());
 				}
 			
 			Intent i = new Intent();
-			i.setClassName("aexp.dualservice", "aexp.dualservice.DualService");
+			i.setClassName(this.getPackageName(), LogService.class.getName());
 			stopService(i);
 			Log.d(LOG_TAG, "stopService()");
 			started = false;
@@ -122,13 +122,14 @@ public class DualServiceClient extends Activity {
 
 	private void invokeService() {
 		if (conn == null) {
-			Toast.makeText(this, "Cannot invoke - service not bound",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Cannot invoke - service not bound", Toast.LENGTH_SHORT).show();
+		} else if (loggerService == null) {
+			Toast.makeText(this, "Cannot invoke - loggerService is null.", Toast.LENGTH_SHORT).show();
 		} else {
 			try {
 				TextView t = (TextView) findViewById(R.id.result);
 
-				List<Location> fixes = counterService.getPoints();
+				List<Location> fixes = loggerService.getPoints();
 				if (fixes == null)
 					t.setText("List of fixes is null");
 				else if (fixes.isEmpty())
@@ -150,14 +151,14 @@ public class DualServiceClient extends Activity {
 		t.setText(statusText);
 	}
 
-	class CounterServiceConnection implements ServiceConnection {
+	class LoggerServiceConnection implements ServiceConnection {
 		public void onServiceConnected(ComponentName className, IBinder boundService) {
-			counterService = ICounterService.Stub.asInterface((IBinder) boundService);
+			loggerService = ILoggerService.Stub.asInterface((IBinder) boundService);
 			Log.d(LOG_TAG, "onServiceConnected");
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
-			counterService = null;
+			loggerService = null;
 			Log.d(LOG_TAG, "onServiceDisconnected");
 			updateServiceStatus();
 		}
