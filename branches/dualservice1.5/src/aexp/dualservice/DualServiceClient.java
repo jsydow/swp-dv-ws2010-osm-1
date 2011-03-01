@@ -39,24 +39,14 @@ public class DualServiceClient extends Activity {
 		startServiceButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				startService();
+				initService();
 			}
 		});
 		Button stopServiceButton = (Button) findViewById(R.id.stopservice);
 		stopServiceButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				stopService();
-			}
-		});
-		Button bindServiceButton = (Button) findViewById(R.id.bindservice);
-		bindServiceButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				initService();
-			}
-		});
-		Button unbindServiceButton = (Button) findViewById(R.id.unbindservice);
-		unbindServiceButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
 				releaseService();
+				stopService();
 			}
 		});
 		Button invokeServiceButton = (Button) findViewById(R.id.invokeservice);
@@ -114,6 +104,13 @@ public class DualServiceClient extends Activity {
 		if (!started) {
 			Toast.makeText(this, "Service not yet started", Toast.LENGTH_SHORT).show();
 		} else {
+			if(counterService != null)
+				try {
+					counterService.clearList();
+				} catch (RemoteException e) {
+					Log.e(LOG_TAG, e.getMessage());
+				}
+			
 			Intent i = new Intent();
 			i.setClassName("aexp.dualservice", "aexp.dualservice.DualService");
 			stopService(i);

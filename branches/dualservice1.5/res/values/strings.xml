@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DualServiceClient</string>
-	<string name="startserv">Start service</string>
-    <string name="stopserv">Stop service</string>
+	<string name="startserv">Start logging</string>
+    <string name="stopserv">Stop logging</string>
     <string name="invokeserv">Get counter</string>
     <string name="bindserv">Bind service</string>
     <string name="unbindserv">Unbind service</string>
