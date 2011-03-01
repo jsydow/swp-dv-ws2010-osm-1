@@ -1,3 +1,5 @@
+#summary Map features in an XML file.
+
 A (not yet complete or "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
 
 = Code (tags.rb) =
@@ -45,7 +47,7 @@ module OsmMapFeatures
                             useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/).to_s.scan(/<li>(.*?)<\/li>/m)
                             useful_tags.each do |useful_tag|
                                 useful_tag = useful_tag.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip
-                                puts "      <useful v=\"#{useful_tag}\" />"
+                                puts "      <useful v=\"#{useful_tag}\" />" unless (useful_tag == "" or useful_tag.match(/ /))
                             end
                         end
                     end
