@@ -4,7 +4,7 @@
 
 = Details =
 Next Target:
-<img src="http://userpage.fu-berlin.de/davbey/SNC00043.jpg"/>
+<img src="http://userpage.fu-berlin.de/davbey/SNC00043.jpg" width="1024" />
 
 Complete Layout:
-<img src="http://userpage.fu-berlin.de/davbey/SNC00044.jpg"/>
+<img src="http://userpage.fu-berlin.de/davbey/SNC00044.jpg" width="1024" />
