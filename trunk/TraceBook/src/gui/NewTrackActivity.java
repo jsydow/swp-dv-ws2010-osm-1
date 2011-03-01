@@ -56,8 +56,7 @@ public class NewTrackActivity extends TabActivity {
 		if (conn == null) {
 			conn = new LoggerServiceConnection();
 			Intent i = new Intent();
-			i.setClassName(this.getPackageName(),
-					WaypointLogService.class.getName());
+			i.setClassName(this.getPackageName(), WaypointLogService.class.getName());
 			bindService(i, conn, Context.BIND_AUTO_CREATE);
 			Log.d(LOG_TAG, "bindService()");
 		} else {
@@ -74,8 +73,7 @@ public class NewTrackActivity extends TabActivity {
 			conn = null;
 			Log.d(LOG_TAG, "unbindService()");
 		} else {
-			Toast.makeText(this, "Cannot unbind - service not bound",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Cannot unbind - service not bound", Toast.LENGTH_SHORT).show();
 		}
 	}
 
