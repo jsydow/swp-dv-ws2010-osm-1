@@ -61,18 +61,19 @@ Each track gets a folder. In this folder all Media are saved plus the way data (
  * - delete Track
  * ~ change Track-information (date, name)
  * # list all Tracks
- * # get Trackinformation
+ * # get Trackinformation (date, name, #entries?)
  * # get all Nodes, Ways, Areas, Media
 
 == Ways / Areas ==
 All Way-Operation apply also to Areas:
  * # list all Media
  * # list all Nodes
- * # get Way information
+ * # get Way information (tags, name)
  * + new Way
  * - delete Way
  * ~ change Way-Information (tags, name) (delete, change, add)
- * ~ change Media (delete, change, add)
+ * ~ change Media (delete, add)
+ * ~ change Nodes (delete, add)
 
 == Node ==
  * + add Node
@@ -85,5 +86,5 @@ All Way-Operation apply also to Areas:
  * # get Media information (name, time, path)
  * - delete Media
 
-== Current Media ==
+== Current Data ==
  
