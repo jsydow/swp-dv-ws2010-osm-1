@@ -38,16 +38,16 @@ module OsmMapFeatures
                     puts "    <value v=\"#{v.strip}\">"
                     if (not @tags[key][value].match(/class="new"/))
                         href = @tags[key][value].scan(/href="(.*?)"/)
-                            if (href)
-                                href = href.to_s.strip
+                        if (href)
+                            href = href.to_s.strip
 
-                                useful_page = get_page("http://wiki.openstreetmap.org#{href}")
-                                useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
-                                useful_tags.each do |useful_tag|
-                                    useful_tag = useful_tag.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip
-                                    puts "      <useful v=\"#{useful_tag}\" />"
-                                end
+                            useful_page = get_page("http://wiki.openstreetmap.org#{href}")
+                            useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/).to_s.scan(/<li>(.*?)<\/li>/m)
+                            useful_tags.each do |useful_tag|
+                                useful_tag = useful_tag.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip
+                                puts "      <useful v=\"#{useful_tag}\" />"
                             end
+                        end
                     end
                     puts "    </value>"
                 end
