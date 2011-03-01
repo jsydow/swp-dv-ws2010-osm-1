@@ -1,22 +1,30 @@
 package aexp.dualservice;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-public class DualService extends Service {
+public class DualService extends Service implements LocationListener {
 	private static final String LOG_TAG = "DUALSERVICE";
-	private int counter = 0;
-	private Handler serviceHandler = null;
+	private List<Location> fixes = new LinkedList<Location>();
+	
+	boolean tracking = false;
+	LocationListener ll = this;
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		Log.d(LOG_TAG, "onStart");
-		serviceHandler = new Handler();
-		serviceHandler.postDelayed(new RunTask(), 1000L);
+		((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
 	}
 
 	@Override
@@ -40,15 +48,41 @@ public class DualService extends Service {
 	 * The IAdderService is defined through IDL
 	 */
 	private final ICounterService.Stub binder = new ICounterService.Stub() {
-		public int getCounterValue() {
-			return counter;
+		public void startTracking() {
+			// TOOD
+		}
+
+		public void stopTracking() {
+			// TODO
+		}
+
+		public List<Location> getPoints() {
+			return fixes;
+		}
+		
+		public void clearList() {
+			fixes.clear();
 		}
 	};
 
-	class RunTask implements Runnable {
-		public void run() {
-			++counter;
-			serviceHandler.postDelayed(this, 1000L);
-		}
+	@Override
+	public void onLocationChanged(Location arg0) {
+		Log.d(LOG_TAG, "GPS location changed");
+		fixes.add(arg0);
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		Log.d(LOG_TAG, "GPS Provider Disabled: " + arg0);
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		Log.d(LOG_TAG, "GPS Provider Enabled: " + arg0);
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		Log.d(LOG_TAG, "GPS Status Changed: " + arg0);
 	}
 }

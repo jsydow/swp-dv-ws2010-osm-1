@@ -4,11 +4,14 @@
 
 package aexp.dualservice;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -29,9 +32,9 @@ public class DualServiceClient extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		/* Create Buttons */
-		
+
 		Button startServiceButton = (Button) findViewById(R.id.startservice);
 		startServiceButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -67,7 +70,7 @@ public class DualServiceClient extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		releaseService();	// keep service running in background
+		releaseService(); // keep service running in background
 	}
 
 	private void initService() {
@@ -90,8 +93,7 @@ public class DualServiceClient extends Activity {
 			updateServiceStatus();
 			Log.d(LOG_TAG, "unbindService()");
 		} else {
-			Toast.makeText(this, "Cannot unbind - service not bound",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Cannot unbind - service not bound", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -123,12 +125,20 @@ public class DualServiceClient extends Activity {
 
 	private void invokeService() {
 		if (conn == null) {
-			Toast.makeText(this, "Cannot invoke - service not bound", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Cannot invoke - service not bound",
+					Toast.LENGTH_SHORT).show();
 		} else {
 			try {
-				int ctr = counterService.getCounterValue();
 				TextView t = (TextView) findViewById(R.id.result);
-				t.setText("Counter value: " + Integer.toString(ctr));
+
+				List<Location> fixes = counterService.getPoints();
+				if (fixes == null)
+					t.setText("List of fixes is null");
+				else if (fixes.isEmpty())
+					t.setText("List of fixes is empty");
+				else
+					t.setText("Last fix: " + fixes.get(0).toString() + " ("+fixes.size()+") fixes saved");
+
 			} catch (RemoteException ex) {
 				Log.e(LOG_TAG, "DeadObjectException", ex);
 			}
