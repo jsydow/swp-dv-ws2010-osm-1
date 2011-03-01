@@ -4,6 +4,8 @@ A (not yet complete or "correct") list of map features: http://userpage.fu-berli
 
 = Code =
 
+No Java, because... well, just because.
+
 {{{
 module OsmMapFeatures
     require 'net/http'
