@@ -13,8 +13,7 @@ module OsmMapFeatures
     @tags = Hash.new
 
     def get_page(uri)
-        uri = URI.parse(uri)
-        Net::HTTP.get(uri)
+        Net::HTTP.get(URI.parse(uri))
     end
 
     # Retrieves keys and values from the Map_Features wiki entry at OSM's.
