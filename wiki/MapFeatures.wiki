@@ -2,7 +2,7 @@
 
 A (not yet complete or "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
 
-= Code (tags.rb) =
+= Code =
 
 {{{
 module OsmMapFeatures
