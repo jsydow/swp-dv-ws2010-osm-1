@@ -15,6 +15,7 @@ module OsmMapFeatures
         Net::HTTP.get(uri)
     end
 
+    # Retrieves keys and values from the Map_Features wiki entry at OSM's.
     def parse_keys_and_values()
         f = get_page('http://wiki.openstreetmap.org/wiki/Map_Features')
         tags = f.scan(/<tr>\s+<td>(.*?)<\/td><td>(.*?)<\/td>/m)
@@ -29,6 +30,7 @@ module OsmMapFeatures
         end
     end
 
+    # Dump what we have as an XML file.
     def p_xml
         puts "<map_features>"
 
@@ -43,6 +45,7 @@ module OsmMapFeatures
                         if (href)
                             href = href.to_s.strip
 
+                            # Try and get some keys that are useful for this given key value pair.
                             useful_page = get_page("http://wiki.openstreetmap.org#{href}")
                             useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/).to_s.scan(/<li>(.*?)<\/li>/m)
                             useful_tags.each do |useful_tag|
