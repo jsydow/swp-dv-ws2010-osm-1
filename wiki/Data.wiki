@@ -47,3 +47,15 @@ The User should be able to:
 
 On the devices memory there is a folder which contains all data.
 Each track gets a folder. In this folder all Media are saved plus the way data (POI, Way, Area).
+
+= Operations =
+
+ * Get a list of all Tracks
+ * Delete a Track
+ * Get all Ways, Areas, POI's, Media of a Track as Names/Id
+ * Get a Way
+ * Get an Area
+ * Get a POI's
+ * Get Media info
+ * Get Nodes of a Way
+ * Get Nodes of a Area
