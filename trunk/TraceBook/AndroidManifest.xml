@@ -13,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="gui.NewTrackActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="gui.NewTrackActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:screenOrientation="portrait" android:name="gui.LoadTrackActivity"></activity>
 
     </application>
