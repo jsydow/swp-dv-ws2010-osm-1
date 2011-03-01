@@ -5,19 +5,10 @@
     android:layout_height="fill_parent"
     >
     <Button android:id="@+id/startservice"
-       android:text="@string/startserv"
        android:layout_width="wrap_content"
-       android:layout_height="wrap_content" />
+       android:layout_height="wrap_content" android:text="@string/startserv"/>
     <Button android:id="@+id/stopservice"
        android:text="@string/stopserv"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content" />
-    <Button android:id="@+id/bindservice"
-       android:text="@string/bindserv"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content" />
-    <Button android:id="@+id/unbindservice"
-       android:text="@string/unbindserv"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content" />
     <Button android:id="@+id/invokeservice"
