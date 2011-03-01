@@ -9,7 +9,7 @@ import java.util.Map;
  * @author js
  *
  */
-public abstract class DataMapObject {
+abstract class DataMapObject {
 	/**
 	 * An id for this object. It is not an id for osm which is set to -1
 	 * for all new objects but it is a program internal id.

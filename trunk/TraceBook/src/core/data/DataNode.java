@@ -9,7 +9,7 @@ import java.util.List;
  * @author js
  *
  */
-public class DataNode extends DataMapObject{
+class DataNode extends DataMapObject implements SerialisableContent{
 	
 	/**
 	 * 
@@ -51,7 +51,17 @@ public class DataNode extends DataMapObject{
 	 * @return The deserialised DataNode object.
 	 */
 	static DataNode deserialise(String id){
-		/* STUB */
+		/* TODO STUB */
 		return null;
+	}
+
+	public void serialise() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void delete() {
+		// TODO Auto-generated method stub
+		
 	}
 }
