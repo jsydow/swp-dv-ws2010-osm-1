@@ -85,6 +85,4 @@ All Way-Operation apply also to Areas:
  * + add Media
  * # get Media information (name, time, path)
  * - delete Media
-
-== Current Data ==
  
