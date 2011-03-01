@@ -42,4 +42,19 @@ class DataMedia {
 	DataMedia() {
 	}
 	
+	/**
+	 * This method loads a Media reference from the devices memory. It uses the 
+	 * appropriate ContentProvider.
+	 * Note: Currently a stub.
+	 * Note: The parameter id may change if another name is better suited
+	 * for retrieving the Media correctly.
+	 *  
+	 * @param name The name of the Media. It is not clear yet if what id or name is needed to load the Media correctly. 
+	 * @return The deserialised DataMedia object.
+	 */
+	static DataMedia deserialise(String name){
+		/* STUB */
+		return null;
+	}
+	
 }
