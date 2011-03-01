@@ -9,7 +9,7 @@ import java.util.List;
  * @author js
  *
  */
-public abstract class DataWayPointList extends DataMapObject{
+abstract class DataWayPointList extends DataMapObject{
 	/**
 	 * The list of nodes of this object. First node is first element
 	 * in this list. 
@@ -25,7 +25,7 @@ public abstract class DataWayPointList extends DataMapObject{
 	 * 
 	 * @param id the internal id of this object
 	 */
-	public DataWayPointList(int id) {
+	 DataWayPointList(int id) {
 		super(id);
 		nodes = new LinkedList<DataNode>();
 		media = new LinkedList<DataMedia>();

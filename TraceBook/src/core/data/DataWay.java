@@ -5,13 +5,13 @@ package core.data;
  * @author js
  *
  */
-public class DataWay extends DataWayPointList {
+class DataWay extends DataWayPointList implements SerialisableContent {
 
 	/**
 	 * 
 	 * @param id id the internal id of this object
 	 */
-	public DataWay(int id) {
+	DataWay(int id) {
 		super(id);
 	}
 	
@@ -26,8 +26,18 @@ public class DataWay extends DataWayPointList {
 	 * @return The deserialised DataWay object.
 	 */
 	static DataWay deserialise(String id) {
-		/* STUB */
+		/* TODO STUB */
 		return null;
+	}
+
+	public void serialise() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void delete() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

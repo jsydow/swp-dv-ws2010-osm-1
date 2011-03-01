@@ -16,4 +16,5 @@ interface SerialisableContent {
 	 * a ContentProvider.
 	 */
 	void serialise();
+	void delete();
 }

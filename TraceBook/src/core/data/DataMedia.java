@@ -53,8 +53,12 @@ class DataMedia {
 	 * @return The deserialised DataMedia object.
 	 */
 	static DataMedia deserialise(String name){
-		/* STUB */
+		/* TODO STUB */
 		return null;
+	}
+	
+	void delete() {
+		/* TODO */
 	}
 	
 }

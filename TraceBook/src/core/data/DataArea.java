@@ -6,7 +6,7 @@ package core.data;
  * @author js
  *
  */
-class DataArea extends DataWayPointList {
+class DataArea extends DataWayPointList implements SerialisableContent {
 
 	/**
 	 * 
@@ -27,8 +27,18 @@ class DataArea extends DataWayPointList {
 	 * @return The deserialised DataArea object.
 	 */
 	static DataArea deserialise(String id) {
-		/* STUB */
+		/* TODO STUB */
 		return null;
+	}
+
+	public void serialise() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void delete() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
