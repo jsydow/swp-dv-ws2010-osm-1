@@ -42,20 +42,13 @@ public class DualService extends Service implements LocationListener {
 	public void onDestroy() {
 		super.onDestroy();
 		Log.d(LOG_TAG, "onDestroy");
+		((LocationManager) getSystemService(Context.LOCATION_SERVICE)).removeUpdates(ll);
 	}
 
 	/**
 	 * The IAdderService is defined through IDL
 	 */
 	private final ICounterService.Stub binder = new ICounterService.Stub() {
-		public void startTracking() {
-			// TOOD
-		}
-
-		public void stopTracking() {
-			// TODO
-		}
-
 		public List<Location> getPoints() {
 			return fixes;
 		}
@@ -65,6 +58,8 @@ public class DualService extends Service implements LocationListener {
 		}
 	};
 
+	/** GPS related Methods **/
+	
 	@Override
 	public void onLocationChanged(Location arg0) {
 		Log.d(LOG_TAG, "GPS location changed");
