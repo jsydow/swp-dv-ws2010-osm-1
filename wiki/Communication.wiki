@@ -6,4 +6,4 @@ This is a short overview over the planned communication system
 
 
 = Details =
-<img src="http://userpage.fu-berlin.de/davbey/SNC00046.jpg"/>
+<img src="http://userpage.fu-berlin.de/davbey/SNC00046.jpg" width="1024"/>
