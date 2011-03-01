@@ -51,13 +51,39 @@ On the devices memory there is a folder which contains all data.
 Each track gets a folder. In this folder all Media are saved plus the way data (POI, Way, Area).
 
 = Operations =
++: insert()
+-: delete()
+~: update()
+#: query()
 
- * Get a list of all Tracks (URI-path: /all_tracks)
- * Delete a Track (URI-path: /delete_track/number)
- * Get all Ways, Areas, POI's, Media of a Track as Names/Id (URI-path: /track/number)
- * Get a Way (URI-path: /way/number)
- * Get an Area (URI-path: /area/number)
- * Get a POI's (URI-path: /poi/number)
- * Get Media info (URI-path: /media/name)
- * Get Nodes of a Way (URI-path: /way_nodes)
- * Get Nodes of a Area (URI-path: /area_nodes)
+== Tracks ==
+ * + new Track
+ * - delete Track
+ * ~ change Track-information (date, name)
+ * # list all Tracks
+ * # get Trackinformation
+ * # get all Nodes, Ways, Areas, Media
+
+== Ways / Areas ==
+All Way-Operation apply also to Areas:
+ * # list all Media
+ * # list all Nodes
+ * # get Way information
+ * + new Way
+ * - delete Way
+ * ~ change Way-Information (tags, name) (delete, change, add)
+ * ~ change Media (delete, change, add)
+
+== Node ==
+ * + add Node
+ * # view information (tags, name, lat, lon, time)
+ * # list all Media
+ *
+
+== Media ==
+ * + add Media
+ * # get Media information (name, time, path)
+ * - delete Media
+
+== Current Media ==
+ 
