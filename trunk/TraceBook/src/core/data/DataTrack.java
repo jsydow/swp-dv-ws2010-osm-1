@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import android.location.Location;
+
 /**
  * A track. Consists of Ways, Areas, POIs and additional Media. 
  * @author js
@@ -11,13 +13,32 @@ import java.util.ListIterator;
  */
 public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	
+	/**
+	 * All Ways and Areas
+	 */
 	private List<DataPointsList> ways;
+	/**
+	 * All POI's
+	 */
 	private List<DataNode> nodes;
 	
+	/**
+	 * The currently edited Way.
+	 */
 	private DataPointsList currentWay;
 	
+	/**
+	 * display name of the Track. Serves as id and should therefore be unique.
+	 * Is initialised with the DateTime of the first creation of this object.
+	 */
 	private String name;
+	/**
+	 * A Comment of this track
+	 */
 	private String comment;
+	/**
+	 * The Creation time.
+	 */
 	private String datetime;
 
 	DataTrack(String datetime) {
@@ -45,6 +66,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	
 
 	/**
+	 * Getter-method
 	 * @return the name
 	 */
 	public String getName() {
@@ -52,6 +74,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	/**
+	 * Setter-method
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -59,6 +82,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	/**
+	 * Getter-method
 	 * @return the comment
 	 */
 	public String getComment() {
@@ -66,6 +90,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	/**
+	 * Setter-method
 	 * @param comment the comment to set
 	 */
 	public void setComment(String comment) {
@@ -73,25 +98,50 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	/**
-	 * @return the nodes
+	 * Getter-method that returns a list of all nodes. The returned List is the
+	 * one stored in this object. Changing the returned List will therefore
+	 * change this list
+	 * @return all POI's of this Track
 	 */
 	public List<DataNode> getNodes() {
 		return nodes;
 	}
 
 	/**
-	 * @return the ways
+	 * Getter-method that returns a list of all Ways. The returned List is the
+	 * one stored in this object. Changing the returned List will therefore
+	 * change this list
+	 * @return all ways of this Track
 	 */
 	public List<DataPointsList> getWays() {
 		return ways;
 	}
 	
+	/**
+	 * Create a new Node (i.e. POI) and add it to the Track
+	 * @return the newly created POI
+	 */
 	public DataNode newNode() {
 		 DataNode dn = new DataNode();
 		 nodes.add(dn);
 		 return dn;
 	 }
+	
+	/**
+	 * Create a new Node (i.e. POI) and add it to the Track
+	 * @return the newly created POI
+	 */
+	public DataNode newNode(Location loc) {
+		 DataNode dn = new DataNode(loc);
+		 nodes.add(dn);
+		 return dn;
+	 }
 	 
+	/**
+	  * This method deletes a Node (POI) of this Track from the devices memory and the working
+	  * memory.
+	  * @param id the id of the POI to delete
+	  */
 	 public void deleteNode(int id) {
 		 ListIterator<DataNode> lit = nodes.listIterator();
 		 DataNode dn;
@@ -105,12 +155,21 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		 }
 	 }
 	 
+	 /**
+	  * Create a new Way/Area in this Track
+	  * @return the newly created Way
+	  */
 	 public DataPointsList newWay() {
 		 DataPointsList dpl = new DataPointsList();
 		 ways.add(dpl);
 		 return dpl;
 	 }
 	 
+	 /**
+	  * This method deletes a Way of this Track from the devices memory and the working
+	  * memory.
+	  * @param id the id of the Way to delete
+	  */
 	 public void deleteWay(int id) {
 		 ListIterator<DataPointsList> lit = ways.listIterator();
 		 DataPointsList dpl;
@@ -125,6 +184,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	 }
 
 	/**
+	 * Getter-method. The creation time string.
 	 * @return the datetime
 	 */
 	public String getDatetime() {
@@ -142,6 +202,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 	
 	/**
+	 * Getter-method. The currently edited Way
 	 * @return the currentWay
 	 */
 	public DataPointsList getCurrentWay() {
@@ -149,6 +210,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	/**
+	 * Sets a Way as currently edited Way. Setter-method
 	 * @param currentWay the currentWay to set
 	 */
 	public DataPointsList setCurrentWay(DataPointsList currentWay) {

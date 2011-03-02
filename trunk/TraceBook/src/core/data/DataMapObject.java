@@ -48,17 +48,12 @@ public abstract class DataMapObject extends DataMediaHolder{
 	}
 
 	/**
-	 * 
-	 * @param id the internal id of this object
+	 * default constructor
 	 */
 	DataMapObject()
 	{
 		super();
 		tags = new HashMap<String,String>();
 		_id = DataStorage.getInstance().getID();
-	}
-
-	public int getID() {
-		return _id;
 	}
 }
