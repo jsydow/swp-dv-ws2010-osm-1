@@ -1,5 +1,7 @@
 package core.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -49,7 +51,11 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		if (datetime != null) {
 			this.datetime = datetime;
 		} else {
-			// TODO set Time
+			// Maybe this doesn't work.
+			SimpleDateFormat sdf = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+			this.datetime = sdf.format(new Date());
+
 		}
 		this.name = this.datetime;
 	}
