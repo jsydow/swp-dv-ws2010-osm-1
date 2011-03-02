@@ -32,6 +32,12 @@ No DTD (yet?), but a snippet of the resulting XML file.
     <value v="station">
     </value>
   </key>
+  <!-- ... -->
+  <key v="area">
+    <value v="yes">
+    </value>
+  </key>
+  <!-- ... -->
 </map_features>
 }}}
 
