@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent" >
+    
 	<TextView 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -11,25 +11,36 @@
 		android:layout_weight="1"
         />    
     
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/welcome"
-    />
+	<TextView  
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:gravity="center_horizontal" 
+	    android:text="@string/welcome"
+	    android:textSize="20sp"
+	    android:textStyle="bold"
+	    android:textColor="#FFFFFF"
+	    />
+	    
+	<TextView 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:scaleType="fitCenter"
+		android:layout_weight="0.5"
+        />    
     
-<Button android:id="@+id/newTrack_btn"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:text="@string/newTrack"
-	android:onClick="newTrack"
- />
+	<Button android:id="@+id/newTrack_btn"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/newTrack"
+		android:onClick="newTrackBtn"
+	 />
  
-<Button android:id="@+id/loadTrack_btn"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:text="@string/loadTrack"
-	android:onClick="loadClick"
- />
+	<Button android:id="@+id/loadTrack_btn"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/loadTrack"
+		android:onClick="loadTrackBtn"
+	 />
  
 	<TextView 
 		android:layout_width="wrap_content"

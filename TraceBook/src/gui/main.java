@@ -16,13 +16,18 @@ public class main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         
         ServiceConnector.startService(this);
         ServiceConnector.initService(this);
-        
     }
     
-    public void newTrack(View view) {
+	/**
+	 * Called if the newTrack Button pressed. 
+	 * Start the NewTrackActivity. 
+	 * @param view
+	 */
+    public void newTrackBtn(View view) {
     	
     	LogParameter param = new LogParameter();
     	
@@ -37,12 +42,18 @@ public class main extends Activity {
 		startActivity(intent);
 
     }
-    
-    public void loadTrack(View view){
+   
+	/**
+	 * Called if the loadTrack Button pressed. 
+	 * Start the LoadTrackActivity. 
+	 * @param view
+	 */
+    public void loadTrackBtn(View view){
     	Intent intent = new Intent (this, LoadTrackActivity.class);
     	startActivity(intent);   	
     }
     
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_optionsmenu, menu);
