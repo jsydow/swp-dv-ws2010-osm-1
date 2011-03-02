@@ -28,7 +28,7 @@
 					android:layout_weight="1" />
 				<ToggleButton android:id="@+id/startTrack_btn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/streetOn_btn" android:textOff="@string/streetOff_btn" />
+					android:textOn="@string/streetOff_btn" android:textOff="@string/streetOn_btn" />
 				<Button android:id="@+id/addPoint_btn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:text="@string/addPoint_btn" android:onClick="addPointBtn" />
@@ -36,6 +36,10 @@
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
+					
+				<Button android:id="@+id/stopTrack_btn" 
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:text="@string/stopTrack_btn" android:onClick="stopTrackBtn" />
 
 			</LinearLayout>
 			<LinearLayout android:id="@+id/edit_tab"
