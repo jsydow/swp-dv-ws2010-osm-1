@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 public class AddPointActivity extends Activity{
 
@@ -23,6 +24,15 @@ public class AddPointActivity extends Activity{
 	            android.R.layout.simple_dropdown_item_1line, tagValues);
 
     }
+    
+    public void autoCompleteValue(View view){
+  /*  	AutoCompleteTextView autoViewCat = (AutoCompleteTextView)findViewById(R.id.autoComplete_Cat);
+    	String cat = autoViewCat.getText().toString();
+    	AutoCompleteTextView autoViewValue = (AutoCompleteTextView) findViewById (R.id.autoComplete_Value);
+    	autoViewValue.setText(cat.toCharArray(), 0, cat.length());*/
+    }
+    
+    
     
     public void saveBtn(View view){
     	final Intent intent = new Intent (this, NewTrackActivity.class);
