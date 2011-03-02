@@ -17,18 +17,15 @@ import core.data.LogParameter;
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
 	
-	DataStorage storage 	= DataStorage.getInstance();
-	DataPointsList current_way = null;
-	DataNode current_node 	= null;
+	DataStorage storage			= DataStorage.getInstance();
+	DataPointsList current_way	= null;
+	DataNode current_node		= null;
 	
 	LogParameter params;
 	
 	boolean gps_on = false;
-	
 	boolean one_shot = false;
-	
-	int mode = 0;
-	
+		
 	LocationListener ll = this;
 
 	@Override
@@ -123,15 +120,13 @@ public class WaypointLogService extends Service implements LocationListener {
 	public void onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
 		
-		if(current_node != null) { // one_shot or POI mode
+		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
-			if(one_shot || current_way == null)
-				stopGPS();
+			if(one_shot || current_way == null)	// one_shot or poi
+				stopGPS();						// else: poi on track
 			current_node = null;
-		}
-		
-		if(current_way != null) {
-			current_way.newNode(loc);
+		} else if(current_way != null) {		// Continuous mode
+			current_way.newNode(loc);			// poi in track was already added before
 		}
 	}
 
