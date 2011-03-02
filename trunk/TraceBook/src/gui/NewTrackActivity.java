@@ -1,9 +1,11 @@
 package gui;
 
+import core.logger.ServiceConnector;
 import Trace.Book.R;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -60,8 +62,8 @@ public class NewTrackActivity extends TabActivity {
 
 		tabHost.setCurrentTab(1);
 
-	//	startService();
-		//initService();
+        ServiceConnector.startService(this);
+        ServiceConnector.initService();
 	}
 	
 	
@@ -81,8 +83,15 @@ public class NewTrackActivity extends TabActivity {
 	 * Called if the stopTrackButton pressed.
 	 * Stop the actual tracking and returns to the main activity.
 	 * @param view
+	 * @throws RemoteException 
 	 */
 	public void stopTrackBtn(View view){
+		try {
+			ServiceConnector.getLoggerService().stopTrack();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		final Intent intent = new Intent (this, main.class);
 		startActivity(intent);
 		
