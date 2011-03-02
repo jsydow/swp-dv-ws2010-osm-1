@@ -6,13 +6,31 @@ import java.util.ListIterator;
 
 public class DataStorage implements SerialisableContent {
 	
+	private static DataStorage instance;
 	private List<DataTrack> tracks;
 	private List<String> names;
+	private int lastID;
 	
-	public DataStorage() {
+	/**
+	 * default constructor
+	 */
+	private DataStorage() {
 		tracks = new LinkedList<DataTrack>();
 		names = new LinkedList<String>();
 		retrieveTrackNames();
+		// TODO lastID laden
+	}
+	
+	public static DataStorage getInstance(){
+		if(instance == null)
+			instance = new DataStorage();
+		return instance;
+	}
+	
+	public int getID() {
+		lastID++;
+		// TODO last id speichern
+		return lastID;
 	}
 
 	/**
@@ -21,7 +39,7 @@ public class DataStorage implements SerialisableContent {
 	 * argument to getTrack()
 	 * @return List of the names of all tracks. If there are no tracks stored then the list will be empty.
 	 */
-	List<String> getAllTracks(){
+	public List<String> getAllTracks(){
 		updateNames();
 		return names;
 	}
@@ -32,9 +50,9 @@ public class DataStorage implements SerialisableContent {
 	 * @param name The name of a track as returned by getAllTracks()
 	 * @return If such a track exists the Track itself is returned. If the track does not exist however null is returned.
 	 */
-	DataTrack getTrack(String name){
+	public DataTrack getTrack(String name){
 		for(DataTrack dt : tracks) {
-			if( dt.name.equals(name) ) {
+			if( dt.getName().equals(name) ) {
 				return dt;
 			}
 		}
@@ -45,12 +63,12 @@ public class DataStorage implements SerialisableContent {
 	 * Deletes a Track from working memory and devices memory.
 	 * @param name The name of a track as stored in the Track object or as returned by getAllTracks()
 	 */
-	void deleteTrack(String name) {
+	public void deleteTrack(String name) {
 		ListIterator<DataTrack> lit = tracks.listIterator();
 		DataTrack dt;
 		while(lit.hasNext()) {
 			dt = lit.next();
-			if( dt.name.equals(name) ) {
+			if( dt.getName().equals(name) ) {
 				dt.delete();
 				lit.remove();
 				break;
@@ -62,7 +80,7 @@ public class DataStorage implements SerialisableContent {
 	 * Create a new Track in working memory. Don't forget to serialise it!
 	 * @return the new Track
 	 */
-	DataTrack newTrack(){
+	public DataTrack newTrack(){
 		DataTrack dt = new DataTrack(null);
 		tracks.add(dt);
 		return dt;
@@ -72,7 +90,7 @@ public class DataStorage implements SerialisableContent {
 	 * Loads all Tracks. Caution this can be a lot of Data! If only the names 
 	 * are needed use retrieveTrackNames()
 	 */
-	void deserialiseAll() {
+	public void deserialiseAll() {
 		// TODO 
 	}
 	
@@ -81,7 +99,7 @@ public class DataStorage implements SerialisableContent {
 	 * If such a Track does not exist nothing is done.
 	 * @param name The name of the Track
 	 */
-	void deserialiseTrack(String name) {
+	public void deserialiseTrack(String name) {
 		DataTrack dt = DataTrack.deserialise(name);
 		if(dt != null)
 			tracks.add(dt);
@@ -91,7 +109,7 @@ public class DataStorage implements SerialisableContent {
 	 * Load the list of all Tracks that are stored on the devices memory.
 	 * These names can be returned by getAllTracks().
 	 */
-	void retrieveTrackNames() {
+	public void retrieveTrackNames() {
 		// TODO
 	}
 	
@@ -99,12 +117,12 @@ public class DataStorage implements SerialisableContent {
 	 * Updates the list of all names. Normally it is unnecessary to use this
 	 * method as getAllTracks() calls this method.
 	 */
-	void updateNames() {
+	public void updateNames() {
 		// TODO
 	}
 
 	/**
-	 * Will serialize all tracks that are currently stored in this DataStorage.
+	 * Will serialise all tracks that are currently stored in this DataStorage.
 	 */
 	public void serialise() {
 		for(DataTrack dt : tracks)
