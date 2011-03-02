@@ -9,7 +9,7 @@ import java.util.ListIterator;
  * @author js
  *
  */
-class DataTrack extends DataMediaHolder implements SerialisableContent {
+public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	
 	private List<DataPointsList> ways;
 	private List<DataNode> nodes;

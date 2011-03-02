@@ -29,6 +29,10 @@ public class LogParameter implements Parcelable {
 		readFromParcel(in);
 	}
 
+	public LogParameter() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int describeContents() {
 		return 0;
 	}

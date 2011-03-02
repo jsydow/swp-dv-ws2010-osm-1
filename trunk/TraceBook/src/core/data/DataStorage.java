@@ -15,7 +15,7 @@ public class DataStorage implements SerialisableContent {
 	/**
 	 * default constructor
 	 */
-	private DataStorage() {
+	DataStorage() {
 		tracks = new LinkedList<DataTrack>();
 		names = new LinkedList<String>();
 		retrieveTrackNames();
@@ -135,7 +135,7 @@ public class DataStorage implements SerialisableContent {
 	}
 
 	/**
-	 * Will serialise all tracks that are currently stored in this DataStorage.
+	 * Will serialize all tracks that are currently stored in this DataStorage.
 	 */
 	public void serialise() {
 		for(DataTrack dt : tracks)

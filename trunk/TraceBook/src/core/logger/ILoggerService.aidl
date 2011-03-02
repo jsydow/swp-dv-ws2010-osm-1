@@ -6,13 +6,13 @@ interface ILoggerService {
 	/**
 	* @param param logging parameters including the id of the track to continue or -1 if a new track is to be started 
 	*/
-	void startLog(in LogParameter param);
+	int addTrack(in LogParameter param, boolean do_one_shot); 
 	
 	/**
 	* stops logging of the current track
 	* @return id of the track
 	*/
-	int stopLog();
+	int stopTrack();
 	
 	/**
 	* create a new Point of interest

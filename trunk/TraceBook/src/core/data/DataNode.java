@@ -8,7 +8,7 @@ import android.location.Location;
  * @author js
  *
  */
-class DataNode extends DataMapObject implements SerialisableContent{
+public class DataNode extends DataMapObject implements SerialisableContent{
 	
 	/**
 	 * 
