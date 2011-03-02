@@ -84,13 +84,13 @@ public class WaypointLogService extends Service implements LocationListener {
 			if(storage.getCurrentTrack() == null)	// create a new track XXX - more logic in DataStorage
 				storage.setCurrentTrack(storage.newTrack());
 			
-			if(current_way == null)	// start a new way
-				current_way = storage.getCurrentTrack().newWay();
+			if(storage.getCurrentTrack().getCurrentWay()== null)	// start a new way
+				storage.getCurrentTrack().setCurrentWay( storage.getCurrentTrack().newWay() );
 			
 			if(one_shot)			// in one_shot mode, add a new point
-				current_node = current_way.newNode();
+				current_node = storage.getCurrentTrack().getCurrentWay().newNode();
 			
- 			return current_way.get_id();
+ 			return storage.getCurrentTrack().getCurrentWay().get_id();
 		}
 
 		public int stopTrack() {
@@ -125,11 +125,11 @@ public class WaypointLogService extends Service implements LocationListener {
 		
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
-			if(one_shot || current_way == null)	// one_shot or poi
+			if(one_shot || storage.getCurrentTrack().getCurrentWay() == null)	// one_shot or poi
 				stopGPS();						// else: poi on track
 			current_node = null;
-		} else if(current_way != null) {		// Continuous mode
-			current_way.newNode(loc);			// poi in track was already added before
+		} else if(storage.getCurrentTrack().getCurrentWay() != null) {		// Continuous mode
+			storage.getCurrentTrack().getCurrentWay().newNode(loc);			// poi in track was already added before
 		}
 	}
 

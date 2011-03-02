@@ -19,8 +19,16 @@ public class main extends Activity {
 
         
         ServiceConnector.startService(this);
-        ServiceConnector.initService(this);
+        ServiceConnector.initService();
     }
+    
+    @Override
+    protected void onDestroy() {
+            super.onDestroy();
+            ServiceConnector.releaseService();
+    }
+
+
     
 	/**
 	 * Called if the newTrack Button pressed. 
