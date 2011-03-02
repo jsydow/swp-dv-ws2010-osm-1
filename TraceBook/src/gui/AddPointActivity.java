@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 public class AddPointActivity extends Activity{
 
@@ -22,8 +20,7 @@ public class AddPointActivity extends Activity{
         final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.autoComplete_Value);
     	final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.autoComplete_Cat);
     	
-        ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter(this,
-	            android.R.layout.simple_dropdown_item_1line, getCategoryTags());
+        ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, getCategoryTags());
         autoComplCat.setAdapter(firstGroupAdapter);
 
         

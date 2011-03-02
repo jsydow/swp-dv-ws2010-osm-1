@@ -1,23 +1,14 @@
 package core.logger;
 
 
-import core.logger.ILoggerService;
-import core.logger.ILoggerService.Stub;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
 
-
 public class ServiceConnector {
-	
-	
-	
 	private static final String LOG_TAG = "LOGSERVICECLIENT";
 	private static LoggerServiceConnection conn = null;
 	private static boolean started = false;

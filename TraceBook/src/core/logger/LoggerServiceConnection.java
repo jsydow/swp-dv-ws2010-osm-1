@@ -15,7 +15,7 @@ public class LoggerServiceConnection implements ServiceConnection {
 	
 	
 	public void onServiceConnected(ComponentName className, IBinder boundService) {
-		loggerService = ILoggerService.Stub.asInterface((IBinder) boundService);
+		loggerService = ILoggerService.Stub.asInterface(boundService);
 		//Log.d(LOG_TAG, "onServiceConnected");
 	}
 
