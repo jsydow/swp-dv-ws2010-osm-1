@@ -5,7 +5,7 @@ package core.data;
  * @author js
  *
  */
-class DataWay extends DataWayPointList implements SerialisableContent {
+public class DataWay extends DataWayPointList implements SerialisableContent {
 
 	/**
 	 * 

@@ -113,12 +113,6 @@ public class NewTrackActivity extends TabActivity {
 		if (!started) {
 			Toast.makeText(this, "Service not yet started", Toast.LENGTH_SHORT).show();
 		} else {
-			if (loggerService != null)
-				try {
-					loggerService.clearList();
-				} catch (RemoteException e) {
-					Log.e(LOG_TAG, e.getMessage());
-				}
 
 			Intent i = new Intent();
 			i.setClassName(this.getPackageName(), WaypointLogService.class.getName());
