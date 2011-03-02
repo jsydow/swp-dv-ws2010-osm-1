@@ -41,6 +41,16 @@ interface ILoggerService {
 	int createPOI(boolean on_way);
 	
 	/**
+	* Tells the service to begin a new way and to add way points to it
+	*/	
+	int beginWay();
+	
+	/**
+	* Tells the service to end way point adding the a way 
+	*/
+	int endWay();
+	
+	/**
 	* @return true if currently a way is recorded
 	*/
 	boolean isLogging();

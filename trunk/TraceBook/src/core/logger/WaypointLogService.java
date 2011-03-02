@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -25,7 +26,8 @@ public class WaypointLogService extends Service implements LocationListener {
 	
 	boolean gps_on = false;
 	boolean one_shot = false;
-		
+	boolean tracking_way = false;
+			
 	LocationListener ll = this;
 
 	@Override
@@ -84,13 +86,15 @@ public class WaypointLogService extends Service implements LocationListener {
 			if(storage.getCurrentTrack() == null)	// create a new track XXX - more logic in DataStorage
 				storage.setCurrentTrack(storage.newTrack());
 			
-			if(storage.getCurrentTrack().getCurrentWay()== null)	// start a new way
+		/*	if(storage.getCurrentTrack().getCurrentWay()== null)	// start a new way
 				storage.getCurrentTrack().setCurrentWay( storage.getCurrentTrack().newWay() );
 			
 			if(one_shot)			// in one_shot mode, add a new point
 				current_node = storage.getCurrentTrack().getCurrentWay().newNode();
 			
- 			return storage.getCurrentTrack().getCurrentWay().get_id();
+ 			return storage.getCurrentTrack().getCurrentWay()*/
+ 			
+ 			return 0;
 		}
 
 		public int stopTrack() {
@@ -116,6 +120,23 @@ public class WaypointLogService extends Service implements LocationListener {
 		public boolean isLogging() {
 			return current_way != null;
 		}
+
+		public int beginWay() throws RemoteException {
+			// TODO Auto-generated method stub			
+			current_way = storage.getCurrentTrack().newWay();
+			storage.getCurrentTrack().setCurrentWay(current_way);
+			tracking_way= true;
+				
+			return 0;
+		}
+
+		public int endWay() throws RemoteException {
+			// TODO Auto-generated method stub
+			storage.getCurrentTrack().setCurrentWay(null);
+			tracking_way	= false;
+			
+			return 0;
+		}
 	};
 
 	/** GPS related Methods **/
@@ -130,7 +151,8 @@ public class WaypointLogService extends Service implements LocationListener {
 			current_node = null;
 		} else if(storage.getCurrentTrack().getCurrentWay() != null) {		// Continuous mode
 			storage.getCurrentTrack().getCurrentWay().newNode(loc);			// poi in track was already added before
-		}
+		}else 
+			storage.getCurrentTrack().newNode(loc);
 	}
 
 	public void onProviderDisabled(String arg0) {
