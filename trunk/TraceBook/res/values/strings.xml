@@ -12,5 +12,9 @@
     <string name="streetOff_btn">Straßenende</string>
     <string name="addPoint_btn">Add Point of intrest</string>
     <string name="poi_btn">Point of intrest</string>
+    <string name="save_btn">Speichern</string>
+    <string name="cancel_btn">Abbrechen</string>
     <string name="trackName">Trackname</string>
+    <string name="insertTag">Tag einfügen</string>
+    <string name="insertValue">Value einfügen</string>
 </resources>
