@@ -186,11 +186,15 @@ public class DataStorage implements SerialisableContent {
 	 * method as getAllTracks() calls this method.
 	 */
 	public void updateNames() {
-		// TODO
+		names.clear();
+		for (DataTrack dt : tracks) {
+			names.add(dt.getName());
+		}
+		// TODO also update names from tracks on devices memory
 	}
 
 	/**
-	 * Will serialize all tracks that are currently stored in this DataStorage.
+	 * Will serialise all tracks that are currently stored in this DataStorage.
 	 */
 	public void serialise() {
 		for (DataTrack dt : tracks)
