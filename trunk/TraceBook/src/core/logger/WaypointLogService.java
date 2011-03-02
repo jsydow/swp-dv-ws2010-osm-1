@@ -81,6 +81,9 @@ public class WaypointLogService extends Service implements LocationListener {
 			
 			restartGPS();
 			
+			if(storage.getCurrentTrack() == null)	// create a new track XXX - more logic in DataStorage
+				storage.setCurrentTrack(storage.newTrack());
+			
 			if(current_way == null)	// start a new way
 				current_way = storage.getCurrentTrack().newWay();
 			

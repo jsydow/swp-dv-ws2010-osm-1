@@ -32,10 +32,10 @@ public class main extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    //	Intent intent = new Intent(this, NewTrackActivity.class);
-   // 	startActivity(intent);
-    	
-    	
+
+		Intent intent = new Intent(this, NewTrackActivity.class);
+		startActivity(intent);
+
     }
     
     public void loadTrack(View view){
