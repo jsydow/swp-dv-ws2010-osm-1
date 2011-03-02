@@ -100,7 +100,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			current_way = null;
 			
 			if(tmp != null)
-				return tmp.getID();
+				return tmp.get_id();
 			return -1;
 		}
 		
@@ -110,7 +110,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			else
 				current_node = storage.getCurrentTrack().newNode();
 			
-			return current_node.getID();
+			return current_node.get_id();
 		}
 
 		public boolean isLogging() {
@@ -124,14 +124,14 @@ public class WaypointLogService extends Service implements LocationListener {
 		Log.d(LOG_TAG, "GPS location changed");
 		
 		if(current_node != null) { // one_shot or POI mode
-			//current_node.updateLocation(loc);	// TODO
+			current_node.setLocation(loc);
 			if(one_shot || current_way == null)
 				stopGPS();
 			current_node = null;
 		}
 		
 		if(current_way != null) {
-			current_way.newNode(); // TODO insert location
+			current_way.newNode(loc);
 		}
 	}
 
