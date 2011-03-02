@@ -1,8 +1,5 @@
 package core.data;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.location.Location;
 
 /**
@@ -11,19 +8,22 @@ import android.location.Location;
  * @author js
  *
  */
-public class DataNode extends DataMapObject implements SerialisableContent{
+class DataNode extends DataMapObject implements SerialisableContent{
 	
 	/**
 	 * 
 	 * @param id the internal id of this object
 	 */
-	
-	public DataNode(int id, Location loc) {
-		super(id);
-		media = new LinkedList<DataMedia>();
+	DataNode(Location loc) {
+		super();
 		this.lon = loc.getLongitude();
 		this.lat = loc.getLatitude();
 	}
+	
+	DataNode() {
+		super();
+	}
+	
 	/**
 	 * Longitude. OSM specifies 7 digits precision. Must be in interval [-180; 180]
 	 * Note: This could also be stored as a tag lon=... . This is a matter of 
@@ -40,10 +40,10 @@ public class DataNode extends DataMapObject implements SerialisableContent{
 	 */
 	double lat;
 	
-	/**
-	 * List of all media that belong to that object.
-	 */
-	List<DataMedia> media;
+	public void setLocation(Location loc) {
+		this.lon = loc.getLongitude();
+		this.lat = loc.getLatitude();
+	}
 	
 	/**
 	 * This method loads a Node from the devices memory. It uses the 

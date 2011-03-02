@@ -9,12 +9,12 @@ import java.util.Map;
  * @author js
  *
  */
-abstract class DataMapObject {
+public abstract class DataMapObject extends DataMediaHolder{
 	/**
 	 * An id for this object. It is not an id for osm which is set to -1
 	 * for all new objects but it is a program internal id.
 	 */
-	int _id;
+	protected int _id;
 	
 	/**
 	 * tags stores all meta information of this object. 
@@ -22,16 +22,25 @@ abstract class DataMapObject {
 	 * osm-tags. tags is not equivalent to osm-tags as these tags also
 	 * store the timestamp and gps coordinates etc.
 	 */
-	Map<String,String> tags;
+	protected Map<String,String> tags;
 	
+	public int get_id() {
+		return _id;
+	}
+
+	public Map<String, String> getTags() {
+		return tags;
+	}
+
 	/**
 	 * 
 	 * @param id the internal id of this object
 	 */
-	DataMapObject(int id)
+	DataMapObject()
 	{
+		super();
 		tags = new HashMap<String,String>();
-		_id = id;
+		_id = DataStorage.getInstance().getID();
 	}
 
 	public int getID() {

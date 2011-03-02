@@ -11,27 +11,27 @@ class DataMedia {
 	/**
 	 * internal id
 	 */
-	int _id;
+	private int _id;
 	/**
 	 * the path to the file of the medium on the memory. This path should be
 	 * sufficient to open the file (contains basename + filename).
 	 */
-	String path;
+	private String path;
 	/**
 	 * The name is the displayed name. May be equal to the filename without
 	 * extension.
 	 */
-	String name;
-	
+	private String name;
+
 	/**
 	 * 
 	 * @param _id the internal id.
 	 * @param path full path to the file (basename + filename + extension)
 	 * @param name name of the medium.
 	 */
-	DataMedia(int _id, String path, String name) {
+	public DataMedia(String path, String name) {
 		super();
-		this._id = _id;
+		this._id = DataStorage.getInstance().getID();
 		this.path = path;
 		this.name = name;
 	}
@@ -43,6 +43,40 @@ class DataMedia {
 		// nothing to do
 	}
 	
+	public int get_id() {
+		return _id;
+	}
+	
+	
+	
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	/**
 	 * This method loads a Media reference from the devices memory. It uses the 
 	 * appropriate ContentProvider.
