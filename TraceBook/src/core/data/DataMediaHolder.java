@@ -13,7 +13,7 @@ import java.util.ListIterator;
  */
 public abstract class DataMediaHolder {
 	/**
-	 * The list of Media
+	 * The list of Media.
 	 */
 	protected List<DataMedia> media;
 
@@ -27,9 +27,9 @@ public abstract class DataMediaHolder {
 	/**
 	 * Getter-method that returns a list of all media. The returned List is the
 	 * one stored in the MediaHolder. Changing the returned List will therefore
-	 * change this list
+	 * change this list.
 	 * 
-	 * @return the list of all media
+	 * @return The list of all media
 	 */
 	public List<DataMedia> getMedia() {
 		return media;
@@ -39,7 +39,7 @@ public abstract class DataMediaHolder {
 	 * Add a new medium to this object.
 	 * 
 	 * @param medium
-	 *            the Media object
+	 *            The Media object.
 	 */
 	public void addMedia(DataMedia medium) {
 		media.add(medium);
@@ -50,14 +50,15 @@ public abstract class DataMediaHolder {
 	 * devices memory. Warning: Make sure no other object has a reference to
 	 * this medium!
 	 * 
-	 * @param medium
+	 * @param id
+	 *            The id of the medium to be deleted.
 	 */
-	public void deleteMedia(DataMedia medium) {
+	public void deleteMedia(int id) {
 		ListIterator<DataMedia> lit = media.listIterator();
 		DataMedia dm;
 		while (lit.hasNext()) {
 			dm = lit.next();
-			if (dm.get_id() == medium.get_id()) {
+			if (dm.get_id() == id) {
 				dm.delete();
 				lit.remove();
 				break;

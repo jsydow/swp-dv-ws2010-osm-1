@@ -10,21 +10,22 @@ package core.data;
  */
 public class DataMedia {
 	/**
-	 * internal id
+	 * The internal id for this medium.
 	 */
 	private int _id;
 	/**
-	 * the path to the file of the medium on the memory. This path should be
+	 * The path to the file of the medium on the memory. This path should be
 	 * sufficient to open the file (contains basename + filename).
 	 */
 	private String path;
 	/**
-	 * The name is the displayed name. May be equal to the filename without
+	 * This name is the displayed name. May be equal to the filename without
 	 * extension.
 	 */
 	private String name;
 
 	/**
+	 * Constructor that initialises the medium.
 	 * 
 	 * @param path
 	 *            full path to the file (basename + filename + extension)
@@ -48,7 +49,7 @@ public class DataMedia {
 	/**
 	 * Getter-method
 	 * 
-	 * @return the id
+	 * @return The unique id of the medium.
 	 */
 	public int get_id() {
 		return _id;
@@ -57,36 +58,38 @@ public class DataMedia {
 	/**
 	 * Getter-method
 	 * 
-	 * @return the path to the medium
+	 * @return The path to the medium on the devices medium.
 	 */
 	public String getPath() {
 		return path;
 	}
 
 	/**
-	 * Setter-method. The path shouldn't be changed but one never knows.
+	 * Setter-method. The path should normally not be changed but one never
+	 * knows.
 	 * 
 	 * @param path
-	 *            new path
+	 *            The new path of the medium
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
-	 * @return the name of the medium
+	 * @return The name of the medium as it is displayed.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Setter-method
+	 * Setter-method. Changing the name may have no impact on serialisation. On
+	 * next deserialisation the old name may appear again.
 	 * 
 	 * @param name
-	 *            the name to set
+	 *            The new name for the medium.
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -94,13 +97,10 @@ public class DataMedia {
 
 	/**
 	 * This method loads a medium reference from the devices memory. It uses the
-	 * appropriate ContentProvider. Note: Currently a stub. Note: The parameter
-	 * id may change if another name is better suited for retrieving the medium
-	 * correctly.
+	 * appropriate ContentProvider. Note: Currently a stub. Note:
 	 * 
 	 * @param name
-	 *            The name of the medium. It is not clear yet if what id or name
-	 *            is needed to load the Media correctly.
+	 *            The filename without extension of the medium.
 	 * @return The deserialised DataMedia object.
 	 */
 	static DataMedia deserialise(String name) {
