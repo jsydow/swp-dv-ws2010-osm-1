@@ -7,7 +7,7 @@ package core.data;
  * @author js
  *
  */
-class DataMedia {
+public class DataMedia {
 	/**
 	 * internal id
 	 */
@@ -25,7 +25,6 @@ class DataMedia {
 
 	/**
 	 * 
-	 * @param _id the internal id.
 	 * @param path full path to the file (basename + filename + extension)
 	 * @param name name of the medium.
 	 */
@@ -43,34 +42,40 @@ class DataMedia {
 		// nothing to do
 	}
 	
+	/**
+	 * Getter-method
+	 * @return the id
+	 */
 	public int get_id() {
 		return _id;
 	}
 	
-	
-	
 	/**
-	 * @return the path
+	 * Getter-method
+	 * @return the path to the medium
 	 */
 	public String getPath() {
 		return path;
 	}
 
 	/**
-	 * @param path the path to set
+	 * Setter-method. The path shouldn't be changed but one never knows.
+	 * @param path new path
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 
 	/**
-	 * @return the name
+	 * Getter-method
+	 * @return the name of the medium
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
+	 * Setter-method
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -78,13 +83,13 @@ class DataMedia {
 	}
 
 	/**
-	 * This method loads a Media reference from the devices memory. It uses the 
+	 * This method loads a medium reference from the devices memory. It uses the 
 	 * appropriate ContentProvider.
 	 * Note: Currently a stub.
 	 * Note: The parameter id may change if another name is better suited
-	 * for retrieving the Media correctly.
+	 * for retrieving the medium correctly.
 	 *  
-	 * @param name The name of the Media. It is not clear yet if what id or name is needed to load the Media correctly. 
+	 * @param name The name of the medium. It is not clear yet if what id or name is needed to load the Media correctly. 
 	 * @return The deserialised DataMedia object.
 	 */
 	static DataMedia deserialise(String name){
@@ -92,6 +97,10 @@ class DataMedia {
 		return null;
 	}
 	
+	/**
+	 * Deletes a medium on the devices memory. Uses the appropriate ContentProvider
+	 * Note: Currently a stub. 
+	 */
 	void delete() {
 		/* TODO */
 	}

@@ -4,33 +4,67 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * The class that holds all Data.
+ *  
+ * 
+ * It is a Singleton!
+ * 
+ * @author js
+ *
+ */
 public class DataStorage implements SerialisableContent {
 	
+	/**
+	 * Singleton instance
+	 */
 	private static DataStorage instance;
+	/**
+	 * All loaded Tracks
+	 */
 	private List<DataTrack> tracks;
+	/**
+	 * A List of all possible track names on the working memory and devices memory 
+	 */
 	private List<String> names;
+	
+	/**
+	 * last given ID for a MapObject.
+	 */
 	private int lastID;
+	
+	/**
+	 * currently active Track
+	 */
 	private DataTrack currentTrack;
 
 	/**
-	 * default constructor
+	 * default private constructor
 	 */
 	DataStorage() {
 		tracks = new LinkedList<DataTrack>();
 		names = new LinkedList<String>();
 		retrieveTrackNames();
-		// TODO lastID laden
+		// TODO load lastID
 	}
 	
+	/**
+	 * Singleton implementation
+	 * @return instance of this class
+	 */
 	public static DataStorage getInstance(){
 		if(instance == null)
 			instance = new DataStorage();
 		return instance;
 	}
 	
+	/**
+	 * Create a new unique id to use for a new map object.
+	 * @return a new unique id
+	 */
 	public int getID() {
 		lastID++;
-		// TODO last id speichern
+		// TODO save last id
 		return lastID;
 	}
 
@@ -87,13 +121,19 @@ public class DataStorage implements SerialisableContent {
 		return dt;
 	}
 	
+	/**
+	 * Setter-method for the currently edited Track
+	 * @param currentTrack
+	 * @return the parameter currentTrack
+	 */
 	public DataTrack setCurrentTrack(DataTrack currentTrack) {
 		this.currentTrack = currentTrack;
 		return currentTrack;
 	}
 	
 	/**
-	 * @return the currentTrack
+	 * Getter-method
+	 * @return the currently edited Track
 	 */
 	public DataTrack getCurrentTrack() {
 		return currentTrack;
