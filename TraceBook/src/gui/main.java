@@ -17,12 +17,12 @@ public class main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        ServiceConnector.startService(this);
         ServiceConnector.initService(this);
+        
     }
     
     public void newTrack(View view) {
-    	Intent intent = new Intent(this, NewTrackActivity.class);
-    	startActivity(intent);
     	
     	LogParameter param = new LogParameter();
     	
@@ -32,6 +32,10 @@ public class main extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    //	Intent intent = new Intent(this, NewTrackActivity.class);
+   // 	startActivity(intent);
+    	
+    	
     }
     
     public void loadTrack(View view){

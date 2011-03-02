@@ -19,6 +19,6 @@
         <activity android:name="gui.AddPointActivity"></activity>
         <activity android:name="gui.PreferencesActivity"></activity>
         <activity android:name="gui.EditPointActivity"></activity>
-
+	<service android:name="core.logger.WaypointLogService"/>
     </application>
 </manifest>

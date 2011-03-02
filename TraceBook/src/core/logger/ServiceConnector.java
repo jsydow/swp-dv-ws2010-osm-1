@@ -1,6 +1,8 @@
 package core.logger;
 
 
+import core.logger.ILoggerService;
+import core.logger.ILoggerService.Stub;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,37 +12,13 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
- * Stub for RPC communication with the logger Service  
- * @author benpicco
- *
- */
-class LoggerServiceConnection implements ServiceConnection {
-	
-	ILoggerService loggerService = null;
-	
-	
-	public void onServiceConnected(ComponentName className, IBinder boundService) {
-		loggerService = ILoggerService.Stub.asInterface((IBinder) boundService);
-		//Log.d(LOG_TAG, "onServiceConnected");
-	}
 
-	public void onServiceDisconnected(ComponentName className) {
-		loggerService = null;
-		//Log.d(LOG_TAG, "onServiceDisconnected");
-	}
-	
-	public ILoggerService getLoggerService() {
-		return loggerService;
-	}
-}
 
 public class ServiceConnector {
 	
 	
 	
 	private static final String LOG_TAG = "LOGSERVICECLIENT";
-	private static ILoggerService loggerService = null;
 	private static LoggerServiceConnection conn = null;
 	private static boolean started = false;
 	private static Activity activity = null;
@@ -54,7 +32,7 @@ public class ServiceConnector {
 			conn = new LoggerServiceConnection();
 			Intent i = new Intent();
 			i.setClassName(activity.getPackageName(), WaypointLogService.class.getName());
-			activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
+			boolean res = activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
 			Log.d(LOG_TAG, "bindService()");
 		} else {
 			Toast.makeText(activity, "Cannot bind - service already bound", Toast.LENGTH_SHORT).show();
@@ -77,7 +55,8 @@ public class ServiceConnector {
 	/**
 	 * Start the logging service (collect GPS data)
 	 */
-	public static void startService() {
+	public static void startService( Activity act ) {
+		activity = act;
 		if (started) {
 			Toast.makeText(activity, "Service already started", Toast.LENGTH_SHORT).show();
 		} else {
