@@ -2,14 +2,9 @@ package gui;
 
 import Trace.Book.R;
 import android.app.TabActivity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.view.View;
-import android.os.IBinder;
-import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -17,8 +12,6 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
-import core.logger.ILoggerService;
-import core.logger.WaypointLogService;
 
 public class NewTrackActivity extends TabActivity {
 	
