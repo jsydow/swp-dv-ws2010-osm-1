@@ -69,8 +69,17 @@ public class MapView extends View {
 	canvas.drawColor(Color.BLACK);
 		 
 	if (track != null) {
-		int length = track.getCurrentWay().getNodes().size();
-		canvas.drawText("Anzahl der TrackPoints " + length, 10, 100, paint);
+		
+		canvas.drawText("Anzahl der POI's" + track.getNodes().size() ,10,25,paint);
+		canvas.drawText("Anzahl der Wege " + track.getWays().size() ,10,50,paint);
+		
+		if(  track.getCurrentWay() != null  ){
+			
+			canvas.drawText("Anzahl der Punkte im Weg " + track.getWays().size() ,10,50,paint);
+			
+		}
+		//int length = track.getCurrentWay().getNodes().size();
+		//canvas.drawText("Anzahl der TrackPoints " + length, 10, 100, paint);
 	}
 
 	}
