@@ -1,10 +1,5 @@
 package core.logger;
 
-import core.data.DataNode;
-import core.data.DataStorage;
-import core.data.DataWay;
-import core.data.LogParameter;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,15 +9,26 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import core.data.DataNode;
+import core.data.DataPointsList;
+import core.data.DataStorage;
+import core.data.LogParameter;
 
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
 	
-	DataStorage storage 	= new DataStorage();
-	DataWay current_way 	= null;
+	DataStorage storage 	= DataStorage.getInstance();
+	DataPointsList current_way = null;
 	DataNode current_node 	= null;
 	
-	boolean tracking = false;
+	LogParameter params;
+	
+	boolean gps_on = false;
+	
+	boolean one_shot = false;
+	
+	int mode = 0;
+	
 	LocationListener ll = this;
 
 	@Override
@@ -33,6 +39,7 @@ public class WaypointLogService extends Service implements LocationListener {
 
 	@Override
 	public IBinder onBind(Intent intent) {
+		startGPS();
 		return binder;
 	}
 
@@ -40,6 +47,7 @@ public class WaypointLogService extends Service implements LocationListener {
 	public void onCreate() {
 		super.onCreate();
 		Log.d(LOG_TAG, "onCreate");
+		params = new LogParameter();
 	}
 
 	@Override
@@ -49,16 +57,20 @@ public class WaypointLogService extends Service implements LocationListener {
 		stopGPS();
 	}
 	
-	void startGPS(int delta_distance, int delta_time) {
-		if(!tracking)
-			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, delta_distance, delta_time, ll);
-		tracking = true;
+	void startGPS() {
+		if(!gps_on)
+			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, params.delta_distance, params.delta_time, ll);
+		gps_on = true;
 	}
 	
 	void stopGPS() {
-		if(tracking)
+		if(gps_on)
 			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).removeUpdates(ll);
-		tracking = false;
+		gps_on = false;
+	}
+	
+	void restartGPS() {
+		stopGPS(); startGPS();
 	}
 
 	/**
@@ -66,37 +78,61 @@ public class WaypointLogService extends Service implements LocationListener {
 	 */
 	private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 
-		public void startLog(LogParameter param) {
-			startGPS(param.delta_distance, param.delta_time);
-// 			current_way = storage.getCurrentTrack().newWay();
+		public int addTrack(LogParameter param, boolean do_one_shot) {
+			params = param;
+			one_shot = do_one_shot;
+			
+			restartGPS();
+			
+			if(current_way == null)	// start a new way
+				current_way = storage.getCurrentTrack().newWay();
+			
+			if(one_shot)			// in one_shot mode, add a new point
+				current_node = current_way.newNode();
+			
+ 			return current_way.get_id();
 		}
 
-		public int stopLog() {
+		public int stopTrack() {
 			stopGPS();
-			if(current_way != null)
-				return current_way.getID();
+			
+			DataPointsList tmp = current_way;
+			current_way = null;
+			
+			if(tmp != null)
+				return tmp.getID();
 			return -1;
 		}
-
-		public int createPOI(boolean onWay) {
-			// TODO Auto-generated method stub
-			return 0;
+		
+		public int createPOI(boolean on_way) {
+			if(on_way && current_way != null)
+				current_node = current_way.newNode();
+			else
+				current_node = storage.getCurrentTrack().newNode();
+			
+			return current_node.getID();
 		}
 
 		public boolean isLogging() {
-			return tracking;
+			return current_way != null;
 		}
 	};
 
 	/** GPS related Methods **/
 	
-	public void onLocationChanged(Location arg0) {
+	public void onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
 		
-//		current_node = new DataNode(storage.getID(), loc);
-//		
-//		if(current_way != null)
-//			current_way.add(current_node);
+		if(current_node != null) { // one_shot or POI mode
+			//current_node.updateLocation(loc);	// TODO
+			if(one_shot || current_way == null)
+				stopGPS();
+			current_node = null;
+		}
+		
+		if(current_way != null) {
+			current_way.newNode(); // TODO insert location
+		}
 	}
 
 	public void onProviderDisabled(String arg0) {
