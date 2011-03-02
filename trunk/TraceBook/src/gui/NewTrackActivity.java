@@ -53,7 +53,7 @@ public class NewTrackActivity extends TabActivity {
 		initService();
 	}
 	
-	public void addPoint (View view){
+	public void addPointBtn (View view){
 		final Intent intent = new Intent (this, AddPointActivity.class);
 		startActivity(intent);
 	}
