@@ -17,6 +17,8 @@ public class DataPointsList extends DataMapObject implements SerialisableContent
 	 */
 	protected List<DataNode> nodes;
 	
+	protected boolean isArea;
+	
 	/**
 	 * 
 	 * @param id the internal id of this object
@@ -24,6 +26,25 @@ public class DataPointsList extends DataMapObject implements SerialisableContent
 	 DataPointsList() {
 		super();
 		nodes = new LinkedList<DataNode>();
+	}
+	 
+	 DataPointsList(boolean isArea) {
+			this();
+			this.isArea = isArea;
+		}
+
+	/**
+	 * @return the isArea
+	 */
+	public boolean isArea() {
+		return isArea;
+	}
+
+	/**
+	 * @param isArea the isArea to set
+	 */
+	public void setArea(boolean isArea) {
+		this.isArea = isArea;
 	}
 
 	public List<DataNode> getNodes() {
