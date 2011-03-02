@@ -18,7 +18,7 @@
         <activity android:screenOrientation="portrait" android:name="gui.LoadTrackActivity"></activity>
         <activity android:name="gui.AddPointActivity"></activity>
         <activity android:name="gui.PreferencesActivity"></activity>
-        <activity android:name="gui.PoiActivity"></activity>
+        <activity android:name="gui.EditPointActivity"></activity>
 
     </application>
 </manifest>

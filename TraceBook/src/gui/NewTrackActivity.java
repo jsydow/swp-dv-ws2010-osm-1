@@ -22,8 +22,6 @@ public class NewTrackActivity extends TabActivity {
 	private ILoggerService loggerService = null;
 	private LoggerServiceConnection conn = null;
 	private boolean started = false;
-	String[] firstGroupTags = {};
-	String[] tagValues = {};
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,13 +39,7 @@ public class NewTrackActivity extends TabActivity {
 				.setIndicator(getResources().getString(R.string.edit_tab))
 				.setContent(R.id.edit_tab));
 
-		tabHost.setCurrentTab(0);
-		
-        
-        ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter(this,
-	            android.R.layout.simple_dropdown_item_1line, firstGroupTags);
-        ArrayAdapter<String> valueTags = new ArrayAdapter(this,
-	            android.R.layout.simple_dropdown_item_1line, tagValues);
+		tabHost.setCurrentTab(1);
 
 		startService();
 		initService();
@@ -56,6 +48,12 @@ public class NewTrackActivity extends TabActivity {
 	public void addPointBtn (View view){
 		final Intent intent = new Intent (this, AddPointActivity.class);
 		startActivity(intent);
+	}
+	
+	public void stopTrackBtn(View view){
+		final Intent intent = new Intent (this, main.class);
+		startActivity(intent);
+		
 	}
 
 	@Override
