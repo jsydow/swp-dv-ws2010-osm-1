@@ -2,7 +2,9 @@ package gui;
 
 import Trace.Book.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class AddPointActivity extends Activity{
 
@@ -11,5 +13,14 @@ public class AddPointActivity extends Activity{
         setContentView(R.layout.addpointactivity);
     }
     
+    public void saveBtn(View view){
+    	final Intent intent = new Intent (this, NewTrackActivity.class);
+    	startActivity(intent);
+    }
+    
+    public void cancelBtn(View view){
+    	final Intent intent = new Intent (this, NewTrackActivity.class);
+    	startActivity(intent);
+    }
     
 }
