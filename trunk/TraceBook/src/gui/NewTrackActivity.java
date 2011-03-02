@@ -10,9 +10,7 @@ import android.content.Context;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -136,10 +134,5 @@ public class NewTrackActivity extends TabActivity {
 			loggerService = null;
 			Log.d(LOG_TAG, "onServiceDisconnected");
 		}
-	};
-	 
-	 
-
-	 
-	 
+	}
 }

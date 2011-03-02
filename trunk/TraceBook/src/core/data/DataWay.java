@@ -39,5 +39,4 @@ public class DataWay extends DataWayPointList implements SerialisableContent {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

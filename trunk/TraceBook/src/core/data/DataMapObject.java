@@ -33,4 +33,8 @@ abstract class DataMapObject {
 		tags = new HashMap<String,String>();
 		_id = id;
 	}
+
+	public int getID() {
+		return _id;
+	}
 }
