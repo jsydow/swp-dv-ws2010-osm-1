@@ -1,8 +1,5 @@
 package core.logger;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import core.data.DataNode;
 import core.data.DataStorage;
 import core.data.DataWay;
@@ -16,16 +13,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
-	private List<Location> fixes = new LinkedList<Location>();
 	
-	private DataStorage storage 	= new DataStorage();
-	private DataWay current_way 	= null;
-	private DataNode current_node 	= null;
+	DataStorage storage 	= new DataStorage();
+	DataWay current_way 	= null;
+	DataNode current_node 	= null;
 	
 	boolean tracking = false;
 	LocationListener ll = this;
@@ -71,21 +66,24 @@ public class WaypointLogService extends Service implements LocationListener {
 	 */
 	private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 
-		public void startLog(LogParameter param) throws RemoteException {
-			startGPS(param.delta_distance, param.delta_time);	
+		public void startLog(LogParameter param) {
+			startGPS(param.delta_distance, param.delta_time);
+// 			current_way = storage.getCurrentTrack().newWay();
 		}
 
-		public int stopLog() throws RemoteException {
+		public int stopLog() {
+			stopGPS();
+			if(current_way != null)
+				return current_way.getID();
+			return -1;
+		}
+
+		public int createPOI(boolean onWay) {
 			// TODO Auto-generated method stub
 			return 0;
 		}
 
-		public int createPOI(boolean onWay) throws RemoteException {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		public boolean isLogging() throws RemoteException {
+		public boolean isLogging() {
 			return tracking;
 		}
 	};
