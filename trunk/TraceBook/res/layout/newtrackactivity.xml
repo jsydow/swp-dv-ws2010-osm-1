@@ -26,15 +26,15 @@
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
-				<ToggleButton android:id="@+id/startTrack_btn"
+				<ToggleButton android:id="@+id/startWay_Tbtn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textOn="@string/streetOff_btn" android:textOff="@string/streetOn_btn" 
-					android:drawableLeft="@drawable/way_icon"/>
+					android:drawableLeft="@drawable/way_icon" android:onClick="startWayTbtn"/>
 					
-				<ToggleButton android:id="@+id/startArea_btn"
+				<ToggleButton android:id="@+id/startArea_Tbtn"
 						android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textOn="@string/areaOff_btn" android:textOff="@string/areaOn_btn" 
-					android:drawableLeft="@drawable/area_icon"/>
+					android:drawableLeft="@drawable/area_icon" android:onClick="startAreaTbtn"/>
 				
 				<Button android:id="@+id/addPoint_btn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
