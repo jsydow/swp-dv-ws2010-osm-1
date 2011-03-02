@@ -12,11 +12,11 @@ import android.location.Location;
 public class DataNode extends DataMapObject implements SerialisableContent {
 
 	/**
-	 * This constructor initialises the Latitude and Longitude with data from a
+	 * This constructor initializes the Latitude and Longitude with data from a
 	 * Location object.
 	 * 
 	 * @param loc
-	 *            The Location of the new node. Initialises latitude and
+	 *            The Location of the new node. Initializes latitude and
 	 *            longitude. Must not be null!
 	 */
 	DataNode(Location loc) {
@@ -32,20 +32,9 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	}
 
 	/**
-	 * Longitude. OSM specifies 7 digits precision. Must be in interval [-180;
-	 * 180] Note: This could also be stored as a tag lon=... . This is a matter
-	 * of taste that the gps coordinates are stored as double. It can still be
-	 * changed if a string representation is more useful.
+	 * The location object associated with this node
 	 */
-	private double lon;
-
-	/**
-	 * Latitude. OSM specifies 7 digits precision. Must be in interval [-90; 90]
-	 * Note: This could also be stored as a tag lat=... . This is a matter of
-	 * taste that the gps coordinates are stored as double. It can still be
-	 * changed if a string representation is more useful.
-	 */
-	private double lat;
+	private Location loc;
 
 	/**
 	 * Set the latitude and longitude to the position given by the Location
@@ -55,8 +44,17 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 *            The Location object that the gps module delivers.
 	 */
 	public void setLocation(Location loc) {
-		this.lon = loc.getLongitude();
-		this.lat = loc.getLatitude();
+		this.loc = loc;
+	}
+	
+	/**
+	 * Returns the location Object associated with this node.
+	 * 
+	 * @return location
+	 * 				The Location object that the gps module delivered
+	 */
+	public Location getLocation() {
+		return loc;
 	}
 
 	/**
@@ -65,17 +63,9 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @return the longitude
 	 */
 	public double getLon() {
-		return lon;
-	}
-
-	/**
-	 * Setter-method
-	 * 
-	 * @param lon
-	 *            the longitude to set
-	 */
-	public void setLon(double lon) {
-		this.lon = lon;
+		if(loc == null)
+			return 0;
+		return loc.getLongitude();
 	}
 
 	/**
@@ -84,17 +74,18 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @return the latitude
 	 */
 	public double getLat() {
-		return lat;
+		return loc.getLatitude();
 	}
 
 	/**
-	 * Setter-method
+	 * A Point may have been added uninitialized, in this case
+	 * it does not contain any valid positional data - this may
+	 * be added later once a GPS fix is obtained.
 	 * 
-	 * @param lat
-	 *            the latitude to set
+	 * @return true if the Node contains data of a valid GPS fix
 	 */
-	public void setLat(double lat) {
-		this.lat = lat;
+	public boolean isValid() {
+		return loc != null;
 	}
 
 	/**
@@ -106,7 +97,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @param id
 	 *            The id of the Node. It is not clear yet if what id or name is
 	 *            needed to load the Node correctly.
-	 * @return The deserialised DataNode object or null if there is not such a
+	 * @return The deserialized DataNode object or null if there is not such a
 	 *         node.
 	 */
 	static DataNode deserialise(int id) {
