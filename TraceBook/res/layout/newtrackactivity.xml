@@ -29,20 +29,30 @@
 				<ToggleButton android:id="@+id/startTrack_btn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textOn="@string/streetOn_btn" android:textOff="@string/streetOff_btn" />
-				<AutoCompleteTextView android:id="@+id/addAutoPOICat_tv"
+				<Button android:id="@+id/addPoint_btn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:completionThreshold="1" />
-				<AutoCompleteTextView android:id="@+id/addAutoPOIValue_tv"
-					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:completionThreshold="2" />
+					android:text="@string/addPoint_btn" android:onClick="addPoint" />
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
 
 			</LinearLayout>
-			<TextView android:id="@+id/edit_tab" android:layout_height="fill_parent"
-				android:layout_width="fill_parent" android:text="@string/edit_tab" />
+			<LinearLayout android:id="@+id/edit_tab"
+				android:orientation="vertical" android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
+				
+				<TextView android:id="@+id/namen_vw" 
+				android:layout_width="wrap_content"
+				android:layout_height="fill_parent"
+				android:text="@string/trackName"/>
+				
+				<Button android:id="@+id/poi_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="fill_parent"
+				android:text="@string/poi_btn"/>
+				
+			</LinearLayout>
 		</FrameLayout>
 	</LinearLayout>
 </TabHost>

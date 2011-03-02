@@ -4,11 +4,13 @@ import core.logger.ILoggerService;
 import core.logger.WaypointLogService;
 import Trace.Book.R;
 import android.app.TabActivity;
+import android.content.Intent;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -20,6 +22,8 @@ public class NewTrackActivity extends TabActivity {
 	private ILoggerService loggerService = null;
 	private LoggerServiceConnection conn = null;
 	private boolean started = false;
+	String[] firstGroupTags = {};
+	String[] tagValues = {};
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,9 +42,20 @@ public class NewTrackActivity extends TabActivity {
 				.setContent(R.id.edit_tab));
 
 		tabHost.setCurrentTab(0);
+		
+        
+        ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter(this,
+	            android.R.layout.simple_dropdown_item_1line, firstGroupTags);
+        ArrayAdapter<String> valueTags = new ArrayAdapter(this,
+	            android.R.layout.simple_dropdown_item_1line, tagValues);
 
 		startService();
 		initService();
+	}
+	
+	public void addPoint (View view){
+		final Intent intent = new Intent (this, AddPointActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
@@ -111,7 +126,7 @@ public class NewTrackActivity extends TabActivity {
 			i.setClassName(this.getPackageName(), WaypointLogService.class.getName());
 			stopService(i);
 			Log.d(LOG_TAG, "stopService()");
-		}
+		}		 
 	}
 
 	/**
@@ -130,4 +145,9 @@ public class NewTrackActivity extends TabActivity {
 			Log.d(LOG_TAG, "onServiceDisconnected");
 		}
 	};
+	 
+	 
+
+	 
+	 
 }
