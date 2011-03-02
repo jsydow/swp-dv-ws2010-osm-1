@@ -3,21 +3,26 @@ package core.data;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.location.Location;
+
 /**
  * A node. A node can be a POI or an element of a list of waypoints that belong
  * to a Way or Area. 
  * @author js
  *
  */
-class DataNode extends DataMapObject implements SerialisableContent{
+public class DataNode extends DataMapObject implements SerialisableContent{
 	
 	/**
 	 * 
 	 * @param id the internal id of this object
 	 */
-	DataNode(int id) {
+	
+	public DataNode(int id, Location loc) {
 		super(id);
 		media = new LinkedList<DataMedia>();
+		this.lon = loc.getLongitude();
+		this.lat = loc.getLatitude();
 	}
 	/**
 	 * Longitude. OSM specifies 7 digits precision. Must be in interval [-180; 180]

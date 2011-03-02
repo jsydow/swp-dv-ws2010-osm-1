@@ -9,10 +9,7 @@ public class DataStorage implements SerialisableContent {
 	private List<DataTrack> tracks;
 	private List<String> names;
 	
-	/**
-	 * default constructor
-	 */
-	DataStorage() {
+	public DataStorage() {
 		tracks = new LinkedList<DataTrack>();
 		names = new LinkedList<String>();
 		retrieveTrackNames();
