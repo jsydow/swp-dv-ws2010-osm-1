@@ -2,6 +2,39 @@
 
 A (neither complete, nor "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
 
+= Snip! =
+
+No DTD (yet?), but a snippet of the resulting XML file.
+
+{{{
+<map_features>
+  <key v="aerialway">
+    <value v="cable_car">
+      <useful v="name" />
+      <useful v="ref" />
+    </value>
+    <value v="chair_lift">
+      <useful v="name" />
+      <useful v="ref" />
+    </value>
+    <value v="drag_lift">
+      <useful v="name" />
+      <useful v="ref" />
+    </value>
+    <value v="gondola">
+    </value>
+    <value v="goods">
+    </value>
+    <value v="mixed_lift">
+    </value>
+    <value v="pylon">
+    </value>
+    <value v="station">
+    </value>
+  </key>
+</map_features>
+}}}
+
 = Code =
 
 No Java, because... well, just because.
