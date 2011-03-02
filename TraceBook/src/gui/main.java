@@ -16,8 +16,6 @@ public class main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        
         ServiceConnector.startService(this);
         ServiceConnector.initService();
     }
