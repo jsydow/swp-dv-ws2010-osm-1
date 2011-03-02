@@ -18,13 +18,13 @@ public class LogParameter implements Parcelable {
 			return null;
 		}
 	};
-	
+
 	public LogParameter(int ID, int delta_distance, int delta_time) {
 		this.ID = ID;
 		this.delta_distance = delta_distance;
 		this.delta_time = delta_time;
 	}
-	
+
 	LogParameter(Parcel in) {
 		readFromParcel(in);
 	}
@@ -42,7 +42,7 @@ public class LogParameter implements Parcelable {
 		out.writeInt(delta_distance);
 		out.writeInt(delta_time);
 	}
-	
+
 	public void readFromParcel(Parcel in) {
 		ID = in.readInt();
 		delta_distance = in.readInt();
