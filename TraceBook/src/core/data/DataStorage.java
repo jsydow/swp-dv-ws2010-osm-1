@@ -10,7 +10,8 @@ public class DataStorage implements SerialisableContent {
 	private List<DataTrack> tracks;
 	private List<String> names;
 	private int lastID;
-	
+	private DataTrack currentTrack;
+
 	/**
 	 * default constructor
 	 */
@@ -84,6 +85,18 @@ public class DataStorage implements SerialisableContent {
 		DataTrack dt = new DataTrack(null);
 		tracks.add(dt);
 		return dt;
+	}
+	
+	public DataTrack setCurrentTrack(DataTrack currentTrack) {
+		this.currentTrack = currentTrack;
+		return currentTrack;
+	}
+	
+	/**
+	 * @return the currentTrack
+	 */
+	public DataTrack getCurrentTrack() {
+		return currentTrack;
 	}
 	
 	/**
