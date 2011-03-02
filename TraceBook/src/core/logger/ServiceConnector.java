@@ -17,8 +17,8 @@ public class ServiceConnector {
 	/**
 	 * Bind the logger service to this activity
 	 */
-	public static void initService( Activity act ) {
-		activity = act;
+	public static void initService( ) {
+		
 		if (conn == null) {
 			conn = new LoggerServiceConnection();
 			Intent i = new Intent();

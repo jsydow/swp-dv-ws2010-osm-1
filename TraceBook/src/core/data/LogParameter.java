@@ -5,8 +5,8 @@ import android.os.Parcelable;
 
 public class LogParameter implements Parcelable {
 	public int ID = -1;
-	public int delta_distance = 10;
-	public int delta_time = 2000;
+	public int delta_distance = 0;
+	public int delta_time = 0;
 
 	public static final Parcelable.Creator<LogParameter> CREATOR = new Parcelable.Creator<LogParameter>() {
 
