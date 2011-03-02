@@ -29,6 +29,7 @@ class DataTrack implements SerialisableContent {
 		} else {
 			// TODO set Time
 		}
+		this.name = this.datetime;
 	}
 
 	DataTrack(String datetime, String name) {
@@ -59,7 +60,7 @@ class DataTrack implements SerialisableContent {
 	 * for retrieving the Track correctly.
 	 *  
 	 * @param name The name of the Track as stored on the memory. 
-	 * @return The deserialised DataTrack object.
+	 * @return The deserialised DataTrack object or null if such a Track does not exist
 	 */
 	static DataTrack deserialise(String name) {
 		/* TODO STUB */
