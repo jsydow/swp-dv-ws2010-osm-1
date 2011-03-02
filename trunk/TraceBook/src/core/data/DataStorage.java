@@ -5,8 +5,16 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * The class that holds all Data.
+ * The class that holds all Data. The class has 0 to several Tracks. Each Track
+ * consists of Nodes and PointLists (Area/Way). Pointlists consist of Nodes.
  * 
+ * In the implementation u see there is a difference between the track names and
+ * the tracks themselves. The names-list contains all the names of the tracks
+ * that are in the working memory and on the devices memory. It may not be
+ * perfectly synchronised with the actual tracks available as it is updated only
+ * when needed. These names can be used to actually load a Track completely into
+ * memory. The primary reason for the names is the list of all Tracks without
+ * loading them all.
  * 
  * It is a Singleton!
  * 
@@ -40,7 +48,7 @@ public class DataStorage implements SerialisableContent {
 	private DataTrack currentTrack;
 
 	/**
-	 * default private constructor
+	 * Default private constructor for Singleton implementation.
 	 */
 	DataStorage() {
 		tracks = new LinkedList<DataTrack>();
@@ -50,9 +58,10 @@ public class DataStorage implements SerialisableContent {
 	}
 
 	/**
-	 * Singleton implementation
+	 * Singleton implementation. This method returns the one and only instance
+	 * of this class.
 	 * 
-	 * @return instance of this class
+	 * @return The instance of this class.
 	 */
 	public static DataStorage getInstance() {
 		if (instance == null)
@@ -63,7 +72,7 @@ public class DataStorage implements SerialisableContent {
 	/**
 	 * Create a new unique id to use for a new map object.
 	 * 
-	 * @return a new unique id
+	 * @return A new unique id.
 	 */
 	public int getID() {
 		lastID++;
@@ -73,7 +82,7 @@ public class DataStorage implements SerialisableContent {
 
 	/**
 	 * Returns a list of the names of all tracks that are currently stored in
-	 * this DataStorage object. The names can be used as argument to getTrack()
+	 * this DataStorage object. The names can be used as argument to getTrack().
 	 * 
 	 * @return List of the names of all tracks. If there are no tracks stored
 	 *         then the list will be empty.
@@ -106,7 +115,7 @@ public class DataStorage implements SerialisableContent {
 	 * 
 	 * @param name
 	 *            The name of a track as stored in the Track object or as
-	 *            returned by getAllTracks()
+	 *            returned by getAllTracks().
 	 */
 	public void deleteTrack(String name) {
 		ListIterator<DataTrack> lit = tracks.listIterator();
@@ -124,7 +133,7 @@ public class DataStorage implements SerialisableContent {
 	/**
 	 * Create a new Track in working memory. Don't forget to serialise it!
 	 * 
-	 * @return the new Track
+	 * @return The newly created Track.
 	 */
 	public DataTrack newTrack() {
 		DataTrack dt = new DataTrack(null);
@@ -133,10 +142,11 @@ public class DataStorage implements SerialisableContent {
 	}
 
 	/**
-	 * Setter-method for the currently edited Track
+	 * Setter-method for the currently edited Track.
 	 * 
 	 * @param currentTrack
-	 * @return the parameter currentTrack
+	 *            The new currently edited Track.
+	 * @return The parameter currentTrack is simple returned for further use.
 	 */
 	public DataTrack setCurrentTrack(DataTrack currentTrack) {
 		this.currentTrack = currentTrack;
@@ -146,7 +156,7 @@ public class DataStorage implements SerialisableContent {
 	/**
 	 * Getter-method
 	 * 
-	 * @return the currently edited Track
+	 * @return The currently edited Track is returned.
 	 */
 	public DataTrack getCurrentTrack() {
 		return currentTrack;
@@ -165,7 +175,7 @@ public class DataStorage implements SerialisableContent {
 	 * memory. If such a Track does not exist nothing is done.
 	 * 
 	 * @param name
-	 *            The name of the Track
+	 *            The name of the Track.
 	 */
 	public void deserialiseTrack(String name) {
 		DataTrack dt = DataTrack.deserialise(name);

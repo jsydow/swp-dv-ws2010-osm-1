@@ -37,7 +37,8 @@ public class DataPointsList extends DataMapObject implements
 	/**
 	 * Constructor which initialises the Object as an Area.
 	 * 
-	 * @param isArea
+	 * @param Whether
+	 *            object is an Area.
 	 */
 	DataPointsList(boolean isArea) {
 		this();
@@ -47,7 +48,7 @@ public class DataPointsList extends DataMapObject implements
 	/**
 	 * Getter-method
 	 * 
-	 * @return the isArea
+	 * @return true if object resembles an Area.
 	 */
 	public boolean isArea() {
 		return isArea;
@@ -57,7 +58,7 @@ public class DataPointsList extends DataMapObject implements
 	 * Setter-method
 	 * 
 	 * @param isArea
-	 *            is Object an Area
+	 *            Whether object is an Area.
 	 */
 	public void setArea(boolean isArea) {
 		this.isArea = isArea;
@@ -78,7 +79,7 @@ public class DataPointsList extends DataMapObject implements
 	 * Add a new Node at the end of the list. Call this method if you want to
 	 * extend the Way or Area.
 	 * 
-	 * @return the newly created DataNode.
+	 * @return The newly created DataNode.
 	 */
 	public DataNode newNode() {
 		DataNode dn = new DataNode();
@@ -100,10 +101,12 @@ public class DataPointsList extends DataMapObject implements
 	}
 
 	/**
-	 * This method deletes a Node on the working and devices memory completely.
+	 * This method deletes a Node on the working memory and devices memory
+	 * completely.
 	 * 
 	 * @param id
-	 *            the id of the node to be deleted.
+	 *            The id of the node to be deleted. If this node does not exist
+	 *            nothing is done.
 	 */
 	public void deleteNode(int id) {
 		ListIterator<DataNode> lit = nodes.listIterator();
@@ -123,7 +126,8 @@ public class DataPointsList extends DataMapObject implements
 	 * 
 	 * @param id
 	 *            the id of the PointsList to load from the devices memory.
-	 * @return the loaded DataPointsList object
+	 * @return The loaded DataPointsList object. If there is not such an object
+	 *         null is returned.
 	 */
 	static DataPointsList deserialise(int id) {
 		/* TODO STUB */

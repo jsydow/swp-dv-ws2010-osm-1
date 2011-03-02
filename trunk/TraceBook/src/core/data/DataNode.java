@@ -13,7 +13,11 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 
 	/**
 	 * This constructor initialises the Latitude and Longitude with data from a
-	 * Location object
+	 * Location object.
+	 * 
+	 * @param loc
+	 *            The Location of the new node. Initialises latitude and
+	 *            longitude. Must not be null!
 	 */
 	DataNode(Location loc) {
 		super();
@@ -48,7 +52,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * object which is received from the gps module.
 	 * 
 	 * @param loc
-	 *            the Location object that the gps module delivers
+	 *            The Location object that the gps module delivers.
 	 */
 	public void setLocation(Location loc) {
 		this.lon = loc.getLongitude();
@@ -102,7 +106,8 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @param id
 	 *            The id of the Node. It is not clear yet if what id or name is
 	 *            needed to load the Node correctly.
-	 * @return The deserialised DataNode object.
+	 * @return The deserialised DataNode object or null if there is not such a
+	 *         node.
 	 */
 	static DataNode deserialise(int id) {
 		/* TODO STUB */

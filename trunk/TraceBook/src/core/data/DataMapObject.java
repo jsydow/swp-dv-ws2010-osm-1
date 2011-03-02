@@ -35,8 +35,8 @@ public abstract class DataMapObject extends DataMediaHolder {
 	}
 
 	/**
-	 * Getter-method for a all tags stored as a Map Tags that are no tags in osm
-	 * are: * name * lat * lon * timestamp
+	 * Getter-method for a all tags stored as a Map of String. Tags that are no
+	 * tags in osm are: name, lat, lon, timestamp
 	 * 
 	 * @return map of all tags
 	 */
