@@ -48,7 +48,7 @@ public class ServiceConnector {
 	/**
 	 * Bind the logger service to this activity
 	 */
-	private static void initService( Activity act ) {
+	public static void initService( Activity act ) {
 		activity = act;
 		if (conn == null) {
 			conn = new LoggerServiceConnection();
@@ -64,7 +64,7 @@ public class ServiceConnector {
 	/**
 	 * release the logger service
 	 */
-	private static void releaseService() {
+	public static void releaseService() {
 		if (conn != null) {
 			activity.unbindService(conn);
 			conn = null;
@@ -77,7 +77,7 @@ public class ServiceConnector {
 	/**
 	 * Start the logging service (collect GPS data)
 	 */
-	private static void startService() {
+	public static void startService() {
 		if (started) {
 			Toast.makeText(activity, "Service already started", Toast.LENGTH_SHORT).show();
 		} else {
@@ -93,7 +93,7 @@ public class ServiceConnector {
 	/**
 	 * Stop logging service (stop collecting GPS data)
 	 */
-	private static void stopService() {
+	public static void stopService() {
 		if (!started) {
 			Toast.makeText(activity, "Service not yet started", Toast.LENGTH_SHORT).show();
 		} else {
