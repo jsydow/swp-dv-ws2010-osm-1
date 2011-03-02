@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class NewTrackActivity extends TabActivity {
 	
@@ -64,6 +65,35 @@ public class NewTrackActivity extends TabActivity {
 
         ServiceConnector.startService(this);
         ServiceConnector.initService();
+        }
+	
+	
+	public void startWayTbtn(View view){
+        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
+		String check = streetToggle.getText().toString();
+        if(check.equals(streetToggle.getTextOn().toString())){
+        		try {
+					ServiceConnector.getLoggerService().beginWay();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        }else{
+        	try {
+				ServiceConnector.getLoggerService().endWay();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+	}
+	
+	public void startAreaTbtn(View view){
+	    ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
+		String check = areaToggle.getText().toString();
+        if(check.equals(areaToggle.getTextOn().toString())){
+        		
+        }
 	}
 	
 	
