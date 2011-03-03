@@ -138,8 +138,8 @@ public class WaypointLogService extends Service implements LocationListener {
 		
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
-			if(one_shot || current_way() == null)	// one_shot or poi
-				stopGPS();						// else: poi on track
+//			if(one_shot || current_way() == null)	// one_shot or poi
+//				stopGPS();						// else: poi on track
 			current_node = null;
 		} else if(current_way() != null) {		// Continuous mode
 			current_way().newNode(loc);			// poi in track was already added before
