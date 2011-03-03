@@ -21,6 +21,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import android.location.Location;
 import android.os.Environment;
@@ -272,13 +273,19 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		}
 		Document document = builder.newDocument();
 		
+		Element root = document.createElement("track");
 		// TODO
-		document.appendChild(document.createElement("test"));
+		
+		for(DataNode dn : nodes) {
+			root.appendChild(dn.serialiseToXmlNode(document));
+		}
+		
+		document.appendChild(root);
 
 		try {
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			DOMSource        source = new DOMSource( document );
-			FileOutputStream os     = new FileOutputStream( new File( Environment.getExternalStorageDirectory().getAbsolutePath()+File.pathSeparator+"fu.xml" ) );
+			DOMSource        source = new DOMSource( document ); // Context.openFileOutput("fu.xml",Context.MODE_APPEND);
+			FileOutputStream os     = new FileOutputStream( new File( Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"fu.xml" ) );
 			StreamResult     result = new StreamResult( os );
 			transformer.transform( source, result );
 		} catch (TransformerConfigurationException e) {

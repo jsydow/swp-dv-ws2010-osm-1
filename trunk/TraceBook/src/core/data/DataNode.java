@@ -1,5 +1,11 @@
 package core.data;
 
+import java.text.DecimalFormat;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import android.location.Location;
 
 /**
@@ -74,6 +80,8 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @return the latitude
 	 */
 	public double getLat() {
+		if(loc == null)
+			return 0;
 		return loc.getLatitude();
 	}
 
@@ -108,6 +116,18 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	public void serialise() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public Node serialiseToXmlNode(Document doc) {
+		Element ret = doc.createElement("node");
+		DecimalFormat df = new DecimalFormat("0.0000000");
+		
+		ret.setAttribute("lat",df.format(this.getLat()));
+		ret.setAttribute("lon",df.format(this.getLon()));
+		ret.setAttribute("id", Integer.toString(this.get_id()));
+		// TODO
+		
+		return ret;
 	}
 
 	public void delete() {
