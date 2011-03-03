@@ -3,8 +3,6 @@ package core.data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -63,31 +61,16 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	private String comment;
 
 	/**
-	 * The Creation time.
-	 */
-	private String datetime;
-
-	/**
 	 * Constructor which initialises the Track, each Track must have a Datetime.
 	 * 
 	 * @param datetime
 	 *            The Datetime in string representation. Can be null! Null is
 	 *            recommended.
 	 */
-	DataTrack(String datetime) {
+	DataTrack() {
+		super();
 		ways = new LinkedList<DataPointsList>();
 		nodes = new LinkedList<DataNode>();
-
-		if (datetime != null) {
-			this.datetime = datetime;
-		} else {
-			// Maybe this doesn't work.
-			SimpleDateFormat sdf = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-			this.datetime = sdf.format(new Date());
-
-		}
-		this.name = this.datetime;
 	}
 
 	/**
@@ -98,8 +81,8 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	 * @param name
 	 *            The display and foldername of the Track.
 	 */
-	DataTrack(String datetime, String name) {
-		this(datetime);
+	DataTrack(String name) {
+		this();
 		this.name = name;
 	}
 
@@ -113,8 +96,8 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	 * @param comment
 	 *            Comment that may be displayed for this Track.
 	 */
-	DataTrack(String datetime, String name, String comment) {
-		this(datetime, name);
+	DataTrack(String name, String comment) {
+		this(name);
 		this.comment = comment;
 	}
 
@@ -253,15 +236,6 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		}
 	}
 
-	/**
-	 * Getter-method. The creation time string.
-	 * 
-	 * @return The datetime string.
-	 */
-	public String getDatetime() {
-		return datetime;
-	}
-
 	public void serialise() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder;
@@ -273,7 +247,9 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		}
 		Document document = builder.newDocument();
 		
-		Element root = document.createElement("track");
+		Element root = document.createElement("osm");
+		root.setAttribute("version", "0.6");
+		root.setAttribute("generator", "TraceBook");
 		// TODO
 		
 		for(DataNode dn : nodes) {
