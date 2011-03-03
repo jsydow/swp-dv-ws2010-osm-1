@@ -52,6 +52,7 @@ public class MapView extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
+			invalidate();
 			break;
 		}
 		this.invalidate();
