@@ -31,6 +31,9 @@ public class MapView extends View {
 	 */
 	Paint paint;
 
+	/**
+	 * Height and width variable of the actual view size.
+	 */
 	int width;
 	int height;
 
@@ -41,9 +44,18 @@ public class MapView extends View {
 		init();
 	}
 
-	public boolean onTouch(View arg0, MotionEvent arg1) {
+	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
-		return false;
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			break;
+		case MotionEvent.ACTION_MOVE:
+			break;
+		case MotionEvent.ACTION_UP:
+			break;
+		}
+		this.invalidate();
+		return true;
 	}
 
 	private void init() {
@@ -70,17 +82,20 @@ public class MapView extends View {
 		 
 	if (track != null) {
 		
-		canvas.drawText("Anzahl der POI's" + track.getNodes().size() ,10,25,paint);
-		canvas.drawText("Anzahl der Wege " + track.getWays().size() ,10,50,paint);
+		canvas.drawText("Anzahl der POI's:" + track.getNodes().size() ,10,25,paint);
+		canvas.drawText("Anzahl der Wege: " + track.getWays().size() ,10,55,paint);
 		
 		if(  track.getCurrentWay() != null  ){
 			
-			canvas.drawText("Anzahl der Punkte im Weg " + track.getWays().size() ,10,50,paint);
+			canvas.drawText("Anzahl der Punkte im aktuellen Weg: " + track.getWays().size() ,10,80,paint);
 			
 		}
+		
+		//canvas.drawText("Anzahl der Flächen: ", 10, 110, paint);
 		//int length = track.getCurrentWay().getNodes().size();
-		//canvas.drawText("Anzahl der TrackPoints " + length, 10, 100, paint);
+		//canvas.drawText("Anzahl der TrackPoints " + length, 10, 140, paint);
 	}
 
 	}
+
 }

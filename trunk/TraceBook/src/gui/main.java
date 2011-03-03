@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 public class main extends Activity {
@@ -16,17 +17,11 @@ public class main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        // Init ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
     }
-    
-    @Override
-    protected void onDestroy() {
-            super.onDestroy();
-            ServiceConnector.releaseService();
-    }
-
-
     
 	/**
 	 * Called if the newTrack Button pressed. 
@@ -60,9 +55,36 @@ public class main extends Activity {
     }
     
     @Override
+    /**
+     * Init optionsmenu for the MainActivity
+     */
 	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_optionsmenu, menu);
 		return true;
 	}
+    
+    /**
+     * Functionality of all Optionmenuitems
+     */
+    public boolean onOptionsItemSelected(MenuItem item){
+    	
+    	switch(item.getItemId()){
+    	case R.id.close_opt:
+    		finish();
+    		return true;
+    	case R.id.preferences_opt:
+    		final Intent intent = new Intent(this,PreferencesActivity.class);
+    		startActivity(intent);
+    		return true;
+		default:
+			return super.onOptionsItemSelected(item);
+    	}
+    }
+    
+    @Override
+    protected void onDestroy() {
+            super.onDestroy();
+            ServiceConnector.releaseService();
+    }
 }
