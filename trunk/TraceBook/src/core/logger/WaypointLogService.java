@@ -8,7 +8,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -19,14 +18,12 @@ public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
 	
 	DataStorage storage			= DataStorage.getInstance();
-	DataPointsList current_way	= null;
 	DataNode current_node		= null;
 	
 	LogParameter params;
 	
 	boolean gps_on = false;
 	boolean one_shot = false;
-	boolean tracking_way = false;
 			
 	LocationListener ll = this;
 
@@ -71,46 +68,36 @@ public class WaypointLogService extends Service implements LocationListener {
 	void restartGPS() {
 		stopGPS(); startGPS();
 	}
+	
+	DataPointsList current_way() {
+		if(storage == null || storage.getCurrentTrack() == null)
+			return null;
+		return storage.getCurrentTrack().getCurrentWay();
+	}
 
 	/**
 	 * The IAdderService is defined through IDL
 	 */
 	private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 
-		public int addTrack(LogParameter param, boolean do_one_shot) {
-			params = param;
-			one_shot = do_one_shot;
-			
+		public void addTrack(LogParameter param) {
+			params = param;		
 			restartGPS();
-			
-			if(storage.getCurrentTrack() == null)	// create a new track XXX - more logic in DataStorage
-				storage.setCurrentTrack(storage.newTrack());
-			
-		/*	if(storage.getCurrentTrack().getCurrentWay()== null)	// start a new way
-				storage.getCurrentTrack().setCurrentWay( storage.getCurrentTrack().newWay() );
-			
-			if(one_shot)			// in one_shot mode, add a new point
-				current_node = storage.getCurrentTrack().getCurrentWay().newNode();
-			
- 			return storage.getCurrentTrack().getCurrentWay()*/
  			
- 			return 0;
+			storage.setCurrentTrack(storage.newTrack());
 		}
 
 		public int stopTrack() {
 			stopGPS();
 			
-			DataPointsList tmp = current_way;
-			current_way = null;
+			storage.getCurrentTrack().serialise();
 			
-			if(tmp != null)
-				return tmp.get_id();
-			return -1;
+			return endWay();
 		}
 		
 		public int createPOI(boolean on_way) {
-			if(on_way && current_way != null)
-				current_node = current_way.newNode();
+			if(on_way && current_way() != null)
+				current_node = current_way().newNode();
 			else
 				current_node = storage.getCurrentTrack().newNode();
 			
@@ -118,39 +105,44 @@ public class WaypointLogService extends Service implements LocationListener {
 		}
 
 		public boolean isLogging() {
-			return current_way != null;
+			return current_way() != null;
 		}
 
-		public synchronized int beginWay() throws RemoteException {
-			// TODO Auto-generated method stub			
-			current_way = storage.getCurrentTrack().newWay();
-			storage.getCurrentTrack().setCurrentWay(current_way);
-			tracking_way= true;
-				
-			return current_way.get_id();
-		}
-
-		public synchronized int  endWay() throws RemoteException {
-			// TODO Auto-generated method stub
-			storage.getCurrentTrack().setCurrentWay(null);
-			tracking_way	= false;
+		public int beginWay(boolean do_one_shot) {
+			one_shot = do_one_shot;
 			
-			return current_way.get_id();
+			if(current_way() == null)	// start a new way
+				storage.getCurrentTrack().setCurrentWay(storage.getCurrentTrack().newWay());
+			
+			if(one_shot)			// in one_shot mode, add a new point
+				current_node = current_way().newNode();
+				
+			return current_way().get_id();
+		}
+
+		public synchronized int endWay() {
+			storage.getCurrentTrack().setCurrentWay(null);
+			
+			DataPointsList tmp = current_way();
+			
+			if(tmp != null)
+				return tmp.get_id();
+			return -1;
 		}
 	};
 
 	/** GPS related Methods **/
 	
-	public synchronized void  onLocationChanged(Location loc) {
+	public synchronized void onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
 		
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
-			if(one_shot || storage.getCurrentTrack().getCurrentWay() == null)	// one_shot or poi
+			if(one_shot || current_way() == null)	// one_shot or poi
 				stopGPS();						// else: poi on track
 			current_node = null;
-		} else if(storage.getCurrentTrack().getCurrentWay() != null) {		// Continuous mode
-			storage.getCurrentTrack().getCurrentWay().newNode(loc);			// poi in track was already added before
+		} else if(current_way() != null) {		// Continuous mode
+			current_way().newNode(loc);			// poi in track was already added before
 		}else 
 			storage.getCurrentTrack().newNode(loc);
 	}
