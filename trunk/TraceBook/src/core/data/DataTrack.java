@@ -1,12 +1,29 @@
 package core.data;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+
 import android.location.Location;
+import android.os.Environment;
 
 /**
  * A Track. Consists of Ways, Areas, POIs and additional Media. A Track is a
@@ -245,7 +262,38 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	public void serialise() {
-		// TODO Auto-generated method stub
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
+		try {
+			builder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			return;
+		}
+		Document document = builder.newDocument();
+		
+		// TODO
+		document.appendChild(document.createElement("test"));
+
+		try {
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			DOMSource        source = new DOMSource( document );
+			FileOutputStream os     = new FileOutputStream( new File( Environment.getExternalStorageDirectory().getAbsolutePath()+File.pathSeparator+"fu.xml" ) );
+			StreamResult     result = new StreamResult( os );
+			transformer.transform( source, result );
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

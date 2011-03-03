@@ -8,7 +8,7 @@ package core.data;
  * @author js
  * 
  */
-public class DataMedia {
+public class DataMedia{
 	/**
 	 * The internal id for this medium.
 	 */
@@ -115,5 +115,4 @@ public class DataMedia {
 	void delete() {
 		/* TODO */
 	}
-
 }

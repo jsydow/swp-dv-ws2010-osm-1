@@ -1,5 +1,7 @@
 package core.data;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -73,6 +75,18 @@ public class DataPointsList extends DataMapObject implements
 	 */
 	public List<DataNode> getNodes() {
 		return nodes;
+	}
+	
+	/**
+	 * Searches for a Node in this Track by the specified id. 
+	 * @param id The id of the Node that is being searched for.
+	 * @return The DataNode where get_id() == id, or null if not found.
+	 */
+	public DataNode getNodeByID(int id) {
+		for(DataNode dn : nodes)
+			if(dn.get_id() == id)
+				return dn; 
+		return null;
 	}
 
 	/**
