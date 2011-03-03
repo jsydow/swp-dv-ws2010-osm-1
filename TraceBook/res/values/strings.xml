@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Textview values -->
     <string name="welcome">Willkommen bei TraceBook.</string>
     <string name="app_name">TraceBook</string>
     <string name="newTrack">Neuer Track</string>
     <string name="loadTrack">Lade Track</string>
+    <string name="trackName">Trackname</string>
+    <string name="insertTag">Tag einfügen</string>
+    <string name="insertValue">Wert einfügen</string>
+  
+  	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>
+    <string name="close_opt">Beenden</string>
+   
+   <!-- Tab values -->
     <string name="map_tab">Karte</string>
     <string name="new_tab">Neu</string>
     <string name="edit_tab">Ändern</string>
+   
+   <!--  Button values -->
     <string name="streetOn_btn">Straßenanfang</string>
     <string name="streetOff_btn">Straßenende</string>
     <string name="areaOn_btn">Flächenanfang</string>
@@ -17,7 +28,4 @@
     <string name="poi_btn">Point of intrest</string>
     <string name="save_btn">Speichern</string>
     <string name="cancel_btn">Abbrechen</string>
-    <string name="trackName">Trackname</string>
-    <string name="insertTag">Tag einfügen</string>
-    <string name="insertValue">Wert einfügen</string>
 </resources>

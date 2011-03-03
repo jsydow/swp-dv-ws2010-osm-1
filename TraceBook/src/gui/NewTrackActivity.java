@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 
 public class NewTrackActivity extends TabActivity {
 	
+	// Samplearray, will replace with the list of POI's, Way's and Area's
 	String[] tracks = new String[] {
         "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
         "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina",
@@ -27,21 +28,23 @@ public class NewTrackActivity extends TabActivity {
 	
 	@Override
 	/**
-	 * Init TabView and start tracking
+	 * Init TabView and ListView
 	 */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
 
-		// Init TabHost and ListView for EditTab
+		// Init TabHost
 		TabHost tabHost = getTabHost();
+		
+		//Init ListView for EditTab
 		ListView listView = (ListView) findViewById(R.id.tracks_lvw);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>
 						(this,android.R.layout.simple_list_item_1, tracks);
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
 		
-		//Get list Element and send Toast
+		//Get selected item and send toast
 		listView.setOnItemClickListener(new OnItemClickListener() {
 		    public void onItemClick(AdapterView<?> parent, View view,
 		        int position, long id) {
@@ -63,11 +66,16 @@ public class NewTrackActivity extends TabActivity {
 
 		tabHost.setCurrentTab(1);
 
+		//Init ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
         }
 	
-	
+	/**
+	 * Method is called if StartWay-Togglebutton pressed. 
+	 * Start and stop way tracking.
+	 * @param view
+	 */
 	public void startWayTbtn(View view){
         ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
 		String check = streetToggle.getText().toString();
@@ -88,6 +96,11 @@ public class NewTrackActivity extends TabActivity {
         }
 	}
 	
+	/**
+	 * Method is called if StartArea-Togglebutton pressed.
+	 * Start and stop area tracking.
+	 * @param view
+	 */
 	public void startAreaTbtn(View view){
 	    ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
 		String check = areaToggle.getText().toString();
