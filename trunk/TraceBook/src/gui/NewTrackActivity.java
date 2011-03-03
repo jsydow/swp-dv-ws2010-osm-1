@@ -123,6 +123,15 @@ public class NewTrackActivity extends TabActivity {
 	  * @param view
 	  */
 	public void addPointBtn (View view){
+		int nodeId = 0;
+		
+		try {
+			nodeId = ServiceConnector.getLoggerService().createPOI(false);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		final Intent intent = new Intent (this, AddPointActivity.class);
 		startActivity(intent);
 	}
