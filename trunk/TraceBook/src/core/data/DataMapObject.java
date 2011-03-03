@@ -1,7 +1,12 @@
 package core.data;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 /**
  * Basic class for any object that is stored in OSM. All objects have an id and
@@ -59,5 +64,10 @@ public abstract class DataMapObject extends DataMediaHolder  implements Comparab
 		if(_id > arg0.intValue())
 			return 1;
 		return 0;
+	}
+	
+	public List<Node> serialiseTagsToXmlNode(Document doc){
+		//TODO: do something + javadoc!!
+		return new LinkedList<Node>();
 	}
 }
