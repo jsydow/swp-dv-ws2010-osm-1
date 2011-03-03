@@ -22,7 +22,7 @@
     <string name="streetOn_btn">Straßenanfang</string>
     <string name="streetOff_btn">Straßenende</string>
     <string name="areaOn_btn">Flächenanfang</string>
-    <string name="areaOff_btn">Fläschenende</string>
+    <string name="areaOff_btn">Flächenende</string>
     <string name="addPoint_btn">Point Of Interest hinzufügen</string>
     <string name="stopTrack_btn">Stoppe Track</string>
     <string name="poi_btn">Point of intrest</string>
