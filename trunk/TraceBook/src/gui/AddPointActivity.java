@@ -17,6 +17,9 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+
+
+
 public class AddPointActivity extends Activity {
 	/**
 	 * fixed Integer-values for tag types, used in parseTags()
@@ -24,12 +27,24 @@ public class AddPointActivity extends Activity {
 	static final short KEY = 0;
 	static final short VALUE = 1;
 	static final short USEFUL = 2;
-	
+	int nodeID;
 	XmlResourceParser parser;
 	
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		// Create Bundle for extras of the intent
+		 final Bundle extras = getIntent().getExtras();
+		
+	        /*
+	         * Get nodeID of the intent.extras
+	         */
+	        if(extras != null){
+	        	nodeID = extras.getInt("NodeId");
+	        }
+		 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.addpointactivity);
 
