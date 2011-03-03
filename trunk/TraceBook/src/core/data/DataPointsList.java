@@ -1,8 +1,14 @@
 package core.data;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import android.location.Location;
 
@@ -149,6 +155,25 @@ public class DataPointsList extends DataMapObject implements
 	public void serialise() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public List<Node> serialiseToXmlNode(Document doc) {
+		List<Node> ret = new LinkedList<Node>();
+		
+		Element elem = doc.createElement("way");
+		
+		elem.setAttribute("id", Integer.toString(this.get_id()));
+		elem.setAttribute("timestamp", this.getDatetime());
+		elem.setAttribute("version","1");
+		
+		for(DataNode dn : nodes) {
+			ret.add(dn.serialiseToXmlNode(doc));
+			Element nd=doc.createElement("nd");
+			nd.setAttribute("ref", Integer.toString(dn.get_id()));
+			elem.appendChild(nd);
+		}
+		ret.add(elem);
+		return ret;
 	}
 
 	public void delete() {
