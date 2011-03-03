@@ -51,6 +51,16 @@ interface ILoggerService {
 	int endWay();
 	
 	/**
+	* Tells the service to begin a new area and to add way points to it
+	*/	
+	int beginArea();
+	
+	/**
+	* Tells the service to end area point adding the a way 
+	*/
+	int endArea();
+	
+	/**
 	* @return true if currently a way is recorded
 	*/
 	boolean isLogging();

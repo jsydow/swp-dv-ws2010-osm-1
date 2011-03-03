@@ -1,5 +1,7 @@
 package core.logger;
 
+import java.util.List;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -128,6 +131,37 @@ public class WaypointLogService extends Service implements LocationListener {
 			if(tmp != null)
 				return tmp.get_id();
 			return -1;
+		}
+
+		public synchronized int beginArea() throws RemoteException {
+			// TODO Auto-generated method stub			
+			if(current_way() == null)	// start a new way
+				storage.getCurrentTrack().setCurrentWay(storage.getCurrentTrack().newWay());
+			
+			current_way().setArea(true);			
+			return current_way().get_id();
+		
+		}
+
+		public synchronized int endArea() throws RemoteException {
+			// TODO Auto-generated method stub
+			
+			DataPointsList area = storage.getCurrentTrack().getCurrentWay(); 
+			
+			
+			//Close the area by putting the first node in to the end
+			if( area != null ) {
+				List<DataNode> nodes = area.getNodes();
+				DataNode begin = nodes.get(0);
+				nodes.add(begin);
+			}
+			
+			storage.getCurrentTrack().setCurrentWay(null);			
+			DataPointsList tmp = current_way();
+			
+			if(tmp != null)
+				return tmp.get_id();			
+			return 0;
 		}
 	};
 
