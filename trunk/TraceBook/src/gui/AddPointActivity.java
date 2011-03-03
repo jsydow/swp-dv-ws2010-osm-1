@@ -120,8 +120,8 @@ public class AddPointActivity extends Activity {
 						
 		}	
 		
-		//final Intent intent = new Intent(this, NewTrackActivity.class);
-		//startActivity(intent);
+		final Intent intent = new Intent(this, NewTrackActivity.class);
+		startActivity(intent);
 	}
 
 	public void cancelBtn(View view) {
