@@ -105,7 +105,13 @@ public class NewTrackActivity extends TabActivity {
 	    ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
 		String check = areaToggle.getText().toString();
         if(check.equals(areaToggle.getTextOn().toString())){
-        		
+        try{
+        	ServiceConnector.getLoggerService().beginWay();
+        
+        }catch (RemoteException e) {
+			// TODO: handle exception
+        	e.printStackTrace();
+        }
         }
 	}
 	

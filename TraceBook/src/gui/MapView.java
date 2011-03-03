@@ -1,21 +1,19 @@
 package gui;
 
-import core.data.DataNode;
-import core.data.DataStorage;
-import core.data.DataTrack;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Bitmap.Config;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import core.data.DataNode;
+import core.data.DataStorage;
+import core.data.DataTrack;
 
-public class MapView extends View {
+public class MapView extends View implements OnTouchListener{
 
 	/**
 	 * The canvas
@@ -41,7 +39,7 @@ public class MapView extends View {
 	public MapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
-
+		this.setOnTouchListener(this);
 		init();
 	}
 
