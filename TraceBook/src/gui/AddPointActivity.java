@@ -100,10 +100,8 @@ public class AddPointActivity extends Activity {
 	}
 
 	/**
-	 * Save btn.
-	 * 
-	 * @param view
-	 *            the view
+	 * Save Button
+	 * @param view the view
 	 */
 	public void saveBtn(View view) {
 		final Intent intent = new Intent(this, NewTrackActivity.class);
@@ -113,8 +111,7 @@ public class AddPointActivity extends Activity {
 	/**
 	 * Cancel btn.
 	 * 
-	 * @param view
-	 *            the view
+	 * @param view the view
 	 */
 	public void cancelBtn(View view) {
 		final Intent intent = new Intent(this, NewTrackActivity.class);
@@ -124,31 +121,34 @@ public class AddPointActivity extends Activity {
 	/**
 	 * Parses the tags.
 	 * 
-	 * @param tagType
-	 *            the tag type
-	 * @param parentName
-	 *            the parent name
+	 * @param tagType can be KEY, VALUE or USEFUL (cf.http://wiki.openstreetmap.org/wiki/Map_Features)
+	 * @param parentName the entry point for the search
 	 * @return the string[]
 	 */
 	private String[] parseTags(int tagType, String parentName) {
 		int next;
 		boolean inParent = false;
+		//get the XML file with the tags
 		parser = this.getResources().getXml(R.xml.tags);
+		//all tags are added to tagStrings
 		ArrayList<String> tagStrings = new ArrayList<String>();
 
 		try {
 			String tag = "";
 			next = parser.getEventType();
 			while (next != XmlPullParser.END_DOCUMENT) {
+				//check if the current event is a start tag
 				if (next == XmlPullParser.START_TAG) {
 					tag = parser.getName();
 					switch (tagType) {
+					//get all categories
 					case KEY: {
 						if (tag.equals("key")) {
 							tagStrings.add(parser.getAttributeValue(null, "v"));
 						}
 						break;
 					}
+					//get all values for the current category
 					case VALUE: {
 						if ((tag.equals("key"))
 								&& (parser.getAttributeValue(null, "v"))
@@ -163,6 +163,7 @@ public class AddPointActivity extends Activity {
 						}
 						break;
 					}
+					//get all categories that are ofteh used with the current category
 					case USEFUL: {
 						if ((tag.equals("value"))
 								&& (parser.getAttributeValue(null, "v"))
@@ -196,6 +197,7 @@ public class AddPointActivity extends Activity {
 		} finally {
 			parser.close();
 		}
+		//create the Stringarray
 		String[] tagStringsArray = new String[tagStrings.size()];
 		return tagStrings.toArray(tagStringsArray);
 	}
