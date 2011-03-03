@@ -2,9 +2,13 @@ package gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
+import core.data.DataNode;
+import core.data.DataStorage;
 
 import Trace.Book.R;
 import android.app.Activity;
@@ -16,66 +20,65 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
-/**
- * The Class AddPointActivity. This activity is evoked, when new points are added (ways, areas or POI).
- * First the user chooses a category (e.g. highway) and than a value (e.g. motorway). The user is aided 
- * by automatic suggestions for the input as suggested in http://wiki.openstreetmap.org/wiki/Map_Features. 
- * TODO input of multiple tags for a point will be added in the next version
- */
+
+
+
 public class AddPointActivity extends Activity {
-
-	/** fixed Integer-values for tag types, used in parseTags(). */
+	/**
+	 * fixed Integer-values for tag types, used in parseTags()
+	 */
 	static final short KEY = 0;
 	static final short VALUE = 1;
 	static final short USEFUL = 2;
-
-	/** The node id. */
 	int nodeID;
-
-	/** The tag parser. */
+	
+	DataNode node;
+	
 	XmlResourceParser parser;
+	
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// Create Bundle for extras of the intent
-		final Bundle extras = getIntent().getExtras();
-		// Get nodeID of the intent.extras
-		if (extras != null) {
-			nodeID = extras.getInt("NodeId");
-		}
-
 		
+		// Create Bundle for extras of the intent
+		 final Bundle extras = getIntent().getExtras();
+		
+	       	if( DataStorage.getInstance().getCurrentTrack() != null ){
+	       		List<DataNode> data = DataStorage.getInstance().getCurrentTrack().getNodes();
+	       		if( data.size() != 0 )
+	       			node = data.get(data.size()-1);
+	       		else
+	       			Toast.makeText(this, "No Node tracked yet", Toast.LENGTH_SHORT).show();
+	        		
+	        }
+		 
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.addpointactivity);
-		//get the AutocompletViews for Tag Values and Categories
+
 		final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.autoComplete_Value);
 		final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.autoComplete_Cat);
-		//set autocomplete options for category
+
 		ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, getCategoryTags());
 		autoComplCat.setAdapter(firstGroupAdapter);
 
-		/*
+		/**
 		 * If the focus is at the AutoCompleteTextView autoComplVal we call the
-		 * method getValues to generate the AutoComplete String[] for all useful values 
-		 * corrsponding to the current category
+		 * method getValues to generate the AutoComplete String[]
 		 */
 		autoComplVal.setOnFocusChangeListener(new OnFocusChangeListener() {
+
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
 					String cat = autoComplCat.getText().toString();
-					ArrayAdapter<String> valueTagAdapter = new ArrayAdapter<String>(v
-							.getContext(),
-							android.R.layout.simple_dropdown_item_1line,
-							getValues(cat));
-					autoComplVal.setAdapter(valueTagAdapter);
-
+					
+					 //autoComplVal.setText(cat.toCharArray(),0,cat.length());
+					 ArrayAdapter<String> valueTagAdapter = new ArrayAdapter(v.getContext(),android.R.layout.simple_dropdown_item_1line,getValues(cat));
+					 autoComplVal.setAdapter(valueTagAdapter);
+					 
 				}
 			}
 		});
@@ -83,72 +86,68 @@ public class AddPointActivity extends Activity {
 	}
 
 	/**
-	 * Give all the tag category's from the Tag-XML.	 * 
-	 * @return the category tags
+	 * Give all the tag category's from the Tag-XML.
+	 * 
+	 * @return
 	 */
-	private String[] getCategoryTags() {
-		return parseTags(KEY, "");
+	public String[] getCategoryTags() {
+		// Testarray
+		String[] firstGroupTags = parseTags(KEY,"");
+		return firstGroupTags;
 	}
 
 	/**
 	 * Generate the appendant values for the category tag.
-	 * @param category the category
-	 * @return the values
-	 */
-	private String[] getValues(String category) {
-		return parseTags(VALUE, category);
-	}
-
-	/**
-	 * Save Button
-	 * @param view the view
-	 */
-	public void saveBtn(View view) {
-		final Intent intent = new Intent(this, NewTrackActivity.class);
-		startActivity(intent);
-	}
-
-	/**
-	 * Cancel btn.
 	 * 
-	 * @param view the view
+	 * @param category
+	 * @return
 	 */
+	public String[] getValues(String category) {
+		// return Testarray
+		String[] valueTags =parseTags(VALUE, category);
+		return valueTags;
+	}
+
+	public void saveBtn(View view) {
+		
+		final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.autoComplete_Value);
+		final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.autoComplete_Cat);
+		
+		if( node != null) {
+			
+			node.getTags().put( autoComplCat.getText().toString(),
+								autoComplVal.getText().toString());
+						
+		}	
+		
+		//final Intent intent = new Intent(this, NewTrackActivity.class);
+		//startActivity(intent);
+	}
+
 	public void cancelBtn(View view) {
 		final Intent intent = new Intent(this, NewTrackActivity.class);
 		startActivity(intent);
 	}
 
-	/**
-	 * Parses the tags.
-	 * 
-	 * @param tagType can be KEY, VALUE or USEFUL (cf.http://wiki.openstreetmap.org/wiki/Map_Features)
-	 * @param parentName the entry point for the search
-	 * @return the string[]
-	 */
 	private String[] parseTags(int tagType, String parentName) {
 		int next;
 		boolean inParent = false;
-		//get the XML file with the tags
 		parser = this.getResources().getXml(R.xml.tags);
-		//all tags are added to tagStrings
 		ArrayList<String> tagStrings = new ArrayList<String>();
 
 		try {
 			String tag = "";
 			next = parser.getEventType();
 			while (next != XmlPullParser.END_DOCUMENT) {
-				//check if the current event is a start tag
 				if (next == XmlPullParser.START_TAG) {
 					tag = parser.getName();
 					switch (tagType) {
-					//get all categories
 					case KEY: {
 						if (tag.equals("key")) {
 							tagStrings.add(parser.getAttributeValue(null, "v"));
 						}
 						break;
 					}
-					//get all values for the current category
 					case VALUE: {
 						if ((tag.equals("key"))
 								&& (parser.getAttributeValue(null, "v"))
@@ -163,7 +162,6 @@ public class AddPointActivity extends Activity {
 						}
 						break;
 					}
-					//get all categories that are ofteh used with the current category
 					case USEFUL: {
 						if ((tag.equals("value"))
 								&& (parser.getAttributeValue(null, "v"))
@@ -197,7 +195,6 @@ public class AddPointActivity extends Activity {
 		} finally {
 			parser.close();
 		}
-		//create the Stringarray
 		String[] tagStringsArray = new String[tagStrings.size()];
 		return tagStrings.toArray(tagStringsArray);
 	}
