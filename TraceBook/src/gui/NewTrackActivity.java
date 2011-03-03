@@ -104,15 +104,15 @@ public class NewTrackActivity extends TabActivity {
 	public void startAreaTbtn(View view){
 	    ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
 		String check = areaToggle.getText().toString();
-        if(check.equals(areaToggle.getTextOn().toString())){
+       /* if(check.equals(areaToggle.getTextOn().toString())){
         try{
-        	ServiceConnector.getLoggerService().beginWay();
+        //	ServiceConnector.getLoggerService().beginWay();
         
         }catch (RemoteException e) {
 			// TODO: handle exception
         	e.printStackTrace();
         }
-        }
+        }*/
 	}
 	
 	
@@ -133,6 +133,7 @@ public class NewTrackActivity extends TabActivity {
 		}
 		
 		final Intent intent = new Intent (this, AddPointActivity.class);
+		intent.putExtra("NodeId", nodeId);
 		startActivity(intent);
 	}
 	
