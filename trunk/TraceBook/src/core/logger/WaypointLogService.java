@@ -121,7 +121,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			return current_way != null;
 		}
 
-		public int beginWay() throws RemoteException {
+		public synchronized int beginWay() throws RemoteException {
 			// TODO Auto-generated method stub			
 			current_way = storage.getCurrentTrack().newWay();
 			storage.getCurrentTrack().setCurrentWay(current_way);
@@ -130,7 +130,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			return current_way.get_id();
 		}
 
-		public int endWay() throws RemoteException {
+		public synchronized int  endWay() throws RemoteException {
 			// TODO Auto-generated method stub
 			storage.getCurrentTrack().setCurrentWay(null);
 			tracking_way	= false;
@@ -141,7 +141,7 @@ public class WaypointLogService extends Service implements LocationListener {
 
 	/** GPS related Methods **/
 	
-	public void onLocationChanged(Location loc) {
+	public synchronized void  onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
 		
 		if(current_node != null) {				// one_shot or POI mode

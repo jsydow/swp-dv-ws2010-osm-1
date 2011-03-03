@@ -101,7 +101,7 @@ public class MapView extends View {
 		
 		if(  track.getCurrentWay() != null  ){
 			
-			canvas.drawText("Anzahl der Punkte im aktuellen Weg: " + track.getWays().size() ,10,80,paint);
+			canvas.drawText("Anzahl der Punkte im aktuellen Weg: " + track.getCurrentWay().getNodes().size() ,10,80,paint);
 			
 		}
 		
