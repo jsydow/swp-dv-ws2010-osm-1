@@ -127,7 +127,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			storage.getCurrentTrack().setCurrentWay(current_way);
 			tracking_way= true;
 				
-			return 0;
+			return current_way.get_id();
 		}
 
 		public int endWay() throws RemoteException {
@@ -135,7 +135,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			storage.getCurrentTrack().setCurrentWay(null);
 			tracking_way	= false;
 			
-			return 0;
+			return current_way.get_id();
 		}
 	};
 
