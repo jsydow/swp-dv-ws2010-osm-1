@@ -219,7 +219,7 @@ public class NewTrackActivity extends TabActivity {
 		String[] poiList = new String[nodeList.size()];
 		int i = 0;
 		for( DataNode dn : nodeList) {
-			poiList[i] = ""	+ dn.get_id();
+			poiList[i] = "POI's: "	+ dn.get_id();
 			i++;
 		}		
 		return poiList;
