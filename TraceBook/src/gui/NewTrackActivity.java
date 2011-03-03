@@ -81,7 +81,7 @@ public class NewTrackActivity extends TabActivity {
 		String check = streetToggle.getText().toString();
         if(check.equals(streetToggle.getTextOn().toString())){
         		try {
-					ServiceConnector.getLoggerService().beginWay();
+					ServiceConnector.getLoggerService().beginWay(false);
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

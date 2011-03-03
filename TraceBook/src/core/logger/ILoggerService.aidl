@@ -16,7 +16,7 @@ interface ILoggerService {
 	 * specified in param and all so obtained points are automatically added
 	 * to the track.
 	 */
-	int addTrack(in LogParameter param, boolean do_one_shot); 
+	void addTrack(in LogParameter param); 
 	
 	/**
 	* @return id of the track
@@ -43,7 +43,7 @@ interface ILoggerService {
 	/**
 	* Tells the service to begin a new way and to add way points to it
 	*/	
-	int beginWay();
+	int beginWay(boolean do_one_shot);
 	
 	/**
 	* Tells the service to end way point adding the a way 

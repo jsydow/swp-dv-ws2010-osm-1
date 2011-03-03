@@ -33,7 +33,7 @@ public class main extends Activity {
     	LogParameter param = new LogParameter();
     	
     	try {
-			ServiceConnector.getLoggerService().addTrack(param, false);
+			ServiceConnector.getLoggerService().addTrack(param);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
