@@ -1,6 +1,7 @@
 package gui;
 
-import core.logger.ServiceConnector;
+import java.util.List;
+
 import Trace.Book.R;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -12,35 +13,69 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import core.data.DataNode;
+import core.data.DataStorage;
+import core.logger.ServiceConnector;
 
 public class NewTrackActivity extends TabActivity {
 	
-	// Samplearray, will replace with the list of POI's, Way's and Area's
-	String[] tracks = new String[] {
-        "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
-        "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina",
-        "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan",
-        "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium"
-      };
+	class MyListener implements OnTabChangeListener {
+		
+		NewTrackActivity  act;
+		TabHost		tab;
+		String editTab;
+		String currentTab;
+		public MyListener(NewTrackActivity act, TabHost tab){
+			this.act = act;
+			this.tab = tab;
+		}
+
+		public void onTabChanged(String tabId) {
+			editTab = "edit_tab";
+			currentTab = tab.getCurrentTabTag();// TODO Auto-generated method stub
+			if (currentTab.equals(tabId)){ 
+			act.initListView();
+			tab.invalidate();
+			}
+		}	
+	}
 	
+	TabHost myTabHost;
 	@Override
 	/**
-	 * Init TabView and ListView
+	 * Create activity
 	 */
 	public void onCreate(Bundle savedInstanceState) {
+		myTabHost = getTabHost();
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.newtrackactivity);
-
+		setContentView(R.layout.newtrackactivity);	
 		// Init TabHost
-		TabHost tabHost = getTabHost();
+		initTabHost();
 		
+		// Init ListView
+		initListView();
+		
+		//Init ServiceConnector
+        ServiceConnector.startService(this);
+        ServiceConnector.initService();
+        
+        
+        NewTrackActivity myAct = this;
+        
+        myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost) );
+		
+	}
+
+	
+	private void initListView(){
 		//Init ListView for EditTab
 		ListView listView = (ListView) findViewById(R.id.tracks_lvw);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>
-						(this,android.R.layout.simple_list_item_1, tracks);
+						(this,android.R.layout.simple_list_item_1, getPOIList());
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
 		
@@ -53,6 +88,12 @@ public class NewTrackActivity extends TabActivity {
 		    }
 		  });
 
+	}
+	
+	private void initTabHost(){
+		// Init TabHost
+		TabHost tabHost = getTabHost();
+	
 		//Init TabHost
 		tabHost.addTab(tabHost.newTabSpec("map_tab")
 				.setIndicator(getResources().getString(R.string.map_tab))
@@ -66,10 +107,7 @@ public class NewTrackActivity extends TabActivity {
 
 		tabHost.setCurrentTab(1);
 
-		//Init ServiceConnector
-        ServiceConnector.startService(this);
-        ServiceConnector.initService();
-        }
+	}
 	
 	/**
 	 * Method is called if StartWay-Togglebutton pressed. 
@@ -171,4 +209,19 @@ public class NewTrackActivity extends TabActivity {
 	}
 
 	
+	/**
+	 * Generate String Array for ListView to list all POI's Way's and Area's.
+	 * @return
+	 */
+	public String[] getPOIList (){
+		
+		List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack().getNodes();
+		String[] poiList = new String[nodeList.size()];
+		int i = 0;
+		for( DataNode dn : nodeList) {
+			poiList[i] = ""	+ dn.get_id();
+			i++;
+		}		
+		return poiList;
+	}
 }
