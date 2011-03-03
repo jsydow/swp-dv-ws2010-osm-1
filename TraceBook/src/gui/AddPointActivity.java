@@ -24,6 +24,9 @@ public class AddPointActivity extends Activity {
 	static final short KEY = 0;
 	static final short VALUE = 1;
 	static final short USEFUL = 2;
+	
+	XmlResourceParser parser;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,14 +49,11 @@ public class AddPointActivity extends Activity {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
 					String cat = autoComplCat.getText().toString();
-					/*
-					 * autoComplVal.setText(cat.toCharArray(),0,cat.length());
-					 * ArrayAdapter<String> valueTagAdapter = new
-					 * ArrayAdapter(this,
-					 * android.R.layout.simple_dropdown_item_1line,
-					 * getValues(cat));
-					 * autoComplVal.setAdapter(valueTagAdapter);
-					 */
+					
+					 //autoComplVal.setText(cat.toCharArray(),0,cat.length());
+					 ArrayAdapter<String> valueTagAdapter = new ArrayAdapter(v.getContext(),android.R.layout.simple_dropdown_item_1line,getValues(cat));
+					 autoComplVal.setAdapter(valueTagAdapter);
+					 
 				}
 			}
 		});
@@ -94,10 +94,9 @@ public class AddPointActivity extends Activity {
 	}
 
 	private String[] parseTags(int tagType, String parentName) {
-		XmlResourceParser parser = this.getResources().getXml(R.xml.tags_part);
 		int next;
 		boolean inParent = false;
-
+		parser = this.getResources().getXml(R.xml.tags);
 		ArrayList<String> tagStrings = new ArrayList<String>();
 
 		try {
@@ -145,8 +144,9 @@ public class AddPointActivity extends Activity {
 						break;
 					}
 				}
+
+				next = parser.next();
 			}
-			next = parser.next();
 
 		} catch (XmlPullParserException xe) {
 			parser.close();
