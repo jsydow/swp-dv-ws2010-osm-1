@@ -1,5 +1,6 @@
 package gui;
 
+import core.data.DataNode;
 import core.data.DataStorage;
 import core.data.DataTrack;
 import android.content.Context;
@@ -48,11 +49,13 @@ public class MapView extends View {
 		// TODO Auto-generated method stub
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
+			this.invalidate();
 			break;
 		case MotionEvent.ACTION_MOVE:
+			this.invalidate();
 			break;
 		case MotionEvent.ACTION_UP:
-			invalidate();
+			this.invalidate();
 			break;
 		}
 		this.invalidate();
@@ -85,6 +88,16 @@ public class MapView extends View {
 		
 		canvas.drawText("Anzahl der POI's:" + track.getNodes().size() ,10,25,paint);
 		canvas.drawText("Anzahl der Wege: " + track.getWays().size() ,10,55,paint);
+		
+		if (track.getNodes().size() != 0){
+			DataNode node = track.getNodes().get(track.getNodes().size()-1);
+			double lat = node.getLat();
+			double lon = node.getLon();
+			
+			canvas.drawText("Letzer Knoten:", 10, 175, paint);
+			canvas.drawText("Lat: " + lat, 10, 200, paint);
+			canvas.drawText("Lon: " + lon, 10, 225, paint);
+		}
 		
 		if(  track.getCurrentWay() != null  ){
 			
