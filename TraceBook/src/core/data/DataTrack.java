@@ -20,6 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import android.location.Location;
 import android.os.Environment;
@@ -254,6 +255,12 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		
 		for(DataNode dn : nodes) {
 			root.appendChild(dn.serialiseToXmlNode(document));
+		}
+		for(DataPointsList dpl : ways) {
+			List<Node> ln = dpl.serialiseToXmlNode(document);
+			for(Node nd : ln) {
+				root.appendChild(nd);
+			}
 		}
 		
 		document.appendChild(root);

@@ -125,7 +125,6 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 		dfs.setDecimalSeparator('.');
 		DecimalFormat df = new DecimalFormat("0.0000000",dfs);
 		
-		
 		ret.setAttribute("lat",df.format(this.getLat()));
 		ret.setAttribute("lon",df.format(this.getLon()));
 		ret.setAttribute("id", Integer.toString(this.get_id()));
