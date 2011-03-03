@@ -148,19 +148,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			// TODO Auto-generated method stub
 			
 			DataPointsList area = storage.getCurrentTrack().getCurrentWay(); 
-			
-			
-			//Close the area by putting the first node in to the end
-			if( area != null ) {
-				List<DataNode> nodes = area.getNodes();
-				
-				if( nodes.size()!= 0) {
-					DataNode begin = nodes.get(0);
-					nodes.add(begin);					
-				}
-				
-			}
-			
+						
 			storage.getCurrentTrack().setCurrentWay(null);			
 			DataPointsList tmp = current_way();
 			
@@ -178,14 +166,9 @@ public class WaypointLogService extends Service implements LocationListener {
 		
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
-//			if(one_shot || current_way() == null)	// one_shot or poi
-//				stopGPS();						// else: poi on track
 			current_node = null;
 		} else if(current_way() != null) {		// Continuous mode
 			current_way().newNode(loc);			// poi in track was already added before
-		}else { 
-			if(storage.getCurrentTrack() != null)
-				storage.getCurrentTrack().newNode(loc);
 		}
 	}
 
