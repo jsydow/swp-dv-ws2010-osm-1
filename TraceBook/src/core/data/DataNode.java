@@ -1,6 +1,7 @@
 package core.data;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -120,12 +121,15 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	
 	public Node serialiseToXmlNode(Document doc) {
 		Element ret = doc.createElement("node");
-		DecimalFormat df = new DecimalFormat("0.0000000");
+		DecimalFormatSymbols dfs=new DecimalFormatSymbols();
+		dfs.setDecimalSeparator('.');
+		DecimalFormat df = new DecimalFormat("0.0000000",dfs);
+		
 		
 		ret.setAttribute("lat",df.format(this.getLat()));
 		ret.setAttribute("lon",df.format(this.getLon()));
 		ret.setAttribute("id", Integer.toString(this.get_id()));
-		// TODO
+		ret.setAttribute("timestamp", this.getDatetime());
 		
 		return ret;
 	}

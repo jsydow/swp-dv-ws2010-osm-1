@@ -1,5 +1,7 @@
 package core.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -22,7 +24,14 @@ public abstract class DataMediaHolder {
 	 */
 	DataMediaHolder() {
 		media = new LinkedList<DataMedia>();
+		SimpleDateFormat sdf = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		this.datetime = sdf.format(new Date());
 	}
+	/**
+	 * The Creation time.
+	 */
+	private String datetime;
 
 	/**
 	 * Getter-method that returns a list of all media. The returned List is the
@@ -35,6 +44,16 @@ public abstract class DataMediaHolder {
 		return media;
 	}
 
+
+	/**
+	 * Getter-method. The creation time string.
+	 * 
+	 * @return The datetime string.
+	 */
+	public String getDatetime() {
+		return datetime;
+	}
+	
 	/**
 	 * Add a new medium to this object.
 	 * 
