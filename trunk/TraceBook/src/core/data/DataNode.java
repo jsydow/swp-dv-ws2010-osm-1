@@ -130,6 +130,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 		ret.setAttribute("lon",df.format(this.getLon()));
 		ret.setAttribute("id", Integer.toString(this.get_id()));
 		ret.setAttribute("timestamp", this.getDatetime());
+		ret.setAttribute("version","1");
 		
 		return ret;
 	}
