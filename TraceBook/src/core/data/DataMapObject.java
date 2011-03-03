@@ -10,7 +10,7 @@ import java.util.Map;
  * @author js
  * 
  */
-public abstract class DataMapObject extends DataMediaHolder {
+public abstract class DataMapObject extends DataMediaHolder  implements Comparable<Integer> {
 	/**
 	 * An id for this object. It is not an id for osm which is set to -1 for all
 	 * new objects but it is a program internal id. It should be unique.
@@ -51,5 +51,13 @@ public abstract class DataMapObject extends DataMediaHolder {
 		super();
 		tags = new HashMap<String, String>();
 		_id = DataStorage.getInstance().getID();
+	}
+	
+	public int compareTo(Integer arg0) {
+		if(_id < arg0.intValue())
+			return -1;
+		if(_id > arg0.intValue())
+			return 1;
+		return 0;
 	}
 }
