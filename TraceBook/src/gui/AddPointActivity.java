@@ -17,58 +17,65 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-
-
-
+/**
+ * The Class AddPointActivity. This activity is evoked, when new points are added (ways, areas or POI).
+ * First the user chooses a category (e.g. highway) and than a value (e.g. motorway). The user is aided 
+ * by automatic suggestions for the input as suggested in http://wiki.openstreetmap.org/wiki/Map_Features. 
+ * TODO input of multiple tags for a point will be added in the next version
+ */
 public class AddPointActivity extends Activity {
-	/**
-	 * fixed Integer-values for tag types, used in parseTags()
-	 */
+
+	/** fixed Integer-values for tag types, used in parseTags(). */
 	static final short KEY = 0;
 	static final short VALUE = 1;
 	static final short USEFUL = 2;
-	int nodeID;
-	XmlResourceParser parser;
-	
 
-	
+	/** The node id. */
+	int nodeID;
+
+	/** The tag parser. */
+	XmlResourceParser parser;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
-		// Create Bundle for extras of the intent
-		 final Bundle extras = getIntent().getExtras();
-		
-	        /*
-	         * Get nodeID of the intent.extras
-	         */
-	        if(extras != null){
-	        	nodeID = extras.getInt("NodeId");
-	        }
-		 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.addpointactivity);
+		// Create Bundle for extras of the intent
+		final Bundle extras = getIntent().getExtras();
+		// Get nodeID of the intent.extras
+		if (extras != null) {
+			nodeID = extras.getInt("NodeId");
+		}
 
+		
+		setContentView(R.layout.addpointactivity);
+		//get the AutocompletViews for Tag Values and Categories
 		final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.autoComplete_Value);
 		final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.autoComplete_Cat);
-
+		//set autocomplete options for category
 		ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, getCategoryTags());
 		autoComplCat.setAdapter(firstGroupAdapter);
 
-		/**
+		/*
 		 * If the focus is at the AutoCompleteTextView autoComplVal we call the
-		 * method getValues to generate the AutoComplete String[]
+		 * method getValues to generate the AutoComplete String[] for all useful values 
+		 * corrsponding to the current category
 		 */
 		autoComplVal.setOnFocusChangeListener(new OnFocusChangeListener() {
-
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
 					String cat = autoComplCat.getText().toString();
-					
-					 //autoComplVal.setText(cat.toCharArray(),0,cat.length());
-					 ArrayAdapter<String> valueTagAdapter = new ArrayAdapter(v.getContext(),android.R.layout.simple_dropdown_item_1line,getValues(cat));
-					 autoComplVal.setAdapter(valueTagAdapter);
-					 
+					ArrayAdapter<String> valueTagAdapter = new ArrayAdapter<String>(v
+							.getContext(),
+							android.R.layout.simple_dropdown_item_1line,
+							getValues(cat));
+					autoComplVal.setAdapter(valueTagAdapter);
+
 				}
 			}
 		});
@@ -76,38 +83,53 @@ public class AddPointActivity extends Activity {
 	}
 
 	/**
-	 * Give all the tag category's from the Tag-XML.
-	 * 
-	 * @return
+	 * Give all the tag category's from the Tag-XML.	 * 
+	 * @return the category tags
 	 */
-	public String[] getCategoryTags() {
-		// Testarray
-		String[] firstGroupTags = parseTags(KEY,"");
-		return firstGroupTags;
+	private String[] getCategoryTags() {
+		return parseTags(KEY, "");
 	}
 
 	/**
 	 * Generate the appendant values for the category tag.
-	 * 
-	 * @param category
-	 * @return
+	 * @param category the category
+	 * @return the values
 	 */
-	public String[] getValues(String category) {
-		// return Testarray
-		String[] valueTags =parseTags(VALUE, category);
-		return valueTags;
+	private String[] getValues(String category) {
+		return parseTags(VALUE, category);
 	}
 
+	/**
+	 * Save btn.
+	 * 
+	 * @param view
+	 *            the view
+	 */
 	public void saveBtn(View view) {
 		final Intent intent = new Intent(this, NewTrackActivity.class);
 		startActivity(intent);
 	}
 
+	/**
+	 * Cancel btn.
+	 * 
+	 * @param view
+	 *            the view
+	 */
 	public void cancelBtn(View view) {
 		final Intent intent = new Intent(this, NewTrackActivity.class);
 		startActivity(intent);
 	}
 
+	/**
+	 * Parses the tags.
+	 * 
+	 * @param tagType
+	 *            the tag type
+	 * @param parentName
+	 *            the parent name
+	 * @return the string[]
+	 */
 	private String[] parseTags(int tagType, String parentName) {
 		int next;
 		boolean inParent = false;
