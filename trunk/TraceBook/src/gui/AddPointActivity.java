@@ -105,7 +105,7 @@ public class AddPointActivity extends Activity {
 		return valueTags;
 	}
 
-	public void saveBtn(View view) {
+	public void saveBtn() {
 		
 		final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.autoComplete_Value);
 		final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.autoComplete_Cat);
@@ -121,7 +121,7 @@ public class AddPointActivity extends Activity {
 		startActivity(intent);
 	}
 
-	public void cancelBtn(View view) {
+	public void cancelBtn() {
 		final Intent intent = new Intent(this, NewTrackActivity.class);
 		startActivity(intent);
 	}

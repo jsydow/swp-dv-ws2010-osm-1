@@ -1,7 +1,5 @@
 package core.logger;
 
-import java.util.List;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +8,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -134,7 +131,7 @@ public class WaypointLogService extends Service implements LocationListener {
 		}
 
 
-		public synchronized int beginArea() throws RemoteException {
+		public synchronized int beginArea() {
 			// TODO Auto-generated method stub			
 			if(current_way() == null)	// start a new way
 				storage.getCurrentTrack().setCurrentWay(storage.getCurrentTrack().newWay());
@@ -144,7 +141,7 @@ public class WaypointLogService extends Service implements LocationListener {
 		
 		}
 
-		public synchronized int endArea() throws RemoteException {
+		public synchronized int endArea() {
 			// TODO Auto-generated method stub
 			
 			DataPointsList area = storage.getCurrentTrack().getCurrentWay(); 
