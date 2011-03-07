@@ -11,7 +11,7 @@ public class MapsForgeActivity extends MapActivity {
         MapView mapView = new MapView(this);
         mapView.setClickable(true);
         mapView.setBuiltInZoomControls(true);
-        mapView.setMapFile("/sdcard/berlin-0.2.1.map");
+        mapView.setMapFile("/sdcard/default.map");
         setContentView(mapView);
     }
 }
