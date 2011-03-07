@@ -239,9 +239,15 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 				+ File.separator + "/track.xml");
 		try {
 			if(xmlfile.exists()) {
-				xmlfile.delete();
+				if(!xmlfile.delete()) {
+					Log.e("TrackSerialisation", "Deleting old file failed");
+					return;
+				}
 			}
-			xmlfile.createNewFile();
+			if(!xmlfile.createNewFile()) {
+				Log.e("TrackSerialisation", "Creating new XML-file failed");
+				return;
+			}
 			
 		} catch (IOException e) {
 			Log.e("TrackSerialisation", "Could not create new file");
