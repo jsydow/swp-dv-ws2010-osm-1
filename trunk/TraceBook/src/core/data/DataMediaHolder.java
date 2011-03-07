@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.xmlpull.v1.XmlSerializer;
+
 /**
  * Any object that can have media attached. Media can be added and retrieved.
  * This class is abstract.
@@ -62,6 +64,18 @@ public abstract class DataMediaHolder {
 	 */
 	public void addMedia(DataMedia medium) {
 		media.add(medium);
+	}
+	
+	/**
+	 * This method generates the media-tags (<link>) for a DataMediaHolder-object.
+	 * The enclosing tag must be opened.
+	 * 
+	 * @param serializer An XmlSerializer that is initialised.
+	 */
+	public void serialiseMedia(XmlSerializer serializer){
+		for (DataMedia m : media) {
+			m.serialise(serializer);
+		}
 	}
 
 	/**

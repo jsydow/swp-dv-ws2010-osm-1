@@ -8,6 +8,7 @@ import java.util.ListIterator;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
+import android.util.Log;
 
 /**
  * WayPointList objects are any objects that consist of a series of nodes like
@@ -162,9 +163,9 @@ public class DataPointsList extends DataMapObject implements
 	 * @param serializer
 	 *            An XmlSerializer that is initialised.
 	 */
-	public void serialiseNodes(XmlSerializer serializer) {
+	public void serialiseNodes(XmlSerializer serializer, boolean shouldSerialiseMedia) {
 		for (DataNode dn : nodes) {
-			dn.serialise(serializer);
+			dn.serialise(serializer, shouldSerialiseMedia);
 		}
 		return;
 	}
@@ -175,8 +176,11 @@ public class DataPointsList extends DataMapObject implements
 	 * 
 	 * @param serializer
 	 *            An XmlSerializer that is initialised.
+	 * @param shouldSerialiseMedia
+	 *            Should media also be serialised? Adding media means that the
+	 *            resulting XML-file is not valid to OSM.
 	 */
-	public void serialiseWay(XmlSerializer serializer) {
+	public void serialiseWay(XmlSerializer serializer, boolean shouldSerialiseMedia) {
 		try {
 			serializer.startTag(null, "way");
 
@@ -202,18 +206,18 @@ public class DataPointsList extends DataMapObject implements
 			}
 
 			serialiseTags(serializer);
+			if (shouldSerialiseMedia) {
+				serialiseMedia(serializer);
+			}
 
 			serializer.endTag(null, "way");
 
 		} catch (IllegalArgumentException e) {
-			//
-			e.printStackTrace();
+			Log.e("WaySerialisation", "Should not happen");
 		} catch (IllegalStateException e) {
-			//
-			e.printStackTrace();
+			Log.e("WaySerialisation", "Illegal state");
 		} catch (IOException e) {
-			//
-			e.printStackTrace();
+			Log.e("WaySerialisation", "Could not serialise way");
 		}
 	}
 

@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.xmlpull.v1.XmlSerializer;
 
+import android.util.Log;
+
 /**
  * Basic class for any object that is stored in OSM. All objects have an id and
  * some tags. Additionally all objects can have media attached.
@@ -24,8 +26,8 @@ public abstract class DataMapObject extends DataMediaHolder implements
 
 	/**
 	 * tags stores all meta information of this object. These may be the name,
-	 * timestamp, latitude, longitude and OSM-tags. tags is not equivalent to
-	 * OSM-tags as these tags also store the timestamp and GPS coordinates etc.
+	 * time stamp, latitude, longitude and OSM-tags. tags is not equivalent to
+	 * OSM-tags as these tags also store the time stamp and GPS coordinates etc.
 	 */
 	protected Map<String, String> tags;
 
@@ -86,14 +88,11 @@ public abstract class DataMapObject extends DataMediaHolder implements
 				serializer.endTag(null, "tag");
 			}
 		} catch (IllegalArgumentException e) {
-			//
-			e.printStackTrace();
+			Log.e("TagSerialisation", "Should not happen");
 		} catch (IllegalStateException e) {
-			//
-			e.printStackTrace();
+			Log.e("TagSerialisation", "Illegal state");
 		} catch (IOException e) {
-			//
-			e.printStackTrace();
+			Log.e("TagSerialisation", "Could not serialise tags");
 		}
 		return;
 	}

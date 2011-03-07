@@ -7,6 +7,7 @@ import java.text.DecimalFormatSymbols;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
+import android.util.Log;
 
 /**
  * A node. A node can be a POI or an element of a list of waypoints that belong
@@ -122,8 +123,11 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * 
 	 * @param serializer
 	 *            An XmlSerializer that is initialised.
+	 * @param shouldSerialiseMedia
+	 *            Should media also be serialised? Adding media means that the
+	 *            resulting XML-file is not valid to OSM.
 	 */
-	public void serialise(XmlSerializer serializer) {
+	public void serialise(XmlSerializer serializer, boolean shouldSerialiseMedia) {
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 		dfs.setDecimalSeparator('.');
 		DecimalFormat df = new DecimalFormat("0.0000000", dfs);
@@ -137,21 +141,19 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 			serializer.attribute(null, "version", "1");
 
 			serialiseTags(serializer);
+			if (shouldSerialiseMedia) {
+				serialiseMedia(serializer);
+			}
 
 			serializer.endTag(null, "node");
 
 		} catch (IllegalArgumentException e) {
-			//
-			e.printStackTrace();
+			Log.e("NodeSerialisation", "Should not happen");
 		} catch (IllegalStateException e) {
-			//
-			e.printStackTrace();
+			Log.e("NodeSerialisation", "Illegal state");
 		} catch (IOException e) {
-			//
-			e.printStackTrace();
+			Log.e("NodeSerialisation", "Could not serialise node");
 		}
-
-		return;
 	}
 
 	public void delete() {

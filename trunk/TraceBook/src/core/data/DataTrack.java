@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
 import android.os.Environment;
+import android.util.Log;
 import android.util.Xml;
 
 /**
@@ -228,21 +229,28 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 
 	/**
 	 * Serialises a track to a XML-file stored on the SD-card in folder TraceBook/<track name>.
+	 * @param shouldSerialiseMedia
+	 *            Should media also be serialised? Adding media means that the
+	 *            resulting XML-file is not valid to OSM.
 	 */
-	public void serialise() {
-		File newxmlfile = new File(Environment.getExternalStorageDirectory()
+	public void serialise(boolean shouldSerialiseMedia) {
+		File xmlfile = new File(Environment.getExternalStorageDirectory()
 				+ File.separator + "TraceBook" + File.separator + name
 				+ File.separator + "/track.xml");
 		try {
-			newxmlfile.createNewFile();
+			if(xmlfile.exists()) {
+				xmlfile.delete();
+			}
+			xmlfile.createNewFile();
+			
 		} catch (IOException e) {
-			//
+			Log.e("TrackSerialisation", "Could not create new file");
 		}
 		FileOutputStream fileos = null;
 		try {
-			fileos = new FileOutputStream(newxmlfile);
+			fileos = new FileOutputStream(xmlfile);
 		} catch (FileNotFoundException e) {
-			//
+			Log.e("TrackSerialisation", "Could not open new file");
 		}
 
 		XmlSerializer serializer = Xml.newSerializer();
@@ -255,18 +263,18 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 			serializer.attribute(null, "generator", "TraceBook");
 
 			for (DataNode dn : nodes) {
-				dn.serialise(serializer);
+				dn.serialise(serializer,shouldSerialiseMedia);
 			}
 			for (DataPointsList dpl : ways) {
-				dpl.serialiseNodes(serializer);
+				dpl.serialiseNodes(serializer, shouldSerialiseMedia);
 			}
 			for (DataPointsList dpl : ways) {
-				dpl.serialiseWay(serializer);
+				dpl.serialiseWay(serializer, shouldSerialiseMedia);
 			}
 
 			serializer.endTag(null, "osm");
 		} catch (Exception e) {
-			//
+			Log.e("TrackSerialisation","Could not serialise track");
 		}
 
 	}
@@ -321,6 +329,10 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	public static List<String> allTracks() {
 		/* TODO STUB */
 		return null;
+	}
+
+	public void serialise() {
+		serialise(true);
 	}
 
 }
