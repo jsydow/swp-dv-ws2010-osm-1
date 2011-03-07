@@ -1,5 +1,11 @@
 package core.data;
 
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlSerializer;
+
+import android.util.Log;
+
 /**
  * This is an object that refers to a medium. The medium itself is stored on the
  * background memory of the device. Only the name and path of the actual medium
@@ -9,21 +15,49 @@ package core.data;
  * 
  */
 public class DataMedia {
+	
+	/**
+	 * Media type constants.
+	 */
+	static final int TYPE_VIDEO = 3;
+	static final int TYPE_AUDIO = 2;
+	static final int TYPE_TEXT = 0;
+	static final int TYPE_PICTURE = 1;
+	static String[] typesAsString = { "text", "picture", "audio", "video" };
+	
 	/**
 	 * The internal id for this medium.
 	 */
 	private int _id;
+	
 	/**
 	 * The path to the file of the medium on the memory. This path should be
-	 * sufficient to open the file (contains basename + filename).
+	 * sufficient to open the file (contains filename).
 	 */
 	private String path;
+	
 	/**
 	 * This name is the displayed name. May be equal to the filename without
 	 * extension.
 	 */
 	private String name;
-
+	
+	/**
+	 * This is the type of the medium. Use the TYPE_****-constants!
+	 */
+	private int type;
+	
+	/**
+	 * Basically a toString()-method of the type-variable.
+	 * @param type The type-variable of this class/object.
+	 * @return The type as String
+	 */
+	private String typeToString(int p_type) {
+		if(p_type>TYPE_VIDEO || p_type<TYPE_TEXT)
+			return "";
+		return typesAsString[p_type];
+	}
+	
 	/**
 	 * Constructor that initialises the medium.
 	 * 
@@ -44,6 +78,24 @@ public class DataMedia {
 	 */
 	DataMedia() {
 		// nothing to do
+	}
+	
+	
+
+	/**
+	 * Getter-method
+	 * @return The type of the medium
+	 */
+	public int getType() {
+		return type;
+	}
+
+	/**
+	 * Setter-method
+	 * @param The new type of this medium
+	 */
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	/**
@@ -115,5 +167,24 @@ public class DataMedia {
 	 */
 	void delete() {
 		/* TODO */
+	}
+	
+	/**
+	 * Generates a <link>-tag for this medium.
+	 * @param serializer
+	 */
+	public void serialise(XmlSerializer serializer) {
+		try {
+			serializer.startTag(null, "link");
+			serializer.attribute(null, "type", typeToString(type));
+			serializer.attribute(null, "value", path);
+			serializer.endTag(null, "tag");
+		} catch (IllegalArgumentException e) {
+			Log.e("MediaSerialisation", "Should not happen");
+		} catch (IllegalStateException e) {
+			Log.e("MediaSerialisation", "Illegal state");
+		} catch (IOException e) {
+			Log.e("MediaSerialisation", "Could not serialise medium "+name);
+		}
 	}
 }
