@@ -22,6 +22,4 @@
         <activity android:name="gui.MapsForgeActivity"></activity>
 	<service android:name="core.logger.WaypointLogService"/>
     </application>
-
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 </manifest>
