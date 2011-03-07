@@ -69,8 +69,14 @@ public abstract class DataMapObject extends DataMediaHolder implements
 		return 0;
 	}
 
+	/**
+	 * Add Tag-tags like <tag k="..." v="..." /> to the XmlSerializer. Make sure
+	 * the enclosing tag is opened.
+	 * 
+	 * @param serializer
+	 *            An XmlSerializer that is initialised.
+	 */
 	public void serialiseTags(XmlSerializer serializer) {
-		// TODO: javadoc!!
 		try {
 			for (String tag : tags.keySet()) {
 
@@ -80,13 +86,13 @@ public abstract class DataMapObject extends DataMediaHolder implements
 				serializer.endTag(null, "tag");
 			}
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		}
 		return;
