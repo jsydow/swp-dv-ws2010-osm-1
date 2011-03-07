@@ -43,10 +43,7 @@ public class AddPointActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
-		// Create Bundle for extras of the intent
-		 final Bundle extras = getIntent().getExtras();
-		
-	       	if( DataStorage.getInstance().getCurrentTrack() != null ){
+			if( DataStorage.getInstance().getCurrentTrack() != null ){
 	       		List<DataNode> data = DataStorage.getInstance().getCurrentTrack().getNodes();
 	       		if( data.size() != 0 )
 	       			node = data.get(data.size()-1);
@@ -76,7 +73,7 @@ public class AddPointActivity extends Activity {
 					String cat = autoComplCat.getText().toString();
 					
 					 //autoComplVal.setText(cat.toCharArray(),0,cat.length());
-					 ArrayAdapter<String> valueTagAdapter = new ArrayAdapter(v.getContext(),android.R.layout.simple_dropdown_item_1line,getValues(cat));
+					 ArrayAdapter<String> valueTagAdapter = new ArrayAdapter<String>(v.getContext(),android.R.layout.simple_dropdown_item_1line,getValues(cat));
 					 autoComplVal.setAdapter(valueTagAdapter);
 					 
 				}

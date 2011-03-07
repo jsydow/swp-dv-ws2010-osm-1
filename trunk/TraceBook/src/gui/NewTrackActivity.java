@@ -63,9 +63,6 @@ public class NewTrackActivity extends TabActivity {
         ServiceConnector.startService(this);
         ServiceConnector.initService();
         
-        
-        NewTrackActivity myAct = this;
-        
         myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost) );
 		
 	}

@@ -23,7 +23,7 @@ public class ServiceConnector {
 			conn = new LoggerServiceConnection();
 			Intent i = new Intent();
 			i.setClassName(activity.getPackageName(), WaypointLogService.class.getName());
-			boolean res = activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
+			activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
 			Log.d(LOG_TAG, "bindService()");
 		} else {
 			Toast.makeText(activity, "Cannot bind - service already bound", Toast.LENGTH_SHORT).show();
