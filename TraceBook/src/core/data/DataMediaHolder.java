@@ -25,9 +25,10 @@ public abstract class DataMediaHolder {
 	DataMediaHolder() {
 		media = new LinkedList<DataMedia>();
 		SimpleDateFormat sdf = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+				"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		this.datetime = sdf.format(new Date());
 	}
+
 	/**
 	 * The Creation time.
 	 */
@@ -44,16 +45,15 @@ public abstract class DataMediaHolder {
 		return media;
 	}
 
-
 	/**
 	 * Getter-method. The creation time string.
 	 * 
-	 * @return The datetime string.
+	 * @return The creation time of this object as String.
 	 */
 	public String getDatetime() {
 		return datetime;
 	}
-	
+
 	/**
 	 * Add a new medium to this object.
 	 * 

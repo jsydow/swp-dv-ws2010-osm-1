@@ -1,11 +1,10 @@
 package core.data;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
 
@@ -19,12 +18,12 @@ import android.location.Location;
 public class DataNode extends DataMapObject implements SerialisableContent {
 
 	/**
-	 * This constructor initializes the Latitude and Longitude with data from a
+	 * This constructor initialises the Latitude and Longitude with data from a
 	 * Location object.
 	 * 
 	 * @param loc
-	 *            The Location of the new node. Initializes latitude and
-	 *            longitude. Must not be null!
+	 *            The Location of the new node. Initialises latitude and
+	 *            longitude.
 	 */
 	DataNode(Location loc) {
 		super();
@@ -45,20 +44,19 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 
 	/**
 	 * Set the latitude and longitude to the position given by the Location
-	 * object which is received from the gps module.
+	 * object which is received from the GPS module.
 	 * 
 	 * @param loc
-	 *            The Location object that the gps module delivers.
+	 *            The Location object that the GPS module delivers.
 	 */
 	public void setLocation(Location loc) {
 		this.loc = loc;
 	}
-	
+
 	/**
 	 * Returns the location Object associated with this node.
 	 * 
-	 * @return location
-	 * 				The Location object that the gps module delivered
+	 * @return location The Location object that the gps module delivered
 	 */
 	public Location getLocation() {
 		return loc;
@@ -70,7 +68,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @return the longitude
 	 */
 	public double getLon() {
-		if(loc == null)
+		if (loc == null)
 			return 0;
 		return loc.getLongitude();
 	}
@@ -81,15 +79,15 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @return the latitude
 	 */
 	public double getLat() {
-		if(loc == null)
+		if (loc == null)
 			return 0;
 		return loc.getLatitude();
 	}
 
 	/**
-	 * A Point may have been added uninitialized, in this case
-	 * it does not contain any valid positional data - this may
-	 * be added later once a GPS fix is obtained.
+	 * A Point may have been added uninitialised, in this case it does not
+	 * contain any valid positional data - this may be added later once a GPS
+	 * fix is obtained.
 	 * 
 	 * @return true if the Node contains data of a valid GPS fix
 	 */
@@ -118,20 +116,55 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 		// TODO Auto-generated method stub
 
 	}
-	
-	public Node serialiseToXmlNode(Document doc) {
-		Element ret = doc.createElement("node");
-		DecimalFormatSymbols dfs=new DecimalFormatSymbols();
+
+	public void serialise(XmlSerializer serializer) {
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 		dfs.setDecimalSeparator('.');
-		DecimalFormat df = new DecimalFormat("0.0000000",dfs);
+		DecimalFormat df = new DecimalFormat("0.0000000", dfs);
 		
-		ret.setAttribute("lat",df.format(this.getLat()));
-		ret.setAttribute("lon",df.format(this.getLon()));
+		try {
+			serializer.startTag(null, "node");
+			serializer.attribute(null, "lat", df.format(this.getLat()) );
+			serializer.attribute(null, "lon", df.format(this.getLon()) );
+			serializer.attribute(null, "id", Integer.toString(this.get_id()));
+			serializer.attribute(null, "timestamp", this.getDatetime());
+			serializer.attribute(null, "version", "1");
+			
+			serialiseTags(serializer);
+			
+			serializer.endTag(null, "node");
+			
+			
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		/*Element ret = doc.createElement("node");
+		
+
+		ret.setAttribute("lat", df.format(this.getLat()));
+		ret.setAttribute("lon", df.format(this.getLon()));
 		ret.setAttribute("id", Integer.toString(this.get_id()));
 		ret.setAttribute("timestamp", this.getDatetime());
-		ret.setAttribute("version","1");
-		
-		return ret;
+		ret.setAttribute("version", "1");
+
+		for (String tag : tags.keySet()) {
+
+			Element areaTag = doc.createElement("tag");
+			areaTag.setAttribute("k", tag);
+			areaTag.setAttribute("v", tags.get(tag));
+			ret.appendChild(areaTag);
+		}*/
+
+		return;
 	}
 
 	public void delete() {

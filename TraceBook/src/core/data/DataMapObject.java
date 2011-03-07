@@ -1,12 +1,10 @@
 package core.data;
 
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.xmlpull.v1.XmlSerializer;
 
 /**
  * Basic class for any object that is stored in OSM. All objects have an id and
@@ -15,9 +13,10 @@ import org.w3c.dom.Node;
  * @author js
  * 
  */
-public abstract class DataMapObject extends DataMediaHolder  implements Comparable<Integer> {
+public abstract class DataMapObject extends DataMediaHolder implements
+		Comparable<Integer> {
 	/**
-	 * An id for this object. It is not an id for osm which is set to -1 for all
+	 * An id for this object. It is not an id for OSM which is set to -1 for all
 	 * new objects but it is a program internal id. It should be unique.
 	 * DataStorage.getID() creates one.
 	 */
@@ -25,8 +24,8 @@ public abstract class DataMapObject extends DataMediaHolder  implements Comparab
 
 	/**
 	 * tags stores all meta information of this object. These may be the name,
-	 * timestamp, latitude, longitude and osm-tags. tags is not equivalent to
-	 * osm-tags as these tags also store the timestamp and gps coordinates etc.
+	 * timestamp, latitude, longitude and OSM-tags. tags is not equivalent to
+	 * OSM-tags as these tags also store the timestamp and GPS coordinates etc.
 	 */
 	protected Map<String, String> tags;
 
@@ -41,7 +40,8 @@ public abstract class DataMapObject extends DataMediaHolder  implements Comparab
 
 	/**
 	 * Getter-method for a all tags stored as a Map of String. Tags that are no
-	 * tags in osm are: name, lat, lon, timestamp
+	 * tags in OSM are: name, lat, lon, timestamp. Mind that changes in the
+	 * returned Map change this object in the same way.
 	 * 
 	 * @return map of all tags
 	 */
@@ -57,17 +57,38 @@ public abstract class DataMapObject extends DataMediaHolder  implements Comparab
 		tags = new HashMap<String, String>();
 		_id = DataStorage.getInstance().getID();
 	}
-	
+
+	/**
+	 * Comparable-implementation
+	 */
 	public int compareTo(Integer arg0) {
-		if(_id < arg0.intValue())
+		if (_id < arg0.intValue())
 			return -1;
-		if(_id > arg0.intValue())
+		if (_id > arg0.intValue())
 			return 1;
 		return 0;
 	}
-	
-	public List<Node> serialiseTagsToXmlNode(Document doc){
-		//TODO: do something + javadoc!!
-		return new LinkedList<Node>();
+
+	public void serialiseTags(XmlSerializer serializer) {
+		// TODO: javadoc!!
+		try {
+			for (String tag : tags.keySet()) {
+
+				serializer.startTag(null, "tag");
+				serializer.attribute(null, "k", tag);
+				serializer.attribute(null, "v", tags.get(tag));
+				serializer.endTag(null, "tag");
+			}
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return;
 	}
 }

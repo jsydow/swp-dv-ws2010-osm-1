@@ -1,12 +1,11 @@
 package core.data;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
 
@@ -23,7 +22,7 @@ public class DataPointsList extends DataMapObject implements
 	 * The list of nodes of this object. First node is first element in this
 	 * list.
 	 */
-	protected List<DataNode> nodes;
+	protected LinkedList<DataNode> nodes;
 
 	/**
 	 * Is this Object an Area?
@@ -78,16 +77,18 @@ public class DataPointsList extends DataMapObject implements
 	public List<DataNode> getNodes() {
 		return nodes;
 	}
-	
+
 	/**
-	 * Searches for a Node in this Track by the specified id. 
-	 * @param id The id of the Node that is being searched for.
+	 * Searches for a Node in this Track by the specified id.
+	 * 
+	 * @param id
+	 *            The id of the Node that is being searched for.
 	 * @return The DataNode where get_id() == id, or null if not found.
 	 */
 	public DataNode getNodeByID(int id) {
-		for(DataNode dn : nodes)
-			if(dn.get_id() == id)
-				return dn; 
+		for (DataNode dn : nodes)
+			if (dn.get_id() == id)
+				return dn;
 		return null;
 	}
 
@@ -155,23 +156,81 @@ public class DataPointsList extends DataMapObject implements
 
 	}
 	
-	public List<Node> serialiseToXmlNode(Document doc) {
-		List<Node> ret = new LinkedList<Node>();
+	public void serialiseNodes(XmlSerializer serializer) {
+		for (DataNode dn : nodes) {
+			dn.serialise(serializer);
+		}
+		return;
+	}
+
+	public void serialiseWay(XmlSerializer serializer) {
+		try {
+			serializer.startTag(null, "way");
+			
+			for (DataNode dn : nodes){
+				serializer.startTag(null, "nd");
+				
+				serializer.attribute(null, "ref", Integer.toString(dn.get_id()) );
+				
+				serializer.endTag(null, "nd");
+			}
+			if (this.isArea && nodes.size() > 0) {
+				DataNode lastNode = nodes.getFirst();
+				serializer.startTag(null, "nd");
+				serializer.attribute(null, "ref", Integer.toString(lastNode.get_id()));
+				serializer.endTag(null, "nd");
+				
+				serializer.startTag(null, "tag");
+				serializer.attribute(null, "k", "area");
+				serializer.attribute(null, "v", "yes");
+				serializer.endTag(null, "tag");
+			}
+			
+			serialiseTags(serializer);
+			
+			serializer.endTag(null, "way");
+			
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		
+		
+		/*List<Node> ret = new LinkedList<Node>();
+
 		Element elem = doc.createElement("way");
-		
+
 		elem.setAttribute("id", Integer.toString(this.get_id()));
 		elem.setAttribute("timestamp", this.getDatetime());
-		elem.setAttribute("version","1");
-		
-		for(DataNode dn : nodes) {
+		elem.setAttribute("version", "1");
+
+		for (DataNode dn : nodes) {
 			ret.add(dn.serialiseToXmlNode(doc));
-			Element nd=doc.createElement("nd");
+			Element nd = doc.createElement("nd");
 			nd.setAttribute("ref", Integer.toString(dn.get_id()));
 			elem.appendChild(nd);
 		}
+		if (this.isArea && nodes.size() > 0) {
+			DataNode lastNode = nodes.getFirst();
+			Element nd = doc.createElement("nd");
+			nd.setAttribute("ref", Integer.toString(lastNode.get_id()));
+			elem.appendChild(nd);
+			Element areaTag = doc.createElement("tag");
+			areaTag.setAttribute("k", "area");
+			areaTag.setAttribute("v", "yes");
+			elem.appendChild(areaTag);
+		}
+		// TODO: add all tags;
 		ret.add(elem);
-		return ret;
+		return ret;*/
+		return;
 	}
 
 	public void delete() {
