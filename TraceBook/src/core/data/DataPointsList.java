@@ -1,7 +1,5 @@
 package core.data;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;

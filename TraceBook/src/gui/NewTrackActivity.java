@@ -68,7 +68,7 @@ public class NewTrackActivity extends TabActivity {
 	}
 
 	
-	private void initListView(){
+	void initListView(){
 		//Init ListView for EditTab
 		ListView listView = (ListView) findViewById(R.id.tracks_lvw);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>
