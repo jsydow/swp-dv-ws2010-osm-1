@@ -54,10 +54,10 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	private String comment;
 
 	/**
-	 * Constructor which initialises the Track, each Track must have a Datetime.
+	 * Constructor which initialises the Track, each Track must have a Date time.
 	 * 
 	 * @param datetime
-	 *            The Datetime in string representation. Can be null! Null is
+	 *            The Date time in string representation. Can be null! Null is
 	 *            recommended.
 	 */
 	DataTrack() {
@@ -238,6 +238,9 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	 *            resulting XML-file is not valid to OSM.
 	 */
 	public void serialise(boolean shouldSerialiseMedia) {
+		
+		Log.d("DataTrack", "Ways: "+ways.size()+", POIs: "+nodes.size());
+		
 		File xmlfile = new File(Environment.getExternalStorageDirectory()
 				+ File.separator + "TraceBook" + File.separator + name
 				+ File.separator + "/track.xml");
@@ -283,6 +286,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 			}
 
 			serializer.endTag(null, "osm");
+			serializer.flush();
 		} catch (Exception e) {
 			Log.e("TrackSerialisation","Could not serialise track");
 		}
