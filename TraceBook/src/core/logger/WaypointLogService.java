@@ -181,6 +181,8 @@ public class WaypointLogService extends Service implements LocationListener {
 	public synchronized void onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
 		
+		DataStorage.getInstance().setLastLocation(loc);	// update current location
+		
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
 			current_node = null;

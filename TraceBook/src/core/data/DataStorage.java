@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import android.location.Location;
+
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
  * consists of Nodes and PointLists (Area/Way). PointsLists consist of Nodes.
@@ -46,6 +48,11 @@ public class DataStorage implements SerialisableContent {
 	 * currently active Track
 	 */
 	private DataTrack currentTrack;
+	
+	/**
+	 * last known gps location, may be updated independent of ongoing logging 
+	 */
+	private Location lastLocation;
 
 	/**
 	 * Default private constructor for Singleton implementation.
@@ -219,6 +226,23 @@ public class DataStorage implements SerialisableContent {
 		for (DataTrack dt : tracks)
 			dt.delete();
 		tracks.clear();
+	}
+	
+	/**
+	 * Sets the current location, this is used for visualizing the last position
+	 * even if there is no logging going on
+	 * @param loc
+	 */
+	public void setLastLocation(Location loc) {
+		lastLocation = loc;
+	}
+
+	/**
+	 * returns the last known GPS location
+	 * @return
+	 */
+	public Location getLastLocation() {
+		return lastLocation;
 	}
 
 }
