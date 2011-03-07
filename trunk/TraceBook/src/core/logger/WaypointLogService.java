@@ -16,11 +16,13 @@ import core.data.LogParameter;
 
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
+	public static final String BROADCAST_ACTION = "de.fu-berlin.inf.tracebook.UPDTAE_GPS";
 	
 	DataStorage storage			= DataStorage.getInstance();
 	DataNode current_node		= null;
 	
 	LogParameter params;
+	Intent gps_intent;
 	
 	boolean gps_on = false;
 	boolean one_shot = false;
@@ -31,6 +33,8 @@ public class WaypointLogService extends Service implements LocationListener {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		Log.d(LOG_TAG, "onStart");
+		
+		gps_intent = new Intent(BROADCAST_ACTION);
 	}
 
 	@Override
@@ -104,10 +108,6 @@ public class WaypointLogService extends Service implements LocationListener {
 			return current_node.get_id();
 		}
 
-		public boolean isLogging() {
-			return current_way() != null;
-		}
-
 		public int beginWay(boolean do_one_shot) {
 			one_shot = do_one_shot;
 			
@@ -153,23 +153,19 @@ public class WaypointLogService extends Service implements LocationListener {
 		}
 
 		public boolean isWayLogging() {
-			// TODO Auto-generated method stub
 			if( storage.getCurrentTrack() != null ){
-				if( storage.getCurrentTrack().getCurrentWay() != null){
-					return !storage.getCurrentTrack().getCurrentWay().isArea();
+				if(current_way() != null){
+					return !current_way().isArea();
 				}
-				
 			}
 			return false;
-				
 		}
 
 		public boolean isAreaLogging() {
 			if( storage.getCurrentTrack() != null ){
-				if( storage.getCurrentTrack().getCurrentWay() != null){
-					return storage.getCurrentTrack().getCurrentWay().isArea();
+				if(current_way() != null){
+					return current_way().isArea();
 				}
-				
 			}
 			return false;
 		}
@@ -181,8 +177,10 @@ public class WaypointLogService extends Service implements LocationListener {
 	public synchronized void onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
 		
-		DataStorage.getInstance().setLastLocation(loc);	// update current location
-		
+		gps_intent.putExtra("long",	loc.getLongitude());
+		gps_intent.putExtra("lat",	loc.getLatitude());
+		sendBroadcast(gps_intent);
+				
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
 			current_node = null;

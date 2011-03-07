@@ -7,17 +7,19 @@ import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
 
-import util.helper;
+import core.logger.WaypointLogService;
 
-import android.location.Location;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
-import core.data.DataStorage;
 
 public class MapsForgeActivity extends MapActivity {
 	MapController mapController;
-	Handler serviceHandler = null;
+	BroadcastReceiver gpsReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +41,35 @@ public class MapsForgeActivity extends MapActivity {
 		setContentView(mapView);
 		
 		mapController = mapView.getController();
-
-		serviceHandler = new Handler();
-		serviceHandler.postDelayed(new RunTask(), 1000L);
+		
+		gpsReceiver = new GPSReceiver();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		registerReceiver(gpsReceiver, new IntentFilter(WaypointLogService.BROADCAST_ACTION));
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(gpsReceiver);
+	}
+	
+	private class GPSReceiver extends BroadcastReceiver {
+		public GPSReceiver() {
+			// TODO Auto-generated constructor stub
+		}
 
-	/**
-	 * We check every second for an updated GPS location
-	 * XXX maybe there is a better way to do this
-	 * @author benpicco
-	 *
-	 */
-	class RunTask implements Runnable {
-		public void run() {
-			Location loc = DataStorage.getInstance().getLastLocation();
+		@Override
+		public void onReceive(Context ctx, Intent intend) {
+			double lng = intend.getExtras().getDouble("long");
+			double lat = intend.getExtras().getDouble("lat");
 			
-			if(loc != null) {
-				GeoPoint current = helper.geoPointFromLocation(loc);
-				mapController.setCenter(current);
-			}
+			mapController.setCenter(new GeoPoint(lat, lng));
 			
-			serviceHandler.postDelayed(this, 1000L);
+			Log.d("GPS_REC", "Location update received (" + lng +  ", " + lat +")");
 		}
 	}
 }
