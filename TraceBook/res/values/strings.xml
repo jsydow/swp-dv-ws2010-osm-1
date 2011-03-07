@@ -8,7 +8,7 @@
     <string name="trackName">Trackname</string>
     <string name="insertTag">Tag einfügen</string>
     <string name="insertValue">Wert einfügen</string>
-    <string name="tagId">POI Id</string>
+    <string name="nodeId">Node Id</string>
   
   	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>
