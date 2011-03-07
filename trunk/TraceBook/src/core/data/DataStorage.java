@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
- * consists of Nodes and PointLists (Area/Way). Pointlists consist of Nodes.
+ * consists of Nodes and PointLists (Area/Way). PointsLists consist of Nodes.
  * 
  * In the implementation u see there is a difference between the track names and
  * the tracks themselves. The names-list contains all the names of the tracks

@@ -3,27 +3,16 @@ package core.data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
 import android.os.Environment;
+import android.util.Xml;
 
 /**
  * A Track. Consists of Ways, Areas, POIs and additional Media. A Track is a
@@ -238,52 +227,75 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	public void serialise() {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder;
+		File newxmlfile = new File(Environment.getExternalStorageDirectory()+ "/new.xml");
 		try {
-			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			return;
+			newxmlfile.createNewFile();
+		} catch (IOException e) {
+			//
 		}
-		Document document = builder.newDocument();
-		
-		Element root = document.createElement("osm");
-		root.setAttribute("version", "0.6");
-		root.setAttribute("generator", "TraceBook");
-		// TODO
-		
-		for(DataNode dn : nodes) {
-			root.appendChild(dn.serialiseToXmlNode(document));
-		}
-		for(DataPointsList dpl : ways) {
-			List<Node> ln = dpl.serialiseToXmlNode(document);
-			for(Node nd : ln) {
-				root.appendChild(nd);
-			}
-		}
-		
-		document.appendChild(root);
-
+		FileOutputStream fileos = null;
 		try {
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			DOMSource        source = new DOMSource( document ); // Context.openFileOutput("fu.xml",Context.MODE_APPEND);
-			FileOutputStream os     = new FileOutputStream( new File( Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"fu.xml" ) );
-			StreamResult     result = new StreamResult( os );
-			transformer.transform( source, result );
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fileos = new FileOutputStream(newxmlfile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerFactoryConfigurationError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//
 		}
+		XmlSerializer serializer = Xml.newSerializer();
+		try {
+			serializer.setOutput(fileos, "UTF-8");
+			serializer.startDocument(null, Boolean.valueOf(true));
+			serializer.startTag(null, "osm");
+			
+			serializer.attribute(null, "version", "0.6");
+			serializer.attribute(null, "generator", "TraceBook");
+			
+			for (DataNode dn : nodes) {
+				dn.serialise(serializer);
+			}
+			for (DataPointsList dpl : ways) {
+				dpl.serialiseNodes(serializer);
+			}
+			for (DataPointsList dpl : ways) {
+				dpl.serialiseWay(serializer);
+			}
+			
+			serializer.endTag(null, "osm");
+		} catch (Exception e) {
+			//
+		}
+
+		/*
+		 * DocumentBuilderFactory factory =
+		 * DocumentBuilderFactory.newInstance(); DocumentBuilder builder; try {
+		 * builder = factory.newDocumentBuilder(); } catch
+		 * (ParserConfigurationException e) { e.printStackTrace(); return; }
+		 * Document document = builder.newDocument();
+		 * 
+		 * Element root = document.createElement("osm");
+		 * root.setAttribute("version", "0.6"); root.setAttribute("generator",
+		 * "TraceBook"); // TODO
+		 * 
+		 * for (DataNode dn : nodes) {
+		 * root.appendChild(dn.serialiseToXmlNode(document)); } for
+		 * (DataPointsList dpl : ways) { List<Node> ln =
+		 * dpl.serialiseToXmlNode(document); for (Node nd : ln) {
+		 * root.appendChild(nd); } }
+		 * 
+		 * document.appendChild(root);
+		 * 
+		 * try { Transformer transformer = TransformerFactory.newInstance()
+		 * .newTransformer(); DOMSource source = new DOMSource(document); //
+		 * Context.openFileOutput("fu.xml",Context.MODE_APPEND);
+		 * FileOutputStream os = new FileOutputStream(new File(Environment
+		 * .getExternalStorageDirectory().getAbsolutePath() + File.separator +
+		 * "fu.xml")); StreamResult result = new StreamResult(os);
+		 * transformer.transform(source, result); } catch
+		 * (TransformerConfigurationException e) { // TODO Auto-generated catch
+		 * block e.printStackTrace(); } catch (FileNotFoundException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); } catch
+		 * (TransformerFactoryConfigurationError e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); } catch (TransformerException e) {
+		 * // TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 
 	}
 
