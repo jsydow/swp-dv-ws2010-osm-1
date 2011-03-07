@@ -1,12 +1,16 @@
 package gui;
 
+import java.io.File;
+
 import core.data.LogParameter;
 import core.logger.ServiceConnector;
 import Trace.Book.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +34,16 @@ public class main extends Activity {
 		// Init ServiceConnector
 		ServiceConnector.startService(this);
 		ServiceConnector.initService();
+		
+		//create TraceBook-folder
+		File dir = new File(Environment.getExternalStorageDirectory()
+				+ File.separator + "TraceBook");
+		if(!dir.isDirectory()) {
+			if(!dir.mkdir()) {
+				Log.e("TraceBookMainActiviy","Could not create TraceBook-directory");
+			}
+		}
+		
 	}
 
 	/**
