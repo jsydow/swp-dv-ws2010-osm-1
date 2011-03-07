@@ -102,6 +102,8 @@ public class main extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.close_opt:
+			ServiceConnector.stopService();
+			System.exit(0);
 			finish();
 			return true;
 		case R.id.preferences_opt:
@@ -121,6 +123,6 @@ public class main extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		ServiceConnector.releaseService();
+		//ServiceConnector.releaseService();
 	}
 }
