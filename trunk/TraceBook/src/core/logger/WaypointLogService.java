@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -150,6 +151,28 @@ public class WaypointLogService extends Service implements LocationListener {
 			if(tmp != null)
 				return tmp.get_id();			
 			return 0;
+		}
+
+		public boolean isWayLogging() throws RemoteException {
+			// TODO Auto-generated method stub
+			if( storage.getCurrentTrack() != null ){
+				if( storage.getCurrentTrack().getCurrentWay() != null){
+					return !storage.getCurrentTrack().getCurrentWay().isArea();
+				}
+				
+			}
+			return false;
+				
+		}
+
+		public boolean isAreaLogging() throws RemoteException {
+			if( storage.getCurrentTrack() != null ){
+				if( storage.getCurrentTrack().getCurrentWay() != null){
+					return storage.getCurrentTrack().getCurrentWay().isArea();
+				}
+				
+			}
+			return false;
 		}
 
 	};
