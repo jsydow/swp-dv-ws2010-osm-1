@@ -63,6 +63,11 @@ interface ILoggerService {
 	/**
 	* @return true if currently a way is recorded
 	*/
-	boolean isLogging();
+	boolean isWayLogging();
+	
+	/**
+	*@return true if area loggin is in progress
+	*/
+	boolean isAreaLogging();
 	
 }
