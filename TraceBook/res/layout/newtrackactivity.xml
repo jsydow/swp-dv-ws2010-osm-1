@@ -24,40 +24,36 @@
 					android:layout_weight="1" />
 				<ToggleButton android:id="@+id/startWay_Tbtn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/streetOff_btn" android:textOff="@string/streetOn_btn" 
-					android:drawableLeft="@drawable/way_icon" android:onClick="startWayTbtn"/>
-					
+					android:textOn="@string/streetOff_btn" android:textOff="@string/streetOn_btn"
+					android:drawableLeft="@drawable/way_icon" android:onClick="startWayTbtn" />
+
 				<ToggleButton android:id="@+id/startArea_Tbtn"
-						android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/areaOff_btn" android:textOff="@string/areaOn_btn" 
-					android:drawableLeft="@drawable/area_icon" android:onClick="startAreaTbtn"/>
-				
-				<Button android:id="@+id/addPoint_btn"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:text="@string/addPoint_btn" android:onClick="addPointBtn" 
-					android:drawableLeft="@drawable/node_icon"/>
+					android:textOn="@string/areaOff_btn" android:textOff="@string/areaOn_btn"
+					android:drawableLeft="@drawable/area_icon" android:onClick="startAreaTbtn" />
+
+				<Button android:id="@+id/addPoint_btn" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:text="@string/addPoint_btn"
+					android:onClick="addPointBtn" android:drawableLeft="@drawable/node_icon" />
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
-					
-				<Button android:id="@+id/stopTrack_btn" 
-					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:text="@string/stopTrack_btn" android:onClick="stopTrackBtn"
-					android:drawableLeft="@drawable/stop_icon" />
+
+				<Button android:id="@+id/stopTrack_btn" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:text="@string/stopTrack_btn"
+					android:onClick="stopTrackBtn" android:drawableLeft="@drawable/stop_icon" />
 
 			</LinearLayout>
 			<LinearLayout android:id="@+id/edit_tab"
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
-				
+
 				<ListView android:id="@+id/tracks_lvw"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:layout_weight="1"
-					android:drawSelectorOnTop="false" />
-					
-				
+					android:layout_width="match_parent" android:layout_height="match_parent"
+					android:layout_weight="1" android:drawSelectorOnTop="false" />
+
+
 			</LinearLayout>
 		</FrameLayout>
 	</LinearLayout>
