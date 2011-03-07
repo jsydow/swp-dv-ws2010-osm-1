@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-
-import android.location.Location;
 import android.os.Environment;
 import android.util.Log;
 
@@ -16,7 +14,7 @@ import android.util.Log;
  * In the implementation u see there is a difference between the track names and
  * the tracks themselves. The names-list contains all the names of the tracks
  * that are in the working memory and on the devices memory. It may not be
- * perfectly synchronised with the actual tracks available as it is updated only
+ * perfectly synchronized with the actual tracks available as it is updated only
  * when needed. These names can be used to actually load a Track completely into
  * memory. The primary reason for the names is the list of all Tracks without
  * loading them all.
@@ -51,11 +49,6 @@ public class DataStorage implements SerialisableContent {
 	 * currently active Track
 	 */
 	private DataTrack currentTrack;
-	
-	/**
-	 * last known gps location, may be updated independent of ongoing logging 
-	 */
-	private Location lastLocation;
 
 	/**
 	 * Default private constructor for Singleton implementation.
@@ -230,23 +223,6 @@ public class DataStorage implements SerialisableContent {
 		for (DataTrack dt : tracks)
 			dt.delete();
 		tracks.clear();
-	}
-	
-	/**
-	 * Sets the current location, this is used for visualizing the last position
-	 * even if there is no logging going on
-	 * @param loc
-	 */
-	public void setLastLocation(Location loc) {
-		lastLocation = loc;
-	}
-
-	/**
-	 * returns the last known GPS location
-	 * @return
-	 */
-	public Location getLastLocation() {
-		return lastLocation;
 	}
 	
 	public void createNewTrackFolder(String name) {
