@@ -44,6 +44,27 @@ public class NewTrackActivity extends TabActivity {
 		}	
 	}
 	
+	private void initToggleButtons() {
+		
+		ToggleButton startWay =(ToggleButton)findViewById(R.id.startWay_Tbtn);
+		ToggleButton startArea =(ToggleButton)findViewById(R.id.startArea_Tbtn);
+		
+		try {
+			startWay.setChecked( ServiceConnector.getLoggerService().isWayLogging()) ;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			startArea.setChecked(ServiceConnector.getLoggerService().isAreaLogging());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	TabHost myTabHost;
 	@Override
 	/**
@@ -62,6 +83,8 @@ public class NewTrackActivity extends TabActivity {
 		//Init ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
+        
+        initToggleButtons();
         
         myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost) );
 		
@@ -114,15 +137,19 @@ public class NewTrackActivity extends TabActivity {
 	 */
 	public void startWayTbtn(View view){
         ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
+        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
 		String check = streetToggle.getText().toString();
         if(check.equals(streetToggle.getTextOn().toString())){
+        		areaToggle.setClickable(false);
         		try {
 					ServiceConnector.getLoggerService().beginWay(false);
+					
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
         }else{
+        	areaToggle.setClickable(true);
         	try {
 				ServiceConnector.getLoggerService().endWay();
 			} catch (RemoteException e) {
@@ -139,8 +166,10 @@ public class NewTrackActivity extends TabActivity {
 	 */
 	public void startAreaTbtn(View view){
 	    ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
+	    ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
 		String check = areaToggle.getText().toString();
         if(check.equals(areaToggle.getTextOn().toString())){
+        	streetToggle.setClickable(false);
 	        try{
 	        	ServiceConnector.getLoggerService().beginArea();
 	        
@@ -149,6 +178,7 @@ public class NewTrackActivity extends TabActivity {
 	        	e.printStackTrace();
 	        }
         }else  {
+        	streetToggle.setClickable(true);
         	 try{
  	        	ServiceConnector.getLoggerService().endArea();
  	        
