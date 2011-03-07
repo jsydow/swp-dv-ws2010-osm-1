@@ -183,6 +183,9 @@ public class DataPointsList extends DataMapObject implements
 	public void serialiseWay(XmlSerializer serializer, boolean shouldSerialiseMedia) {
 		try {
 			serializer.startTag(null, "way");
+			serializer.attribute(null, "version", "1");
+			serializer.attribute(null, "timestamp", getDatetime());
+			serializer.attribute(null, "id", Integer.toString(get_id()) );
 
 			for (DataNode dn : nodes) {
 				serializer.startTag(null, "nd");
