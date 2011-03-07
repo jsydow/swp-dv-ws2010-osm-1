@@ -16,13 +16,17 @@ import core.data.LogParameter;
 
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
-	public static final String BROADCAST_ACTION = "de.fu-berlin.inf.tracebook.UPDTAE_GPS";
+	private static final String basetag = "de.fu-berlin.inf.tracebook";
+	public  static final String UPDTAE_GPS = basetag + ".UPDTAE_GPS";
+	public  static final String UPDTAE_WAY = basetag + ".UPDTAE_WAY";
 	
 	DataStorage storage			= DataStorage.getInstance();
 	DataNode current_node		= null;
 	
 	LogParameter params;
-	Intent gps_intent;
+	
+	Intent gps_intent = new Intent(UPDTAE_GPS);
+	Intent way_intent = new Intent(UPDTAE_WAY);	// XXX do we need this?
 	
 	boolean gps_on = false;
 	boolean one_shot = false;
@@ -33,8 +37,6 @@ public class WaypointLogService extends Service implements LocationListener {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		Log.d(LOG_TAG, "onStart");
-		
-		gps_intent = new Intent(BROADCAST_ACTION);
 	}
 
 	@Override
@@ -186,6 +188,11 @@ public class WaypointLogService extends Service implements LocationListener {
 			current_node = null;
 		} else if(current_way() != null) {		// Continuous mode
 			current_way().newNode(loc);			// poi in track was already added before
+		}
+		
+		if(current_way() != null) {				// call for an update of the way
+			way_intent.putExtra("way_id", current_way().get_id());
+			sendBroadcast(way_intent);
 		}
 	}
 
