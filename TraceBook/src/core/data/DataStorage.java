@@ -1,10 +1,13 @@
 package core.data;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
 import android.location.Location;
+import android.os.Environment;
+import android.util.Log;
 
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
@@ -143,8 +146,9 @@ public class DataStorage implements SerialisableContent {
 	 * @return The newly created Track.
 	 */
 	public DataTrack newTrack() {
-		DataTrack dt = new DataTrack(null);
+		DataTrack dt = new DataTrack();
 		tracks.add(dt);
+		createNewTrackFolder(dt.getName());
 		return dt;
 	}
 
@@ -243,6 +247,16 @@ public class DataStorage implements SerialisableContent {
 	 */
 	public Location getLastLocation() {
 		return lastLocation;
+	}
+	
+	public void createNewTrackFolder(String name) {
+		File dir = new File(Environment.getExternalStorageDirectory()
+				+ File.separator + "TraceBook" + File.separator + name);
+		if(!dir.isDirectory()) {
+			if(!dir.mkdir()) {
+				Log.e("DataStorage","Could not create new track folder "+name);
+			}
+		}
 	}
 
 }
