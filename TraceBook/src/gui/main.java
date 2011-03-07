@@ -58,7 +58,7 @@ public class main extends Activity {
 	 * @param view the view
 	 */
 	public void loadTrackBtn(View view) {
-		Intent intent = new Intent(this, LoadTrackActivity.class);
+		Intent intent = new Intent(this, LoadTrackActivity.class); 
 		startActivity(intent);
 	}
 

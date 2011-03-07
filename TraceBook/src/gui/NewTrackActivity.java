@@ -92,9 +92,10 @@ public class NewTrackActivity extends TabActivity {
 		TabHost tabHost = getTabHost();
 	
 		//Init TabHost
+		
 		tabHost.addTab(tabHost.newTabSpec("map_tab")
 				.setIndicator(getResources().getString(R.string.map_tab))
-				.setContent(R.id.map_tab));
+				.setContent(new Intent(this, MapsForgeActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec("new_tab")
 				.setIndicator(getResources().getString(R.string.new_tab))
 				.setContent(R.id.new_tab));
