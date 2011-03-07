@@ -155,7 +155,13 @@ public class DataPointsList extends DataMapObject implements
 		// TODO Auto-generated method stub
 
 	}
-	
+
+	/**
+	 * Serialises all nodes sequentially.
+	 * 
+	 * @param serializer
+	 *            An XmlSerializer that is initialised.
+	 */
 	public void serialiseNodes(XmlSerializer serializer) {
 		for (DataNode dn : nodes) {
 			dn.serialise(serializer);
@@ -163,74 +169,52 @@ public class DataPointsList extends DataMapObject implements
 		return;
 	}
 
+	/**
+	 * Serialises a way as way-tag. The nodes are referenced like in OSM using a
+	 * nd-tag with an ref-attribute.
+	 * 
+	 * @param serializer
+	 *            An XmlSerializer that is initialised.
+	 */
 	public void serialiseWay(XmlSerializer serializer) {
 		try {
 			serializer.startTag(null, "way");
-			
-			for (DataNode dn : nodes){
+
+			for (DataNode dn : nodes) {
 				serializer.startTag(null, "nd");
-				
-				serializer.attribute(null, "ref", Integer.toString(dn.get_id()) );
-				
+
+				serializer
+						.attribute(null, "ref", Integer.toString(dn.get_id()));
+
 				serializer.endTag(null, "nd");
 			}
 			if (this.isArea && nodes.size() > 0) {
 				DataNode lastNode = nodes.getFirst();
 				serializer.startTag(null, "nd");
-				serializer.attribute(null, "ref", Integer.toString(lastNode.get_id()));
+				serializer.attribute(null, "ref",
+						Integer.toString(lastNode.get_id()));
 				serializer.endTag(null, "nd");
-				
+
 				serializer.startTag(null, "tag");
 				serializer.attribute(null, "k", "area");
 				serializer.attribute(null, "v", "yes");
 				serializer.endTag(null, "tag");
 			}
-			
+
 			serialiseTags(serializer);
-			
+
 			serializer.endTag(null, "way");
-			
+
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		}
-		
-		
-		
-		/*List<Node> ret = new LinkedList<Node>();
-
-		Element elem = doc.createElement("way");
-
-		elem.setAttribute("id", Integer.toString(this.get_id()));
-		elem.setAttribute("timestamp", this.getDatetime());
-		elem.setAttribute("version", "1");
-
-		for (DataNode dn : nodes) {
-			ret.add(dn.serialiseToXmlNode(doc));
-			Element nd = doc.createElement("nd");
-			nd.setAttribute("ref", Integer.toString(dn.get_id()));
-			elem.appendChild(nd);
-		}
-		if (this.isArea && nodes.size() > 0) {
-			DataNode lastNode = nodes.getFirst();
-			Element nd = doc.createElement("nd");
-			nd.setAttribute("ref", Integer.toString(lastNode.get_id()));
-			elem.appendChild(nd);
-			Element areaTag = doc.createElement("tag");
-			areaTag.setAttribute("k", "area");
-			areaTag.setAttribute("v", "yes");
-			elem.appendChild(areaTag);
-		}
-		// TODO: add all tags;
-		ret.add(elem);
-		return ret;*/
-		return;
 	}
 
 	public void delete() {

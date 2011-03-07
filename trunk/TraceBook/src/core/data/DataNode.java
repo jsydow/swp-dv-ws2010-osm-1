@@ -117,52 +117,39 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 
 	}
 
+	/**
+	 * Serialises a node using a XmlSerializer. It generates a <node>-tag.
+	 * 
+	 * @param serializer
+	 *            An XmlSerializer that is initialised.
+	 */
 	public void serialise(XmlSerializer serializer) {
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 		dfs.setDecimalSeparator('.');
 		DecimalFormat df = new DecimalFormat("0.0000000", dfs);
-		
+
 		try {
 			serializer.startTag(null, "node");
-			serializer.attribute(null, "lat", df.format(this.getLat()) );
-			serializer.attribute(null, "lon", df.format(this.getLon()) );
+			serializer.attribute(null, "lat", df.format(this.getLat()));
+			serializer.attribute(null, "lon", df.format(this.getLon()));
 			serializer.attribute(null, "id", Integer.toString(this.get_id()));
 			serializer.attribute(null, "timestamp", this.getDatetime());
 			serializer.attribute(null, "version", "1");
-			
+
 			serialiseTags(serializer);
-			
+
 			serializer.endTag(null, "node");
-			
-			
+
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		}
-		
-		
-		/*Element ret = doc.createElement("node");
-		
-
-		ret.setAttribute("lat", df.format(this.getLat()));
-		ret.setAttribute("lon", df.format(this.getLon()));
-		ret.setAttribute("id", Integer.toString(this.get_id()));
-		ret.setAttribute("timestamp", this.getDatetime());
-		ret.setAttribute("version", "1");
-
-		for (String tag : tags.keySet()) {
-
-			Element areaTag = doc.createElement("tag");
-			areaTag.setAttribute("k", tag);
-			areaTag.setAttribute("v", tags.get(tag));
-			ret.appendChild(areaTag);
-		}*/
 
 		return;
 	}

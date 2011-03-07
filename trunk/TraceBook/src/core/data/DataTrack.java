@@ -226,8 +226,13 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		}
 	}
 
+	/**
+	 * Serialises a track to a XML-file stored on the SD-card in folder TraceBook/<track name>.
+	 */
 	public void serialise() {
-		File newxmlfile = new File(Environment.getExternalStorageDirectory()+ "/new.xml");
+		File newxmlfile = new File(Environment.getExternalStorageDirectory()
+				+ File.separator + "TraceBook" + File.separator + name
+				+ File.separator + "/track.xml");
 		try {
 			newxmlfile.createNewFile();
 		} catch (IOException e) {
@@ -239,15 +244,16 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		} catch (FileNotFoundException e) {
 			//
 		}
+
 		XmlSerializer serializer = Xml.newSerializer();
 		try {
 			serializer.setOutput(fileos, "UTF-8");
 			serializer.startDocument(null, Boolean.valueOf(true));
 			serializer.startTag(null, "osm");
-			
+
 			serializer.attribute(null, "version", "0.6");
 			serializer.attribute(null, "generator", "TraceBook");
-			
+
 			for (DataNode dn : nodes) {
 				dn.serialise(serializer);
 			}
@@ -257,45 +263,11 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 			for (DataPointsList dpl : ways) {
 				dpl.serialiseWay(serializer);
 			}
-			
+
 			serializer.endTag(null, "osm");
 		} catch (Exception e) {
 			//
 		}
-
-		/*
-		 * DocumentBuilderFactory factory =
-		 * DocumentBuilderFactory.newInstance(); DocumentBuilder builder; try {
-		 * builder = factory.newDocumentBuilder(); } catch
-		 * (ParserConfigurationException e) { e.printStackTrace(); return; }
-		 * Document document = builder.newDocument();
-		 * 
-		 * Element root = document.createElement("osm");
-		 * root.setAttribute("version", "0.6"); root.setAttribute("generator",
-		 * "TraceBook"); // TODO
-		 * 
-		 * for (DataNode dn : nodes) {
-		 * root.appendChild(dn.serialiseToXmlNode(document)); } for
-		 * (DataPointsList dpl : ways) { List<Node> ln =
-		 * dpl.serialiseToXmlNode(document); for (Node nd : ln) {
-		 * root.appendChild(nd); } }
-		 * 
-		 * document.appendChild(root);
-		 * 
-		 * try { Transformer transformer = TransformerFactory.newInstance()
-		 * .newTransformer(); DOMSource source = new DOMSource(document); //
-		 * Context.openFileOutput("fu.xml",Context.MODE_APPEND);
-		 * FileOutputStream os = new FileOutputStream(new File(Environment
-		 * .getExternalStorageDirectory().getAbsolutePath() + File.separator +
-		 * "fu.xml")); StreamResult result = new StreamResult(os);
-		 * transformer.transform(source, result); } catch
-		 * (TransformerConfigurationException e) { // TODO Auto-generated catch
-		 * block e.printStackTrace(); } catch (FileNotFoundException e) { //
-		 * TODO Auto-generated catch block e.printStackTrace(); } catch
-		 * (TransformerFactoryConfigurationError e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); } catch (TransformerException e) {
-		 * // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
 
 	}
 
