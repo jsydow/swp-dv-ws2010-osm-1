@@ -143,9 +143,7 @@ public class WaypointLogService extends Service implements LocationListener {
 
 		public synchronized int endArea() {
 			// TODO Auto-generated method stub
-			
-			DataPointsList area = storage.getCurrentTrack().getCurrentWay(); 
-						
+								
 			storage.getCurrentTrack().setCurrentWay(null);			
 			DataPointsList tmp = current_way();
 			
