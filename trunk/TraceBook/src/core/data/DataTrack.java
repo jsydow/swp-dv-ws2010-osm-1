@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -62,6 +64,8 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		super();
 		ways = new LinkedList<DataPointsList>();
 		nodes = new LinkedList<DataNode>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		this.name = sdf.format(new Date());
 	}
 
 	/**
