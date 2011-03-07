@@ -102,6 +102,13 @@ public class main extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.close_opt:
+			
+			try {
+				ServiceConnector.getLoggerService().stopTrack();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			ServiceConnector.stopService();
 			System.exit(0);
 			finish();
