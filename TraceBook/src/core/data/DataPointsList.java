@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.mapsforge.android.maps.GeoPoint;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
@@ -79,6 +80,16 @@ public class DataPointsList extends DataMapObject implements
 		return nodes;
 	}
 
+	public GeoPoint[] toGeoPoitArray() {
+		GeoPoint[] tmp = new GeoPoint[nodes.size()];
+		
+		int i=0;
+		for(DataNode n : nodes)
+			tmp[i++] = new GeoPoint(n.getLat(), n.getLon());
+		
+		return tmp;
+	}
+	
 	/**
 	 * Searches for a Node in this Track by the specified id.
 	 * 

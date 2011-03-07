@@ -124,8 +124,7 @@ public class AddPointMetaActivity extends Activity {
 		startActivity(intent);
 	}
 
-	
-	public void cancelBtn(View view) {
+	public void cancelBtn(View view) { // method signature including view is required
 		final Intent intent = new Intent(this, AddPointActivity.class);
 		startActivity(intent);
 	}
