@@ -2,17 +2,21 @@ package gui;
 
 import java.io.File;
 
+import org.mapsforge.android.maps.GeoPoint;
+import org.mapsforge.android.maps.MapActivity;
+import org.mapsforge.android.maps.MapController;
+import org.mapsforge.android.maps.MapView;
+
+import util.helper;
+
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
-
-import org.mapsforge.android.maps.MapActivity;
-import org.mapsforge.android.maps.MapView;
-
 import core.data.DataStorage;
 
 public class MapsForgeActivity extends MapActivity {
+	MapController mapController;
 	Handler serviceHandler = null;
 
 	@Override
@@ -33,6 +37,8 @@ public class MapsForgeActivity extends MapActivity {
 		mapView.setMapFile(file.getAbsolutePath());
 
 		setContentView(mapView);
+		
+		mapController = mapView.getController();
 
 		serviceHandler = new Handler();
 		serviceHandler.postDelayed(new RunTask(), 1000L);
@@ -49,7 +55,8 @@ public class MapsForgeActivity extends MapActivity {
 			Location loc = DataStorage.getInstance().getLastLocation();
 			
 			if(loc != null) {
-				Toast.makeText(getApplicationContext(), loc.getLatitude() + " - " + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+				GeoPoint current = helper.geoPointFromLocation(loc);
+				mapController.setCenter(current);
 			}
 			
 			serviceHandler.postDelayed(this, 1000L);
