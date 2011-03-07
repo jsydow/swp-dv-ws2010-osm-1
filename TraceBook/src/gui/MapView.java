@@ -26,11 +26,6 @@ public class MapView extends View implements OnTouchListener{
 	Bitmap bitmap;
 
 	/**
-	 * The Paint objects helps us to define attributes for drawing operations
-	 */
-	Paint paint;
-
-	/**
 	 * Height and width variable of the actual view size.
 	 */
 	int width;
