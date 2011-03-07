@@ -19,7 +19,8 @@
         <activity android:name="gui.AddPointActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="gui.PreferencesActivity" android:screenOrientation="portrait"></activity>
         <activity android:name="gui.EditPointActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="gui.MapsForgeActivity"></activity>
 	<service android:name="core.logger.WaypointLogService"/>
+	<activity android:name="gui.MapsForgeActivity"></activity>
+	<activity android:name="gui.AddPointMetaActivity"></activity>
     </application>
 </manifest>

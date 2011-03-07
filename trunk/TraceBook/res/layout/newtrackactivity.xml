@@ -13,6 +13,7 @@
 			<LinearLayout android:id="@+id/map_tab"
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="fill_parent">
+
 			</LinearLayout>
 			<LinearLayout android:id="@+id/new_tab"
 				android:orientation="vertical" android:layout_width="fill_parent"

@@ -8,6 +8,7 @@
     <string name="trackName">Trackname</string>
     <string name="insertTag">Tag einfügen</string>
     <string name="insertValue">Wert einfügen</string>
+    <string name="tagId">POI Id</string>
   
   	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>
@@ -28,4 +29,5 @@
     <string name="poi_btn">Point of intrest</string>
     <string name="save_btn">Speichern</string>
     <string name="cancel_btn">Abbrechen</string>
+    <string name="addMeta_btn">Hinzufügen</string>
 </resources>
