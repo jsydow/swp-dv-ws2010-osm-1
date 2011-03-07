@@ -13,7 +13,7 @@ Goal list:
  
 
  MetaDaten + Speicher + Ändern 
-  * Audio , Video, Text( Wie? ) ( *Hui && David* )
+  * Audio , Video, Text( Wie? ) ( *Huy && David* )
   * GUI anpassen( Hinzufügen + Anzeigen )  ( *Marc* )
   * Serialisierung beenden ( *Jan* )
 
