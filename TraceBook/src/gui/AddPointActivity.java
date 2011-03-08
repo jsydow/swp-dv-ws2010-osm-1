@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import core.data.DataNode;
+import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
 
@@ -27,22 +28,39 @@ public class AddPointActivity extends Activity {
 	TextView nodeId;
 	TextView nodeInfo;
 	DataNode node;
+	DataPointsList way;
+	DataPointsList area;
 	String[] metaInformation;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final Bundle extras = getIntent().getExtras();
-
+		
 		/*
 		 * Get the node of the sending Intent
 		 */
 		if (extras != null) {
-			int nodeId = extras.getInt("DataNodeId");
-			List<DataNode> nodeList = DataStorage.getInstance()
-					.getCurrentTrack().getNodes();
-			int index = Collections.binarySearch(nodeList, nodeId);
-			node = nodeList.get(index);
+
+			if (extras.containsKey("DataNodeId")) {
+				int poiNodeId = extras.getInt("DataNodeId");
+				List<DataNode> nodeList = DataStorage.getInstance()
+						.getCurrentTrack().getNodes();
+				int index = Collections.binarySearch(nodeList, poiNodeId);
+				node = nodeList.get(index);
+			} else if (extras.containsKey("WayNodeId")) {
+				int wayNodeId = extras.getInt("WayNodeId");
+				List<DataPointsList> wayList = DataStorage.getInstance()
+				.getCurrentTrack().getWays();
+				int index = Collections.binarySearch(wayList, wayNodeId);
+				way = wayList.get(index);
+			} else if (extras.containsKey("AreaNodeId")) {
+				int areaNodeId = extras.getInt("AreaNodeId");
+				List<DataPointsList> areaList = DataStorage.getInstance()
+				.getCurrentTrack().getWays();
+				int index = Collections.binarySearch(areaList, areaNodeId);
+				area = areaList.get(index);
+			}
 		}
 
 		setContentView(R.layout.addpointactivity);

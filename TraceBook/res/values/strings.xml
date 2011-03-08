@@ -2,6 +2,9 @@
 <resources>
     <!-- Textview values -->
     <string name="welcome">Willkommen bei TraceBook.</string>
+    <string name="POI">POI</string>
+    <string name="Way">Way</string>
+    <string name="Area">Area</string>
     <string name="app_name">TraceBook</string>
     <string name="newTrack">Neuer Track</string>
     <string name="loadTrack">Lade Track</string>
