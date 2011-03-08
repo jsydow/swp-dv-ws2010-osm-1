@@ -20,7 +20,6 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import core.data.DataMedia;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -323,20 +322,40 @@ public class NewTrackActivity extends TabActivity {
 
 	}
 
+	/**
+	 * Function to be called upon clicking the "Take a photo!" button
+	 * 
+	 * @param view
+	 */
 	public void makePictureBtn(View view) {
 		mm.takePhoto(this);
 	}
 
+	/**
+	 * Function to be called upon clicking the "Record a video!" button
+	 * 
+	 * @param view
+	 */
 	public void makeVideoBtn(View view) {
 		mm.takeVideo(this);
 	}
 
+	/**
+	 * Function to be called upon clicking the "Record a voice memo!" button
+	 * 
+	 * @param view
+	 */
 	public void makeMemoBtn(View view) {
-		
+		// TODO: Fill this space.
 	}
 
+	/**
+	 * Function to be called upon clicking the "Make a text note!" button
+	 * 
+	 * @param view
+	 */
 	public void makeNoticeBtn(View view) {
-
+		// TODO: Fill this space.
 	}
 
 	@Override
