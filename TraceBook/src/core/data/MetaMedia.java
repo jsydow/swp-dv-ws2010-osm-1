@@ -40,11 +40,6 @@ public class MetaMedia {
 	private DataTrack currentTrack;
 	
 	/**
-	 * Directory to put all media files into.
-	 */
-	private String baseDir = "";
-	
-	/**
 	 * Path to the most recent media file.
 	 */
 	private String currentFilename = "";
@@ -66,7 +61,6 @@ public class MetaMedia {
 	 * @param track     DataTrack object containing the current track.
 	 */
 	MetaMedia(DataTrack track) {
-		baseDir = track.getTrackDirPath();
 		currentTrack = track;
 		recorder = new MediaRecorder();
 	}
@@ -108,7 +102,8 @@ public class MetaMedia {
 			// Possible output formats are 3gpp and MPEG4, e. g.
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-			recorder.setOutputFile(baseDir + File.separator + currentFilename);
+			recorder.setOutputFile(currentTrack.getTrackDirPath() +
+					File.separator + currentFilename);
 
 			try {
 				recorder.start();
@@ -140,7 +135,8 @@ public class MetaMedia {
 			recorder.stop();
 			recorder.reset();
 			recorder.release();
-			currentTrack.addMedia(new DataMedia(baseDir, currentFilename));
+			currentTrack.addMedia(new DataMedia(currentTrack.getTrackDirPath(),
+					currentFilename));
 			
 			isRecordingAudio = false;
 		}
@@ -176,7 +172,8 @@ public class MetaMedia {
 		final Intent i = new Intent(action);
 		currentFilename = getNewFilename(requestCode);
 		
-		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(baseDir + File.separator + currentFilename)));
+		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(currentTrack.getTrackDirPath() +
+				File.separator + currentFilename)));
 		activity.startActivityForResult(i, requestCode);
 		
 		return currentFilename;
