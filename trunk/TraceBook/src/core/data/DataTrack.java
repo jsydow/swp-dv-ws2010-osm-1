@@ -66,6 +66,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		nodes = new LinkedList<DataNode>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		this.name = sdf.format(new Date());
+		createNewTrackFolder();
 	}
 
 	/**
@@ -347,6 +348,19 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 
 	public void serialise() {
 		serialise(true);
+	}
+	
+	public void createNewTrackFolder() {
+		File dir = new File( DataStorage.getTraceBookDirPath() + File.separator + name);
+		if(!dir.isDirectory()) {
+			if(!dir.mkdir()) {
+				Log.e("DataStorage","Could not create new track folder "+name);
+			}
+		}
+	}
+	
+	public String getTrackDirPath() {
+		return DataStorage.getTraceBookDirPath() + File.separator + name;
 	}
 
 }
