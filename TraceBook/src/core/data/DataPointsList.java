@@ -34,7 +34,7 @@ public class DataPointsList extends DataMapObject implements
 	/**
 	 * default constructor
 	 */
-	DataPointsList() {
+	public DataPointsList() {
 		super();
 		nodes = new LinkedList<DataNode>();
 	}
@@ -45,7 +45,7 @@ public class DataPointsList extends DataMapObject implements
 	 * @param Whether
 	 *            object is an Area.
 	 */
-	DataPointsList(boolean isArea) {
+	public DataPointsList(boolean isArea) {
 		this();
 		this.isArea = isArea;
 	}
@@ -82,14 +82,14 @@ public class DataPointsList extends DataMapObject implements
 
 	public GeoPoint[] toGeoPoitArray() {
 		GeoPoint[] tmp = new GeoPoint[nodes.size()];
-		
-		int i=0;
-		for(DataNode n : nodes)
+
+		int i = 0;
+		for (DataNode n : nodes)
 			tmp[i++] = new GeoPoint(n.getLat(), n.getLon());
-		
+
 		return tmp;
 	}
-	
+
 	/**
 	 * Searches for a Node in this Track by the specified id.
 	 * 
@@ -158,7 +158,7 @@ public class DataPointsList extends DataMapObject implements
 	 * @return The loaded DataPointsList object. If there is not such an object
 	 *         null is returned.
 	 */
-	static DataPointsList deserialise(int id) {
+	public static DataPointsList deserialise(int id) {
 		/* TODO STUB */
 		return null;
 	}
@@ -174,7 +174,8 @@ public class DataPointsList extends DataMapObject implements
 	 * @param serializer
 	 *            An XmlSerializer that is initialised.
 	 */
-	public void serialiseNodes(XmlSerializer serializer, boolean shouldSerialiseMedia) {
+	public void serialiseNodes(XmlSerializer serializer,
+			boolean shouldSerialiseMedia) {
 		for (DataNode dn : nodes) {
 			dn.serialise(serializer, shouldSerialiseMedia);
 		}
@@ -191,12 +192,13 @@ public class DataPointsList extends DataMapObject implements
 	 *            Should media also be serialised? Adding media means that the
 	 *            resulting XML-file is not valid to OSM.
 	 */
-	public void serialiseWay(XmlSerializer serializer, boolean shouldSerialiseMedia) {
+	public void serialiseWay(XmlSerializer serializer,
+			boolean shouldSerialiseMedia) {
 		try {
 			serializer.startTag(null, "way");
 			serializer.attribute(null, "version", "1");
 			serializer.attribute(null, "timestamp", getDatetime());
-			serializer.attribute(null, "id", Integer.toString(get_id()) );
+			serializer.attribute(null, "id", Integer.toString(get_id()));
 
 			for (DataNode dn : nodes) {
 				serializer.startTag(null, "nd");

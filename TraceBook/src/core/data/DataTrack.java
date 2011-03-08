@@ -54,13 +54,14 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	private String comment;
 
 	/**
-	 * Constructor which initialises the Track, each Track must have a Date time.
+	 * Constructor which initialises the Track, each Track must have a Date
+	 * time.
 	 * 
 	 * @param datetime
 	 *            The Date time in string representation. Can be null! Null is
 	 *            recommended.
 	 */
-	DataTrack() {
+	public DataTrack() {
 		super();
 		ways = new LinkedList<DataPointsList>();
 		nodes = new LinkedList<DataNode>();
@@ -77,7 +78,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	 * @param name
 	 *            The display and foldername of the Track.
 	 */
-	DataTrack(String name) {
+	public DataTrack(String name) {
 		this();
 		this.name = name;
 	}
@@ -92,7 +93,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	 * @param comment
 	 *            Comment that may be displayed for this Track.
 	 */
-	DataTrack(String name, String comment) {
+	public DataTrack(String name, String comment) {
 		this(name);
 		this.comment = comment;
 	}
@@ -233,30 +234,32 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	}
 
 	/**
-	 * Serialises a track to a XML-file stored on the SD-card in folder TraceBook/<track name>.
+	 * Serialises a track to a XML-file stored on the SD-card in folder
+	 * TraceBook/<track name>.
+	 * 
 	 * @param shouldSerialiseMedia
 	 *            Should media also be serialised? Adding media means that the
 	 *            resulting XML-file is not valid to OSM.
 	 */
 	public void serialise(boolean shouldSerialiseMedia) {
-		
-		Log.d("DataTrack", "Ways: "+ways.size()+", POIs: "+nodes.size());
-		
+
+		Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
+
 		File xmlfile = new File(Environment.getExternalStorageDirectory()
 				+ File.separator + "TraceBook" + File.separator + name
 				+ File.separator + "/track.xml");
 		try {
-			if(xmlfile.exists()) {
-				if(!xmlfile.delete()) {
+			if (xmlfile.exists()) {
+				if (!xmlfile.delete()) {
 					Log.e("TrackSerialisation", "Deleting old file failed");
 					return;
 				}
 			}
-			if(!xmlfile.createNewFile()) {
+			if (!xmlfile.createNewFile()) {
 				Log.e("TrackSerialisation", "Creating new XML-file failed");
 				return;
 			}
-			
+
 		} catch (IOException e) {
 			Log.e("TrackSerialisation", "Could not create new file");
 		}
@@ -277,7 +280,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 			serializer.attribute(null, "generator", "TraceBook");
 
 			for (DataNode dn : nodes) {
-				dn.serialise(serializer,shouldSerialiseMedia);
+				dn.serialise(serializer, shouldSerialiseMedia);
 			}
 			for (DataPointsList dpl : ways) {
 				dpl.serialiseNodes(serializer, shouldSerialiseMedia);
@@ -289,7 +292,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 			serializer.endTag(null, "osm");
 			serializer.flush();
 		} catch (Exception e) {
-			Log.e("TrackSerialisation","Could not serialise track");
+			Log.e("TrackSerialisation", "Could not serialise track");
 		}
 
 	}
@@ -349,16 +352,18 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 	public void serialise() {
 		serialise(true);
 	}
-	
+
 	public void createNewTrackFolder() {
-		File dir = new File( DataStorage.getTraceBookDirPath() + File.separator + name);
-		if(!dir.isDirectory()) {
-			if(!dir.mkdir()) {
-				Log.e("DataStorage","Could not create new track folder "+name);
+		File dir = new File(DataStorage.getTraceBookDirPath() + File.separator
+				+ name);
+		if (!dir.isDirectory()) {
+			if (!dir.mkdir()) {
+				Log.e("DataStorage", "Could not create new track folder "
+						+ name);
 			}
 		}
 	}
-	
+
 	public String getTrackDirPath() {
 		return DataStorage.getTraceBookDirPath() + File.separator + name;
 	}

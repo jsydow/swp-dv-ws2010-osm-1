@@ -16,49 +16,52 @@ import android.util.Log;
  * 
  */
 public class DataMedia {
-	
+
 	/**
 	 * Media type constants.
 	 */
-	static final int TYPE_VIDEO = 3;
-	static final int TYPE_AUDIO = 2;
-	static final int TYPE_TEXT = 0;
-	static final int TYPE_PICTURE = 1;
-	static String[] typesAsString = { "text", "picture", "audio", "video" };
-	
+	public static final int TYPE_VIDEO = 3;
+	public static final int TYPE_AUDIO = 2;
+	public static final int TYPE_TEXT = 0;
+	public static final int TYPE_PICTURE = 1;
+	private static String[] typesAsString = { "text", "picture", "audio",
+			"video" };
+
 	/**
 	 * The internal id for this medium.
 	 */
 	private int _id;
-	
+
 	/**
 	 * The path to the file of the medium on the memory. This path should be
 	 * sufficient to open the file (contains filename).
 	 */
 	private String path;
-	
+
 	/**
 	 * This name is the displayed name. May be equal to the filename without
 	 * extension.
 	 */
 	private String name;
-	
+
 	/**
 	 * This is the type of the medium. Use the TYPE_****-constants!
 	 */
 	private int type;
-	
+
 	/**
 	 * Basically a toString()-method of the type-variable.
-	 * @param type The type-variable of this class/object.
+	 * 
+	 * @param type
+	 *            The type-variable of this class/object.
 	 * @return The type as String
 	 */
-	private String typeToString(int p_type) {
-		if(p_type>TYPE_VIDEO || p_type<TYPE_TEXT)
+	public String typeToString(int p_type) {
+		if (p_type > TYPE_VIDEO || p_type < TYPE_TEXT)
 			return "";
 		return typesAsString[p_type];
 	}
-	
+
 	/**
 	 * Constructor that initialises the medium.
 	 * 
@@ -77,14 +80,13 @@ public class DataMedia {
 	/**
 	 * default constructor
 	 */
-	DataMedia() {
+	public DataMedia() {
 		// nothing to do
 	}
-	
-	
 
 	/**
 	 * Getter-method
+	 * 
 	 * @return The type of the medium
 	 */
 	public int getType() {
@@ -93,7 +95,9 @@ public class DataMedia {
 
 	/**
 	 * Setter-method
-	 * @param The new type of this medium
+	 * 
+	 * @param The
+	 *            new type of this medium
 	 */
 	public void setType(int type) {
 		this.type = type;
@@ -154,7 +158,7 @@ public class DataMedia {
 		// Rename file (or directory)
 		boolean success = file.renameTo(file2);
 		if (!success) {
-		    // File was not successfully renamed
+			// File was not successfully renamed
 		}
 
 		this.name = name;
@@ -169,7 +173,7 @@ public class DataMedia {
 	 *            The filename without extension of the medium.
 	 * @return The deserialised DataMedia object.
 	 */
-	static DataMedia deserialise(String name) {
+	public static DataMedia deserialise(String name) {
 		/* TODO STUB */
 		return null;
 	}
@@ -178,12 +182,13 @@ public class DataMedia {
 	 * Deletes a medium on the devices memory. Uses the appropriate
 	 * ContentProvider Note: Currently a stub.
 	 */
-	void delete() {
+	public void delete() {
 		/* TODO */
 	}
-	
+
 	/**
 	 * Generates a <link>-tag for this medium.
+	 * 
 	 * @param serializer
 	 */
 	public void serialise(XmlSerializer serializer) {
@@ -197,7 +202,7 @@ public class DataMedia {
 		} catch (IllegalStateException e) {
 			Log.e("MediaSerialisation", "Illegal state");
 		} catch (IOException e) {
-			Log.e("MediaSerialisation", "Could not serialise medium "+name);
+			Log.e("MediaSerialisation", "Could not serialise medium " + name);
 		}
 	}
 }
