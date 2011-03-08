@@ -2,14 +2,9 @@ package gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
-import core.data.DataNode;
-import core.data.DataStorage;
 
 import Trace.Book.R;
 import android.app.Activity;
@@ -21,7 +16,8 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
+import core.data.DataMapObject;
+import core.data.DataStorage;
 
 public class AddPointMetaActivity extends Activity {
 
@@ -33,7 +29,7 @@ public class AddPointMetaActivity extends Activity {
 	static final short USEFUL = 2;
 	int nodeId;
 
-	DataNode node;
+	DataMapObject node;
 	XmlResourceParser parser;
 
 	@Override
@@ -49,9 +45,7 @@ public class AddPointMetaActivity extends Activity {
 		
 		if (extras != null) {
 			nodeId = extras.getInt("DataNodeId");
-			List<DataNode>  nodeList = DataStorage.getInstance().getCurrentTrack().getNodes();
-			int index = Collections.binarySearch(nodeList, nodeId);
-			node = nodeList.get(index);
+			node = DataStorage.getInstance().getCurrentTrack().getDataMapObjectById(nodeId);
 			
 			if( extras.containsKey("DataNodeKey") ) {
 				String keyValue = extras.getString("DataNodeKey");

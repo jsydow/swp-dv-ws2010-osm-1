@@ -155,12 +155,9 @@ public class NewTrackActivity extends TabActivity {
 					int position, long id) {
 				String itemText = adapter.getItem(position);
 				String[] cut = itemText.split(": ");
-				if(cut[1].equals(getResources().getString(R.string.POI)))	
-					intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
-				else if(cut[1].equals(getResources().getString(R.string.Way)))
-					intent.putExtra("WayNodeId", Integer.parseInt(cut[0]));
-				else if(cut[1].equals(getResources().getString(R.string.Area)))
-					intent.putExtra("AreaNodeId", Integer.parseInt(cut[0]));
+				
+				intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
+				
 				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();

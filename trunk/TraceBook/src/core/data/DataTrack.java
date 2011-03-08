@@ -469,4 +469,25 @@ public class DataTrack extends DataMediaHolder {
 	private void addWay(DataPointsList dpl) {
 		ways.add(dpl);
 	}
+	
+	/**
+	 * Search the whole track for an DataMapObject by id
+	 * @param id
+	 * @return
+	 */
+	public DataMapObject getDataMapObjectById( int id ){
+		
+		DataMapObject res = getNodeById( id );
+		if( res != null ) {
+			return res;
+		}
+		
+		res = getPointsListById( id );
+		if( res != null ) {
+			return res;
+		}
+		
+		return null;
+		
+	}
 }
