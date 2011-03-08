@@ -17,16 +17,16 @@ import core.data.LogParameter;
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
 	private static final String basetag = "de.fu-berlin.inf.tracebook";
-	public  static final String UPDTAE_GPS = basetag + ".UPDTAE_GPS";
-	public  static final String UPDTAE_WAY = basetag + ".UPDTAE_WAY";
+	public  static final String UPDTAE_GPS_POS = basetag + ".UPDTAE_GPS_POS";
+	public  static final String UPDTAE_OBJECT = basetag + ".UPDTAE_OBJECT";
 	
 	DataStorage storage			= DataStorage.getInstance();
 	DataNode current_node		= null;
 	
 	LogParameter params;
 	
-	Intent gps_intent = new Intent(UPDTAE_GPS);
-	Intent way_intent = new Intent(UPDTAE_WAY);	// XXX do we need this?
+	Intent gps_intent = new Intent(UPDTAE_GPS_POS);
+	Intent update_intent = new Intent(UPDTAE_OBJECT);
 	
 	boolean gps_on = false;
 	boolean one_shot = false;
@@ -185,14 +185,20 @@ public class WaypointLogService extends Service implements LocationListener {
 				
 		if(current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);
-			current_node = null;
+			
+			update_intent.putExtra("point_id", current_node.get_id());
+			update_intent.putExtra("way_id", -1);
+			sendBroadcast(update_intent);
+			
+			current_node = null;				// no node waiting for gps pos any more
 		} else if(current_way() != null) {		// Continuous mode
 			current_way().newNode(loc);			// poi in track was already added before
 		}
 		
 		if(current_way() != null) {				// call for an update of the way
-			way_intent.putExtra("way_id", current_way().get_id());
-			sendBroadcast(way_intent);
+			update_intent.putExtra("point_id", -1);
+			update_intent.putExtra("way_id", current_way().get_id());
+			sendBroadcast(update_intent);
 		}
 	}
 
