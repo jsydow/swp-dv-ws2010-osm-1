@@ -188,9 +188,13 @@ public class MetaMedia {
 	 * Appends this media file to a given DataMediaHolder object. 
 	 * 
 	 * @param parent       Object to append a DataMedia object to.
+	 * @return             Object that has been appended.
 	 */
-	public final void appendToObject(DataMediaHolder parent) {
-		parent.addMedia(new DataMedia(getPath(), currentFilename));
+	public final DataMedia appendToObject(DataMediaHolder parent) {
+		DataMedia dm = new DataMedia(getPath(), currentFilename);
+		
+		parent.addMedia(dm);
+		return dm;
 	}
 
 	/**
