@@ -247,7 +247,7 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 
 		File xmlfile = new File(Environment.getExternalStorageDirectory()
 				+ File.separator + "TraceBook" + File.separator + name
-				+ File.separator + "/track.xml");
+				+ File.separator + "/track.tbt");
 		try {
 			if (xmlfile.exists()) {
 				if (!xmlfile.delete()) {
