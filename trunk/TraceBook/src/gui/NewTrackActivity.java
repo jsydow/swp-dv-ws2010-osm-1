@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import core.data.DataNode;
+import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
 
@@ -56,7 +57,7 @@ public class NewTrackActivity extends TabActivity {
 	 * Create activity
 	 */
 	public void onCreate(Bundle savedInstanceState) {
-		myTabHost = getTabHost();
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
 		// Init TabHost
@@ -71,6 +72,8 @@ public class NewTrackActivity extends TabActivity {
 
 		initToggleButtons();
 		setButtonList(false, 0);
+		
+		myTabHost = getTabHost();
 		myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost));
 
 	}
@@ -154,7 +157,7 @@ public class NewTrackActivity extends TabActivity {
 					int position, long id) {
 				String itemText = adapter.getItem(position);
 				String[] cut = itemText.split(": ");
-				intent.putExtra("DataNodeId", Integer.parseInt(cut[1]));
+				intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
 				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
@@ -326,12 +329,23 @@ public class NewTrackActivity extends TabActivity {
 
 		List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack()
 				.getNodes();
-		String[] poiList = new String[nodeList.size()];
+		List<DataPointsList> wayList = DataStorage.getInstance().getCurrentTrack().getWays();
+		String[] poiList = new String[nodeList.size() + wayList.size()];
 		int i = 0;
 		for (DataNode dn : nodeList) {
-			poiList[i] = "POI's: " + dn.get_id();
+			poiList[i] = dn.get_id() + ": POI";
 			i++;
 		}
+		
+		for(DataPointsList wl : wayList) {
+			if(wl.isArea())
+				poiList[i] = wl.get_id() + ": Area";
+			else
+				poiList[i] = wl.get_id() + ": Way";
+			i++;
+		}
+		
+		
 		return poiList;
 	}
 }
