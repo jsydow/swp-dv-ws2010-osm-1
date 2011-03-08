@@ -11,8 +11,6 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import core.data.DataTrack;
-
 /**
  * This class takes care of how different media files are created. Basically,
  * there are two different ways to create a new file:
