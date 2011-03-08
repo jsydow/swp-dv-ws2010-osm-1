@@ -47,31 +47,6 @@ public class NewTrackActivity extends TabActivity {
 		}
 	}
 
-	/**
-	 * Init Toggle Buttons for startWay and startArea
-	 */
-	private void initToggleButtons() {
-
-		ToggleButton startWay = (ToggleButton) findViewById(R.id.startWay_Tbtn);
-		ToggleButton startArea = (ToggleButton) findViewById(R.id.startArea_Tbtn);
-
-		try {
-			startWay.setChecked(ServiceConnector.getLoggerService()
-					.isWayLogging());
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			startArea.setChecked(ServiceConnector.getLoggerService()
-					.isAreaLogging());
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 
 	TabHost myTabHost;
 	TextView mediaData;
@@ -135,12 +110,40 @@ public class NewTrackActivity extends TabActivity {
 	}
 
 	/**
+	 * Init Toggle Buttons for startWay and startArea
+	 */
+	private void initToggleButtons() {
+
+		ToggleButton startWay = (ToggleButton) findViewById(R.id.startWay_Tbtn);
+		ToggleButton startArea = (ToggleButton) findViewById(R.id.startArea_Tbtn);
+
+		try {
+			startWay.setChecked(ServiceConnector.getLoggerService()
+					.isWayLogging());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			startArea.setChecked(ServiceConnector.getLoggerService()
+					.isAreaLogging());
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	/**
 	 * Init ListView with the list of saved POI, streets and areas
 	 */
 	void initListView() {
+		final Intent intent = new Intent(this, AddPointActivity.class);
 		// Init ListView for EditTab
 		ListView listView = (ListView) findViewById(R.id.tracks_lvw);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, getPOIList());
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
@@ -149,6 +152,10 @@ public class NewTrackActivity extends TabActivity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				String itemText = adapter.getItem(position);
+				String[] cut = itemText.split(": ");
+				intent.putExtra("DataNodeId", Integer.parseInt(cut[1]));
+				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 			}
@@ -264,6 +271,7 @@ public class NewTrackActivity extends TabActivity {
 		}
 
 		final Intent intent = new Intent(this, AddPointActivity.class);
+		intent.putExtra("DataNodeId", nodeId);
 		startActivity(intent);
 	}
 
