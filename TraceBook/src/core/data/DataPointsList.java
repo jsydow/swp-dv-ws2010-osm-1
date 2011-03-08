@@ -84,9 +84,9 @@ public class DataPointsList extends DataMapObject {
 	 * in a RouteOverlay.
 	 * If isArea() is true, the first point will be added as last point, this is a requirement
 	 * of the RouteOverlay.
-	 * @return
+	 * @return the array of GeoPoints
 	 */
-	public GeoPoint[] toGeoPoitArray() {
+	public GeoPoint[] toGeoPointArray() {
 		GeoPoint[] tmp = new GeoPoint[nodes.size() + (isArea ? 1 : 0)];
 		GeoPoint first = null;
 

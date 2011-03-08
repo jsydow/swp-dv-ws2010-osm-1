@@ -154,7 +154,7 @@ public class MapsForgeActivity extends MapActivity {
 					if(way == null)
 						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
 					else {
-						routesOverlay.setRouteData(way.toGeoPoitArray());
+						routesOverlay.setRouteData(way.toGeoPointArray());
 					}
 					
 				} else if(point_id > 0) {
