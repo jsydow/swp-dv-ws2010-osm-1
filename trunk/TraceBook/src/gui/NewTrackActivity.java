@@ -56,7 +56,7 @@ public class NewTrackActivity extends TabActivity {
 	TabHost myTabHost;
 	TextView mediaData;
 	
-	MetaMedia mm;
+	MetaMedia mm = new MetaMedia();
 
 	@Override
 	/**
@@ -66,8 +66,6 @@ public class NewTrackActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
-		
-		mm = new MetaMedia();
 		
 		// Init TabHost
 		initTabHost();
