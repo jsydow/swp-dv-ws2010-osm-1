@@ -200,9 +200,6 @@ public class MapsForgeActivity extends MapActivity {
 							routesOverlay.removeOverlay(way.getOverlayRoute());
 						way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(), paintFill, paintOutline));
 						routesOverlay.addRoute(way.getOverlayRoute());
-						final DataNode last_point = way.getNodes().get(way.getNodes().size()-1);
-						Log.d(LOG_TAG, "new node in current way: " + last_point);
-						pointsOverlay.addOverlay(getOverlayItem(last_point.toGeoPoint(), R.drawable.marker_blue));
 					}	
 				}
 			}
