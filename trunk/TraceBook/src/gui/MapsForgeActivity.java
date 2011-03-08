@@ -3,18 +3,22 @@ package gui;
 import java.io.File;
 
 import org.mapsforge.android.maps.ArrayItemizedOverlay;
+import org.mapsforge.android.maps.ArrayRouteOverlay;
 import org.mapsforge.android.maps.GeoPoint;
+import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.OverlayItem;
-import org.mapsforge.android.maps.RouteOverlay;
+import org.mapsforge.android.maps.OverlayRoute;
 
 import Trace.Book.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -37,9 +41,12 @@ public class MapsForgeActivity extends MapActivity {
 	final static String LOG_TAG = "MapsForgeActivity";
 	
 	MapController mapController;
-	RouteOverlay routesOverlay;
+	ArrayRouteOverlay routesOverlay;
 	ArrayItemizedOverlay pointsOverlay;
 	BroadcastReceiver gpsReceiver;
+	
+	static Paint paintFill;	// TODO: different colors for different tracks
+	static Paint paintOutline;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +74,55 @@ public class MapsForgeActivity extends MapActivity {
 		
 		mapController = mapView.getController();
 		
-		Paint outline = new Paint();
-		outline.setARGB(150, 0, 0, 255);
-		Paint filling = new Paint();
-		filling.setARGB(100, 255, 0, 0);
-		
-		final Drawable defaultMarker = getResources().getDrawable(R.drawable.marker_red);
-		
-		routesOverlay = new RouteOverlay(filling, outline);
+		final Drawable defaultMarker = getResources().getDrawable(R.drawable.marker_red);	
+
 		pointsOverlay = new ArrayItemizedOverlay(defaultMarker, this);
 		
+		// create the paint objects for the RouteOverlay and set all parameters
+		paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintFill.setStyle(Paint.Style.STROKE);
+		paintFill.setColor(Color.BLUE);
+		paintFill.setAlpha(160);
+		paintFill.setStrokeWidth(7);
+		paintFill.setStrokeCap(Paint.Cap.BUTT);
+		paintFill.setStrokeJoin(Paint.Join.ROUND);
+		paintFill.setPathEffect(new DashPathEffect(new float[] { 20, 20 }, 0));
+
+		paintOutline = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintOutline.setStyle(Paint.Style.STROKE);
+		paintOutline.setColor(Color.BLUE);
+		paintOutline.setAlpha(96);
+		paintOutline.setStrokeWidth(7);
+		paintOutline.setStrokeCap(Paint.Cap.BUTT);
+		paintOutline.setStrokeJoin(Paint.Join.ROUND);
+		
+		routesOverlay = new ArrayRouteOverlay(paintFill, paintOutline);
+		
+		addPoints(pointsOverlay); // when adding a POI this activity is destroyed
+		addWays(routesOverlay);
+
 		mapView.getOverlays().add(routesOverlay);
 		mapView.getOverlays().add(pointsOverlay);
 		
 		gpsReceiver = new GPSReceiver();
 	}
 	
+	private static void addPoints(ArrayItemizedOverlay overlay) {
+		for(DataNode n : currentTrack().getNodes()) {
+			if(n.getOverlayItem() == null)
+				n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
+			overlay.addOverlay(n.getOverlayItem());
+		}
+	}
+	
+	private static void addWays(ArrayRouteOverlay overlay) {
+		for(DataPointsList l : currentTrack().getWays()) {
+			if(l.getOverlayRoute() == null)
+				l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(), paintFill, paintOutline));
+			overlay.addRoute(l.getOverlayRoute());
+		}
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -104,17 +144,18 @@ public class MapsForgeActivity extends MapActivity {
 	 *
 	 */
 	private class GPSReceiver extends BroadcastReceiver {
-		OverlayItem current_pos;
+		OverlayItem current_pos = null;
 
 		/**
 		 * creates a new OverlayItem
-		 * @param pos postition of the marker
+		 * @param pos position of the marker
 		 * @param marker id of the Graphics object to use
 		 * @return
 		 */
 		private OverlayItem getOverlayItem(GeoPoint pos, int marker) {
-			OverlayItem oi = new OverlayItem(pos, "foo", "bar");
-			oi.setMarker(getResources().getDrawable(marker));
+			final OverlayItem oi = new OverlayItem(pos, "", "");
+			Drawable icon = getResources().getDrawable(marker);	
+			oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
 			
 			return oi;
 		}
@@ -133,9 +174,10 @@ public class MapsForgeActivity extends MapActivity {
 				
 				mapController.setCenter(pos);
 				
-				Log.d(LOG_TAG, "Location update received (" + lng +  ", " + lat +")");
+				Log.d(LOG_TAG, "Location update received " + pos.toString());
 				
-				pointsOverlay.removeOverlay(current_pos);
+				if(current_pos != null)
+					pointsOverlay.removeOverlay(current_pos);
 				current_pos = getOverlayItem(pos, R.drawable.marker_green);
 				pointsOverlay.addOverlay(current_pos);
 				
@@ -155,19 +197,24 @@ public class MapsForgeActivity extends MapActivity {
 					if(way == null)
 						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
 					else {
-						routesOverlay.setRouteData(way.toGeoPointArray());
+						if(way.getOverlayRoute() != null)
+							routesOverlay.removeOverlay(way.getOverlayRoute());
+						way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(), paintFill, paintOutline));
+						routesOverlay.addRoute(way.getOverlayRoute());
 						final DataNode last_point = way.getNodes().get(way.getNodes().size()-1);
-						pointsOverlay.addOverlay(getOverlayItem(DataNode.toGeoPoint(last_point), R.drawable.marker_blue));
+						Log.d(LOG_TAG, "new node in current way: " + last_point);
+						pointsOverlay.addOverlay(getOverlayItem(last_point.toGeoPoint(), R.drawable.marker_blue));
 					}
 					
-				} else if(point_id > 0) {
+				} else if(point_id > 0) { // XXX - we don't really need this any more
 					Log.d("LOG_TAG", "Received node update, id="+point_id);
 					DataNode point = currentTrack().getNodeById(point_id);
 					if(point == null)
 						Log.e(LOG_TAG, "Node with ID " + point_id + " does not exist.");
 					else {
+						Log.d(LOG_TAG, point.toString());
 						pointsOverlay.addOverlay(
-								new OverlayItem(new GeoPoint(point.getLat(), point.getLon()),
+								new OverlayItem(point.toGeoPoint(),
 								point.get_id() + "", ""));
 					}
 				}
