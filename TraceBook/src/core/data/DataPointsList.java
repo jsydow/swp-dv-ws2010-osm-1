@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
@@ -232,5 +233,16 @@ public class DataPointsList extends DataMapObject {
 		} catch (IOException e) {
 			Log.e("WaySerialisation", "Could not serialise way");
 		}
+	}
+
+	/**
+	 * 
+	 * @param item ...
+	 * @param allnodes ...
+	 * @return
+	 */
+	public static DataPointsList deserialise(Node item, List<DataNode> allnodes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

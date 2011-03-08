@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
@@ -142,5 +143,15 @@ public class DataNode extends DataMapObject{
 	 */
 	public static GeoPoint toGeoPoint(DataNode n) {
 		return new GeoPoint(n.getLat(), n.getLon());
+	}
+
+	/**
+	 * 
+	 * @param item ...
+	 * @return
+	 */
+	public static DataNode deserialise(Node item) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
