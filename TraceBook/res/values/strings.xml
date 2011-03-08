@@ -8,11 +8,20 @@
     <string name="trackName">Trackname</string>
     <string name="insertTag">Tag einfügen</string>
     <string name="insertValue">Wert einfügen</string>
-    <string name="nodeId">Node Id</string>
-  
+    <string name="nodeId_tv">Konten Id:</string>
+    <string name="editMeta_tv">Editierung von MetaDaten</string>
+    <string name="noMetaData_tv">Es liegen keine MetaDaten vor</string>
+    <string name="MetaData_tv">Der Konten besitzt folgende MetaDaten</string>
+    <string name="setButtonList1_tv">Aktuelle Straße mit MediaDaten versehen</string>
+    <string name="setButtonList2_tv">Aktuelle Fläche mit MediaDaten versehen</string>
+    
   	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>
     <string name="close_opt">Beenden</string>
+    
+    <!--  Contextmenu values -->
+	<string name="deleteTag_cm">Tag löschen</string>
+	<string name="renameTag_cm">Tag ändern</string>
    
    <!-- Tab values -->
     <string name="map_tab">Karte</string>
@@ -30,4 +39,8 @@
     <string name="save_btn">Speichern</string>
     <string name="cancel_btn">Abbrechen</string>
     <string name="addMeta_btn">Hinzufügen</string>
+    <string name="makePicture_btn">Foto</string>
+    <string name="makeVideo_btn">Video</string>
+    <string name="makeMemo_btn">Sprachnotiz</string>
+    <string name="makeNotice_btn">Notiz</string>
 </resources>
