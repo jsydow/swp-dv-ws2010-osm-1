@@ -16,7 +16,7 @@ import android.util.Log;
  * @author js
  * 
  */
-public class DataNode extends DataMapObject implements SerialisableContent {
+public class DataNode extends DataMapObject{
 
 	/**
 	 * This constructor initialises the Latitude and Longitude with data from a
@@ -97,28 +97,6 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	}
 
 	/**
-	 * This method loads a Node from the devices memory. It uses the appropriate
-	 * ContentProvider. Note: Currently a stub. Note: The parameter id may
-	 * change if another name is better suited for retrieving the Node
-	 * correctly.
-	 * 
-	 * @param id
-	 *            The id of the Node. It is not clear yet if what id or name is
-	 *            needed to load the Node correctly.
-	 * @return The deserialized DataNode object or null if there is not such a
-	 *         node.
-	 */
-	public static DataNode deserialise(int id) {
-		/* TODO STUB */
-		return null;
-	}
-
-	public void serialise() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
 	 * Serialises a node using a XmlSerializer. It generates a <node>-tag.
 	 * 
 	 * @param serializer
@@ -154,10 +132,5 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 		} catch (IOException e) {
 			Log.e("NodeSerialisation", "Could not serialise node");
 		}
-	}
-
-	public void delete() {
-		// TODO Auto-generated method stub
-
 	}
 }

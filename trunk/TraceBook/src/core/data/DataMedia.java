@@ -28,7 +28,7 @@ public class DataMedia {
 	public static final int TYPE_PICTURE = 1;
 	private static String[] typesAsString = { "text", "picture", "audio",
 			"video" };
-	private static String[] extensions = { ".txt", ".jpg", ".wav", ".mp4" };
+	private static String[] extensions = { ".txt", ".jpg", ".m4a", ".mp4" };
 
 	/**
 	 * The internal id for this medium.
