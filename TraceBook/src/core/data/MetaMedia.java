@@ -71,7 +71,7 @@ public class MetaMedia {
 	 * 
 	 * @param track     DataTrack object containing the current track.
 	 */
-	MetaMedia(DataTrack track) {
+	public MetaMedia(DataTrack track) {
 		currentTrack = track;
 		recorder = new MediaRecorder();
 	}
@@ -140,17 +140,27 @@ public class MetaMedia {
 	 * into our current track, because startAudio() and stopAudio() are
 	 * not intents. As such, the onActivityResult callback will not be
 	 * invoked for these. 
+	 * 
+	 * @param parent        DataMediaHolder object to append the media
+	 *                      file to.
 	 */
-	public final void stopAudio() {
+	public final void stopAudio(DataMediaHolder parent) {
 		if (isRecordingAudio) {			
 			recorder.stop();
 			recorder.reset();
 			recorder.release();
-			currentTrack.addMedia(new DataMedia(currentTrack.getTrackDirPath(),
-					currentFilename));
+			
+			appendToObject(parent);
 			
 			isRecordingAudio = false;
 		}
+	}
+	
+	/**
+	 * @return Returns base directory for media files.
+	 */
+	public final String getBaseDir() {
+		return currentTrack.getTrackDirPath();
 	}
 	
 	/**
@@ -159,12 +169,28 @@ public class MetaMedia {
 	public final String getCurrentFilename() {
 		return currentFilename;
 	}
+	
+	/**
+	 * @return Path to the current media file.
+	 */
+	public final String getPath() {
+		return currentTrack.getTrackDirPath() + File.separator + currentFilename;
+	}
 
 	/**
 	 * @return Whether an audio file is being recorded at the moment.
 	 */
 	public final boolean isRecordingAudio() {
 		return isRecordingAudio;
+	}
+	
+	/**
+	 * Appends this media file to a given DataMediaHolder object. 
+	 * 
+	 * @param parent       Object to append a DataMedia object to.
+	 */
+	public final void appendToObject(DataMediaHolder parent) {
+		parent.addMedia(new DataMedia(getPath(), currentFilename));
 	}
 
 	/**
@@ -183,8 +209,7 @@ public class MetaMedia {
 		final Intent i = new Intent(action);
 		currentFilename = getNewFilename(requestCode);
 		
-		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(currentTrack.getTrackDirPath() +
-				File.separator + currentFilename)));
+		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(getPath())));
 		activity.startActivityForResult(i, requestCode);
 		
 		return currentFilename;
