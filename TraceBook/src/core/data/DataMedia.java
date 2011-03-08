@@ -33,14 +33,13 @@ public class DataMedia {
 	private int _id;
 
 	/**
-	 * The path to the file of the medium on the memory. This path should be
-	 * sufficient to open the file (contains filename).
-	 */
+	 * The path to the file of the medium on the memory. This path+name should be
+	 * sufficient to open the file. Path is therefore the base name.
+	 */ 
 	private String path;
 
 	/**
-	 * This name is the displayed name. May be equal to the filename without
-	 * extension.
+	 * This name is the displayed name and filename (contains extension).
 	 */
 	private String name;
 
@@ -66,9 +65,9 @@ public class DataMedia {
 	 * Constructor that initialises the medium.
 	 * 
 	 * @param path
-	 *            full path to the file (basename + filename + extension)
+	 *             path to the file (basename)
 	 * @param name
-	 *            name of the medium.
+	 *            name of the medium (filename).
 	 */
 	public DataMedia(String path, String name) {
 		super();
@@ -113,12 +112,21 @@ public class DataMedia {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method. Returns path to the directory the medium is in.
 	 * 
 	 * @return The path to the medium on the devices medium.
 	 */
 	public String getPath() {
 		return path;
+	}
+	
+	/**
+	 * Getter-method. The returned String is enough to open the file.
+	 * 
+	 * @return The path to the medium on the devices medium.
+	 */
+	public String getFullPath() {
+		return path+name;
 	}
 
 	/**
@@ -148,21 +156,16 @@ public class DataMedia {
 	 * @param name
 	 *            The new name for the medium.
 	 */
-	public void setName(String name) {
-		// File (or directory) with old name
-		File file = new File("oldname");
-
-		// File (or directory) with new name
-		File file2 = new File("newname");
-
-		// Rename file (or directory)
-		boolean success = file.renameTo(file2);
+	public void setName(String newname) {
+		File oldfile = new File(getFullPath());
+		File newfile = new File(getPath()+newname);
+		boolean success = oldfile.renameTo(newfile);
 		if (!success) {
-			// File was not successfully renamed
+			Log.e("MediaRenaming", "Could not rename medium.");
 		}
-
-		this.name = name;
-		// TODO: change name on memory too
+		else {
+			this.name = newname;
+		}
 	}
 
 	/**
@@ -195,7 +198,7 @@ public class DataMedia {
 		try {
 			serializer.startTag(null, "link");
 			serializer.attribute(null, "type", typeToString(type));
-			serializer.attribute(null, "value", path);
+			serializer.attribute(null, "value", name);
 			serializer.endTag(null, "tag");
 		} catch (IllegalArgumentException e) {
 			Log.e("MediaSerialisation", "Should not happen");
