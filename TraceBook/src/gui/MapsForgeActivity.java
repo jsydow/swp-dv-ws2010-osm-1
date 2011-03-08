@@ -182,41 +182,28 @@ public class MapsForgeActivity extends MapActivity {
 				pointsOverlay.addOverlay(current_pos);
 				
 				
-			// Receive an update of a way or a node and update the overlay accordingly 
+			// Receive an update of a way and update the overlay accordingly 
 			} else if(intend.getAction().equals(WaypointLogService.UPDTAE_OBJECT)) {
 				if(currentTrack() == null) {
 					Log.e(LOG_TAG, "Received UPDATE_OBJECT with no current track present.");
 					return;
 				}
 				
-				int way_id   = intend.getExtras().getInt("way_id");
-				int point_id = intend.getExtras().getInt("point_id");
+				int way_id = intend.getExtras().getInt("way_id");
 				if(way_id > 0) {
 					Log.d(LOG_TAG, "Received way update, id="+way_id);
 					DataPointsList way = currentTrack().getPointsListById(way_id);
 					if(way == null)
 						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
 					else {
-						if(way.getOverlayRoute() != null)
+						if(way.getOverlayRoute() != null)	// we can not change the route, thus create a new one
 							routesOverlay.removeOverlay(way.getOverlayRoute());
 						way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(), paintFill, paintOutline));
 						routesOverlay.addRoute(way.getOverlayRoute());
 						final DataNode last_point = way.getNodes().get(way.getNodes().size()-1);
 						Log.d(LOG_TAG, "new node in current way: " + last_point);
 						pointsOverlay.addOverlay(getOverlayItem(last_point.toGeoPoint(), R.drawable.marker_blue));
-					}
-					
-				} else if(point_id > 0) { // XXX - we don't really need this any more
-					Log.d("LOG_TAG", "Received node update, id="+point_id);
-					DataNode point = currentTrack().getNodeById(point_id);
-					if(point == null)
-						Log.e(LOG_TAG, "Node with ID " + point_id + " does not exist.");
-					else {
-						Log.d(LOG_TAG, point.toString());
-						pointsOverlay.addOverlay(
-								new OverlayItem(point.toGeoPoint(),
-								point.get_id() + "", ""));
-					}
+					}	
 				}
 			}
 		}

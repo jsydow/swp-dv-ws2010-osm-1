@@ -185,19 +185,13 @@ public class WaypointLogService extends Service implements LocationListener {
 		sendBroadcast(gps_intent);
 				
 		if(current_node != null) {				// one_shot or POI mode
-			current_node.setLocation(loc);
-			
-			update_intent.putExtra("point_id", current_node.get_id());
-			update_intent.putExtra("way_id", -1);
-			sendBroadcast(update_intent);
-			
+			current_node.setLocation(loc);		// update node with proper gps fix			
 			current_node = null;				// no node waiting for gps pos any more
 		} else if(current_way() != null) {		// Continuous mode
 			current_way().newNode(loc);			// poi in track was already added before
 		}
 		
 		if(current_way() != null) {				// call for an update of the way
-			update_intent.putExtra("point_id", -1);
 			update_intent.putExtra("way_id", current_way().get_id());
 			sendBroadcast(update_intent);
 		}
