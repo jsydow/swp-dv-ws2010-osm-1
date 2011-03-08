@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 /**
@@ -29,6 +32,13 @@ public abstract class DataMediaHolder {
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		this.datetime = sdf.format(new Date());
+	}
+
+	/**
+	 * @param datetime the datetime to set
+	 */
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
 	}
 
 	/**
@@ -96,6 +106,21 @@ public abstract class DataMediaHolder {
 				dm.delete();
 				lit.remove();
 				break;
+			}
+		}
+	}
+	
+	public void deserialiseMedia(Node a_node) {
+		NodeList metanodes = a_node.getChildNodes();
+		
+		for(int i=0; i<metanodes.getLength();++i) {
+			if(metanodes.item(i).getNodeName().equals("link")) {
+				
+				NamedNodeMap attributes = metanodes.item(i).getAttributes();
+				Node path = attributes.getNamedItem("value");
+				// misuse of getTrackDirPath
+				addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path.getNodeValue())));
+				
 			}
 		}
 	}

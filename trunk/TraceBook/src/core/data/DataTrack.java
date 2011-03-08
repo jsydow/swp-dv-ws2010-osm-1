@@ -483,11 +483,6 @@ public class DataTrack extends DataMediaHolder {
 		}
 		
 		res = getPointsListById( id );
-		if( res != null ) {
-			return res;
-		}
-		
-		return null;
-		
+		return res;		
 	}
 }

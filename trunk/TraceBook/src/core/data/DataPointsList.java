@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
@@ -241,8 +243,34 @@ public class DataPointsList extends DataMapObject {
 	 * @param allnodes ...
 	 * @return
 	 */
-	public static DataPointsList deserialise(Node item, List<DataNode> allnodes) {
-		// TODO Auto-generated method stub
-		return null;
+	public static DataPointsList deserialise(Node waynode, List<DataNode> allnodes) {
+		DataPointsList ret = new DataPointsList();
+		
+		NamedNodeMap nodeattributes = waynode.getAttributes();
+		ret.setDatetime( nodeattributes.getNamedItem("timestamp").getNodeValue() );
+		ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id").getNodeValue()));
+		
+		// tags and media
+		ret.deserialiseMedia(waynode);
+		ret.deserialiseTags(waynode);
+		
+		// node references
+		NodeList metanodes = waynode.getChildNodes();
+		for(int i=0; i<metanodes.getLength();++i) {
+			if(metanodes.item(i).getNodeName().equals("nd")) {
+				int node_id = Integer.parseInt(metanodes.item(i).getAttributes().getNamedItem("ref").getNodeValue());
+				ListIterator<DataNode> it = allnodes.listIterator();
+				while(it.hasNext())
+				{
+					DataNode dn = it.next();
+					if(dn.get_id() == node_id) {
+						it.remove();
+						ret.nodes.add(dn);
+					}
+				}
+			}
+		}
+		
+		return ret;
 	}
 }
