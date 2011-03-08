@@ -17,6 +17,11 @@
     <string name="MetaData_tv">Der Konten besitzt folgende MetaDaten</string>
     <string name="setButtonList1_tv">Aktuelle Straße mit MediaDaten versehen</string>
     <string name="setButtonList2_tv">Aktuelle Fläche mit MediaDaten versehen</string>
+
+
+	<!--  AlertBox values -->
+    <string name="addNotice_alert">Notiz hinzufügen</string>
+    <string name="addedNotice_alert">Notiz hünzugefügt:</string>
     
   	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>

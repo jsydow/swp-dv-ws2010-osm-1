@@ -4,8 +4,9 @@ import java.io.File;
 import java.util.List;
 
 import Trace.Book.R;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -23,7 +25,6 @@ import android.widget.ToggleButton;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
-import core.data.DataTrack;
 import core.data.MetaMedia;
 import core.logger.ServiceConnector;
 
@@ -54,7 +55,6 @@ public class NewTrackActivity extends TabActivity {
 
 	TabHost myTabHost;
 	TextView mediaData;
-	
 	MetaMedia mm = new MetaMedia();
 
 	@Override
@@ -65,6 +65,7 @@ public class NewTrackActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
+
 		
 		// Init TabHost
 		initTabHost();
@@ -78,7 +79,6 @@ public class NewTrackActivity extends TabActivity {
 
 		setButtonList(false, 0);
 		initToggleButtons();
-		
 
 		myTabHost = getTabHost();
 		myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost));
@@ -126,33 +126,34 @@ public class NewTrackActivity extends TabActivity {
 
 		ToggleButton startWay = (ToggleButton) findViewById(R.id.startWay_Tbtn);
 		ToggleButton startArea = (ToggleButton) findViewById(R.id.startArea_Tbtn);
-		
+
 		ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
 		ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
 
 		try {
-			boolean toggle = ServiceConnector.getLoggerService().isWayLogging();			
+			boolean toggle = ServiceConnector.getLoggerService().isWayLogging();
 			startWay.setChecked(toggle);
 			areaToggle.setClickable(!toggle);
-			
-			if( toggle )
+
+			if (toggle)
 				setButtonList(true, 1);
-			
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
-			
-			boolean toggle = ServiceConnector.getLoggerService().isAreaLogging();
-			
+
+			boolean toggle = ServiceConnector.getLoggerService()
+					.isAreaLogging();
+
 			startArea.setChecked(toggle);
 			streetToggle.setClickable(!toggle);
-			
-			if( toggle )
+
+			if (toggle)
 				setButtonList(true, 2);
-			
+
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -178,9 +179,9 @@ public class NewTrackActivity extends TabActivity {
 					int position, long id) {
 				String itemText = adapter.getItem(position);
 				String[] cut = itemText.split(": ");
-				
+
 				intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
-				
+
 				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
@@ -322,58 +323,40 @@ public class NewTrackActivity extends TabActivity {
 
 	}
 
-	/**
-	 * Function to be called upon clicking the "Take a photo!" button
-	 * 
-	 * @param view
-	 */
 	public void makePictureBtn(View view) {
 		mm.takePhoto(this);
 	}
 
-	/**
-	 * Function to be called upon clicking the "Record a video!" button
-	 * 
-	 * @param view
-	 */
 	public void makeVideoBtn(View view) {
 		mm.takeVideo(this);
 	}
 
-	/**
-	 * Function to be called upon clicking the "Record a voice memo!" button
-	 * 
-	 * @param view
-	 */
 	public void makeMemoBtn(View view) {
-		// TODO: Fill this space.
+
 	}
 
-	/**
-	 * Function to be called upon clicking the "Make a text note!" button
-	 * 
-	 * @param view
-	 */
 	public void makeNoticeBtn(View view) {
-		// TODO: Fill this space.
-	}
+		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		final EditText input = new EditText(this);
+		alert.setView(input);
+		alert.setTitle(getResources().getString(R.string.addNotice_alert));
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				String value = input.getText().toString().trim();
+				DataStorage.getInstance().getCurrentTrack().getCurrentWay().getTags().put("Notice", value);
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.addNotice_alert) + " " + value,
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		DataTrack dt = DataStorage.getInstance().getCurrentTrack();
-		
-		switch (requestCode) {
-			case MetaMedia.TAKE_PHOTO_CODE:
-				if (resultCode == Activity.RESULT_OK) {
-					mm.appendToObject(dt.getCurrentWay());
-				}
-				break;
-			case MetaMedia.TAKE_VIDEO_CODE:
-				if (resultCode == Activity.RESULT_OK) {
-					mm.appendToObject(dt.getCurrentWay());
-				}
-				break;
-		}
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						dialog.cancel();
+					}
+				});
+		alert.show();
+
 	}
 
 	@Override
@@ -396,15 +379,18 @@ public class NewTrackActivity extends TabActivity {
 		String[] poiList = new String[nodeList.size() + wayList.size()];
 		int i = 0;
 		for (DataNode dn : nodeList) {
-			poiList[i] = dn.get_id() + ": " + getResources().getString(R.string.POI);
+			poiList[i] = dn.get_id() + ": "
+					+ getResources().getString(R.string.POI);
 			i++;
 		}
 
 		for (DataPointsList wl : wayList) {
 			if (wl.isArea())
-				poiList[i] = wl.get_id() + ": " + getResources().getString(R.string.Area);
+				poiList[i] = wl.get_id() + ": "
+						+ getResources().getString(R.string.Area);
 			else
-				poiList[i] = wl.get_id() + ": " + getResources().getString(R.string.Way);
+				poiList[i] = wl.get_id() + ": "
+						+ getResources().getString(R.string.Way);
 			i++;
 		}
 

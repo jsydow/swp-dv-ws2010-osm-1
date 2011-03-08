@@ -77,7 +77,7 @@ public class AddPointActivity extends Activity {
 
 		Map<String, String> tagMap = node.getTags();
 		metaInformation = new String[tagMap.size()];
-		nodeIdTv.setText(R.id.nodeId_tv + " " + node.get_id());
+		nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " " + node.get_id());
 
 		if (tagMap.size() != 0) {
 			nodeInfo.setText(R.string.MetaData_tv);
