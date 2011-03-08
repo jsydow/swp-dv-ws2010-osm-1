@@ -20,7 +20,7 @@ import android.util.Log;
  * @author js
  * 
  */
-public class DataNode extends DataMapObject{
+public class DataNode extends DataMapObject {
 
 	/**
 	 * This constructor initialises the Latitude and Longitude with data from a
@@ -47,7 +47,7 @@ public class DataNode extends DataMapObject{
 	 * The location object associated with this node
 	 */
 	private Location loc;
-	
+
 	/**
 	 * the overlay Item used by the gui, associated with a certain poi
 	 */
@@ -105,18 +105,22 @@ public class DataNode extends DataMapObject{
 	public boolean isValid() {
 		return loc != null;
 	}
-	
+
 	/**
 	 * Change the latitude value of this node.
-	 * @param newLat The new latitude for this node
+	 * 
+	 * @param newLat
+	 *            The new latitude for this node
 	 */
 	public void setLat(double newLat) {
 		loc.setLatitude(newLat);
 	}
-	
+
 	/**
 	 * Change the longitude value of this node.
-	 * @param newLat The new longitude for this node
+	 * 
+	 * @param newLat
+	 *            The new longitude for this node
 	 */
 	public void setLon(double newlon) {
 		loc.setLongitude(newlon);
@@ -159,9 +163,10 @@ public class DataNode extends DataMapObject{
 			Log.e("NodeSerialisation", "Could not serialise node");
 		}
 	}
-	
+
 	/**
 	 * Returns a String with id and longitude and latitude of this node.
+	 * 
 	 * @return String "id=<id> (<longitude>, <latitude>)"
 	 */
 	@Override
@@ -171,15 +176,18 @@ public class DataNode extends DataMapObject{
 
 	/**
 	 * Converts the DataNode to a GeoPoint
-	 * @return a GeoPoint with the coordinates of the DataNode 
+	 * 
+	 * @return a GeoPoint with the coordinates of the DataNode
 	 */
 	public GeoPoint toGeoPoint() {
 		return new GeoPoint(getLat(), getLon());
 	}
-	
+
 	/**
 	 * Getter-method
-	 * @return a reference to the OverlayItem that is drawn and handled by MapsForge's overlay
+	 * 
+	 * @return a reference to the OverlayItem that is drawn and handled by
+	 *         MapsForge's overlay
 	 */
 	public OverlayItem getOverlayItem() {
 		return overlayItem;
@@ -187,6 +195,7 @@ public class DataNode extends DataMapObject{
 
 	/**
 	 * set the OverlayItem, used by MapsForgeActivity
+	 * 
 	 * @param overlayItem
 	 */
 	public void setOverlayItem(OverlayItem overlayItem) {
@@ -194,23 +203,29 @@ public class DataNode extends DataMapObject{
 	}
 
 	/**
-	 * nodenode is a XML-node labeled "node". This method restores a DataNode from such a XML-Node.
-	 * @param nodenode The XML-node 
+	 * nodenode is a XML-node labeled "node". This method restores a DataNode
+	 * from such a XML-Node.
+	 * 
+	 * @param nodenode
+	 *            The XML-node
 	 * @return The new DataNode-object
 	 */
 	public static DataNode deserialise(Node nodenode) {
 		DataNode ret = new DataNode();
-		
+
 		NamedNodeMap nodeattributes = nodenode.getAttributes();
-		ret.setLat(Double.parseDouble(nodeattributes.getNamedItem("lat").getNodeValue()));
-		ret.setLon(Double.parseDouble(nodeattributes.getNamedItem("lon").getNodeValue()));
-		ret.setDatetime( nodeattributes.getNamedItem("timestamp").getNodeValue() );
-		ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id").getNodeValue()));
-		
+		ret.setLat(Double.parseDouble(nodeattributes.getNamedItem("lat")
+				.getNodeValue()));
+		ret.setLon(Double.parseDouble(nodeattributes.getNamedItem("lon")
+				.getNodeValue()));
+		ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+		ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id")
+				.getNodeValue()));
+
 		// tags and media
 		ret.deserialiseMedia(nodenode);
 		ret.deserialiseTags(nodenode);
-		
+
 		return ret;
 	}
 }

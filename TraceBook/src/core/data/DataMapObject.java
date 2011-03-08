@@ -42,11 +42,14 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	public int get_id() {
 		return _id;
 	}
-	
+
 	/**
-	 * Method to set the id. Do not use! If some MapObjects have the same id errors might occur.
-	 * It is intended to use to initialise a DataMapObject from an old id which is unique.
-	 * @param id The new id
+	 * Method to set the id. Do not use! If some MapObjects have the same id
+	 * errors might occur. It is intended to use to initialise a DataMapObject
+	 * from an old id which is unique.
+	 * 
+	 * @param id
+	 *            The new id
 	 */
 	void set_id(int id) {
 		this._id = id;
@@ -108,17 +111,19 @@ public abstract class DataMapObject extends DataMediaHolder implements
 		}
 		return;
 	}
-	
+
 	/**
-	 * a_node is a Node which has <tag>-children. This method retrieves the
-	 * tags out of these <tag>s
-	 * @param a_node An XML-node
+	 * a_node is a Node which has <tag>-children. This method retrieves the tags
+	 * out of these <tag>s
+	 * 
+	 * @param a_node
+	 *            An XML-node
 	 */
 	public void deserialiseTags(Node a_node) {
 		NodeList metanodes = a_node.getChildNodes();
-		for(int i=0; i<metanodes.getLength();++i) {
-			if(metanodes.item(i).getNodeName().equals("tag")) {
-				
+		for (int i = 0; i < metanodes.getLength(); ++i) {
+			if (metanodes.item(i).getNodeName().equals("tag")) {
+
 				NamedNodeMap attributes = metanodes.item(i).getAttributes();
 				Node key = attributes.getNamedItem("k");
 				Node value = attributes.getNamedItem("v");

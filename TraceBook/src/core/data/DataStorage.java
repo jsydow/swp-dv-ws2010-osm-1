@@ -75,11 +75,12 @@ public class DataStorage {
 			instance = new DataStorage();
 		return instance;
 	}
-	
+
 	/**
 	 * This method removes duplicates in a list of Strings.
 	 * 
-	 * @param l the list of Strings
+	 * @param l
+	 *            the list of Strings
 	 */
 	static void removeDuplicatesInStringList(List<String> l) {
 		Set<String> tmp = new HashSet<String>(l);
@@ -198,7 +199,7 @@ public class DataStorage {
 	 */
 	public void deserialiseAll() {
 		retrieveTrackNames();
-		for(String tname : names) {
+		for (String tname : names) {
 			deserialiseTrack(DataTrack.getTrackDirPath(tname));
 		}
 	}
@@ -227,13 +228,13 @@ public class DataStorage {
 		if (tracebookdir.isDirectory()) {
 			names.clear();
 			File[] dirs = tracebookdir.listFiles();
-			
+
 			for (File f : dirs) {
 				if (f.isDirectory()) {
 					names.add(f.getName());
 				}
 			}
-			
+
 		} else {
 			Log.w("TraceBookDirectory",
 					"The TraceBook directory path doesn't point to a directory! wtf?");

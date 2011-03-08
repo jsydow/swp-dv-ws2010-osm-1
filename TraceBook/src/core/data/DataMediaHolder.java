@@ -31,21 +31,24 @@ public abstract class DataMediaHolder {
 		media = new LinkedList<DataMedia>();
 		this.datetime = getW3CFormattedTimeStamp();
 	}
-	
+
 	/**
 	 * Creates a time stamp of the current time formatted according to W3C
+	 * 
 	 * @return A time stamp String.
 	 */
 	public static String getW3CFormattedTimeStamp() {
 		SimpleDateFormat sdf = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+				"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		return sdf.format(new Date());
 	}
 
 	/**
 	 * Set the Creation time of this MediaHolder. Used to restore an old
 	 * MediaHolder while deserialisation.
-	 * @param datetime The new time stamp as String.
+	 * 
+	 * @param datetime
+	 *            The new time stamp as String.
 	 */
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
@@ -119,23 +122,26 @@ public abstract class DataMediaHolder {
 			}
 		}
 	}
-	
+
 	/**
-	 * a_node is a node which has <link>-nodes. This method restores the DataMedia-objects
-	 * from these <link>-nodes.
-	 * @param a_node An XML-node.
+	 * a_node is a node which has <link>-nodes. This method restores the
+	 * DataMedia-objects from these <link>-nodes.
+	 * 
+	 * @param a_node
+	 *            An XML-node.
 	 */
 	public void deserialiseMedia(Node a_node) {
 		NodeList metanodes = a_node.getChildNodes();
-		
-		for(int i=0; i<metanodes.getLength();++i) {
-			if(metanodes.item(i).getNodeName().equals("link")) {
-				
+
+		for (int i = 0; i < metanodes.getLength(); ++i) {
+			if (metanodes.item(i).getNodeName().equals("link")) {
+
 				NamedNodeMap attributes = metanodes.item(i).getAttributes();
 				Node path = attributes.getNamedItem("href");
 				// misuse of getTrackDirPath
-				addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path.getNodeValue())));
-				
+				addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path
+						.getNodeValue())));
+
 			}
 		}
 	}

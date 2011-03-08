@@ -89,10 +89,10 @@ public class DataPointsList extends DataMapObject {
 	}
 
 	/**
-	 * Returns an array of GeoPoints representing the current way for being displayed
-	 * in a RouteOverlay.
-	 * If isArea() is true, the first point will be added as last point, this is a requirement
-	 * of the RouteOverlay.
+	 * Returns an array of GeoPoints representing the current way for being
+	 * displayed in a RouteOverlay. If isArea() is true, the first point will be
+	 * added as last point, this is a requirement of the RouteOverlay.
+	 * 
 	 * @return the array of GeoPoints
 	 */
 	public GeoPoint[] toGeoPointArray() {
@@ -102,13 +102,13 @@ public class DataPointsList extends DataMapObject {
 		int i = 0;
 		for (DataNode n : nodes) {
 			tmp[i] = new GeoPoint(n.getLat(), n.getLon());
-			if(first == null)
+			if (first == null)
 				first = tmp[i];
 			++i;
 		}
-		
-		if(isArea)
-			tmp[tmp.length-1] = first;
+
+		if (isArea)
+			tmp[tmp.length - 1] = first;
 
 		return tmp;
 	}
@@ -124,7 +124,7 @@ public class DataPointsList extends DataMapObject {
 		nodes.add(dn);
 		return dn;
 	}
-	
+
 	/**
 	 * Searches for a Node in this Track by the specified id.
 	 * 
@@ -133,8 +133,8 @@ public class DataPointsList extends DataMapObject {
 	 * @return The DataNode where get_id() == id, or null if not found.
 	 */
 	public DataNode getNodeById(int id) {
-		for(DataNode dn : nodes) {
-			if(dn.get_id() == id) {
+		for (DataNode dn : nodes) {
+			if (dn.get_id() == id) {
 				return dn;
 			}
 		}
@@ -173,9 +173,10 @@ public class DataPointsList extends DataMapObject {
 			}
 		}
 	}
-	
+
 	/**
-	 * gets the route Object used by MapsForge to display this way 
+	 * gets the route Object used by MapsForge to display this way
+	 * 
 	 * @return
 	 */
 	public OverlayRoute getOverlayRoute() {
@@ -184,6 +185,7 @@ public class DataPointsList extends DataMapObject {
 
 	/**
 	 * sets the OverlayRoute, an object used by MapsForge for visualization
+	 * 
 	 * @param overlayRoute
 	 */
 	public void setOverlayRoute(OverlayRoute overlayRoute) {
@@ -260,49 +262,55 @@ public class DataPointsList extends DataMapObject {
 	}
 
 	/**
-	 * waynode is a XML-node labelled "way". This method restores a DataPointsList from such a XML-Node.
-	 * @param waynode A XML-node
-	 * @param allnodes All DataNodes that were already retrieved from that XML-file
+	 * waynode is a XML-node labelled "way". This method restores a
+	 * DataPointsList from such a XML-Node.
+	 * 
+	 * @param waynode
+	 *            A XML-node
+	 * @param allnodes
+	 *            All DataNodes that were already retrieved from that XML-file
 	 * @return The new DataPointsList
 	 */
-	public static DataPointsList deserialise(Node waynode, List<DataNode> allnodes) {
+	public static DataPointsList deserialise(Node waynode,
+			List<DataNode> allnodes) {
 		DataPointsList ret = new DataPointsList();
-		
+
 		NamedNodeMap nodeattributes = waynode.getAttributes();
-		ret.setDatetime( nodeattributes.getNamedItem("timestamp").getNodeValue() );
-		ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id").getNodeValue()));
-		
+		ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+		ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id")
+				.getNodeValue()));
+
 		// tags and media
 		ret.deserialiseMedia(waynode);
 		ret.deserialiseTags(waynode);
-		
+
 		// node references
 		NodeList metanodes = waynode.getChildNodes();
-		for(int i=0; i<metanodes.getLength();++i) {
-			
-			if(metanodes.item(i).getNodeName().equals("nd")) {
-				
-				int node_id = Integer.parseInt(metanodes.item(i).getAttributes().getNamedItem("ref").getNodeValue());
+		for (int i = 0; i < metanodes.getLength(); ++i) {
+
+			if (metanodes.item(i).getNodeName().equals("nd")) {
+
+				int node_id = Integer.parseInt(metanodes.item(i)
+						.getAttributes().getNamedItem("ref").getNodeValue());
 				ListIterator<DataNode> it = allnodes.listIterator();
-				
-				while(it.hasNext())
-				{
+
+				while (it.hasNext()) {
 					DataNode dn = it.next();
-					if(dn.get_id() == node_id) {
+					if (dn.get_id() == node_id) {
 						it.remove();
 						ret.nodes.add(dn);
 					}
 				}
 			}
 		}
-		
+
 		String value = ret.getTags().get("key");
-		if(value != null) {
-			if(value.equals("yes")) {
+		if (value != null) {
+			if (value.equals("yes")) {
 				ret.setArea(true);
 			}
 		}
-		
+
 		return ret;
 	}
 }

@@ -236,21 +236,23 @@ public class DataMedia {
 	}
 
 	/**
-	 * Give a pathname of a track (like .../TraceBook/TrackName) this method retrieves
-	 * a list of all media in that directory. If the folder does not exist an empty list is returned.
+	 * Give a pathname of a track (like .../TraceBook/TrackName) this method
+	 * retrieves a list of all media in that directory. If the folder does not
+	 * exist an empty list is returned.
 	 * 
-	 * @param dirpath The path of the folder.
+	 * @param dirpath
+	 *            The path of the folder.
 	 * @return A list of all Media in that folder.
 	 */
 	public List<DataMedia> listAllMedia(String dirpath) {
 		File dir = new File(dirpath);
 		List<DataMedia> ret = new LinkedList<DataMedia>();
-		
-		if(dir.isDirectory()) {
+
+		if (dir.isDirectory()) {
 			File[] files = dir.listFiles();
-			for(File f : files) {
-				if( getTypeFromFilename(f.getPath()) != -1) {
-					ret.add( DataMedia.deserialise(f.getPath()) );
+			for (File f : files) {
+				if (getTypeFromFilename(f.getPath()) != -1) {
+					ret.add(DataMedia.deserialise(f.getPath()));
 				}
 			}
 		} else {
@@ -263,7 +265,8 @@ public class DataMedia {
 	/**
 	 * Generates a <link>-tag for this medium.
 	 * 
-	 * @param serializer The initialised XmlSerialiser
+	 * @param serializer
+	 *            The initialised XmlSerialiser
 	 */
 	public void serialise(XmlSerializer serializer) {
 		try {

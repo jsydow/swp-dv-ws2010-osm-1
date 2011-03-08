@@ -78,9 +78,10 @@ public class DataTrack extends DataMediaHolder {
 		this.name = getFilenameCompatibleTimeStamp();
 		createNewTrackFolder();
 	}
-	
+
 	/**
 	 * Creates a time stamp of the current time which can be used as a filename.
+	 * 
 	 * @return The time stamp String.
 	 */
 	public static String getFilenameCompatibleTimeStamp() {
@@ -102,8 +103,7 @@ public class DataTrack extends DataMediaHolder {
 	}
 
 	/**
-	 * Initialising constructor.
-	 * Note: comment is not implemented yet.
+	 * Initialising constructor. Note: comment is not implemented yet.
 	 * 
 	 * @param datetime
 	 *            See constructor DataTrack(Datetime).
@@ -320,16 +320,18 @@ public class DataTrack extends DataMediaHolder {
 	public void delete() {
 		File track = new File(getTrackDirPath());
 		File[] files = track.listFiles();
-		for(File f : files) {
-			if(f.isFile()) {
-				if(!f.delete()) {
-					Log.e("DeleteTrackFile", "Could not delete file "+f.getName() +" in track " + getName());
+		for (File f : files) {
+			if (f.isFile()) {
+				if (!f.delete()) {
+					Log.e("DeleteTrackFile",
+							"Could not delete file " + f.getName()
+									+ " in track " + getName());
 				}
 			}
 		}
-		if(!track.delete()) {
+		if (!track.delete()) {
 			Log.e("DeleteTrack", "Could not delete track " + getName());
-			
+
 		}
 	}
 
@@ -368,42 +370,46 @@ public class DataTrack extends DataMediaHolder {
 		List<DataNode> allnodes = new LinkedList<DataNode>();
 		File track = new File(getTrackDirPath(name));
 		DataTrack ret = new DataTrack(track.getName());
-		
-		if(track.isFile()) {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		
+
+		if (track.isFile()) {
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+
 			try {
 				DocumentBuilder builder = factory.newDocumentBuilder();
 				Document dom = builder.parse(track);
 				Element osmelement = dom.getDocumentElement(); // root-element
-				
+
 				// all nodes
 				NodeList nodeelements = osmelement.getElementsByTagName("node");
-				for(int i=0; i<nodeelements.getLength();++i) {
+				for (int i = 0; i < nodeelements.getLength(); ++i) {
 					allnodes.add(DataNode.deserialise(nodeelements.item(i)));
 				}
-				
+
 				// all ways
 				NodeList wayelements = osmelement.getElementsByTagName("way");
-				for(int i=0; i<wayelements.getLength();++i) {
-					DataPointsList dpl = DataPointsList.deserialise(nodeelements.item(i),allnodes);
+				for (int i = 0; i < wayelements.getLength(); ++i) {
+					DataPointsList dpl = DataPointsList.deserialise(
+							nodeelements.item(i), allnodes);
 					ret.addWay(dpl);
 				}
-				
+
 				// all media
 				NodeList medianodes = osmelement.getElementsByTagName("way");
-				for(int i=0; i<medianodes.getLength();++i) {
-					NamedNodeMap attributes = medianodes.item(i).getAttributes();
+				for (int i = 0; i < medianodes.getLength(); ++i) {
+					NamedNodeMap attributes = medianodes.item(i)
+							.getAttributes();
 					Node path = attributes.getNamedItem("value");
 					// misuse of getTrackDirPath
-					ret.addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path.getNodeValue())));
+					ret.addMedia(DataMedia.deserialise(DataTrack
+							.getTrackDirPath(path.getNodeValue())));
 				}
-				
+
 				// nodes -> POIs
 				ret.getNodes().addAll(allnodes);
 
 			} catch (IOException e) {
-				Log.e("TrackDeserialisation","Error while reading XML file.");
+				Log.e("TrackDeserialisation", "Error while reading XML file.");
 				return null;
 			} catch (Exception e) {
 				Log.e("TrackDeserialisation", "XML parsing error.");
@@ -413,7 +419,7 @@ public class DataTrack extends DataMediaHolder {
 			Log.e("TrackDeserialisation", "Track was not found.");
 			return null;
 		}
-		
+
 		return ret;
 	}
 
@@ -434,16 +440,19 @@ public class DataTrack extends DataMediaHolder {
 
 	/**
 	 * Returns the complete absolute path to this Track directory.
+	 * 
 	 * @return path to the track directory
 	 */
 	public String getTrackDirPath() {
 		return DataStorage.getTraceBookDirPath() + File.separator + name;
 	}
-	
+
 	/**
-	 * Completes a track directory name to a complete path.
-	 * Note: Do not changed as this method is misused somewhere.
-	 * @param dir Name of the track directory 
+	 * Completes a track directory name to a complete path. Note: Do not changed
+	 * as this method is misused somewhere.
+	 * 
+	 * @param dir
+	 *            Name of the track directory
 	 * @return The complete path to the track directory.
 	 */
 	public static String getTrackDirPath(String dir) {
@@ -452,75 +461,89 @@ public class DataTrack extends DataMediaHolder {
 
 	/**
 	 * Get a DataPointsList with a given id.
-	 * @param id The id of the DataPointsList
+	 * 
+	 * @param id
+	 *            The id of the DataPointsList
 	 * @return The DataPointsList or null if there is none with such an id.
 	 */
 	public DataPointsList getPointsListById(int id) {
-		for(DataPointsList dpl : ways) {
-			if(dpl.get_id() == id) {
+		for (DataPointsList dpl : ways) {
+			if (dpl.get_id() == id) {
 				return dpl;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Get a DataNode with a given id.
-	 * @param id The id of the DataNode
+	 * 
+	 * @param id
+	 *            The id of the DataNode
 	 * @return The DataNode or null if there is none with such an id.
 	 */
 	public DataNode getNodeById(int id) {
-		for(DataNode dn : nodes) {
-			if(dn.get_id() == id) {
+		for (DataNode dn : nodes) {
+			if (dn.get_id() == id) {
 				return dn;
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Adds a way to the ways of this Track.
-	 * @param way the DataPointsList to be added
+	 * 
+	 * @param way
+	 *            the DataPointsList to be added
 	 */
 	private void addWay(DataPointsList way) {
 		ways.add(way);
 	}
-	
+
 	/**
 	 * Search the whole track for an DataMapObject by id. This may be a DataNode
 	 * or DataPointsList.
-	 * @param id The id of the DataMapObject that is being searched for.
-	 * @return The DataMapObject where get_id()==id or null if there is not such an object.
+	 * 
+	 * @param id
+	 *            The id of the DataMapObject that is being searched for.
+	 * @return The DataMapObject where get_id()==id or null if there is not such
+	 *         an object.
 	 */
-	public DataMapObject getDataMapObjectById( int id ){
-		
-		DataMapObject res = getNodeById( id );
-		if( res != null ) {
+	public DataMapObject getDataMapObjectById(int id) {
+
+		DataMapObject res = getNodeById(id);
+		if (res != null) {
 			return res;
 		}
-		
-		res = getPointsListById( id );
-		return res;		
+
+		res = getPointsListById(id);
+		return res;
 	}
-	
+
 	/**
-	 * This method saves a String to a .txt-file and generates a DataMedia-object which
-	 * can be added to any DataMediaHolder.
-	 * @param text The text to save
+	 * This method saves a String to a .txt-file and generates a
+	 * DataMedia-object which can be added to any DataMediaHolder.
+	 * 
+	 * @param text
+	 *            The text to save
 	 */
 	public DataMedia saveText(String text) {
-		File txtfile = new File(getTrackDirPath()+File.separator+getFilenameCompatibleTimeStamp()+".txt");
+		File txtfile = new File(getTrackDirPath() + File.separator
+				+ getFilenameCompatibleTimeStamp() + ".txt");
 		try {
-			if(txtfile.createNewFile()) {	
+			if (txtfile.createNewFile()) {
 				BufferedWriter buf = new BufferedWriter(new FileWriter(txtfile));
 				buf.write(text);
+				buf.close();
 			} else {
-				Log.w("MediaSavingText", "Text file with this timestamp already exists.");
+				Log.w("MediaSavingText",
+						"Text file with this timestamp already exists.");
 			}
 		} catch (IOException e) {
 			Log.e("MediaSavingText", "Error while writing text file.");
 			return null;
 		}
-		return new DataMedia(txtfile.getParent(),txtfile.getName());
+		return new DataMedia(txtfile.getParent(), txtfile.getName());
 	}
 }
