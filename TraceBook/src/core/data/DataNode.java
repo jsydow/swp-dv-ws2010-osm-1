@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import org.mapsforge.android.maps.GeoPoint;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
@@ -132,5 +133,14 @@ public class DataNode extends DataMapObject{
 		} catch (IOException e) {
 			Log.e("NodeSerialisation", "Could not serialise node");
 		}
+	}
+
+	/**
+	 * Converts a DataNode to a GeoPoint
+	 * @param node DataNode
+	 * @return a GeoPoint with the coordinates of the DataNode 
+	 */
+	public static GeoPoint toGeoPoint(DataNode n) {
+		return new GeoPoint(n.getLat(), n.getLon());
 	}
 }

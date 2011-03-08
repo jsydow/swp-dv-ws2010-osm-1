@@ -136,7 +136,8 @@ public class MapsForgeActivity extends MapActivity {
 				Log.d(LOG_TAG, "Location update received (" + lng +  ", " + lat +")");
 				
 				pointsOverlay.removeOverlay(current_pos);
-				pointsOverlay.addOverlay(getOverlayItem(pos, R.drawable.marker_green));
+				current_pos = getOverlayItem(pos, R.drawable.marker_green);
+				pointsOverlay.addOverlay(current_pos);
 				
 				
 			// Receive an update of a way or a node and update the overlay accordingly 
@@ -155,6 +156,8 @@ public class MapsForgeActivity extends MapActivity {
 						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
 					else {
 						routesOverlay.setRouteData(way.toGeoPointArray());
+						final DataNode last_point = way.getNodes().get(way.getNodes().size()-1);
+						pointsOverlay.addOverlay(getOverlayItem(DataNode.toGeoPoint(last_point), R.drawable.marker_blue));
 					}
 					
 				} else if(point_id > 0) {
