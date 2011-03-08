@@ -28,10 +28,21 @@ import android.provider.MediaStore;
  */
 public class MetaMedia {
 	/**
-	 *  Request Codes for the onActivityResult callback.
+	 *  Request code for the onActivityResult callback.
+	 *  TAKE_AUDIO_CODE = 100000;
 	 */
 	public static final int TAKE_AUDIO_CODE = 100000;
+	
+	/**
+	 *  Request code for the onActivityResult callback.
+	 *  TAKE_PHOTO_CODE = 100001;
+	 */
 	public static final int TAKE_PHOTO_CODE = 100001;
+	
+	/**
+	 *  Request code for the onActivityResult callback.
+	 *  TAKE_VIDIO_CODE = 100002;
+	 */
 	public static final int TAKE_VIDEO_CODE = 100002;
 	
 	/**
