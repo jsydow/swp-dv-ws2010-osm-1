@@ -1,5 +1,6 @@
 package core.data;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.xmlpull.v1.XmlSerializer;
@@ -144,6 +145,18 @@ public class DataMedia {
 	 *            The new name for the medium.
 	 */
 	public void setName(String name) {
+		// File (or directory) with old name
+		File file = new File("oldname");
+
+		// File (or directory) with new name
+		File file2 = new File("newname");
+
+		// Rename file (or directory)
+		boolean success = file.renameTo(file2);
+		if (!success) {
+		    // File was not successfully renamed
+		}
+
 		this.name = name;
 		// TODO: change name on memory too
 	}

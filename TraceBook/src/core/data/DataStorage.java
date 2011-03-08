@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import android.os.Environment;
-import android.util.Log;
 
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
@@ -14,7 +13,7 @@ import android.util.Log;
  * In the implementation u see there is a difference between the track names and
  * the tracks themselves. The names-list contains all the names of the tracks
  * that are in the working memory and on the devices memory. It may not be
- * perfectly synchronized with the actual tracks available as it is updated only
+ * perfectly synchronised with the actual tracks available as it is updated only
  * when needed. These names can be used to actually load a Track completely into
  * memory. The primary reason for the names is the list of all Tracks without
  * loading them all.
@@ -70,6 +69,15 @@ public class DataStorage implements SerialisableContent {
 		if (instance == null)
 			instance = new DataStorage();
 		return instance;
+	}
+	
+	/**
+	 * Return a String of the path to the TraceBook directory without an ending /
+	 * Path is like: /sdcard/TraceBook
+	 * @return path of the TraceBook directory
+	 */
+	public static String getTraceBookDirPath() {
+		return Environment.getExternalStorageDirectory() + File.separator + "TraceBook";
 	}
 
 	/**
@@ -141,7 +149,6 @@ public class DataStorage implements SerialisableContent {
 	public DataTrack newTrack() {
 		DataTrack dt = new DataTrack();
 		tracks.add(dt);
-		createNewTrackFolder(dt.getName());
 		return dt;
 	}
 
@@ -223,16 +230,6 @@ public class DataStorage implements SerialisableContent {
 		for (DataTrack dt : tracks)
 			dt.delete();
 		tracks.clear();
-	}
-	
-	public void createNewTrackFolder(String name) {
-		File dir = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "TraceBook" + File.separator + name);
-		if(!dir.isDirectory()) {
-			if(!dir.mkdir()) {
-				Log.e("DataStorage","Could not create new track folder "+name);
-			}
-		}
 	}
 
 }
