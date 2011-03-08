@@ -2,12 +2,16 @@ package core.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.provider.MediaStore;
+
+import core.data.DataTrack;
 
 /**
  * This class takes care of how different media files are created. Basically,
@@ -28,8 +32,19 @@ public class MetaMedia {
 	/**
 	 *  Request Codes for the onActivityResult callback.
 	 */
-	public static final int TAKE_PHOTO_CODE = 1;
-	public static final int TAKE_VIDEO_CODE = 2;
+	public static final int TAKE_AUDIO_CODE = 100000;
+	public static final int TAKE_PHOTO_CODE = 100001;
+	public static final int TAKE_VIDEO_CODE = 100002;
+	
+	/**
+	 * Directory to put all media files into.
+	 */
+	private String baseDir = "";
+	
+	/**
+	 * Path to the most recent media file.
+	 */
+	private String currentFilename = "";
 
 	/**
 	 * The MediaRecorder object that takes care of audio recording.
@@ -42,9 +57,13 @@ public class MetaMedia {
 	private boolean isRecordingAudio = false;
 
 	/**
-	 * Constructor. Initializes the recorder object for audio recording.
+	 * Constructor. Initializes the recorder object for audio recording and
+	 * sets the base directory for media files.
+	 * 
+	 * @param track     DataTrack object containing the current track.
 	 */
-	MetaMedia() {
+	MetaMedia(DataTrack track) {
+		baseDir = track.getTrackDirPath();
 		recorder = new MediaRecorder();
 	}
 
@@ -53,10 +72,10 @@ public class MetaMedia {
 	 *
 	 * @param activity The activity that eventually fires the intent and
 	 *                 that handles the onActivityResult callback.
-	 * @param path     Path to the file the image is going to be saved to.
+	 * @return         Name of the created media file.
 	 */
-	public final void takePhoto(final Activity activity, final String path) {
-		recordVideoOrPhoto(activity, path, MediaStore.ACTION_IMAGE_CAPTURE,
+	public final String takePhoto(final Activity activity) {
+		return recordVideoOrPhoto(activity, MediaStore.ACTION_IMAGE_CAPTURE,
 				           TAKE_PHOTO_CODE);
 	}
 
@@ -66,40 +85,43 @@ public class MetaMedia {
 	 *
 	 * @param activity The activity that eventually fires the intent and
 	 *                 that handles the onActivityResult callback.
-	 * @param path     Path to the file the video is going to be saved to.
+	 * @return         Name of the created media file.
 	 */
-	public final void takeVideo(final Activity activity, final String path) {
-		recordVideoOrPhoto(activity, path, MediaStore.ACTION_VIDEO_CAPTURE,
+	public final String takeVideo(final Activity activity) {
+		return recordVideoOrPhoto(activity, MediaStore.ACTION_VIDEO_CAPTURE,
 				           TAKE_VIDEO_CODE);
 	}
 
 	/**
 	 * Starts recording an audio file at the given path.
 	 *
-	 * @param path     Path to the file the audio recording is going to be
-	 *                 saved to.
+	 * @return         Name of the created media file.
 	 */
-	public final void startAudio(final String path) {
+	public final String startAudio() {
 		if (!isRecordingAudio) {
+			currentFilename = getNewFilename(TAKE_AUDIO_CODE);
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			// Possible output formats are 3gpp and MPEG4, e. g.
-			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			recorder.setOutputFile(path);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+			recorder.setOutputFile(baseDir + File.separator + currentFilename);
 
 			try {
+				recorder.start();
+				isRecordingAudio = true;
 				recorder.prepare();
+				
+				return currentFilename;
 			} catch (IllegalStateException e) {
-				// 	TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			recorder.start();
-			isRecordingAudio = true;
+		
+			return "";
 		}
+		
+		return "";
 	}
 
 	/**
@@ -113,6 +135,10 @@ public class MetaMedia {
 			recorder.release();
 			isRecordingAudio = false;
 		}
+	}
+	
+	public final String getCurrentFilename() {
+		return currentFilename;
 	}
 
 	/**
@@ -128,15 +154,45 @@ public class MetaMedia {
 	 *
 	 * @param activity     The activity that eventually fires the intent and that
 	 *                     handles the onActivityResult callback.
-	 * @param path         Path to the file the video is going to be saved to.
 	 * @param action       Action for the intent to be created.
 	 * @param requestCode  The request code that is passed to onActivityResult
 	 *                     when the launched activity has terminated.
+	 * @return             Name of the created media file.
 	 */
-	private void recordVideoOrPhoto(final Activity activity, final String path,
+	private final String recordVideoOrPhoto(final Activity activity,
 			final String action, final int requestCode) {
 		final Intent i = new Intent(action);
-		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(path)));
+		currentFilename = getNewFilename(requestCode);
+		
+		i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(baseDir + File.separator + currentFilename)));
 		activity.startActivityForResult(i, requestCode);
+		
+		return currentFilename;
+	}
+	
+	/**
+	 * Makes up a new filename for the given media type.
+	 * 
+	 * @param mediaType    Media type to make up a new filename for.
+	 * @return A filename for the provided media type.
+	 */
+	private final String getNewFilename(final int mediaType) {
+		String newFilename = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		String timestamp = sdf.format(new Date());
+		
+		switch (mediaType) {
+			case TAKE_AUDIO_CODE:
+				newFilename += "audio_" + timestamp + ".mp4";
+				break;
+			case TAKE_PHOTO_CODE:
+				newFilename += "image_" + timestamp + ".jpg";
+				break;
+			case TAKE_VIDEO_CODE:
+				newFilename += "video_" + timestamp + ".mp4";
+				break;
+		}
+		
+		return newFilename;
 	}
 }
