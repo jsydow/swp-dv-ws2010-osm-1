@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
 
@@ -38,6 +39,7 @@ public class DataNode extends DataMapObject{
 	 */
 	public DataNode() {
 		super();
+		setLocation(new Location("TraceBook"));
 	}
 
 	/**
@@ -97,6 +99,14 @@ public class DataNode extends DataMapObject{
 	public boolean isValid() {
 		return loc != null;
 	}
+	
+	public void setLat(double newLat) {
+		loc.setLatitude(newLat);
+	}
+	
+	public void setLon(double newlon) {
+		loc.setLongitude(newlon);
+	}
 
 	/**
 	 * Serialises a node using a XmlSerializer. It generates a <node>-tag.
@@ -150,8 +160,19 @@ public class DataNode extends DataMapObject{
 	 * @param item ...
 	 * @return
 	 */
-	public static DataNode deserialise(Node item) {
-		// TODO Auto-generated method stub
-		return null;
+	public static DataNode deserialise(Node nodenode) {
+		DataNode ret = new DataNode();
+		
+		NamedNodeMap nodeattributes = nodenode.getAttributes();
+		ret.setLat(Double.parseDouble(nodeattributes.getNamedItem("lat").getNodeValue()));
+		ret.setLon(Double.parseDouble(nodeattributes.getNamedItem("lon").getNodeValue()));
+		ret.setDatetime( nodeattributes.getNamedItem("timestamp").getNodeValue() );
+		ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id").getNodeValue()));
+		
+		// tags and media
+		ret.deserialiseMedia(nodenode);
+		ret.deserialiseTags(nodenode);
+		
+		return ret;
 	}
 }

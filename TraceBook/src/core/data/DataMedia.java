@@ -276,8 +276,8 @@ public class DataMedia {
 	public void serialise(XmlSerializer serializer) {
 		try {
 			serializer.startTag(null, "link");
-			serializer.attribute(null, "type", typeToString(type));
-			serializer.attribute(null, "value", name);
+			// serializer.attribute(null, "type", typeToString(type)); not used
+			serializer.attribute(null, "href", name);
 			serializer.endTag(null, "link");
 		} catch (IllegalArgumentException e) {
 			Log.e("MediaSerialisation", "Should not happen");

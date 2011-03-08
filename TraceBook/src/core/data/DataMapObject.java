@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.util.Log;
@@ -38,6 +41,10 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	 */
 	public int get_id() {
 		return _id;
+	}
+	
+	void set_id(int id) {
+		this._id = id;
 	}
 
 	/**
@@ -95,5 +102,18 @@ public abstract class DataMapObject extends DataMediaHolder implements
 			Log.e("TagSerialisation", "Could not serialise tags");
 		}
 		return;
+	}
+	
+	public void deserialiseTags(Node a_node) {
+		NodeList metanodes = a_node.getChildNodes();
+		for(int i=0; i<metanodes.getLength();++i) {
+			if(metanodes.item(i).getNodeName().equals("tag")) {
+				
+				NamedNodeMap attributes = metanodes.item(i).getAttributes();
+				Node key = attributes.getNamedItem("k");
+				Node value = attributes.getNamedItem("v");
+				getTags().put(key.getNodeValue(), value.getNodeValue());
+			}
+		}
 	}
 }
