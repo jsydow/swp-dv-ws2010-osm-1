@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.mapsforge.android.maps.OverlayRoute;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -32,6 +33,11 @@ public class DataPointsList extends DataMapObject {
 	 * Is this Object an Area?
 	 */
 	protected boolean isArea;
+
+	/**
+	 * Route Object for MapsForge
+	 */
+	private OverlayRoute overlayRoute;
 
 	/**
 	 * default constructor
@@ -166,6 +172,22 @@ public class DataPointsList extends DataMapObject {
 				break;
 			}
 		}
+	}
+	
+	/**
+	 * gets the route Object used by MapsForge to display this way 
+	 * @return
+	 */
+	public OverlayRoute getOverlayRoute() {
+		return overlayRoute;
+	}
+
+	/**
+	 * sets the OverlayRoute, an object used by MapsForge for visualization
+	 * @param overlayRoute
+	 */
+	public void setOverlayRoute(OverlayRoute overlayRoute) {
+		this.overlayRoute = overlayRoute;
 	}
 
 	/**

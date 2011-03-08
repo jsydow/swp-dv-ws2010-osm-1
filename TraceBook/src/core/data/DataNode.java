@@ -5,6 +5,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.mapsforge.android.maps.OverlayItem;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
@@ -46,6 +47,11 @@ public class DataNode extends DataMapObject{
 	 * The location object associated with this node
 	 */
 	private Location loc;
+	
+	/**
+	 * the overlay Item used by the gui, associated with a certain poi
+	 */
+	private OverlayItem overlayItem;
 
 	/**
 	 * Set the latitude and longitude to the position given by the Location
@@ -153,18 +159,37 @@ public class DataNode extends DataMapObject{
 			Log.e("NodeSerialisation", "Could not serialise node");
 		}
 	}
-
-	/**
-	 * Converts a DataNode to a GeoPoint
-	 * @param node DataNode
-	 * @return a GeoPoint with the coordinates of the DataNode 
-	 */
-	public static GeoPoint toGeoPoint(DataNode n) {
-		return new GeoPoint(n.getLat(), n.getLon());
+	
+	@Override
+	public String toString() {
+		return "id=" + get_id() + " (" + getLon() + ", " + getLat() + ")";
 	}
 
 	/**
-	 * nodenode is a XML-node labelled "node". This method restores a DataNode from such a XML-Node.
+	 * Converts the DataNode to a GeoPoint
+	 * @return a GeoPoint with the coordinates of the DataNode 
+	 */
+	public GeoPoint toGeoPoint() {
+		return new GeoPoint(getLat(), getLon());
+	}
+	
+	/**
+	 * @return a reference to the OverlayItem that is drawn and handled by MapsForge's overlay
+	 */
+	public OverlayItem getOverlayItem() {
+		return overlayItem;
+	}
+
+	/**
+	 * set the OverlayItem, used by MapsForgeActivity
+	 * @param overlayItem
+	 */
+	public void setOverlayItem(OverlayItem overlayItem) {
+		this.overlayItem = overlayItem;
+	}
+
+	/**
+	 * nodenode is a XML-node labeled "node". This method restores a DataNode from such a XML-Node.
 	 * @param nodenode The XML-node 
 	 * @return The new DataNode-object
 	 */
