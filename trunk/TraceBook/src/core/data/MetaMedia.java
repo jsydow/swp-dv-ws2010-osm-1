@@ -51,7 +51,7 @@ public class MetaMedia {
 	private DataTrack currentTrack;
 	
 	/**
-	 * Path to the most recent media file.
+	 * Name of the most recent media file.
 	 */
 	private String currentFilename = "";
 
