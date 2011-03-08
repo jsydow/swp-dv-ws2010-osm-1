@@ -62,7 +62,7 @@ public class MetaMedia {
 	 * 
 	 * @param track     DataTrack object containing the current track.
 	 */
-	MetaMedia(DataTrack track) {
+	MetaMedia(final DataTrack track) {
 		baseDir = track.getTrackDirPath();
 		recorder = new MediaRecorder();
 	}
