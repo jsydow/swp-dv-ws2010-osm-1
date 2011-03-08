@@ -48,7 +48,6 @@ public class NewTrackActivity extends TabActivity {
 		}
 	}
 
-
 	TabHost myTabHost;
 	TextView mediaData;
 
@@ -57,7 +56,7 @@ public class NewTrackActivity extends TabActivity {
 	 * Create activity
 	 */
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
 		// Init TabHost
@@ -72,7 +71,7 @@ public class NewTrackActivity extends TabActivity {
 
 		initToggleButtons();
 		setButtonList(false, 0);
-		
+
 		myTabHost = getTabHost();
 		myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost));
 
@@ -138,7 +137,6 @@ public class NewTrackActivity extends TabActivity {
 
 	}
 
-	
 	/**
 	 * Init ListView with the list of saved POI, streets and areas
 	 */
@@ -157,7 +155,12 @@ public class NewTrackActivity extends TabActivity {
 					int position, long id) {
 				String itemText = adapter.getItem(position);
 				String[] cut = itemText.split(": ");
-				intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
+				if(cut[1].equals(getResources().getString(R.string.POI)))	
+					intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
+				else if(cut[1].equals(getResources().getString(R.string.Way)))
+					intent.putExtra("WayNodeId", Integer.parseInt(cut[0]));
+				else if(cut[1].equals(getResources().getString(R.string.Area)))
+					intent.putExtra("AreaNodeId", Integer.parseInt(cut[0]));
 				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
@@ -330,23 +333,23 @@ public class NewTrackActivity extends TabActivity {
 
 		List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack()
 				.getNodes();
-		List<DataPointsList> wayList = DataStorage.getInstance().getCurrentTrack().getWays();
+		List<DataPointsList> wayList = DataStorage.getInstance()
+				.getCurrentTrack().getWays();
 		String[] poiList = new String[nodeList.size() + wayList.size()];
 		int i = 0;
 		for (DataNode dn : nodeList) {
-			poiList[i] = dn.get_id() + ": POI";
+			poiList[i] = dn.get_id() + ": " + getResources().getString(R.string.POI);
 			i++;
 		}
-		
-		for(DataPointsList wl : wayList) {
-			if(wl.isArea())
-				poiList[i] = wl.get_id() + ": Area";
+
+		for (DataPointsList wl : wayList) {
+			if (wl.isArea())
+				poiList[i] = wl.get_id() + ": " + getResources().getString(R.string.Area);
 			else
-				poiList[i] = wl.get_id() + ": Way";
+				poiList[i] = wl.get_id() + ": " + getResources().getString(R.string.Way);
 			i++;
 		}
-		
-		
+
 		return poiList;
 	}
 }
