@@ -29,9 +29,17 @@ public abstract class DataMediaHolder {
 	 */
 	public DataMediaHolder() {
 		media = new LinkedList<DataMedia>();
+		this.datetime = getW3CFormattedTimeStamp();
+	}
+	
+	/**
+	 * Creates a time stamp of the current time formatted according to W3C
+	 * @return A time stamp String.
+	 */
+	public static String getW3CFormattedTimeStamp() {
 		SimpleDateFormat sdf = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		this.datetime = sdf.format(new Date());
+		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		return sdf.format(new Date());
 	}
 
 	/**
@@ -130,9 +138,5 @@ public abstract class DataMediaHolder {
 				
 			}
 		}
-	}
-	
-	public void saveText(String text) {
-		//
 	}
 }
