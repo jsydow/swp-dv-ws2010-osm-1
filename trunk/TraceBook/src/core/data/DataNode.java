@@ -70,7 +70,7 @@ public class DataNode extends DataMapObject{
 	/**
 	 * Getter-method
 	 * 
-	 * @return the longitude
+	 * @return The longitude
 	 */
 	public double getLon() {
 		if (loc == null)
@@ -81,7 +81,7 @@ public class DataNode extends DataMapObject{
 	/**
 	 * Getter-method
 	 * 
-	 * @return the latitude
+	 * @return The latitude
 	 */
 	public double getLat() {
 		if (loc == null)
@@ -100,10 +100,18 @@ public class DataNode extends DataMapObject{
 		return loc != null;
 	}
 	
+	/**
+	 * Change the latitude value of this node.
+	 * @param newLat The new latitude for this node
+	 */
 	public void setLat(double newLat) {
 		loc.setLatitude(newLat);
 	}
 	
+	/**
+	 * Change the longitude value of this node.
+	 * @param newLat The new longitude for this node
+	 */
 	public void setLon(double newlon) {
 		loc.setLongitude(newlon);
 	}
@@ -156,9 +164,9 @@ public class DataNode extends DataMapObject{
 	}
 
 	/**
-	 * 
-	 * @param item ...
-	 * @return
+	 * nodenode is a XML-node labelled "node". This method restores a DataNode from such a XML-Node.
+	 * @param nodenode The XML-node 
+	 * @return The new DataNode-object
 	 */
 	public static DataNode deserialise(Node nodenode) {
 		DataNode ret = new DataNode();

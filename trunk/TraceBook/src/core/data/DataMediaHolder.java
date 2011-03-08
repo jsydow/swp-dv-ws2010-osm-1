@@ -35,7 +35,9 @@ public abstract class DataMediaHolder {
 	}
 
 	/**
-	 * @param datetime the datetime to set
+	 * Set the Creation time of this MediaHolder. Used to restore an old
+	 * MediaHolder while deserialisation.
+	 * @param datetime The new time stamp as String.
 	 */
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
@@ -110,6 +112,11 @@ public abstract class DataMediaHolder {
 		}
 	}
 	
+	/**
+	 * a_node is a node which has <link>-nodes. This method restores the DataMedia-objects
+	 * from these <link>-nodes.
+	 * @param a_node An XML-node.
+	 */
 	public void deserialiseMedia(Node a_node) {
 		NodeList metanodes = a_node.getChildNodes();
 		
@@ -117,11 +124,15 @@ public abstract class DataMediaHolder {
 			if(metanodes.item(i).getNodeName().equals("link")) {
 				
 				NamedNodeMap attributes = metanodes.item(i).getAttributes();
-				Node path = attributes.getNamedItem("value");
+				Node path = attributes.getNamedItem("href");
 				// misuse of getTrackDirPath
 				addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path.getNodeValue())));
 				
 			}
 		}
+	}
+	
+	public void saveText(String text) {
+		//
 	}
 }
