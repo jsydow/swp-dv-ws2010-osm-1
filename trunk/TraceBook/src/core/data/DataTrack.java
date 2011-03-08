@@ -10,6 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
@@ -85,6 +92,7 @@ public class DataTrack extends DataMediaHolder {
 
 	/**
 	 * Initialising constructor.
+	 * Note: comment is not implemented yet.
 	 * 
 	 * @param datetime
 	 *            See constructor DataTrack(Datetime).
@@ -346,8 +354,56 @@ public class DataTrack extends DataMediaHolder {
 	 *         not exist
 	 */
 	static DataTrack deserialise(String name) {
-		/* TODO STUB */
-		return null;
+		List<DataNode> allnodes = new LinkedList<DataNode>();
+		File track = new File(getTrackDirPath(name));
+		DataTrack ret = new DataTrack(track.getName());
+		
+		if(track.isFile()) {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		
+			try {
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				Document dom = builder.parse(track);
+				Element osmelement = dom.getDocumentElement(); // root-element
+				
+				// all nodes
+				NodeList nodeelements = osmelement.getElementsByTagName("node");
+				for(int i=0; i<nodeelements.getLength();++i) {
+					allnodes.add(DataNode.deserialise(nodeelements.item(i)));
+				}
+				
+				// all ways
+				NodeList wayelements = osmelement.getElementsByTagName("way");
+				for(int i=0; i<wayelements.getLength();++i) {
+					DataPointsList dpl = DataPointsList.deserialise(nodeelements.item(i),allnodes);
+					ret.addWay(dpl);
+				}
+				
+				// all media
+				NodeList medianodes = osmelement.getElementsByTagName("way");
+				for(int i=0; i<medianodes.getLength();++i) {
+					NamedNodeMap attributes = medianodes.item(i).getAttributes();
+					Node path = attributes.getNamedItem("value");
+					// misuse of getTrackDirPath
+					ret.addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path.getNodeValue())));
+				}
+				
+				// nodes -> POIs
+				ret.getNodes().addAll(allnodes);
+
+			} catch (IOException e) {
+				Log.e("TrackDeserialisation","Error while reading XML file.");
+				return null;
+			} catch (Exception e) {
+				Log.e("TrackDeserialisation", "XML parsing error.");
+				return null;
+			}
+		} else {
+			Log.e("TrackDeserialisation", "Track was not found.");
+			return null;
+		}
+		
+		return ret;
 	}
 
 	public void serialise() {
@@ -408,5 +464,9 @@ public class DataTrack extends DataMediaHolder {
 			}
 		}
 		return null;
+	}
+	
+	private void addWay(DataPointsList dpl) {
+		ways.add(dpl);
 	}
 }

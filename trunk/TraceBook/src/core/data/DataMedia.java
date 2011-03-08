@@ -66,7 +66,7 @@ public class DataMedia {
 	}
 
 	/**
-	 * Returns the extension of files of this type. Format is ".XXX" like
+	 * Returns the extension of files of this type. Format is ".***" like
 	 * ".jpg".
 	 * 
 	 * @param p_type
@@ -278,7 +278,7 @@ public class DataMedia {
 			serializer.startTag(null, "link");
 			serializer.attribute(null, "type", typeToString(type));
 			serializer.attribute(null, "value", name);
-			serializer.endTag(null, "tag");
+			serializer.endTag(null, "link");
 		} catch (IllegalArgumentException e) {
 			Log.e("MediaSerialisation", "Should not happen");
 		} catch (IllegalStateException e) {
