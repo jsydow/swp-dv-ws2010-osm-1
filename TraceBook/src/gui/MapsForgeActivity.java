@@ -87,6 +87,7 @@ public class MapsForgeActivity extends MapActivity {
 	protected void onResume() {
 		super.onResume();
 		registerReceiver(gpsReceiver, new IntentFilter(WaypointLogService.UPDTAE_GPS_POS));
+		registerReceiver(gpsReceiver, new IntentFilter(WaypointLogService.UPDTAE_OBJECT));
 	}
 	
 	@Override
@@ -105,6 +106,12 @@ public class MapsForgeActivity extends MapActivity {
 	private class GPSReceiver extends BroadcastReceiver {
 		OverlayItem current_pos;
 
+		/**
+		 * creates a new OverlayItem
+		 * @param pos postition of the marker
+		 * @param marker id of the Graphics object to use
+		 * @return
+		 */
 		private OverlayItem getOverlayItem(GeoPoint pos, int marker) {
 			OverlayItem oi = new OverlayItem(pos, "foo", "bar");
 			oi.setMarker(getResources().getDrawable(marker));
@@ -143,7 +150,7 @@ public class MapsForgeActivity extends MapActivity {
 				int point_id = intend.getExtras().getInt("point_id");
 				if(way_id > 0) {
 					Log.d(LOG_TAG, "Received way update, id="+way_id);
-					DataPointsList way = currentTrack().getWays().get(way_id);
+					DataPointsList way = currentTrack().getPointsListById(way_id);
 					if(way == null)
 						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
 					else {
@@ -152,7 +159,7 @@ public class MapsForgeActivity extends MapActivity {
 					
 				} else if(point_id > 0) {
 					Log.d("LOG_TAG", "Received node update, id="+point_id);
-					DataNode point = currentTrack().getNodes().get(point_id);
+					DataNode point = currentTrack().getNodeById(point_id);
 					if(point == null)
 						Log.e(LOG_TAG, "Node with ID " + point_id + " does not exist.");
 					else {
