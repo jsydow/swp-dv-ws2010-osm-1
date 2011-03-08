@@ -1,8 +1,6 @@
 package gui;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -18,8 +16,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import core.data.DataMapObject;
-import core.data.DataNode;
-import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
 
@@ -127,6 +123,10 @@ public class AddPointActivity extends Activity {
 		});
 	}
 
+	/**
+	 * 
+	 * @param view not used
+	 */
 	public void addPointMetaBtn(View view) { // method signature including view
 												// is required
 		final Intent intent = new Intent(this, AddPointMetaActivity.class);
@@ -136,6 +136,10 @@ public class AddPointActivity extends Activity {
 		startActivity(intent);
 	}
 
+	/**
+	 * 
+	 * @param view not used
+	 */
 	public void cancelBtn(View view) { // method signature including view is
 										// required
 		final Intent intent = new Intent(this, NewTrackActivity.class);
