@@ -122,14 +122,6 @@ public class DataMedia {
 	}
 
 	/**
-	 * default constructor
-	 */
-	// uncomment if needed
-	/*
-	 * public DataMedia() { // nothing to do }
-	 */
-
-	/**
 	 * Getter-method
 	 * 
 	 * @return The type of the medium
@@ -271,7 +263,7 @@ public class DataMedia {
 	/**
 	 * Generates a <link>-tag for this medium.
 	 * 
-	 * @param serializer
+	 * @param serializer The initialised XmlSerialiser
 	 */
 	public void serialise(XmlSerializer serializer) {
 		try {

@@ -238,10 +238,10 @@ public class DataPointsList extends DataMapObject {
 	}
 
 	/**
-	 * 
-	 * @param item ...
-	 * @param allnodes ...
-	 * @return
+	 * waynode is a XML-node labelled "way". This method restores a DataPointsList from such a XML-Node.
+	 * @param waynode A XML-node
+	 * @param allnodes All DataNodes that were already retrieved from that XML-file
+	 * @return The new DataPointsList
 	 */
 	public static DataPointsList deserialise(Node waynode, List<DataNode> allnodes) {
 		DataPointsList ret = new DataPointsList();
@@ -257,9 +257,12 @@ public class DataPointsList extends DataMapObject {
 		// node references
 		NodeList metanodes = waynode.getChildNodes();
 		for(int i=0; i<metanodes.getLength();++i) {
+			
 			if(metanodes.item(i).getNodeName().equals("nd")) {
+				
 				int node_id = Integer.parseInt(metanodes.item(i).getAttributes().getNamedItem("ref").getNodeValue());
 				ListIterator<DataNode> it = allnodes.listIterator();
+				
 				while(it.hasNext())
 				{
 					DataNode dn = it.next();
@@ -268,6 +271,13 @@ public class DataPointsList extends DataMapObject {
 						ret.nodes.add(dn);
 					}
 				}
+			}
+		}
+		
+		String value = ret.getTags().get("key");
+		if(value != null) {
+			if(value.equals("yes")) {
+				ret.setArea(true);
 			}
 		}
 		

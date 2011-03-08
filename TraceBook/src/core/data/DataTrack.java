@@ -431,6 +431,7 @@ public class DataTrack extends DataMediaHolder {
 	
 	/**
 	 * Completes a track directory name to a complete path.
+	 * Note: Do not changed as this method is misused somewhere.
 	 * @param dir Name of the track directory 
 	 * @return The complete path to the track directory.
 	 */
@@ -466,14 +467,19 @@ public class DataTrack extends DataMediaHolder {
 		return null;
 	}
 	
-	private void addWay(DataPointsList dpl) {
-		ways.add(dpl);
+	/**
+	 * Adds a way to the ways of this Track.
+	 * @param way the DataPointsList to be added
+	 */
+	private void addWay(DataPointsList way) {
+		ways.add(way);
 	}
 	
 	/**
-	 * Search the whole track for an DataMapObject by id
-	 * @param id
-	 * @return
+	 * Search the whole track for an DataMapObject by id. This may be a DataNode
+	 * or DataPointsList.
+	 * @param id The id of the DataMapObject that is being searched for.
+	 * @return The DataMapObject where get_id()==id or null if there is not such an object.
 	 */
 	public DataMapObject getDataMapObjectById( int id ){
 		
