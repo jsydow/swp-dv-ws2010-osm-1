@@ -2,6 +2,8 @@ package core.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.xmlpull.v1.XmlSerializer;
 
@@ -26,6 +28,7 @@ public class DataMedia {
 	public static final int TYPE_PICTURE = 1;
 	private static String[] typesAsString = { "text", "picture", "audio",
 			"video" };
+	private static String[] extensions = { ".txt", ".jpg", ".wav", ".mp4" };
 
 	/**
 	 * The internal id for this medium.
@@ -33,9 +36,9 @@ public class DataMedia {
 	private int _id;
 
 	/**
-	 * The path to the file of the medium on the memory. This path+name should be
-	 * sufficient to open the file. Path is therefore the base name.
-	 */ 
+	 * The path to the file of the medium on the memory. This path+name should
+	 * be sufficient to open the file. Path is therefore the base name.
+	 */
 	private String path;
 
 	/**
@@ -53,19 +56,60 @@ public class DataMedia {
 	 * 
 	 * @param type
 	 *            The type-variable of this class/object.
-	 * @return The type as String
+	 * @return The type as String or empty String if parameter type has illegal
+	 *         value.
 	 */
-	public String typeToString(int p_type) {
+	public static String typeToString(int p_type) {
 		if (p_type > TYPE_VIDEO || p_type < TYPE_TEXT)
 			return "";
 		return typesAsString[p_type];
 	}
 
 	/**
+	 * Returns the extension of files of this type. Format is ".XXX" like
+	 * ".jpg".
+	 * 
+	 * @param p_type
+	 *            The type-variable of this class/object.
+	 * @return The extension String or empty String if parameter type has
+	 *         illegal value.
+	 */
+	public static String typeToExtension(int p_type) {
+		if (p_type > TYPE_VIDEO || p_type < TYPE_TEXT)
+			return "";
+		return extensions[p_type];
+	}
+
+	/**
+	 * Given a filename this method retrieves the type of the medium.
+	 * 
+	 * @param filename
+	 *            The filename of the medium.
+	 * @return The type of the medium coded using the constants as integer,
+	 *         returns -1 if type of medium is not known or understood by
+	 *         TraceBook.
+	 */
+	public static int getTypeFromFilename(String filename) {
+		if (filename.endsWith(typeToExtension(TYPE_TEXT))) {
+			return TYPE_TEXT;
+		}
+		if (filename.endsWith(typeToExtension(TYPE_AUDIO))) {
+			return TYPE_AUDIO;
+		}
+		if (filename.endsWith(typeToExtension(TYPE_VIDEO))) {
+			return TYPE_VIDEO;
+		}
+		if (filename.endsWith(typeToExtension(TYPE_PICTURE))) {
+			return TYPE_PICTURE;
+		}
+		return -1;
+	}
+
+	/**
 	 * Constructor that initialises the medium.
 	 * 
 	 * @param path
-	 *             path to the file (basename)
+	 *            path to the file (basename)
 	 * @param name
 	 *            name of the medium (filename).
 	 */
@@ -74,14 +118,16 @@ public class DataMedia {
 		this._id = DataStorage.getInstance().getID();
 		this.path = path;
 		this.name = name;
+		this.type = getTypeFromFilename(name);
 	}
 
 	/**
 	 * default constructor
 	 */
-	public DataMedia() {
-		// nothing to do
-	}
+	// uncomment if needed
+	/*
+	 * public DataMedia() { // nothing to do }
+	 */
 
 	/**
 	 * Getter-method
@@ -119,14 +165,14 @@ public class DataMedia {
 	public String getPath() {
 		return path;
 	}
-	
+
 	/**
 	 * Getter-method. The returned String is enough to open the file.
 	 * 
 	 * @return The path to the medium on the devices medium.
 	 */
 	public String getFullPath() {
-		return path+name;
+		return path + name;
 	}
 
 	/**
@@ -158,35 +204,68 @@ public class DataMedia {
 	 */
 	public void setName(String newname) {
 		File oldfile = new File(getFullPath());
-		File newfile = new File(getPath()+newname);
+		File newfile = new File(getPath() + newname);
 		boolean success = oldfile.renameTo(newfile);
 		if (!success) {
 			Log.e("MediaRenaming", "Could not rename medium.");
-		}
-		else {
+		} else {
 			this.name = newname;
 		}
 	}
 
 	/**
-	 * This method loads a medium reference from the devices memory. It uses the
-	 * appropriate ContentProvider. Note: Currently a stub. Note:
+	 * This method loads a medium reference from the devices memory.
 	 * 
 	 * @param name
-	 *            The filename without extension of the medium.
-	 * @return The deserialised DataMedia object.
+	 *            The complete path to the medium.
+	 * @return The deserialised DataMedia object or null if medium doesn't
+	 *         exist.
 	 */
-	public static DataMedia deserialise(String name) {
-		/* TODO STUB */
+	public static DataMedia deserialise(String path) {
+		File medium = new File(path);
+		if (medium.exists()) {
+			return new DataMedia(medium.getParent(), medium.getName());
+		}
+		Log.w("Media", "Medium was not found. Was trying to load a medium.");
 		return null;
 	}
 
 	/**
-	 * Deletes a medium on the devices memory. Uses the appropriate
-	 * ContentProvider Note: Currently a stub.
+	 * Deletes a medium on the devices memory. Note: Make sure that there is no
+	 * reference to this medium anymore.
 	 */
 	public void delete() {
-		/* TODO */
+		File medium = new File(getFullPath());
+		if (medium.isFile()) {
+			if (!medium.delete()) {
+				Log.w("Media", "Could not delete medium");
+			}
+		}
+	}
+
+	/**
+	 * Give a pathname of a track (like .../TraceBook/TrackName) this method retrieves
+	 * a list of all media in that directory. If the folder does not exist an empty list is returned.
+	 * 
+	 * @param dirpath The path of the folder.
+	 * @return A list of all Media in that folder.
+	 */
+	public List<DataMedia> listAllMedia(String dirpath) {
+		File dir = new File(dirpath);
+		List<DataMedia> ret = new LinkedList<DataMedia>();
+		
+		if(dir.isDirectory()) {
+			File[] files = dir.listFiles();
+			for(File f : files) {
+				if( getTypeFromFilename(f.getPath()) != -1) {
+					ret.add( DataMedia.deserialise(f.getPath()) );
+				}
+			}
+		} else {
+			Log.w("Media", "Given pathname is no diretory.");
+		}
+
+		return ret;
 	}
 
 	/**
