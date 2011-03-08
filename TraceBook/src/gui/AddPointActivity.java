@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,19 @@ public class AddPointActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		final Bundle extras = getIntent().getExtras();
+
+		/*
+		 * Get the node of the sending Intent
+		 */
+		if (extras != null) {
+			int nodeId = extras.getInt("DataNodeId");
+			List<DataNode> nodeList = DataStorage.getInstance()
+					.getCurrentTrack().getNodes();
+			int index = Collections.binarySearch(nodeList, nodeId);
+			node = nodeList.get(index);
+		}
+
 		setContentView(R.layout.addpointactivity);
 
 		// Init ServiceConnector
@@ -57,35 +71,27 @@ public class AddPointActivity extends Activity {
 		String meta = new String();
 		nodeId = (TextView) findViewById(R.id.nodeId_tv);
 		nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
-		List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack()
-				.getNodes();
 		int i = 0;
-		if (nodeList.size() != 0) {
-			node = nodeList.get(nodeList.size() - 1);
-			Map<String, String> tagMap = node.getTags();
-			metaInformation = new String[tagMap.size()];
-			nodeId.setText(R.id.nodeId_tv + " " + node.get_id());
 
-			if (tagMap.size() != 0) {
-				nodeInfo.setText(R.string.MetaData_tv);
-				Iterator<Entry<String, String>> iterator = tagMap.entrySet()
-						.iterator();
+		Map<String, String> tagMap = node.getTags();
+		metaInformation = new String[tagMap.size()];
+		nodeId.setText(R.id.nodeId_tv + " " + node.get_id());
 
-				while (iterator.hasNext()) {
-					Map.Entry<String, String> pairs = iterator.next();
-					meta = pairs.getKey() + " - " + pairs.getValue();
-					metaInformation[i] = meta;
-					i++;
-				}
+		if (tagMap.size() != 0) {
+			nodeInfo.setText(R.string.MetaData_tv);
+			Iterator<Entry<String, String>> iterator = tagMap.entrySet()
+					.iterator();
 
-			} else {
-				nodeInfo.setText(R.string.noMetaData_tv);
-
+			while (iterator.hasNext()) {
+				Map.Entry<String, String> pairs = iterator.next();
+				meta = pairs.getKey() + " - " + pairs.getValue();
+				metaInformation[i] = meta;
+				i++;
 			}
 
 		} else {
-			Toast.makeText(this, "No Node tracked yet", Toast.LENGTH_SHORT)
-					.show();
+			nodeInfo.setText(R.string.noMetaData_tv);
+
 		}
 
 		return metaInformation;
@@ -96,7 +102,8 @@ public class AddPointActivity extends Activity {
 	 * 
 	 * @param adapter
 	 */
-	private void listNodeInformation(ArrayAdapter<String> adapter) {
+	private void listNodeInformation(final ArrayAdapter<String> adapter) {
+		final Intent intent = new Intent(this, AddPointMetaActivity.class);
 		listView = (ListView) findViewById(R.id.allocateMeta_lv);
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
@@ -105,6 +112,9 @@ public class AddPointActivity extends Activity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				intent.putExtra("DataNodeId", node.get_id());
+				intent.putExtra("DataNodeKey", adapter.getItem(position));
+				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
 						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 			}
@@ -114,6 +124,7 @@ public class AddPointActivity extends Activity {
 	public void addPointMetaBtn(View view) { // method signature including view
 												// is required
 		final Intent intent = new Intent(this, AddPointMetaActivity.class);
+		intent.putExtra("DataNodeId", node.get_id());
 		startActivity(intent);
 	}
 
