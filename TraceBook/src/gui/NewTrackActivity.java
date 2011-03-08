@@ -276,6 +276,7 @@ public class NewTrackActivity extends TabActivity {
 		final Intent intent = new Intent(this, AddPointActivity.class);
 		intent.putExtra("DataNodeId", nodeId);
 		startActivity(intent);
+		finish();
 	}
 
 	/**
