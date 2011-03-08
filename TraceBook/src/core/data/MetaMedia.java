@@ -35,6 +35,11 @@ public class MetaMedia {
 	public static final int TAKE_VIDEO_CODE = 100002;
 	
 	/**
+	 * Our current track.
+	 */
+	private DataTrack currentTrack;
+	
+	/**
 	 * Directory to put all media files into.
 	 */
 	private String baseDir = "";
@@ -60,8 +65,9 @@ public class MetaMedia {
 	 * 
 	 * @param track     DataTrack object containing the current track.
 	 */
-	MetaMedia(final DataTrack track) {
+	MetaMedia(DataTrack track) {
 		baseDir = track.getTrackDirPath();
+		currentTrack = track;
 		recorder = new MediaRecorder();
 	}
 
@@ -124,13 +130,18 @@ public class MetaMedia {
 
 	/**
 	 * Stops recording the audio file that is being recorded and releases
-	 * the recorder object.
+	 * the recorder object. Furthermore, this inserts a new media file
+	 * into our current track, because startAudio() and stopAudio() are
+	 * not intents. As such, the onActivityResult callback will not be
+	 * invoked for these. 
 	 */
 	public final void stopAudio() {
-		if (isRecordingAudio) {
+		if (isRecordingAudio) {			
 			recorder.stop();
 			recorder.reset();
 			recorder.release();
+			currentTrack.addMedia(new DataMedia(baseDir, currentFilename));
+			
 			isRecordingAudio = false;
 		}
 	}
