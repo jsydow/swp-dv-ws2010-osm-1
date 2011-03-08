@@ -105,20 +105,6 @@ public class DataPointsList extends DataMapObject {
 	}
 
 	/**
-	 * Searches for a Node in this Track by the specified id.
-	 * 
-	 * @param id
-	 *            The id of the Node that is being searched for.
-	 * @return The DataNode where get_id() == id, or null if not found.
-	 */
-	public DataNode getNodeByID(int id) {
-		for (DataNode dn : nodes)
-			if (dn.get_id() == id)
-				return dn;
-		return null;
-	}
-
-	/**
 	 * Add a new Node at the end of the list. Call this method if you want to
 	 * extend the Way or Area.
 	 * 
@@ -131,9 +117,11 @@ public class DataPointsList extends DataMapObject {
 	}
 	
 	/**
-	 * Get a DataNode with a given id.
-	 * @param id The id of the DataNode
-	 * @return The DataNode or null if there is none with such an id.
+	 * Searches for a Node in this Track by the specified id.
+	 * 
+	 * @param id
+	 *            The id of the Node that is being searched for.
+	 * @return The DataNode where get_id() == id, or null if not found.
 	 */
 	public DataNode getNodeById(int id) {
 		for(DataNode dn : nodes) {
