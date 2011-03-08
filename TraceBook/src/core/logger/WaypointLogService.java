@@ -125,6 +125,7 @@ public class WaypointLogService extends Service implements LocationListener {
 		public synchronized int endWay() {
 			storage.getCurrentTrack().setCurrentWay(null);
 			
+		
 			DataPointsList tmp = current_way();
 			
 			if(tmp != null)

@@ -110,7 +110,6 @@ public class main extends Activity {
 				e.printStackTrace();
 			}
 			ServiceConnector.stopService();
-			System.exit(0);
 			finish();
 			return true;
 		case R.id.preferences_opt:
