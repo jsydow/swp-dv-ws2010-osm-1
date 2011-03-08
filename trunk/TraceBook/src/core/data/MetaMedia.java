@@ -46,9 +46,9 @@ public class MetaMedia {
 	public static final int TAKE_VIDEO_CODE = 100002;
 	
 	/**
-	 * Our current track.
+	 * Base directory for our media files.
 	 */
-	private DataTrack currentTrack;
+	private String baseDir;
 	
 	/**
 	 * Name of the most recent media file.
@@ -68,11 +68,9 @@ public class MetaMedia {
 	/**
 	 * Constructor. Initializes the recorder object for audio recording and
 	 * sets the base directory for media files.
-	 * 
-	 * @param track     DataTrack object containing the current track.
 	 */
-	public MetaMedia(DataTrack track) {
-		currentTrack = track;
+	public MetaMedia() {
+		baseDir = DataStorage.getInstance().getCurrentTrack().getTrackDirPath();
 		recorder = new MediaRecorder();
 	}
 
@@ -113,8 +111,7 @@ public class MetaMedia {
 			// Possible output formats are 3gpp and MPEG4, e. g.
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-			recorder.setOutputFile(currentTrack.getTrackDirPath() +
-					File.separator + currentFilename);
+			recorder.setOutputFile(getPath());
 
 			try {
 				recorder.start();
@@ -160,7 +157,7 @@ public class MetaMedia {
 	 * @return Returns base directory for media files.
 	 */
 	public final String getBaseDir() {
-		return currentTrack.getTrackDirPath();
+		return baseDir;
 	}
 	
 	/**
@@ -174,7 +171,7 @@ public class MetaMedia {
 	 * @return Path to the current media file.
 	 */
 	public final String getPath() {
-		return currentTrack.getTrackDirPath() + File.separator + currentFilename;
+		return baseDir + File.separator + currentFilename;
 	}
 
 	/**
