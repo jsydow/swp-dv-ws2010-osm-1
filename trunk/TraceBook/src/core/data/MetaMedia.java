@@ -186,7 +186,7 @@ public class MetaMedia {
 	 * Makes up a new filename for the given media type.
 	 * 
 	 * @param mediaType    Media type to make up a new filename for.
-	 * @return A filename for the provided media type.
+	 * @return             A filename for the provided media type.
 	 */
 	private final String getNewFilename(final int mediaType) {
 		String newFilename = "";
