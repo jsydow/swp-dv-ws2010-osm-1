@@ -54,7 +54,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	/**
 	 * default constructor
 	 */
-	DataMapObject() {
+	public DataMapObject() {
 		super();
 		tags = new HashMap<String, String>();
 		_id = DataStorage.getInstance().getID();

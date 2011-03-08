@@ -26,7 +26,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 *            The Location of the new node. Initialises latitude and
 	 *            longitude.
 	 */
-	DataNode(Location loc) {
+	public DataNode(Location loc) {
 		super();
 		setLocation(loc);
 	}
@@ -34,7 +34,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	/**
 	 * default constructor. Longitude and Latitude stay unchanged
 	 */
-	DataNode() {
+	public DataNode() {
 		super();
 	}
 
@@ -108,7 +108,7 @@ public class DataNode extends DataMapObject implements SerialisableContent {
 	 * @return The deserialized DataNode object or null if there is not such a
 	 *         node.
 	 */
-	static DataNode deserialise(int id) {
+	public static DataNode deserialise(int id) {
 		/* TODO STUB */
 		return null;
 	}

@@ -24,7 +24,7 @@ public abstract class DataMediaHolder {
 	/**
 	 * default constructor
 	 */
-	DataMediaHolder() {
+	public DataMediaHolder() {
 		media = new LinkedList<DataMedia>();
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -65,14 +65,15 @@ public abstract class DataMediaHolder {
 	public void addMedia(DataMedia medium) {
 		media.add(medium);
 	}
-	
+
 	/**
-	 * This method generates the media-tags (<link>) for a DataMediaHolder-object.
-	 * The enclosing tag must be opened.
+	 * This method generates the media-tags (<link>) for a
+	 * DataMediaHolder-object. The enclosing tag must be opened.
 	 * 
-	 * @param serializer An XmlSerializer that is initialised.
+	 * @param serializer
+	 *            An XmlSerializer that is initialised.
 	 */
-	public void serialiseMedia(XmlSerializer serializer){
+	public void serialiseMedia(XmlSerializer serializer) {
 		for (DataMedia m : media) {
 			m.serialise(serializer);
 		}

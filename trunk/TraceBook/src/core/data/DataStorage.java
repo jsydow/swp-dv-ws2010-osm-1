@@ -52,7 +52,7 @@ public class DataStorage implements SerialisableContent {
 	/**
 	 * Default private constructor for Singleton implementation.
 	 */
-	DataStorage() {
+	public DataStorage() {
 		tracks = new LinkedList<DataTrack>();
 		names = new LinkedList<String>();
 		retrieveTrackNames();
@@ -70,14 +70,16 @@ public class DataStorage implements SerialisableContent {
 			instance = new DataStorage();
 		return instance;
 	}
-	
+
 	/**
-	 * Return a String of the path to the TraceBook directory without an ending /
-	 * Path is like: /sdcard/TraceBook
+	 * Return a String of the path to the TraceBook directory without an ending
+	 * / Path is like: /sdcard/TraceBook
+	 * 
 	 * @return path of the TraceBook directory
 	 */
 	public static String getTraceBookDirPath() {
-		return Environment.getExternalStorageDirectory() + File.separator + "TraceBook";
+		return Environment.getExternalStorageDirectory() + File.separator
+				+ "TraceBook";
 	}
 
 	/**
