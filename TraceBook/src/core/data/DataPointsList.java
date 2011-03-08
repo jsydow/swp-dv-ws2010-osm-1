@@ -79,12 +79,27 @@ public class DataPointsList extends DataMapObject {
 		return nodes;
 	}
 
+	/**
+	 * Returns an array of GeoPoints representing the current way for being displayed
+	 * in a RouteOverlay.
+	 * If isArea() is true, the first point will be added as last point, this is a requirement
+	 * of the RouteOverlay.
+	 * @return
+	 */
 	public GeoPoint[] toGeoPoitArray() {
-		GeoPoint[] tmp = new GeoPoint[nodes.size()];
+		GeoPoint[] tmp = new GeoPoint[nodes.size() + (isArea ? 1 : 0)];
+		GeoPoint first = null;
 
 		int i = 0;
-		for (DataNode n : nodes)
-			tmp[i++] = new GeoPoint(n.getLat(), n.getLon());
+		for (DataNode n : nodes) {
+			tmp[i] = new GeoPoint(n.getLat(), n.getLon());
+			if(first == null)
+				first = tmp[i];
+			++i;
+		}
+		
+		if(isArea)
+			tmp[tmp.length-1] = first;
 
 		return tmp;
 	}

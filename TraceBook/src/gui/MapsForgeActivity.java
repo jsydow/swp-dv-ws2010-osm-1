@@ -146,7 +146,7 @@ public class MapsForgeActivity extends MapActivity {
 					return;
 				}
 				
-				int way_id = intend.getExtras().getInt("way_id");
+				int way_id   = intend.getExtras().getInt("way_id");
 				int point_id = intend.getExtras().getInt("point_id");
 				if(way_id > 0) {
 					Log.d(LOG_TAG, "Received way update, id="+way_id);
