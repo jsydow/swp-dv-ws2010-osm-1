@@ -1,8 +1,10 @@
 package core.data;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +14,7 @@ import java.util.ListIterator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -72,9 +75,17 @@ public class DataTrack extends DataMediaHolder {
 		super();
 		ways = new LinkedList<DataPointsList>();
 		nodes = new LinkedList<DataNode>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		this.name = sdf.format(new Date());
+		this.name = getFilenameCompatibleTimeStamp();
 		createNewTrackFolder();
+	}
+	
+	/**
+	 * Creates a time stamp of the current time which can be used as a filename.
+	 * @return The time stamp String.
+	 */
+	public static String getFilenameCompatibleTimeStamp() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		return sdf.format(new Date());
 	}
 
 	/**
@@ -490,5 +501,26 @@ public class DataTrack extends DataMediaHolder {
 		
 		res = getPointsListById( id );
 		return res;		
+	}
+	
+	/**
+	 * This method saves a String to a .txt-file and generates a DataMedia-object which
+	 * can be added to any DataMediaHolder.
+	 * @param text The text to save
+	 */
+	public DataMedia saveText(String text) {
+		File txtfile = new File(getTrackDirPath()+File.separator+getFilenameCompatibleTimeStamp()+".txt");
+		try {
+			if(txtfile.createNewFile()) {	
+				BufferedWriter buf = new BufferedWriter(new FileWriter(txtfile));
+				buf.write(text);
+			} else {
+				Log.w("MediaSavingText", "Text file with this timestamp already exists.");
+			}
+		} catch (IOException e) {
+			Log.e("MediaSavingText", "Error while writing text file.");
+			return null;
+		}
+		return new DataMedia(txtfile.getParent(),txtfile.getName());
 	}
 }
