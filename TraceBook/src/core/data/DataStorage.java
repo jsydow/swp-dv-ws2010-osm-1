@@ -198,7 +198,9 @@ public class DataStorage {
 	 */
 	public void deserialiseAll() {
 		retrieveTrackNames();
-		// TODO
+		for(String tname : names) {
+			deserialiseTrack(DataTrack.getTrackDirPath(tname));
+		}
 	}
 
 	/**

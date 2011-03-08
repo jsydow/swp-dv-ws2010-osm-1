@@ -295,9 +295,23 @@ public class DataTrack extends DataMediaHolder {
 
 	}
 
+	/**
+	 * Deletes a Track with all its contents from the devices memory.
+	 */
 	public void delete() {
-		// TODO Auto-generated method stub
-
+		File track = new File(getTrackDirPath());
+		File[] files = track.listFiles();
+		for(File f : files) {
+			if(f.isFile()) {
+				if(!f.delete()) {
+					Log.e("DeleteTrackFile", "Could not delete file "+f.getName() +" in track " + getName());
+				}
+			}
+		}
+		if(!track.delete()) {
+			Log.e("DeleteTrack", "Could not delete track " + getName());
+			
+		}
 	}
 
 	/**
@@ -336,17 +350,6 @@ public class DataTrack extends DataMediaHolder {
 		return null;
 	}
 
-	/**
-	 * This method returns a list of the name of all Tracks that are stored on
-	 * the devices memory. These names can be used to deserialise a Track.
-	 * 
-	 * @return A list of the names of all available Tracks
-	 */
-	public static List<String> allTracks() {
-		/* TODO STUB */
-		return null;
-	}
-
 	public void serialise() {
 		serialise(true);
 	}
@@ -362,8 +365,21 @@ public class DataTrack extends DataMediaHolder {
 		}
 	}
 
+	/**
+	 * Returns the complete absolute path to this Track directory.
+	 * @return path to the track directory
+	 */
 	public String getTrackDirPath() {
 		return DataStorage.getTraceBookDirPath() + File.separator + name;
+	}
+	
+	/**
+	 * Completes a track directory name to a complete path.
+	 * @param dir Name of the track directory 
+	 * @return The complete path to the track directory.
+	 */
+	public static String getTrackDirPath(String dir) {
+		return DataStorage.getTraceBookDirPath() + File.separator + dir;
 	}
 
 	/**
