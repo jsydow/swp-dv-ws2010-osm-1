@@ -26,7 +26,7 @@ import android.util.Xml;
  * @author js
  * 
  */
-public class DataTrack extends DataMediaHolder implements SerialisableContent {
+public class DataTrack extends DataMediaHolder {
 
 	/**
 	 * All Ways and Areas
@@ -195,7 +195,6 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		while (lit.hasNext()) {
 			dn = lit.next();
 			if (dn.get_id() == id) {
-				dn.delete();
 				lit.remove();
 				break;
 			}
@@ -226,7 +225,6 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		while (lit.hasNext()) {
 			dpl = lit.next();
 			if (dpl.get_id() == id) {
-				dpl.delete();
 				lit.remove();
 				break;
 			}
@@ -368,4 +366,31 @@ public class DataTrack extends DataMediaHolder implements SerialisableContent {
 		return DataStorage.getTraceBookDirPath() + File.separator + name;
 	}
 
+	/**
+	 * Get a DataPointsList with a given id.
+	 * @param id The id of the DataPointsList
+	 * @return The DataPointsList or null if there is none with such an id.
+	 */
+	public DataPointsList getPointsListById(int id) {
+		for(DataPointsList dpl : ways) {
+			if(dpl.get_id() == id) {
+				return dpl;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Get a DataNode with a given id.
+	 * @param id The id of the DataNode
+	 * @return The DataNode or null if there is none with such an id.
+	 */
+	public DataNode getNodeById(int id) {
+		for(DataNode dn : nodes) {
+			if(dn.get_id() == id) {
+				return dn;
+			}
+		}
+		return null;
+	}
 }

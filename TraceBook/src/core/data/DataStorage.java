@@ -1,10 +1,15 @@
 package core.data;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
+
 import android.os.Environment;
+import android.util.Log;
 
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
@@ -23,7 +28,7 @@ import android.os.Environment;
  * @author js
  * 
  */
-public class DataStorage implements SerialisableContent {
+public class DataStorage {
 
 	/**
 	 * Singleton instance
@@ -56,7 +61,7 @@ public class DataStorage implements SerialisableContent {
 		tracks = new LinkedList<DataTrack>();
 		names = new LinkedList<String>();
 		retrieveTrackNames();
-		// TODO load lastID
+		lastID = 1;
 	}
 
 	/**
@@ -69,6 +74,19 @@ public class DataStorage implements SerialisableContent {
 		if (instance == null)
 			instance = new DataStorage();
 		return instance;
+	}
+	
+	/**
+	 * This method removes duplicates in a list of Strings.
+	 * 
+	 * @param l the list of Strings
+	 */
+	static void removeDuplicatesInStringList(List<String> l) {
+		Set<String> tmp = new HashSet<String>(l);
+		l.clear();
+		l.addAll(tmp);
+		Collections.sort(l);
+		return;
 	}
 
 	/**
@@ -89,7 +107,6 @@ public class DataStorage implements SerialisableContent {
 	 */
 	public int getID() {
 		lastID++;
-		// TODO save last id
 		return lastID;
 	}
 
@@ -180,6 +197,7 @@ public class DataStorage implements SerialisableContent {
 	 * are needed use retrieveTrackNames()
 	 */
 	public void deserialiseAll() {
+		retrieveTrackNames();
 		// TODO
 	}
 
@@ -197,11 +215,27 @@ public class DataStorage implements SerialisableContent {
 	}
 
 	/**
-	 * Load the list of all Tracks that are stored on the devices memory. These
-	 * names can be returned by getAllTracks().
+	 * Load the list of all Tracks that are stored on the devices memory. It
+	 * empties the current list of track names. These names can be returned by
+	 * getAllTracks().
 	 */
 	public void retrieveTrackNames() {
-		// TODO
+		File tracebookdir = new File(getTraceBookDirPath());
+
+		if (tracebookdir.isDirectory()) {
+			names.clear();
+			File[] dirs = tracebookdir.listFiles();
+			
+			for (File f : dirs) {
+				if (f.isDirectory()) {
+					names.add(f.getName());
+				}
+			}
+			
+		} else {
+			Log.w("TraceBookDirectory",
+					"The TraceBook directory path doesn't point to a directory! wtf?");
+		}
 	}
 
 	/**
@@ -209,11 +243,11 @@ public class DataStorage implements SerialisableContent {
 	 * method as getAllTracks() calls this method.
 	 */
 	public void updateNames() {
-		names.clear();
+		retrieveTrackNames();
 		for (DataTrack dt : tracks) {
 			names.add(dt.getName());
 		}
-		// TODO also update names from tracks on devices memory
+		removeDuplicatesInStringList(names);
 	}
 
 	/**

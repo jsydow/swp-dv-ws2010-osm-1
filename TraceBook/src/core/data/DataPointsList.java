@@ -18,8 +18,7 @@ import android.util.Log;
  * @author js
  * 
  */
-public class DataPointsList extends DataMapObject implements
-		SerialisableContent {
+public class DataPointsList extends DataMapObject {
 	/**
 	 * The list of nodes of this object. First node is first element in this
 	 * list.
@@ -115,6 +114,20 @@ public class DataPointsList extends DataMapObject implements
 		nodes.add(dn);
 		return dn;
 	}
+	
+	/**
+	 * Get a DataNode with a given id.
+	 * @param id The id of the DataNode
+	 * @return The DataNode or null if there is none with such an id.
+	 */
+	public DataNode getNodeById(int id) {
+		for(DataNode dn : nodes) {
+			if(dn.get_id() == id) {
+				return dn;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Add a new Node at the end of the list. Call this method if you want to
@@ -143,29 +156,10 @@ public class DataPointsList extends DataMapObject implements
 		while (lit.hasNext()) {
 			dn = lit.next();
 			if (dn.get_id() == id) {
-				dn.delete();
 				lit.remove();
 				break;
 			}
 		}
-	}
-
-	/**
-	 * Deserialises a DataPointsList from the devices memory.
-	 * 
-	 * @param id
-	 *            the id of the PointsList to load from the devices memory.
-	 * @return The loaded DataPointsList object. If there is not such an object
-	 *         null is returned.
-	 */
-	public static DataPointsList deserialise(int id) {
-		/* TODO STUB */
-		return null;
-	}
-
-	public void serialise() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -235,10 +229,5 @@ public class DataPointsList extends DataMapObject implements
 		} catch (IOException e) {
 			Log.e("WaySerialisation", "Could not serialise way");
 		}
-	}
-
-	public void delete() {
-		// TODO Auto-generated method stub
-
 	}
 }
