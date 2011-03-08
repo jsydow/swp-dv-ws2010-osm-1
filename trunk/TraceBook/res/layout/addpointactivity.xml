@@ -3,12 +3,8 @@
 	android:layout_width="fill_parent" android:layout_height="wrap_content"
 	android:orientation="vertical">
 
-	<TextView android:id="@+id/nodeId" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:text="@string/nodeId" />
-
-	<TextView android:id="@+id/nodeTags" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" />
-
+	<TextView android:id="@+id/nodeId_tv" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:textSize="15sp" android:textStyle="bold" android:textColor="#fff"/>
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
@@ -21,9 +17,15 @@
 			android:layout_height="wrap_content" android:text="@string/cancel_btn"
 			android:onClick="cancelBtn" />
 	</LinearLayout>
-	
-	<ListView android:id="@+id/meta_lvw" android:layout_width="match_parent"
-		android:layout_height="match_parent" android:layout_weight="1"
-		android:drawSelectorOnTop="false" />
+
+	<TextView android:id="@+id/allocateMeta_tv"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textSize="15sp" android:textStyle="bold" android:textColor="#fff"/>
+
+	<ListView android:id="@+id/allocateMeta_lv"
+	android:layout_width="match_parent" android:layout_height="match_parent"
+	android:layout_weight="1" android:scrollingCache="true"
+	android:divider="#8ac705" android:dividerHeight="1sp"
+	android:drawSelectorOnTop="false" />
 
 </LinearLayout>

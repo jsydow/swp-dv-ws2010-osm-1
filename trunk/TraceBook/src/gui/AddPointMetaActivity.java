@@ -34,10 +34,7 @@ public class AddPointMetaActivity extends Activity {
 		int nodeID;
 		
 		DataNode node;
-		
 		XmlResourceParser parser;
-		
-
 		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -119,9 +116,9 @@ public class AddPointMetaActivity extends Activity {
 								autoComplVal.getText().toString());
 						
 		}	
-		
-		final Intent intent = new Intent(this, AddPointActivity.class);
+		final Intent intent = new Intent (this, AddPointActivity.class);
 		startActivity(intent);
+		finish();
 	}
 
 	public void cancelBtn(View view) { // method signature including view is required
@@ -129,6 +126,12 @@ public class AddPointMetaActivity extends Activity {
 		startActivity(intent);
 	}
 
+	/**
+	 * This Method parse all the Tag's in the XML-MetaTag files
+	 * @param tagType
+	 * @param parentName
+	 * @return
+	 */
 	private String[] parseTags(int tagType, String parentName) {
 		int next;
 		boolean inParent = false;

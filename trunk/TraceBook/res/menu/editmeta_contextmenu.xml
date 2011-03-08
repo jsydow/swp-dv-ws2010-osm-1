@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/deleteTag_cm"
+          android:title="@string/deleteTag_cm" />
+    <item android:id="@+id/renameTag_cm"
+          android:title="@string/renameTag_cm" />
+</menu>
