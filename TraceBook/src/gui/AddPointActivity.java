@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import core.data.DataMapObject;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -25,11 +26,12 @@ import core.logger.ServiceConnector;
 public class AddPointActivity extends Activity {
 
 	ListView listView;
-	TextView nodeId;
+	TextView nodeIdTv;
 	TextView nodeInfo;
-	DataNode node;
-	DataPointsList way;
-	DataPointsList area;
+	DataMapObject node;
+	
+	
+	
 	String[] metaInformation;
 
 	@Override
@@ -42,25 +44,11 @@ public class AddPointActivity extends Activity {
 		 */
 		if (extras != null) {
 
-			if (extras.containsKey("DataNodeId")) {
-				int poiNodeId = extras.getInt("DataNodeId");
-				List<DataNode> nodeList = DataStorage.getInstance()
-						.getCurrentTrack().getNodes();
-				int index = Collections.binarySearch(nodeList, poiNodeId);
-				node = nodeList.get(index);
-			} else if (extras.containsKey("WayNodeId")) {
-				int wayNodeId = extras.getInt("WayNodeId");
-				List<DataPointsList> wayList = DataStorage.getInstance()
-				.getCurrentTrack().getWays();
-				int index = Collections.binarySearch(wayList, wayNodeId);
-				way = wayList.get(index);
-			} else if (extras.containsKey("AreaNodeId")) {
-				int areaNodeId = extras.getInt("AreaNodeId");
-				List<DataPointsList> areaList = DataStorage.getInstance()
-				.getCurrentTrack().getWays();
-				int index = Collections.binarySearch(areaList, areaNodeId);
-				area = areaList.get(index);
+			if (extras.containsKey("DataNodeId")) {				
+				int nodeId = extras.getInt("DataNodeId");
+				node = DataStorage.getInstance().getCurrentTrack().getDataMapObjectById(nodeId);
 			}
+			
 		}
 
 		setContentView(R.layout.addpointactivity);
@@ -87,13 +75,13 @@ public class AddPointActivity extends Activity {
 	private String[] getNodeInformation() {
 
 		String meta = new String();
-		nodeId = (TextView) findViewById(R.id.nodeId_tv);
+		nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
 		nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
 		int i = 0;
 
 		Map<String, String> tagMap = node.getTags();
 		metaInformation = new String[tagMap.size()];
-		nodeId.setText(R.id.nodeId_tv + " " + node.get_id());
+		nodeIdTv.setText(R.id.nodeId_tv + " " + node.get_id());
 
 		if (tagMap.size() != 0) {
 			nodeInfo.setText(R.string.MetaData_tv);
@@ -142,6 +130,8 @@ public class AddPointActivity extends Activity {
 	public void addPointMetaBtn(View view) { // method signature including view
 												// is required
 		final Intent intent = new Intent(this, AddPointMetaActivity.class);
+		
+		
 		intent.putExtra("DataNodeId", node.get_id());
 		startActivity(intent);
 	}
