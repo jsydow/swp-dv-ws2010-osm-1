@@ -69,8 +69,9 @@ public class NewTrackActivity extends TabActivity {
 		ServiceConnector.startService(this);
 		ServiceConnector.initService();
 
-		initToggleButtons();
 		setButtonList(false, 0);
+		initToggleButtons();
+		
 
 		myTabHost = getTabHost();
 		myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost));
@@ -118,18 +119,33 @@ public class NewTrackActivity extends TabActivity {
 
 		ToggleButton startWay = (ToggleButton) findViewById(R.id.startWay_Tbtn);
 		ToggleButton startArea = (ToggleButton) findViewById(R.id.startArea_Tbtn);
+		
+		ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
+		ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
 
 		try {
-			startWay.setChecked(ServiceConnector.getLoggerService()
-					.isWayLogging());
+			boolean toggle = ServiceConnector.getLoggerService().isWayLogging();			
+			startWay.setChecked(toggle);
+			areaToggle.setClickable(!toggle);
+			
+			if( toggle )
+				setButtonList(true, 1);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
-			startArea.setChecked(ServiceConnector.getLoggerService()
-					.isAreaLogging());
+			
+			boolean toggle = ServiceConnector.getLoggerService().isAreaLogging();
+			
+			startArea.setChecked(toggle);
+			streetToggle.setClickable(!toggle);
+			
+			if( toggle )
+				setButtonList(true, 2);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
