@@ -1,8 +1,10 @@
 package gui;
 
+import java.io.File;
 import java.util.List;
 
 import Trace.Book.R;
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +20,12 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import core.data.DataMedia;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
+import core.data.DataTrack;
+import core.data.MetaMedia;
 import core.logger.ServiceConnector;
 
 public class NewTrackActivity extends TabActivity {
@@ -50,6 +55,8 @@ public class NewTrackActivity extends TabActivity {
 
 	TabHost myTabHost;
 	TextView mediaData;
+	
+	MetaMedia mm;
 
 	@Override
 	/**
@@ -59,6 +66,9 @@ public class NewTrackActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
+		
+		mm = new MetaMedia();
+		
 		// Init TabHost
 		initTabHost();
 
@@ -316,19 +326,37 @@ public class NewTrackActivity extends TabActivity {
 	}
 
 	public void makePictureBtn(View view) {
-
+		mm.takePhoto(this);
 	}
 
 	public void makeVideoBtn(View view) {
-
+		mm.takeVideo(this);
 	}
 
 	public void makeMemoBtn(View view) {
-
+		
 	}
 
 	public void makeNoticeBtn(View view) {
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		DataTrack dt = DataStorage.getInstance().getCurrentTrack();
+		
+		switch (requestCode) {
+			case MetaMedia.TAKE_PHOTO_CODE:
+				if (resultCode == Activity.RESULT_OK) {
+					mm.appendToObject(dt.getCurrentWay());
+				}
+				break;
+			case MetaMedia.TAKE_VIDEO_CODE:
+				if (resultCode == Activity.RESULT_OK) {
+					mm.appendToObject(dt.getCurrentWay());
+				}
+				break;
+		}
 	}
 
 	@Override
