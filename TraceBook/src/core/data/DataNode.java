@@ -160,6 +160,10 @@ public class DataNode extends DataMapObject{
 		}
 	}
 	
+	/**
+	 * Returns a String with id and longitude and latitude of this node.
+	 * @return String "id=<id> (<longitude>, <latitude>)"
+	 */
 	@Override
 	public String toString() {
 		return "id=" + get_id() + " (" + getLon() + ", " + getLat() + ")";
@@ -174,6 +178,7 @@ public class DataNode extends DataMapObject{
 	}
 	
 	/**
+	 * Getter-method
 	 * @return a reference to the OverlayItem that is drawn and handled by MapsForge's overlay
 	 */
 	public OverlayItem getOverlayItem() {
