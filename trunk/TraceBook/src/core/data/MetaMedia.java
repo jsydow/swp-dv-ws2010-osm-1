@@ -137,6 +137,9 @@ public class MetaMedia {
 		}
 	}
 	
+	/**
+	 * @return File name of the current media file.
+	 */
 	public final String getCurrentFilename() {
 		return currentFilename;
 	}
