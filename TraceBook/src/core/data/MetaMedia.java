@@ -184,7 +184,7 @@ public class MetaMedia {
 		
 		switch (mediaType) {
 			case TAKE_AUDIO_CODE:
-				newFilename += "audio_" + timestamp + ".mp4";
+				newFilename += "audio_" + timestamp + ".m4a";
 				break;
 			case TAKE_PHOTO_CODE:
 				newFilename += "image_" + timestamp + ".jpg";
