@@ -196,8 +196,7 @@ public class AddPointActivity extends Activity {
      */
     public void makeMemoBtn(View view) {
         final Intent intent = new Intent(this, AddMemoActivity.class);
-        intent.putExtra("DataNodeId", DataStorage.getInstance()
-                .getCurrentTrack().getCurrentWay().getId());
+        intent.putExtra("DataNodeId", node.getId());
         startActivity(intent);
     }
 
@@ -212,12 +211,9 @@ public class AddPointActivity extends Activity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
-                DataStorage.getInstance().getCurrentTrack().getCurrentWay()
-                        .getTags().put("Notice", value);
-                Toast.makeText(
-                        getApplicationContext(),
-                        getResources().getString(R.string.addNotice_alert)
-                                + " " + value, Toast.LENGTH_SHORT).show();
+
+                node.addMedia(DataStorage.getInstance().getCurrentTrack()
+                        .saveText(value));
             }
         });
 
