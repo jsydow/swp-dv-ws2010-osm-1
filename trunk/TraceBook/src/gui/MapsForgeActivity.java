@@ -155,6 +155,7 @@ public class MapsForgeActivity extends MapActivity {
 			 */
 			return true;
 		case R.id.centerAtOwnPosition_opt:
+			((GPSReceiver) gpsReceiver).centerOnCurrentPosition();
 			/*
 			 * DO SOMETHING
 			 */
@@ -320,6 +321,7 @@ public class MapsForgeActivity extends MapActivity {
 	 */
 	private class GPSReceiver extends BroadcastReceiver {
 		OverlayItem current_pos = null;
+		GeoPoint currentGeoPoint = null;
 
 		/**
 		 * creates a new OverlayItem
@@ -337,6 +339,10 @@ public class MapsForgeActivity extends MapActivity {
 
 			return oi;
 		}
+		
+		private void centerOnCurrentPosition() {
+			mapController.setCenter(currentGeoPoint);			
+		}
 
 		public GPSReceiver() { /* nothing to do here */
 		}
@@ -349,15 +355,13 @@ public class MapsForgeActivity extends MapActivity {
 				final double lng = intend.getExtras().getDouble("long");
 				final double lat = intend.getExtras().getDouble("lat");
 
-				final GeoPoint pos = new GeoPoint(lat, lng);
+				currentGeoPoint = new GeoPoint(lat, lng);
 
-				mapController.setCenter(pos);
-
-				Log.d(LOG_TAG, "Location update received " + pos.toString());
+				Log.d(LOG_TAG, "Location update received " + currentGeoPoint.toString());
 
 				if (current_pos != null)
 					pointsOverlay.removeOverlay(current_pos);
-				current_pos = getOverlayItem(pos, R.drawable.marker_green);
+				current_pos = getOverlayItem(currentGeoPoint, R.drawable.marker_green);
 				pointsOverlay.addOverlay(current_pos);
 
 				// Receive an update of a way and update the overlay accordingly
