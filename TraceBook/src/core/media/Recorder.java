@@ -48,11 +48,6 @@ public abstract class Recorder {
 
     /**
      * 
-     */
-    public abstract void init();
-
-    /**
-     * 
      * @return Filename.
      */
     public abstract String start();
