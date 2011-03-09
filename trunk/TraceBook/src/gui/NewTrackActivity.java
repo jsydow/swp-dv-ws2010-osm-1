@@ -332,7 +332,8 @@ public class NewTrackActivity extends TabActivity {
 	}
 
 	public void makeMemoBtn(View view) {
-
+		final Intent intent = new Intent (this, AddMemoActivity.class);
+		startActivity(intent);
 	}
 
 	public void makeNoticeBtn(View view) {

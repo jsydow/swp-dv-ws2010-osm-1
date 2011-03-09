@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/editPoint_cm"
+          android:title="@string/editPoint_cm" />
+    <item android:id="@+id/deletePoint_cm"
+          android:title="@string/deletePoint_cm" />
+    <item android:id="@+id/movePoint_cm"
+          android:title="@string/movePoint_cm" />
+</menu>

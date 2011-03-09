@@ -22,14 +22,27 @@
 	<!--  AlertBox values -->
     <string name="addNotice_alert">Notiz hinzufügen</string>
     <string name="addedNotice_alert">Notiz hünzugefügt:</string>
+    <string name="exit_alert">Möchten Sie die aktuelle Seassion stoppen?</string>
+    <string name="pause_alert">Möchten Sie die aktuelle Seassion pausieren?</string>
+    <string name="yes_alert">Ja</string>
+    <string name="no_alert">Nein</string>
     
   	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>
     <string name="close_opt">Beenden</string>
+    <string name="centerAtOwnPosition_opt">Ausrichten</string>
+    <string name="activateMobileInternet_opt">Internet aktivieren</string>
+    <string name="stopTrack_opt">Aufnahme stoppen</string>
+    <string name="help_opt">Hilfe</string>
+    <string name="export_opt">Exportieren</string>
+    <string name="pause_opt">Pause</string>
     
     <!--  Contextmenu values -->
 	<string name="deleteTag_cm">Tag löschen</string>
 	<string name="renameTag_cm">Tag ändern</string>
+	<string name="deletePoint_cm">Punkt löschen</string>
+	<string name="editPoint_cm">Punkt editieren</string>
+	<string name="movePoint_cm">Punkt verschieben</string>
    
    <!-- Tab values -->
     <string name="map_tab">Karte</string>
@@ -42,7 +55,7 @@
     <string name="areaOn_btn">Flächenanfang</string>
     <string name="areaOff_btn">Flächenende</string>
     <string name="addPoint_btn">Point Of Interest hinzufügen</string>
-    <string name="stopTrack_btn">Stoppe Track</string>
+    <string name="stopTrack_btn">Stoppen und beenden</string>
     <string name="poi_btn">Point of intrest</string>
     <string name="save_btn">Speichern</string>
     <string name="cancel_btn">Abbrechen</string>
