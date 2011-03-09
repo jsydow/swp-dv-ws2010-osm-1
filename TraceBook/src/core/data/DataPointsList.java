@@ -121,6 +121,7 @@ public class DataPointsList extends DataMapObject {
      */
     public DataNode newNode() {
         DataNode dn = new DataNode();
+        dn.setDataPointsList(this);
         nodes.add(dn);
         return dn;
     }
@@ -152,7 +153,7 @@ public class DataPointsList extends DataMapObject {
      * @return the newly created DataNode.
      */
     public DataNode newNode(Location loc) {
-        DataNode dn = new DataNode(loc);
+        DataNode dn = new DataNode(loc, this);
         nodes.add(dn);
         return dn;
     }
