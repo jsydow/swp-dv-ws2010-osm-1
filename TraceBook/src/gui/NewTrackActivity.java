@@ -88,7 +88,7 @@ public class NewTrackActivity extends TabActivity {
 	/**
 	 * MetaMedia object to create new media objects and to receive it
 	 */
-	MetaMedia mm = new MetaMedia();
+	MetaMedia mm;
 
 	@Override
 	/**
@@ -99,7 +99,7 @@ public class NewTrackActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newtrackactivity);
 
-		
+		mm = new MetaMedia();
 		// Init TabHost
 		initTabHost();
 
@@ -376,6 +376,7 @@ public class NewTrackActivity extends TabActivity {
 	 */
 	public void makeMemoBtn(View view) {
 		final Intent intent = new Intent (this, AddMemoActivity.class);
+		intent.putExtra("DataNodeId", DataStorage.getInstance().getCurrentTrack().getCurrentWay().getId());
 		startActivity(intent);
 	}
 
