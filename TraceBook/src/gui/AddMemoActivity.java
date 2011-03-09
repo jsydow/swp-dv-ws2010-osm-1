@@ -7,18 +7,18 @@ import android.os.Bundle;
 import android.view.View;
 import core.data.DataMapObject;
 import core.data.DataStorage;
-import core.data.MetaMedia;
+import core.media.AudioRecorder;
 
 /**
  * @author greentraxas
  * 
  */
 public class AddMemoActivity extends Activity {
-
     /**
-     * MetaMedia object to create new media objects and to receive it.
+     * The object that is responsible for recording (and attaching) the audio
+     * file to our data structure.
      */
-    MetaMedia mm = new MetaMedia();
+    AudioRecorder recorder = new AudioRecorder();
 
     /**
      * Here we save a reference to the current DataMapObject which is in use.
@@ -39,7 +39,6 @@ public class AddMemoActivity extends Activity {
         setContentView(R.layout.addmemoactivity);
 
         startMemo();
-
     }
 
     /**
@@ -67,10 +66,9 @@ public class AddMemoActivity extends Activity {
                     e.printStackTrace();
                 }
                 dialog.dismiss();
-                mm.startAudio();
+                recorder.start();
             }
         }.start();
-
     }
 
     /**
@@ -79,8 +77,9 @@ public class AddMemoActivity extends Activity {
      * @param view
      */
     public void stopMemoBtn(View view) {
-        mm.stopAudio(node);
+        recorder.stop();
+        recorder.appendFileToObject(node);
+
         finish();
     }
-
 }
