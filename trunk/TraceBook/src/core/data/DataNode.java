@@ -114,7 +114,7 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * Sets the position of this DataNode to the location of the GeoPoint
+     * Sets the position of this DataNode to the location of the GeoPoint.
      * 
      * @param gp
      *            new position of the node
@@ -275,7 +275,9 @@ public class DataNode extends DataMapObject {
                 .getNamedItem("lon").getNodeValue());
         ret.setLocation(new GeoPoint(lat, lon));
         // get time stamp
-        ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+        ret
+                .setDatetime(nodeattributes.getNamedItem("timestamp")
+                        .getNodeValue());
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
