@@ -1,35 +1,36 @@
 package util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
+import org.mapsforge.android.maps.ArrayItemizedOverlay;
 import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.OverlayItem;
+
+import core.data.DataNode;
+import core.data.DataStorage;
+import core.data.DataTrack;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Pair;
 
 /**
  * ArrayItemizedOverlay is a thread-safe implementation of the {@link ItemizedOverlay} class
  * using an {@link ArrayList} as internal data structure. A default marker for all
  * {@link OverlayItem OverlayItems} without an individual marker can be defined via the
  * constructor.
- * <p>
- * The ArrayItemizedOverlay handles tap events on OverlayItems by displaying their title and
- * description in an {@link AlertDialog}. This behavior can easily be changed by overriding the
- * {@link #onTap} method.
  * 
- * This Class is derived from the ArrayItemizedOverlay of MapsForge
+ * This Class is derived from the {@link ArrayItemizedOverlay} of MapsForge
  */
-public class MyArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
+public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private static final int ARRAY_LIST_INITIAL_CAPACITY = 8;
-    private static final String THREAD_NAME = "MyArrayItemizedOverlay";
+    private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
 
     private final Context context;
     private AlertDialog.Builder dialog;
-    private OverlayItem item;
-    private final ArrayList<OverlayItem> overlayItems;
+    private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
+    private DataTrack currentTrack;
 
     /**
      * Constructs a new ArrayItemizedOverlay.
@@ -40,10 +41,11 @@ public class MyArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * @param context
      *            the reference to the application context.
      */
-    public MyArrayItemizedOverlay(Drawable defaultMarker, Context context) {
+    public DataNodeArrayItemizedOverlay(Drawable defaultMarker, Context context) {
         super(defaultMarker == null ? null : boundCenterBottom(defaultMarker));
         this.context = context;
-        this.overlayItems = new ArrayList<OverlayItem>(ARRAY_LIST_INITIAL_CAPACITY);
+        this.overlayItems = new ArrayList<Pair <OverlayItem, Integer>>(ARRAY_LIST_INITIAL_CAPACITY);
+        this.currentTrack = DataStorage.getInstance().getCurrentTrack();
     }
 
     /**
@@ -51,23 +53,12 @@ public class MyArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * 
      * @param overlayItem
      *            the item that should be added to the overlay.
+     * @param node_id
+     *            id of the {@link DataNode} object associated with this Item
      */
-    public void addOverlay(OverlayItem overlayItem) {
+    public void addOverlay(OverlayItem overlayItem, int node_id) {
         synchronized (this.overlayItems) {
-            this.overlayItems.add(overlayItem);
-        }
-        populate();
-    }
-
-    /**
-     * Adds all items of the given collection to the overlay.
-     * 
-     * @param c
-     *            collection whose items should be added to the overlay.
-     */
-    public void addOverlays(Collection<? extends OverlayItem> c) {
-        synchronized (this.overlayItems) {
-            this.overlayItems.addAll(c);
+            this.overlayItems.add(new Pair<OverlayItem, Integer>(overlayItem, new Integer(node_id)));
         }
         populate();
     }
@@ -110,17 +101,25 @@ public class MyArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     @Override
     protected OverlayItem createItem(int i) {
         synchronized (this.overlayItems) {
-            return this.overlayItems.get(i);
+            return this.overlayItems.get(i).first;
         }
     }
 
     @Override
     protected boolean onTap(int index) {
         synchronized (this.overlayItems) {
-            this.item = this.overlayItems.get(index);
+            final int node_id = this.overlayItems.get(index).second.intValue();
             this.dialog = new AlertDialog.Builder(this.context);
-            this.dialog.setTitle(this.item.getTitle());
-            this.dialog.setMessage(this.item.getSnippet());
+            this.dialog.setTitle("id: " + node_id);
+            
+            String message = "no tags set";
+            if(node_id > 0) {
+                DataNode node = currentTrack.getNodeById(node_id);
+                if(node != null)
+                    message = node.getTags().toString();
+            } else
+                message = "current position";
+            this.dialog.setMessage(message);
             this.dialog.show();
             return true;
         }
