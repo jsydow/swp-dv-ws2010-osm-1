@@ -13,7 +13,7 @@ import android.os.IBinder;
 public class LoggerServiceConnection implements ServiceConnection {
 
     /**
-     * reference for loggerService
+     * Reference for loggerService.
      */
     ILoggerService loggerService = null;
 
