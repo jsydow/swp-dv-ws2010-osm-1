@@ -19,19 +19,42 @@ import android.widget.AutoCompleteTextView;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 
+/**
+ * @author greentrax
+ * In this Activty you can choose your Tags via an autocomplete feature.
+ * Tags and values are grouped together. So the autocomplete feature for values 
+ * are depended  by their key values. For example when you choose "highway" only 
+ * highway related values will be given as a list for autocomplete.
+ *
+ */
 public class AddPointMetaActivity extends Activity {
 
+    /**
+     * @author greentraxas
+     * A simple enum class for tags
+     */
+    enum Tags{
+        /**
+         * 
+         */
+        KEY,
+        /**
+         * 
+         */
+        VALUE,
+        /**
+         * 
+         */
+        USEFUL
+        
+    }
+	
+	
 	/**
-	 * fixed Integer-values for tag types, used in parseTags()
+	 * Reference to the current DataMapObject in use
 	 */
-	static final short KEY = 0;
-	static final short VALUE = 1;
-	static final short USEFUL = 2;
-	int nodeId;
-
 	DataMapObject node;
-	XmlResourceParser parser;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,7 +67,7 @@ public class AddPointMetaActivity extends Activity {
 		final Bundle extras = getIntent().getExtras();
 		
 		if (extras != null) {
-			nodeId = extras.getInt("DataNodeId");
+			int nodeId = extras.getInt("DataNodeId");
 			node = DataStorage.getInstance().getCurrentTrack().getDataMapObjectById(nodeId);
 			
 			if( extras.containsKey("DataNodeKey") ) {
@@ -84,11 +107,11 @@ public class AddPointMetaActivity extends Activity {
 	/**
 	 * Give all the tag category's from the Tag-XML.
 	 * 
-	 * @return
+	 * @return a string array containing the category's 
 	 */
 	public String[] getCategoryTags() {
 		// Testarray
-		String[] firstGroupTags = parseTags(KEY, "");
+		String[] firstGroupTags = parseTags(Tags.KEY, "");
 		return firstGroupTags;
 	}
 
@@ -96,11 +119,11 @@ public class AddPointMetaActivity extends Activity {
 	 * Generate the appendant values for the category tag.
 	 * 
 	 * @param category
-	 * @return
+	 * @return return a string array with values for the given category
 	 */
 	public String[] getValues(String category) {
 		// return the value tags for the selected category tag
-		String[] valueTags = parseTags(VALUE, category);
+		String[] valueTags = parseTags(Tags.VALUE, category);
 		return valueTags;
 	}
 
@@ -145,10 +168,10 @@ public class AddPointMetaActivity extends Activity {
 	 * @param parentName
 	 * @return
 	 */
-	private String[] parseTags(int tagType, String parentName) {
+	private String[] parseTags(Tags tagType, String parentName) {
 		int next;
 		boolean inParent = false;
-		parser = this.getResources().getXml(R.xml.tags);
+		XmlResourceParser parser = this.getResources().getXml(R.xml.tags);
 		ArrayList<String> tagStrings = new ArrayList<String>();
 
 		try {
