@@ -132,9 +132,9 @@ public class DataPointsList extends DataMapObject {
 	 *            The id of the Node that is being searched for.
 	 * @return The DataNode where get_id() == id, or null if not found.
 	 */
-	public DataNode getNodeById(int id) {
+	public DataNode getNodeById(int node_id) {
 		for (DataNode dn : nodes) {
-			if (dn.getId() == id) {
+			if (dn.getId() == node_id) {
 				return dn;
 			}
 		}
@@ -162,12 +162,12 @@ public class DataPointsList extends DataMapObject {
 	 *            The id of the node to be deleted. If this node does not exist
 	 *            nothing is done.
 	 */
-	public void deleteNode(int id) {
+	public void deleteNode(int node_id) {
 		ListIterator<DataNode> lit = nodes.listIterator();
 		DataNode dn;
 		while (lit.hasNext()) {
 			dn = lit.next();
-			if (dn.getId() == id) {
+			if (dn.getId() == node_id) {
 				lit.remove();
 				break;
 			}
