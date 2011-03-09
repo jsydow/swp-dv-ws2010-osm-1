@@ -365,7 +365,7 @@ public class NewTrackActivity extends TabActivity {
         String filename = mm.takePhoto(this);
         DataTrack currentTrack = DataStorage.getInstance().getCurrentTrack();
         currentTrack.getCurrentWay().addMedia(
-                new DataMedia(currentTrack.getTrackDirPath(), filename));
+                new DataMedia(mm.getPath(), filename));
     }
 
     /**
@@ -376,7 +376,7 @@ public class NewTrackActivity extends TabActivity {
         String filename = mm.takeVideo(this);
         DataTrack currentTrack = DataStorage.getInstance().getCurrentTrack();
         currentTrack.getCurrentWay().addMedia(
-                new DataMedia(currentTrack.getTrackDirPath(), filename));
+                new DataMedia(mm.getPath(), filename));
     }
 
     /**
