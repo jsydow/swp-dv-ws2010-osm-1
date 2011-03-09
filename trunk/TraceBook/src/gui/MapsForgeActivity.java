@@ -11,7 +11,7 @@ import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.OverlayItem;
 import org.mapsforge.android.maps.OverlayRoute;
 
-import util.MyArrayItemizedOverlay;
+import util.DataNodeArrayItemizedOverlay;
 
 import Trace.Book.R;
 import android.app.AlertDialog;
@@ -62,7 +62,7 @@ public class MapsForgeActivity extends MapActivity {
 	/**
 	 * Overlay containing all POIs
 	 */
-	MyArrayItemizedOverlay pointsOverlay;
+	DataNodeArrayItemizedOverlay pointsOverlay;
 	
 	private BroadcastReceiver gpsReceiver;
 
@@ -98,7 +98,7 @@ public class MapsForgeActivity extends MapActivity {
 		final Drawable defaultMarker = getResources().getDrawable(
 				R.drawable.marker_red);
 
-		pointsOverlay = new MyArrayItemizedOverlay(defaultMarker, this);
+		pointsOverlay = new DataNodeArrayItemizedOverlay(defaultMarker, this);
 
 		// create the paint objects for the RouteOverlay and set all parameters
 		paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -241,11 +241,11 @@ public class MapsForgeActivity extends MapActivity {
 		}
 	}
 
-	private static void addPoints(MyArrayItemizedOverlay pointsOverlay2) {
+	private static void addPoints(DataNodeArrayItemizedOverlay pointsOverlay2) {
 		for (DataNode n : currentTrack().getNodes()) {
 			if (n.getOverlayItem() == null)
 				n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-			pointsOverlay2.addOverlay(n.getOverlayItem());
+			pointsOverlay2.addOverlay(n.getOverlayItem(), n.getId());
 		}
 	}
 
@@ -324,7 +324,7 @@ public class MapsForgeActivity extends MapActivity {
 				if (current_pos != null)
 					pointsOverlay.removeOverlay(current_pos);
 				current_pos = getOverlayItem(currentGeoPoint, R.drawable.marker_green);
-				pointsOverlay.addOverlay(current_pos);
+				pointsOverlay.addOverlay(current_pos, -1);
 
 				// Receive an update of a way and update the overlay accordingly
 			} else if (intend.getAction().equals(
@@ -341,8 +341,7 @@ public class MapsForgeActivity extends MapActivity {
 					DataPointsList way = currentTrack().getPointsListById(
 							way_id);
 					if (way == null)
-						Log.e(LOG_TAG, "Way with ID " + way_id
-								+ " does not exist.");
+						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
 					else {
 						if (way.getOverlayRoute() != null) // we can not change the route, thus create a new one
 						    routesOverlay.removeOverlay(way.getOverlayRoute());
@@ -352,9 +351,7 @@ public class MapsForgeActivity extends MapActivity {
 						final DataNode last_point = way.getNodes().get(
 								        way.getNodes().size() - 1);
 						Log.d(LOG_TAG, "new node in current way: " + last_point);
-						pointsOverlay.addOverlay(getOverlayItem(
-										last_point.toGeoPoint(),
-										R.drawable.marker_blue));
+						pointsOverlay.addOverlay(getOverlayItem(last_point.toGeoPoint(), R.drawable.marker_blue), last_point.getId());
 					}	
 				}
 			}
