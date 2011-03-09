@@ -67,7 +67,7 @@ public abstract class Recorder {
      * @param parent
      * @return No clue.
      */
-    public DataMedia appendToObject(DataMediaHolder parent) {
+    public DataMedia appendFileToObject(DataMediaHolder parent) {
         DataMedia dm = new DataMedia(getPath(), getFilename());
 
         parent.addMedia(dm);
