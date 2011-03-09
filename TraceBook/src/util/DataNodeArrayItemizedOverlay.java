@@ -55,13 +55,13 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * 
      * @param overlayItem
      *            the item that should be added to the overlay.
-     * @param nodeId
+     * @param node_id
      *            id of the {@link DataNode} object associated with this Item
      */
-    public void addOverlay(OverlayItem overlayItem, int nodeId) {
+    public void addOverlay(OverlayItem overlayItem, int node_id) {
         synchronized (this.overlayItems) {
             this.overlayItems.add(new Pair<OverlayItem, Integer>(overlayItem,
-                    new Integer(nodeId)));
+                    new Integer(node_id)));
         }
         populate();
     }
@@ -120,13 +120,13 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     @Override
     protected boolean onTap(int index) {
         synchronized (this.overlayItems) {
-            final int nodeId = this.overlayItems.get(index).second.intValue();
+            final int node_id = this.overlayItems.get(index).second.intValue();
             this.dialog = new AlertDialog.Builder(this.context);
-            this.dialog.setTitle("id: " + nodeId);
+            this.dialog.setTitle("id: " + node_id);
 
             String message = "no tags set";
-            if (nodeId > 0) {
-                DataNode node = currentTrack.getNodeById(nodeId);
+            if (node_id > 0) {
+                DataNode node = currentTrack.getNodeById(node_id);
                 if (node != null)
                     message = node.getTags().toString();
             } else

@@ -11,15 +11,15 @@ public class LogParameter implements Parcelable {
     /**
 	 * 
 	 */
-    public int ID = -1;
+    public int id = -1;
     /**
 	 * 
 	 */
-    public int delta_distance = 0;
+    public int deltaDistance = 0;
     /**
 	 * 
 	 */
-    public int delta_time = 0;
+    public int deltaTime = 0;
 
     /**
 	 * 
@@ -36,14 +36,14 @@ public class LogParameter implements Parcelable {
     };
 
     /**
-     * @param ID
-     * @param delta_distance
-     * @param delta_time
+     * @param id
+     * @param deltaDistance
+     * @param deltaTime
      */
-    public LogParameter(int ID, int delta_distance, int delta_time) {
-        this.ID = ID;
-        this.delta_distance = delta_distance;
-        this.delta_time = delta_time;
+    public LogParameter(int id, int deltaDistance, int deltaTime) {
+        this.id = id;
+        this.deltaDistance = deltaDistance;
+        this.deltaTime = deltaTime;
     }
 
     /**
@@ -65,17 +65,17 @@ public class LogParameter implements Parcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(ID);
-        out.writeInt(delta_distance);
-        out.writeInt(delta_time);
+        out.writeInt(id);
+        out.writeInt(deltaDistance);
+        out.writeInt(deltaTime);
     }
 
     /**
      * @param in
      */
     public void readFromParcel(Parcel in) {
-        ID = in.readInt();
-        delta_distance = in.readInt();
-        delta_time = in.readInt();
+        id = in.readInt();
+        deltaDistance = in.readInt();
+        deltaTime = in.readInt();
     }
 }
