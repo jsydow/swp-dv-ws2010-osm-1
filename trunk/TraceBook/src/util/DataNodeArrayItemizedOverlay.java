@@ -35,12 +35,12 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
 
     /**
-     * context of the MapActivity
+     * Context of the MapActivity.
      */
     final Context context;
 
     /**
-     * reference to the current DataTrack
+     * Reference to the current DataTrack.
      */
     DataTrack currentTrack;
 
@@ -105,8 +105,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     /**
-     * removes an {@link OverlayItem} by the ID of the associated
-     * {@link DataNode}
+     * Removes an {@link OverlayItem} by the ID of the associated
+     * {@link DataNode}.
      * 
      * @param id
      *            ID of the {@link DataNode} associated with the
@@ -160,8 +160,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     final Intent intent = new Intent(context,
                             AddPointActivity.class);
                     if (nodeId < 0)
-                        intent.putExtra("DataNodeId",
-                                currentTrack.newNode(point).getId());
+                        intent.putExtra("DataNodeId", currentTrack.newNode(
+                                point).getId());
                     else
                         intent.putExtra("DataNodeId", nodeId);
 
@@ -180,6 +180,9 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                                     "Can not delete Node id=" + nodeId,
                                     Toast.LENGTH_SHORT).show();
                     }
+                    break;
+                default:
+                    break;
                 }
             }
         });
