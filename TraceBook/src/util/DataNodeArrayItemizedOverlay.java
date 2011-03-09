@@ -1,5 +1,7 @@
 package util;
 
+import gui.AddPointActivity;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -9,8 +11,11 @@ import org.mapsforge.android.maps.OverlayItem;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
+import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataStorage;
 import core.data.DataTrack;
@@ -26,11 +31,17 @@ import core.data.DataTrack;
 public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private static final int ARRAY_LIST_INITIAL_CAPACITY = 8;
     private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
-
-    private final Context context;
-    private AlertDialog.Builder dialog;
     private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
-    private DataTrack currentTrack;
+
+    /**
+     * context of the MapActivity
+     */
+    final Context context;
+
+    /**
+     * reference to the current DataTrack
+     */
+    DataTrack currentTrack;
 
     /**
      * Constructs a new ArrayItemizedOverlay.
@@ -117,23 +128,42 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
     }
 
+    private final CharSequence[] items = { "Tags", "Delete" };
+
     @Override
     protected boolean onTap(int index) {
+        final int nodeId;
         synchronized (this.overlayItems) {
-            final int nodeId = this.overlayItems.get(index).second.intValue();
-            this.dialog = new AlertDialog.Builder(this.context);
-            this.dialog.setTitle("id: " + nodeId);
-
-            String message = "no tags set";
-            if (nodeId > 0) {
-                DataNode node = currentTrack.getNodeById(nodeId);
-                if (node != null)
-                    message = node.getTags().toString();
-            } else
-                message = "current position";
-            this.dialog.setMessage(message);
-            this.dialog.show();
-            return true;
+            nodeId = overlayItems.get(index).second.intValue();
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
+        builder.setTitle("id: " + nodeId);
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                case 0:
+                    if (nodeId < 0) {
+                        Toast.makeText(context,
+                                "Creation of new POI not supported yet",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        final Intent intent = new Intent(context,
+                                AddPointActivity.class);
+                        intent.putExtra("DataNodeId", nodeId);
+                        context.startActivity(intent);
+                    }
+                    break;
+                case 1:
+                    Toast.makeText(context, "Delete: no implemented yet",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.show();
+        return true;
     }
 }

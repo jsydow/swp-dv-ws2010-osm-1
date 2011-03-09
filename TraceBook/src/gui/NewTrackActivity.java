@@ -228,7 +228,6 @@ public class NewTrackActivity extends TabActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     /**

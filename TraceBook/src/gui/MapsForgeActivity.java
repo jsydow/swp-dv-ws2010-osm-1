@@ -31,6 +31,7 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -145,6 +146,12 @@ public class MapsForgeActivity extends MapActivity {
         mapView.getOverlays().add(pointsOverlay);
 
         gpsReceiver = new GPSReceiver();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // TODO handle moving of OverlayItems
+        return super.dispatchTouchEvent(ev);
     }
 
     /**
