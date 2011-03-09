@@ -215,17 +215,25 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param id
      *            The id of the POI to delete.
+     * @return true if a node with the id was found and deleted, false if no
+     *         such node did exist
      */
-    public void deleteNode(int id) {
+    public boolean deleteNode(int id) {
         ListIterator<DataNode> lit = nodes.listIterator();
         DataNode dn;
         while (lit.hasNext()) {
             dn = lit.next();
             if (dn.getId() == id) {
                 lit.remove();
-                break;
+                return true;
             }
         }
+
+        for (DataPointsList dpl : getWays())
+            if (dpl.deleteNode(id))
+                return true;
+
+        return false;
     }
 
     /**
