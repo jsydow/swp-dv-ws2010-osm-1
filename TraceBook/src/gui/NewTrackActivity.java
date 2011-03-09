@@ -1,6 +1,5 @@
 package gui;
 
-import java.io.File;
 import java.util.List;
 
 import Trace.Book.R;
@@ -28,23 +27,49 @@ import core.data.DataStorage;
 import core.data.MetaMedia;
 import core.logger.ServiceConnector;
 
+/**
+ * @author greentraxas
+ * The NewTrackActivity is the main activity to record , edit and see your
+ * ways, areas and POIS. The activity is divided in three part via tabs.
+ * The first one is the map view where you can see your collected way points in
+ * a convenient way. The second one is the main tab where you can set the your POI's,
+ * ways and areas. In the third one you can choose your collected, add new tags, remove tags
+ * remove pois etc.
+ *
+ *
+ */
 public class NewTrackActivity extends TabActivity {
 
+	/**
+	 * @author greentraxas
+	 * The purpose of this OnTabListener is to update the different tab views when 
+	 * changing the tabs. So you see always an updated view of your data.
+	 */
 	class MyListener implements OnTabChangeListener {
 
+		/**
+		 * We use this to have a reference of our NewTracActivity 
+		 */
 		NewTrackActivity act;
+		
+		/**
+		 * Here we save a reference to our tab object in our NewTracActivtiy
+		 */
 		TabHost tab;
-		String editTab;
-		String currentTab;
-
+		
+		/**
+		 * We use a dirty trick to have a reference to our NewTracActivty and to our TabHost which
+		 * is associated to it.
+		 * @param act
+		 * @param tab
+		 */
 		public MyListener(NewTrackActivity act, TabHost tab) {
 			this.act = act;
 			this.tab = tab;
 		}
 
 		public void onTabChanged(String tabId) {
-			editTab = "edit_tab";
-			currentTab = tab.getCurrentTabTag();// TODO Auto-generated method
+		    String currentTab = tab.getCurrentTabTag();// TODO Auto-generated method
 												// stub
 			if (currentTab.equals(tabId)) {
 				act.initListView();
@@ -53,8 +78,16 @@ public class NewTrackActivity extends TabActivity {
 		}
 	}
 
-	TabHost myTabHost;
+	
+	/**
+	 * 
+	 */
 	TextView mediaData;
+	
+	
+	/**
+	 * MetaMedia object to create new media objects and to receive it
+	 */
 	MetaMedia mm = new MetaMedia();
 
 	@Override
@@ -80,7 +113,7 @@ public class NewTrackActivity extends TabActivity {
 		setButtonList(false, 0);
 		initToggleButtons();
 
-		myTabHost = getTabHost();
+		TabHost myTabHost = getTabHost();
 		myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost));
 
 	}
@@ -309,7 +342,6 @@ public class NewTrackActivity extends TabActivity {
 	 * returns to the main activity.
 	 * 
 	 * @param view
-	 * @throws RemoteException
 	 */
 	public void stopTrackBtn(View view) {
 		try {
@@ -323,19 +355,33 @@ public class NewTrackActivity extends TabActivity {
 
 	}
 
+	/**
+	 * @param view not used
+	 */
 	public void makePictureBtn(View view) {
 		mm.takePhoto(this);
 	}
 
+	
+	/**
+	 * @param view not
+	 */
 	public void makeVideoBtn(View view) {
 		mm.takeVideo(this);
 	}
 
+	
+	/**
+	 * @param view
+	 */
 	public void makeMemoBtn(View view) {
 		final Intent intent = new Intent (this, AddMemoActivity.class);
 		startActivity(intent);
 	}
 
+	/**
+     * @param view  
+     */
 	public void makeNoticeBtn(View view) {
 		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		final EditText input = new EditText(this);
