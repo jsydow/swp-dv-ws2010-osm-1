@@ -17,9 +17,9 @@ import core.data.LogParameter;
 import core.logger.ServiceConnector;
 
 /**
- * StartActivity of the application
+ * Start activity of the application.
  */
-public class main extends Activity {
+public class StartActivity extends Activity {
 
     /*
      * (non-Javadoc)

@@ -93,6 +93,8 @@ public class AddPointActivity extends Activity {
                 pictureRecorder.appendFileToObject(node);
             }
             break;
+        default:
+            break;
         }
     }
 
@@ -145,8 +147,7 @@ public class AddPointActivity extends Activity {
     }
 
     /**
-     * This Method create the ListView with the gernerated Adapter
-     * 
+     * This method creates the ListView with the generated Adapter.
      */
     private void listNodeInformation() {
         final Intent intent = new Intent(this, AddPointMetaActivity.class);

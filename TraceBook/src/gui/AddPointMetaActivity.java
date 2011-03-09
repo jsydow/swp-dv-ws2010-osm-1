@@ -19,12 +19,12 @@ import core.data.DataMapObject;
 import core.data.DataStorage;
 
 /**
- * @author greentrax In this Activty you can choose your Tags via an
- *         autocomplete feature. Tags and values are grouped together. So the
- *         autocomplete feature for values are depended by their key values. For
- *         example when you choose "highway" only highway related values will be
- *         given as a list for autocomplete.
+ * In this Activty you can choose your Tags via an autocomplete feature. Tags
+ * and values are grouped together. So the autocomplete feature for values are
+ * depended by their key values. For example when you choose "highway" only
+ * highway related values will be given as a list for autocomplete.
  * 
+ * @author greentrax
  */
 public class AddPointMetaActivity extends Activity {
 
@@ -48,7 +48,7 @@ public class AddPointMetaActivity extends Activity {
     }
 
     /**
-     * Reference to the current DataMapObject in use
+     * Reference to the current DataMapObject in use.
      */
     DataMapObject node;
 
@@ -158,12 +158,12 @@ public class AddPointMetaActivity extends Activity {
      *            not used
      */
     public void cancelBtn(View view) { // method signature including view is
-                                       // required
+        // required
         finish();
     }
 
     /**
-     * This Method parse all the Tag's in the XML-MetaTag files
+     * This method parses all the tags in the XML-MetaTag files.
      * 
      * @param tagType
      * @param parentName
@@ -182,13 +182,12 @@ public class AddPointMetaActivity extends Activity {
                 if (next == XmlPullParser.START_TAG) {
                     tag = parser.getName();
                     switch (tagType) {
-                    case KEY: {
+                    case KEY:
                         if (tag.equals("key")) {
                             tagStrings.add(parser.getAttributeValue(null, "v"));
                         }
                         break;
-                    }
-                    case VALUE: {
+                    case VALUE:
                         if ((tag.equals("key"))
                                 && (parser.getAttributeValue(null, "v"))
                                         .equals(parentName)) {
@@ -201,8 +200,7 @@ public class AddPointMetaActivity extends Activity {
                             tagStrings.add(parser.getAttributeValue(null, "v"));
                         }
                         break;
-                    }
-                    case USEFUL: {
+                    case USEFUL:
                         if ((tag.equals("value"))
                                 && (parser.getAttributeValue(null, "v"))
                                         .equals(parentName)) {
@@ -215,7 +213,6 @@ public class AddPointMetaActivity extends Activity {
                             tagStrings.add(parser.getAttributeValue(null, "v"));
                         }
                         break;
-                    }
                     default:
                         break;
                     }
