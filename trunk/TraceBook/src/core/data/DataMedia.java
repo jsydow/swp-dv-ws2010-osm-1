@@ -20,12 +20,22 @@ import android.util.Log;
 public class DataMedia {
 
 	/**
-	 * Media type constants.
+	 * Media type constants. Type video.
 	 */
 	public static final int TYPE_VIDEO = 3;
+	/**
+     * Media type constants. Type audio.
+     */
 	public static final int TYPE_AUDIO = 2;
+	/**
+     * Media type constants. Type text.
+     */
 	public static final int TYPE_TEXT = 0;
+	/**
+     * Media type constants. Type picture.
+     */
 	public static final int TYPE_PICTURE = 1;
+	
 	private static String[] typesAsString = { "text", "picture", "audio",
 			"video" };
 	private static String[] extensions = { ".txt", ".jpg", ".m4a", ".mp4" };
@@ -54,7 +64,7 @@ public class DataMedia {
 	/**
 	 * Basically a toString()-method of the type-variable.
 	 * 
-	 * @param type
+	 * @param p_type
 	 *            The type-variable of this class/object.
 	 * @return The type as String or empty String if parameter type has illegal
 	 *         value.
@@ -133,8 +143,7 @@ public class DataMedia {
 	/**
 	 * Setter-method
 	 * 
-	 * @param The
-	 *            new type of this medium
+	 * @param type The new type of this medium
 	 */
 	public void setType(int type) {
 		this.type = type;
@@ -191,7 +200,7 @@ public class DataMedia {
 	 * Setter-method. Changing the name may have no impact on serialisation. On
 	 * next deserialisation the old name may appear again.
 	 * 
-	 * @param name
+	 * @param newname
 	 *            The new name for the medium.
 	 */
 	public void setName(String newname) {
@@ -208,7 +217,7 @@ public class DataMedia {
 	/**
 	 * This method loads a medium reference from the devices memory.
 	 * 
-	 * @param name
+	 * @param path
 	 *            The complete path to the medium.
 	 * @return The deserialised DataMedia object or null if medium doesn't
 	 *         exist.
