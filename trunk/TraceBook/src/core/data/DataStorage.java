@@ -122,6 +122,27 @@ public class DataStorage {
 		updateNames();
 		return names;
 	}
+	
+	/**
+	 * Deletes a directory and all files in it. If File is no directory nothing is done.
+	 * @param dir The directory to delete
+	 */
+	static void deleteDirectory(File dir) {
+	    if(dir.isDirectory()) {
+	        File[] files = dir.listFiles();
+	        for (File f : files) {
+	            if (f.isFile()) {
+	                if (!f.delete()) {
+	                    Log.e("DeleteDirectory","Could not delete file "+f.getName()+" in directory "+dir.getPath());
+	                }
+	            }
+	        }
+	        if (!dir.delete()) {
+	            Log.e("DeleteDirectory", "Could not delete directory " + dir.getName());
+
+	        }
+	    }
+	}
 
 	/**
 	 * This method returns a Track object that specified by a name. Note that
@@ -231,7 +252,12 @@ public class DataStorage {
 
 			for (File f : dirs) {
 				if (f.isDirectory()) {
-					names.add(f.getName());
+				    File tracktbt = new File(DataTrack.getPathOfTrackTbTFile(f.getName()));
+				    if(tracktbt.isFile()) {
+				        names.add(f.getName());
+				    } else {
+				        deleteDirectory(f);
+				    }
 				}
 			}
 

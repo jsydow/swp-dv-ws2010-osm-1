@@ -3,6 +3,7 @@ package gui;
 import java.util.List;
 
 import core.data.DataStorage;
+import core.data.DataTrack;
 import Trace.Book.R;
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class LoadTrackActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loadtrackactivity);
 		
+		String lastTrack = "";
 		DataStorage storage = DataStorage.getInstance();
 		storage.retrieveTrackNames();
 		List<String> list = storage.getAllTracks();
@@ -30,7 +32,17 @@ public class LoadTrackActivity extends Activity {
 		for(String str : list) {
 		    sb.append(str);
 		    sb.append("\n");
+		    lastTrack = str;
 		}
-		((TextView)findViewById(R.id.track_textview)).setText(sb);
+		sb.append("\n");
+		storage.deserialiseTrack(lastTrack);
+		DataTrack track = storage.getTrack(lastTrack);
+
+        sb.append("Last Track is: "+track.getName()+"\n");
+		sb.append("Nodes: "+track.getNodes().size()+"\n");
+        sb.append("Media: "+track.getMedia().size()+"\n");
+        sb.append("Ways: "+track.getWays().size()+"\n");
+		
+        ((TextView)findViewById(R.id.track_textview)).setText(sb);
 	}
 }
