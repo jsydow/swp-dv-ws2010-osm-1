@@ -7,5 +7,6 @@
   <TextView 
   	android:layout_width="fill_parent"
   	android:layout_height="wrap_content"
-  	android:text="LoadTrack" />
+  	android:text="LoadTrack" 
+  	android:id="@+id/track_textview"/>
 </LinearLayout>
