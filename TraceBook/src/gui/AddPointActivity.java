@@ -14,17 +14,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import core.data.DataMapObject;
 import core.data.DataStorage;
-import core.data.MetaMedia;
 import core.logger.ServiceConnector;
+import core.media.PictureRecorder;
+import core.media.Recorder;
 
 /**
  * @author greentraxas The purpose of this activity is to add and edit tags to
@@ -40,9 +41,9 @@ public class AddPointActivity extends Activity {
     DataMapObject node;
 
     /**
-     * MetaMedia object to create new media objects and to receive it.
+     * 
      */
-    MetaMedia mm;
+    PictureRecorder pictureRecorder = new PictureRecorder();
 
     /**
      * ArrayAdapter object to fill the ListView with MetaInformation.
@@ -68,7 +69,6 @@ public class AddPointActivity extends Activity {
         }
 
         setContentView(R.layout.addpointactivity);
-        mm = new MetaMedia();
 
         LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnPoint_ly);
@@ -88,14 +88,9 @@ public class AddPointActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        case MetaMedia.TAKE_PHOTO_CODE:
+        case Recorder.TAKE_PHOTO_CODE:
             if (resultCode == Activity.RESULT_OK) {
-                mm.appendToObject(node);
-            }
-            break;
-        case MetaMedia.TAKE_VIDEO_CODE:
-            if (resultCode == Activity.RESULT_OK) {
-                mm.appendToObject(node);
+                pictureRecorder.appendFileToObject(node);
             }
             break;
         }
@@ -200,7 +195,7 @@ public class AddPointActivity extends Activity {
      *            not
      */
     public void makeVideoBtn(View view) {
-        mm.takeVideo(this);
+        // TODO: Record a video.
     }
 
     /**
@@ -244,6 +239,6 @@ public class AddPointActivity extends Activity {
      *            not used
      */
     public void makePictureBtn(View view) {
-        mm.takePhoto(this);
+        pictureRecorder.startIntent(this);
     }
 }
