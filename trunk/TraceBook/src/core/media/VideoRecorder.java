@@ -1,6 +1,3 @@
-/**
- * 
- */
 package core.media;
 
 import java.io.IOException;
@@ -12,26 +9,31 @@ import android.media.MediaRecorder;
 import android.view.Surface;
 
 /**
- * @author Huy Dinh
+ * This class provides required methods for interacting with the MediaRecorder
+ * in order to acquire a video file.
  * 
+ * @author Huy Dinh
  */
 public class VideoRecorder extends Recorder {
     private MediaRecorder recorder = new MediaRecorder();
+    private boolean isReady = false;
 
     /**
-     * 
-     */
-    boolean isReady = false;
-
-    /**
+     * Because of the nature of recording a video with MediaRecorder, we have to
+     * make sure a few certain properties have been set. Furthermore, we require
+     * knowledge of the Surface object to show the preview in, as well as
+     * possibly an explicit object of the camera to use. All those necessary
+     * steps are taken care of during preparation.
      * 
      * @param camera
+     *            An object to the camera object we are going to use.
      * @param surface
-     * @throws IllegalStateException
+     *            The surface object we are going to display our video preview
+     *            in.
      * @throws IOException
      */
     public void prepare(final Camera camera, final Surface surface)
-            throws IllegalStateException, IOException {
+            throws IOException {
         filename = getNewFilename();
 
         // Set camera.
@@ -59,6 +61,12 @@ public class VideoRecorder extends Recorder {
         isReady = true;
     }
 
+    /*
+     * You can only start recording a video if prepare/2 has been called before.
+     * Returns the filename if recording did start, null otherwise.
+     * 
+     * @see core.media.Recorder#start()
+     */
     @Override
     public String start() {
         if (isReady) {
