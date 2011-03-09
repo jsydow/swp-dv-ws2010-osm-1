@@ -6,15 +6,15 @@ import android.preference.PreferenceActivity;
 
 /**
  * @author greentraxas
- *
+ * 
  */
-public class PreferencesActivity extends PreferenceActivity{
+public class PreferencesActivity extends PreferenceActivity {
 
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         this.addPreferencesFromResource(R.xml.tracebook_preference);
-       
+
     }
 }
