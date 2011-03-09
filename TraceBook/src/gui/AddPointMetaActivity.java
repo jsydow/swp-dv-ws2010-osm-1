@@ -8,7 +8,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import Trace.Book.R;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,36 +69,43 @@ public class AddPointMetaActivity extends Activity {
 
             if (extras.containsKey("DataNodeKey")) {
                 String keyValue = extras.getString("DataNodeKey");
+
                 String[] cat = keyValue.split(" - ");
-                autoComplCat.setText(cat[0]);
-                autoComplVal.setText(cat[1]);
-            }
-        }
-
-        ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, getCategoryTags());
-        autoComplCat.setAdapter(firstGroupAdapter);
-
-        /**
-         * If the focus is at the AutoCompleteTextView autoComplVal we call the
-         * method getValues to generate the AutoComplete String[]
-         */
-        autoComplVal.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    String cat = autoComplCat.getText().toString();
-
-                    // autoComplVal.setText(cat.toCharArray(),0,cat.length());
-                    ArrayAdapter<String> valueTagAdapter = new ArrayAdapter<String>(
-                            v.getContext(),
-                            android.R.layout.simple_dropdown_item_1line,
-                            getValues(cat));
-                    autoComplVal.setAdapter(valueTagAdapter);
-
+                if (cat.length != 0) {
+                    autoComplCat.setText(cat[0]);
+                    autoComplVal.setText(cat[1]);
+                } else {
+                    autoComplCat.setText("");
+                    autoComplVal.setText("");
                 }
             }
-        });
+
+            ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_dropdown_item_1line,
+                    getCategoryTags());
+            autoComplCat.setAdapter(firstGroupAdapter);
+
+            /**
+             * If the focus is at the AutoCompleteTextView autoComplVal we call
+             * the method getValues to generate the AutoComplete String[]
+             */
+            autoComplVal.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        String cat = autoComplCat.getText().toString();
+
+                        // autoComplVal.setText(cat.toCharArray(),0,cat.length());
+                        ArrayAdapter<String> valueTagAdapter = new ArrayAdapter<String>(
+                                v.getContext(),
+                                android.R.layout.simple_dropdown_item_1line,
+                                getValues(cat));
+                        autoComplVal.setAdapter(valueTagAdapter);
+
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -142,9 +148,7 @@ public class AddPointMetaActivity extends Activity {
                     autoComplVal.getText().toString());
 
         }
-        final Intent intent = new Intent(this, AddPointActivity.class);
-        intent.putExtra("DataNodeId", node.getId());
-        startActivity(intent);
+
         finish();
     }
 
@@ -155,9 +159,7 @@ public class AddPointMetaActivity extends Activity {
      */
     public void cancelBtn(View view) { // method signature including view is
                                        // required
-        final Intent intent = new Intent(this, AddPointActivity.class);
-        intent.putExtra("DataNodeId", node.getId());
-        startActivity(intent);
+        finish();
     }
 
     /**

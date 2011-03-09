@@ -3,18 +3,21 @@ package gui;
 import java.util.List;
 
 import Trace.Book.R;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
@@ -120,6 +123,12 @@ public class NewTrackActivity extends TabActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initListView();
+    }
+
     /**
      * This method set the visibilty of the MediaButtons at the bottom of the
      * activity for street and area mapping. In top of the Buttons, the textview
@@ -144,13 +153,22 @@ public class NewTrackActivity extends TabActivity {
             mediaData.setText(R.string.setButtonList2_tv);
 
         mediaData.setVisibility(visible);
-        Button makePictureBtn = (Button) findViewById(R.id.makePicture_btn);
+
+        LayoutInflater bInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnNew_ly);
+        bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
+
+        Button makePictureBtn = (Button) layoutHolder
+                .findViewById(R.id.makePicture_btn);
         makePictureBtn.setVisibility(visible);
-        Button makeVideoBtn = (Button) findViewById(R.id.makeVideo_btn);
+        Button makeVideoBtn = (Button) layoutHolder
+                .findViewById(R.id.makeVideo_btn);
         makeVideoBtn.setVisibility(visible);
-        Button makeMemoBtn = (Button) findViewById(R.id.makeMemo_btn);
+        Button makeMemoBtn = (Button) layoutHolder
+                .findViewById(R.id.makeMemo_btn);
         makeMemoBtn.setVisibility(visible);
-        Button makeNoticeBtn = (Button) findViewById(R.id.makeNotice_btn);
+        Button makeNoticeBtn = (Button) layoutHolder
+                .findViewById(R.id.makeNotice_btn);
         makeNoticeBtn.setVisibility(visible);
     }
 
@@ -335,7 +353,6 @@ public class NewTrackActivity extends TabActivity {
         final Intent intent = new Intent(this, AddPointActivity.class);
         intent.putExtra("DataNodeId", nodeId);
         startActivity(intent);
-        finish();
     }
 
     /**
@@ -352,9 +369,7 @@ public class NewTrackActivity extends TabActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        final Intent intent = new Intent(this, main.class);
-        startActivity(intent);
-
+        finish();
     }
 
     /**
