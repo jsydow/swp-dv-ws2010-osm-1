@@ -213,7 +213,7 @@ public class DataTrack extends DataMediaHolder {
 		DataNode dn;
 		while (lit.hasNext()) {
 			dn = lit.next();
-			if (dn.get_id() == id) {
+			if (dn.getId() == id) {
 				lit.remove();
 				break;
 			}
@@ -243,7 +243,7 @@ public class DataTrack extends DataMediaHolder {
 		DataPointsList dpl;
 		while (lit.hasNext()) {
 			dpl = lit.next();
-			if (dpl.get_id() == id) {
+			if (dpl.getId() == id) {
 				lit.remove();
 				break;
 			}
@@ -468,7 +468,7 @@ public class DataTrack extends DataMediaHolder {
 	 */
 	public DataPointsList getPointsListById(int id) {
 		for (DataPointsList dpl : ways) {
-			if (dpl.get_id() == id) {
+			if (dpl.getId() == id) {
 				return dpl;
 			}
 		}
@@ -484,7 +484,7 @@ public class DataTrack extends DataMediaHolder {
 	 */
 	public DataNode getNodeById(int id) {
 		for (DataNode dn : nodes) {
-			if (dn.get_id() == id) {
+			if (dn.getId() == id) {
 				return dn;
 			}
 		}

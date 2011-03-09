@@ -144,7 +144,7 @@ public class DataNode extends DataMapObject {
 			serializer.startTag(null, "node");
 			serializer.attribute(null, "lat", df.format(this.getLat()));
 			serializer.attribute(null, "lon", df.format(this.getLon()));
-			serializer.attribute(null, "id", Integer.toString(this.get_id()));
+			serializer.attribute(null, "id", Integer.toString(this.getId()));
 			serializer.attribute(null, "timestamp", this.getDatetime());
 			serializer.attribute(null, "version", "1");
 
@@ -171,7 +171,7 @@ public class DataNode extends DataMapObject {
 	 */
 	@Override
 	public String toString() {
-		return "id=" + get_id() + " (" + getLon() + ", " + getLat() + ")";
+		return "id=" + getId() + " (" + getLon() + ", " + getLat() + ")";
 	}
 
 	/**

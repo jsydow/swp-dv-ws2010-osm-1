@@ -77,7 +77,7 @@ public class AddPointActivity extends Activity {
 
 		Map<String, String> tagMap = node.getTags();
 		metaInformation = new String[tagMap.size()];
-		nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " " + node.get_id());
+		nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " " + node.getId());
 
 		if (tagMap.size() != 0) {
 			nodeInfo.setText(R.string.MetaData_tv);
@@ -114,7 +114,7 @@ public class AddPointActivity extends Activity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				intent.putExtra("DataNodeId", node.get_id());
+				intent.putExtra("DataNodeId", node.getId());
 				intent.putExtra("DataNodeKey", adapter.getItem(position));
 				startActivity(intent);
 				Toast.makeText(getApplicationContext(),
@@ -132,7 +132,7 @@ public class AddPointActivity extends Activity {
 		final Intent intent = new Intent(this, AddPointMetaActivity.class);
 		
 		
-		intent.putExtra("DataNodeId", node.get_id());
+		intent.putExtra("DataNodeId", node.getId());
 		startActivity(intent);
 	}
 

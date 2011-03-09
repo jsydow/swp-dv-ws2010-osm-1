@@ -134,7 +134,7 @@ public class DataPointsList extends DataMapObject {
 	 */
 	public DataNode getNodeById(int id) {
 		for (DataNode dn : nodes) {
-			if (dn.get_id() == id) {
+			if (dn.getId() == id) {
 				return dn;
 			}
 		}
@@ -167,7 +167,7 @@ public class DataPointsList extends DataMapObject {
 		DataNode dn;
 		while (lit.hasNext()) {
 			dn = lit.next();
-			if (dn.get_id() == id) {
+			if (dn.getId() == id) {
 				lit.remove();
 				break;
 			}
@@ -222,13 +222,13 @@ public class DataPointsList extends DataMapObject {
 			serializer.startTag(null, "way");
 			serializer.attribute(null, "version", "1");
 			serializer.attribute(null, "timestamp", getDatetime());
-			serializer.attribute(null, "id", Integer.toString(get_id()));
+			serializer.attribute(null, "id", Integer.toString(getId()));
 
 			for (DataNode dn : nodes) {
 				serializer.startTag(null, "nd");
 
 				serializer
-						.attribute(null, "ref", Integer.toString(dn.get_id()));
+						.attribute(null, "ref", Integer.toString(dn.getId()));
 
 				serializer.endTag(null, "nd");
 			}
@@ -236,7 +236,7 @@ public class DataPointsList extends DataMapObject {
 				DataNode lastNode = nodes.getFirst();
 				serializer.startTag(null, "nd");
 				serializer.attribute(null, "ref",
-						Integer.toString(lastNode.get_id()));
+						Integer.toString(lastNode.getId()));
 				serializer.endTag(null, "nd");
 
 				serializer.startTag(null, "tag");
@@ -296,7 +296,7 @@ public class DataPointsList extends DataMapObject {
 
 				while (it.hasNext()) {
 					DataNode dn = it.next();
-					if (dn.get_id() == node_id) {
+					if (dn.getId() == node_id) {
 						it.remove();
 						ret.nodes.add(dn);
 					}

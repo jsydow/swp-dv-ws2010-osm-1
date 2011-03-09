@@ -33,7 +33,7 @@ public class DataMedia {
 	/**
 	 * The internal id for this medium.
 	 */
-	private int _id;
+	private int id;
 
 	/**
 	 * The path to the file of the medium on the memory. This path+name should
@@ -115,7 +115,7 @@ public class DataMedia {
 	 */
 	public DataMedia(String path, String name) {
 		super();
-		this._id = DataStorage.getInstance().getID();
+		this.id = DataStorage.getInstance().getID();
 		this.path = path;
 		this.name = name;
 		this.type = getTypeFromFilename(name);
@@ -145,8 +145,8 @@ public class DataMedia {
 	 * 
 	 * @return The unique id of the medium.
 	 */
-	public int get_id() {
-		return _id;
+	public int getId() {
+		return id;
 	}
 
 	/**

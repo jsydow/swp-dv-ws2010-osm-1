@@ -107,7 +107,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			else
 				current_node = storage.getCurrentTrack().newNode();
 			
-			return current_node.get_id();
+			return current_node.getId();
 		}
 
 		public int beginWay(boolean do_one_shot) {
@@ -119,7 +119,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			if(one_shot)			// in one_shot mode, add a new point
 				current_node = current_way().newNode();
 				
-			return current_way().get_id();
+			return current_way().getId();
 		}
 
 		public synchronized int endWay() {
@@ -129,7 +129,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			DataPointsList tmp = current_way();
 			
 			if(tmp != null)
-				return tmp.get_id();
+				return tmp.getId();
 			return -1;
 		}
 
@@ -140,7 +140,7 @@ public class WaypointLogService extends Service implements LocationListener {
 				storage.getCurrentTrack().setCurrentWay(storage.getCurrentTrack().newWay());
 			
 			current_way().setArea(true);			
-			return current_way().get_id();
+			return current_way().getId();
 		
 		}
 
@@ -151,7 +151,7 @@ public class WaypointLogService extends Service implements LocationListener {
 			DataPointsList tmp = current_way();
 			
 			if(tmp != null)
-				return tmp.get_id();			
+				return tmp.getId();			
 			return 0;
 		}
 
@@ -192,7 +192,7 @@ public class WaypointLogService extends Service implements LocationListener {
 		}
 		
 		if(current_way() != null) {				// call for an update of the way
-			update_intent.putExtra("way_id", current_way().get_id());
+			update_intent.putExtra("way_id", current_way().getId());
 			sendBroadcast(update_intent);
 		}
 	}

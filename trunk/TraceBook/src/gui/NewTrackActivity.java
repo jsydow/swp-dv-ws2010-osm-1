@@ -380,17 +380,17 @@ public class NewTrackActivity extends TabActivity {
 		String[] poiList = new String[nodeList.size() + wayList.size()];
 		int i = 0;
 		for (DataNode dn : nodeList) {
-			poiList[i] = dn.get_id() + ": "
+			poiList[i] = dn.getId() + ": "
 					+ getResources().getString(R.string.POI);
 			i++;
 		}
 
 		for (DataPointsList wl : wayList) {
 			if (wl.isArea())
-				poiList[i] = wl.get_id() + ": "
+				poiList[i] = wl.getId() + ": "
 						+ getResources().getString(R.string.Area);
 			else
-				poiList[i] = wl.get_id() + ": "
+				poiList[i] = wl.getId() + ": "
 						+ getResources().getString(R.string.Way);
 			i++;
 		}
