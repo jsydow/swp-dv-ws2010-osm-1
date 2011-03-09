@@ -67,12 +67,22 @@ public class MapsForgeActivity extends MapActivity {
 
     private BroadcastReceiver gpsReceiver;
 
+    /**
+     * list of possible colors for ways and areas the first color in the list is
+     * always used for the current way
+     */
     List<Pair<Paint, Paint>> colors;
 
-    private int colorID;
+    private int colorID = 0;
 
-    private Pair<Paint, Paint> getColor() {
-        colorID = (colorID + 1) % (colors.size() - 1) + 1;
+    /**
+     * gets a color from the rotating color array
+     * 
+     * @return a {@link Pair} of {@link Paint} where the first element is the
+     *         FillPaint and the second one the OutlinePaint
+     */
+    Pair<Paint, Paint> getColor() {
+        colorID = colorID % (colors.size() - 1) + 1;
         return colors.get(colorID);
     }
 
@@ -87,6 +97,7 @@ public class MapsForgeActivity extends MapActivity {
         paintOutline.setAlpha(96);
 
         Paint paintFill = new Paint(paintOutline);
+        // paintFill.setStyle(Paint.Style.FILL);
         paintFill.setAlpha(160);
 
         return new Pair<Paint, Paint>(paintFill, paintOutline);
@@ -95,6 +106,8 @@ public class MapsForgeActivity extends MapActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d(LOG_TAG, "Creating MapActivity");
 
         File file = new File("/sdcard/", "default.map");
         if (!file.exists()) {
@@ -115,8 +128,8 @@ public class MapsForgeActivity extends MapActivity {
 
         // create paint list
         colors = new ArrayList<Pair<Paint, Paint>>();
-        colors.add(getPaintPair(Color.BLUE));
-        colors.add(getPaintPair(Color.CYAN));
+        colors.add(getPaintPair(Color.rgb(0, 0, 255)));
+        colors.add(getPaintPair(Color.rgb(0, 0, 170)));
 
         pointsOverlay = new DataNodeArrayItemizedOverlay(getResources()
                 .getDrawable(R.drawable.marker_red), this);
@@ -133,7 +146,7 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * This method inflate the Optionsmenu for this activity
+     * This method inflate the options menu for this activity
      * 
      * @author greentraxas
      */
@@ -145,7 +158,7 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * This method catch the selected MenuItem from the Optionsmenu and 1.
+     * This method catch the selected MenuItem from the options menu and 1.
      * activate the Internet to get more Mapmaterial 2. Center the Map to the
      * actual own position 3. Stop tracking, show alert and go back to
      * MainActivity 4. Pause tracking and show alert 5. Export actual Seassion
@@ -181,7 +194,8 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.pause_opt:
 
             builder.setMessage(getResources().getString(R.string.pause_alert))
-                    .setCancelable(false).setPositiveButton(
+                    .setCancelable(false)
+                    .setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -196,7 +210,8 @@ public class MapsForgeActivity extends MapActivity {
                                      * DO SOMETHING
                                      */
                                 }
-                            }).setNegativeButton(
+                            })
+                    .setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -210,7 +225,8 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.stopTrack_opt:
             final Intent intent = new Intent(this, main.class);
             builder.setMessage(getResources().getString(R.string.exit_alert))
-                    .setCancelable(false).setPositiveButton(
+                    .setCancelable(false)
+                    .setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -224,7 +240,8 @@ public class MapsForgeActivity extends MapActivity {
                                     startActivity(intent);
 
                                 }
-                            }).setNegativeButton(
+                            })
+                    .setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -263,6 +280,8 @@ public class MapsForgeActivity extends MapActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(LOG_TAG, "Resuming MapActivity");
+
         registerReceiver(gpsReceiver, new IntentFilter(
                 WaypointLogService.UPDTAE_GPS_POS));
         registerReceiver(gpsReceiver, new IntentFilter(
@@ -272,7 +291,14 @@ public class MapsForgeActivity extends MapActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(LOG_TAG, "Pausing MapActivity");
         unregisterReceiver(gpsReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_TAG, "Destroying map activity");
     }
 
     /**
@@ -293,6 +319,8 @@ public class MapsForgeActivity extends MapActivity {
 
         OverlayItem current_pos = null;
         GeoPoint currentGeoPoint = null;
+
+        int oldWayId = -1;
 
         /**
          * creates a new OverlayItem
@@ -332,8 +360,9 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng);
 
-                Log.d(LOG_TAG, "Location update received "
-                        + currentGeoPoint.toString());
+                Log.d(LOG_TAG,
+                        "Location update received "
+                                + currentGeoPoint.toString());
 
                 if (current_pos != null)
                     pointsOverlay.removeOverlay(-1);
@@ -348,14 +377,17 @@ public class MapsForgeActivity extends MapActivity {
             } else if (intend.getAction().equals(
                     WaypointLogService.UPDTAE_OBJECT)) {
                 if (currentTrack() == null) {
-                    Log
-                            .e(LOG_TAG,
-                                    "Received UPDATE_OBJECT with no current track present.");
+                    Log.e(LOG_TAG,
+                            "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 
                 int way_id = intend.getExtras().getInt("way_id");
                 if (way_id > 0) {
+                    if (way_id != oldWayId) {
+                        reDrawWay(oldWayId);
+                        oldWayId = way_id;
+                    }
                     Log.d(LOG_TAG, "Received way update, id=" + way_id);
                     DataPointsList way = currentTrack().getPointsListById(
                             way_id);
@@ -373,12 +405,28 @@ public class MapsForgeActivity extends MapActivity {
                         routesOverlay.addRoute(way.getOverlayRoute());
                         final DataNode last_point = way.getNodes().get(
                                 way.getNodes().size() - 1);
-                        Log
-                                .d(LOG_TAG, "new node in current way: "
-                                        + last_point);
+                        Log.d(LOG_TAG, "new node in current way: " + last_point);
                     }
                 }
             }
+        }
+
+        /**
+         * Update the color of a way once its not the current way any more
+         * 
+         * @param id
+         */
+        private void reDrawWay(int id) {
+            if (id <= 0)
+                return;
+            DataPointsList way = currentTrack().getPointsListById(id);
+            if (way == null)
+                return;
+            routesOverlay.removeOverlay(way.getOverlayRoute());
+            Pair<Paint, Paint> color = getColor();
+            way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
+                    color.first, color.second));
+            routesOverlay.addRoute(way.getOverlayRoute());
         }
     }
 
