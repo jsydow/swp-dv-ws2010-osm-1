@@ -39,6 +39,17 @@ public class DataNode extends DataMapObject {
     }
 
     /**
+     * 
+     * @param gp
+     * @param way
+     */
+    public DataNode(GeoPoint gp, DataPointsList way) {
+        super();
+        this.loc = gp;
+        this.way = way;
+    }
+
+    /**
      * This constructor initializes the Latitude and Longitude with data from a
      * Location object.
      * 
@@ -52,6 +63,19 @@ public class DataNode extends DataMapObject {
     }
 
     /**
+     * This constructor initializes the Latitude and Longitude with data from a
+     * {@link GeoPoint} object.
+     * 
+     * @param loc
+     *            The {@link GeoPoint} of the new node. Initializes latitude and
+     *            longitude.
+     */
+    public DataNode(GeoPoint loc) {
+        super();
+        setLocation(loc);
+    }
+
+    /**
      * default constructor. Longitude and Latitude stay unchanged
      */
     public DataNode() {
@@ -60,9 +84,9 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * The {@link Location} object associated with this node.
+     * The {@link GeoPoint} object associated with this node.
      */
-    private Location loc;
+    private GeoPoint loc;
 
     /**
      * The {@link DataPointsList} object associated with this node. Null if this
@@ -83,16 +107,20 @@ public class DataNode extends DataMapObject {
      *            The Location object that the GPS module delivers.
      */
     public void setLocation(Location loc) {
-        this.loc = loc;
+        if (loc == null)
+            this.loc = null;
+        else
+            this.loc = new GeoPoint(loc.getLatitude(), loc.getLongitude());
     }
 
     /**
-     * Returns the location Object associated with this node.
+     * Sets the position of this DataNode to the location of the GeoPoint
      * 
-     * @return location The Location object that the gps module delivered
+     * @param gp
+     *            new position of the node
      */
-    public Location getLocation() {
-        return loc;
+    public void setLocation(GeoPoint gp) {
+        this.loc = gp;
     }
 
     /**
@@ -139,7 +167,7 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * A Point may have been added uninitialised, in this case it does not
+     * A Point may have been added uninitialized, in this case it does not
      * contain any valid positional data - this may be added later once a GPS
      * fix is obtained.
      * 
@@ -150,32 +178,12 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * Change the latitude value of this node.
-     * 
-     * @param newLat
-     *            The new latitude for this node
-     */
-    public void setLat(double newLat) {
-        loc.setLatitude(newLat);
-    }
-
-    /**
-     * Change the longitude value of this node.
-     * 
-     * @param newlon
-     *            The new longitude for this node
-     */
-    public void setLon(double newlon) {
-        loc.setLongitude(newlon);
-    }
-
-    /**
-     * Serialises a node using a XmlSerializer. It generates a <node>-tag.
+     * Serializes a node using a XmlSerializer. It generates a <node>-tag.
      * 
      * @param serializer
-     *            An XmlSerializer that is initialised.
+     *            An XmlSerializer that is initialized.
      * @param shouldSerialiseMedia
-     *            Should media also be serialised? Adding media means that the
+     *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
     public void serialise(XmlSerializer serializer, boolean shouldSerialiseMedia) {
@@ -223,7 +231,7 @@ public class DataNode extends DataMapObject {
      * @return a GeoPoint with the coordinates of the DataNode
      */
     public GeoPoint toGeoPoint() {
-        return new GeoPoint(getLat(), getLon());
+        return loc;
     }
 
     /**
@@ -260,11 +268,12 @@ public class DataNode extends DataMapObject {
         // get all attributes
         NamedNodeMap nodeattributes = nodenode.getAttributes();
         // get Latitude
-        ret.setLat(Double.parseDouble(nodeattributes.getNamedItem("lat")
-                .getNodeValue()));
+        final double lat = Double.parseDouble(nodeattributes
+                .getNamedItem("lat").getNodeValue());
         // get Longitude
-        ret.setLon(Double.parseDouble(nodeattributes.getNamedItem("lon")
-                .getNodeValue()));
+        final double lon = Double.parseDouble(nodeattributes
+                .getNamedItem("lon").getNodeValue());
+        ret.setLocation(new GeoPoint(lat, lon));
         // get time stamp
         ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
         // get id
