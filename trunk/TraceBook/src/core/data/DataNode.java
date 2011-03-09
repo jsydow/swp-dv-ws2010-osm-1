@@ -44,12 +44,12 @@ public class DataNode extends DataMapObject {
 	}
 
 	/**
-	 * The location object associated with this node
+	 * The location object associated with this node.
 	 */
 	private Location loc;
 
 	/**
-	 * the overlay Item used by the gui, associated with a certain poi
+	 * The overlay Item used by the gui, associated with a certain poi.
 	 */
 	private OverlayItem overlayItem;
 
@@ -74,7 +74,7 @@ public class DataNode extends DataMapObject {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return The longitude
 	 */
@@ -85,7 +85,7 @@ public class DataNode extends DataMapObject {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return The latitude
 	 */
@@ -175,7 +175,7 @@ public class DataNode extends DataMapObject {
 	}
 
 	/**
-	 * Converts the DataNode to a GeoPoint
+	 * Converts the DataNode to a GeoPoint.
 	 * 
 	 * @return a GeoPoint with the coordinates of the DataNode
 	 */
@@ -184,7 +184,7 @@ public class DataNode extends DataMapObject {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return a reference to the OverlayItem that is drawn and handled by
 	 *         MapsForge's overlay
@@ -194,7 +194,7 @@ public class DataNode extends DataMapObject {
 	}
 
 	/**
-	 * set the OverlayItem, used by MapsForgeActivity
+	 * Set the OverlayItem, used by MapsForgeActivity.
 	 * 
 	 * @param overlayItem
 	 */

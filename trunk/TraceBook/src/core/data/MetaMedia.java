@@ -207,7 +207,7 @@ public class MetaMedia {
 	 *            launched activity has terminated.
 	 * @return Name of the created media file.
 	 */
-	private final String recordVideoOrPhoto(final Activity activity,
+	private String recordVideoOrPhoto(final Activity activity,
 			final String action, final int requestCode) {
 		final Intent i = new Intent(action);
 		currentFilename = getNewFilename(requestCode);
@@ -225,7 +225,7 @@ public class MetaMedia {
 	 *            Media type to make up a new filename for.
 	 * @return A filename for the provided media type.
 	 */
-	private final String getNewFilename(final int mediaType) {
+	private String getNewFilename(final int mediaType) {
 		String newFilename = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		String timestamp = sdf.format(new Date());
@@ -239,6 +239,8 @@ public class MetaMedia {
 			break;
 		case TAKE_VIDEO_CODE:
 			newFilename += "video_" + timestamp + ".mp4";
+			break;
+		default:
 			break;
 		}
 

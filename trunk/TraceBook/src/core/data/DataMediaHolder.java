@@ -25,7 +25,7 @@ public abstract class DataMediaHolder {
 	protected List<DataMedia> media;
 
 	/**
-	 * default constructor
+	 * Default constructor.
 	 */
 	public DataMediaHolder() {
 		media = new LinkedList<DataMedia>();
@@ -33,7 +33,7 @@ public abstract class DataMediaHolder {
 	}
 
 	/**
-	 * Creates a time stamp of the current time formatted according to W3C
+	 * Creates a time stamp of the current time formatted according to W3C.
 	 * 
 	 * @return A time stamp String.
 	 */

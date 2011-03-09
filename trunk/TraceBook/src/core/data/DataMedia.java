@@ -132,7 +132,7 @@ public class DataMedia {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return The type of the medium
 	 */
@@ -141,7 +141,7 @@ public class DataMedia {
 	}
 
 	/**
-	 * Setter-method
+	 * Setter-method.
 	 * 
 	 * @param type The new type of this medium
 	 */
@@ -150,7 +150,7 @@ public class DataMedia {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return The unique id of the medium.
 	 */
