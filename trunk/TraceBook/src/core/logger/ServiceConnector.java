@@ -8,16 +8,23 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+/**
+ * TODO: Javadoc!
+ */
 public class ServiceConnector {
 	private static final String LOG_TAG = "LOGSERVICECLIENT";
 	private static LoggerServiceConnection conn = null;
 	private static boolean started = false;
 	private static Activity activity = null;
 	
+	protected ServiceConnector() {
+	    super();
+	}
+	
 	/**
-	 * Bind the logger service to this activity
+	 * Bind the logger service to this activity.
 	 */
-	public static void initService( ) {
+	public static void initService() {
 		
 		if (conn == null) {
 			conn = new LoggerServiceConnection();
@@ -31,7 +38,7 @@ public class ServiceConnector {
 	}
 
 	/**
-	 * release the logger service
+	 * Release the logger service.
 	 */
 	public static void releaseService() {
 		if (conn != null) {
@@ -44,9 +51,9 @@ public class ServiceConnector {
 	}
 
 	/**
-	 * Start the logging service (collect GPS data)
+	 * Start the logging service (collect GPS data).
 	 */
-	public static void startService( Activity act ) {
+	public static void startService(Activity act) {
 		activity = act;
 		if (started) {
 			Toast.makeText(activity, "Service already started", Toast.LENGTH_SHORT).show();
@@ -61,7 +68,7 @@ public class ServiceConnector {
 	}
 
 	/**
-	 * Stop logging service (stop collecting GPS data)
+	 * Stop logging service (stop collecting GPS data).
 	 */
 	public static void stopService() {
 		if (!started) {
