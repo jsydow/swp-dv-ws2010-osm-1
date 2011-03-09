@@ -139,8 +139,8 @@ public class MapsForgeActivity extends MapActivity {
         routesOverlay = new ArrayRouteOverlay(null, null);
 
         // as this activity is destroyed when adding a POI, we get all POIs here
-        addPoints(pointsOverlay);
-        addWays(routesOverlay);
+        addPoints();
+        addWays();
 
         mapView.getOverlays().add(routesOverlay);
         mapView.getOverlays().add(pointsOverlay);
@@ -267,22 +267,22 @@ public class MapsForgeActivity extends MapActivity {
         }
     }
 
-    private void addPoints(DataNodeArrayItemizedOverlay pointsOverlay2) {
+    private void addPoints() {
         for (DataNode n : currentTrack().getNodes()) {
             if (n.getOverlayItem() == null)
                 n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-            pointsOverlay2.addOverlay(n.getOverlayItem(), n.getId());
+            pointsOverlay.addOverlay(n.getOverlayItem(), n.getId());
         }
     }
 
-    private void addWays(ArrayRouteOverlay overlay) {
+    private void addWays() {
         for (DataPointsList l : currentTrack().getWays()) {
             if (l.getOverlayRoute() == null) {
                 Pair<Paint, Paint> col = getColor();
                 l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
                         col.first, col.second));
             }
-            overlay.addRoute(l.getOverlayRoute());
+            routesOverlay.addRoute(l.getOverlayRoute());
         }
     }
 
@@ -291,10 +291,17 @@ public class MapsForgeActivity extends MapActivity {
         super.onResume();
         Log.d(LOG_TAG, "Resuming MapActivity");
 
+        // redraw all overlays to account for the events we've missed paused
+        routesOverlay.clear();
+        pointsOverlay.clear();
+        addPoints();
+        addWays();
+
         registerReceiver(gpsReceiver, new IntentFilter(
                 WaypointLogService.UPDTAE_GPS_POS));
         registerReceiver(gpsReceiver, new IntentFilter(
                 WaypointLogService.UPDTAE_OBJECT));
+
     }
 
     @Override
@@ -392,6 +399,8 @@ public class MapsForgeActivity extends MapActivity {
                 }
 
                 int way_id = intend.getExtras().getInt("way_id");
+                int pointId = intend.getExtras().getInt("point_id");
+
                 if (way_id > 0) {
                     if (way_id != oldWayId) {
                         reDrawWay(oldWayId);
@@ -416,7 +425,20 @@ public class MapsForgeActivity extends MapActivity {
                                 way.getNodes().size() - 1);
                         Log.d(LOG_TAG, "new node in current way: " + last_point);
                     }
+                } else if (pointId > 0) { // received an updated POI
+                    Log.d(LOG_TAG, "Received node update, id=" + pointId);
+                    DataNode point = currentTrack().getNodeById(pointId);
+                    if (point == null)
+                        Log.e(LOG_TAG, "Node with ID " + pointId
+                                + " does not exist.");
+                    else {
+                        Log.d(LOG_TAG, point.toString());
+                        pointsOverlay.addOverlay(
+                                new OverlayItem(point.toGeoPoint(), point
+                                        .getId() + "", ""), pointId);
+                    }
                 }
+
             }
         }
 
