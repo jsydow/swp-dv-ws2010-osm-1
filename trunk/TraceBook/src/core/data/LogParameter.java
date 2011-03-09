@@ -3,11 +3,27 @@ package core.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * @author sahin
+ *
+ */
 public class LogParameter implements Parcelable {
+	/**
+	 * 
+	 */
 	public int ID = -1;
+	/**
+	 * 
+	 */
 	public int delta_distance = 0;
+	/**
+	 * 
+	 */
 	public int delta_time = 0;
 
+	/**
+	 * 
+	 */
 	public static final Parcelable.Creator<LogParameter> CREATOR = new Parcelable.Creator<LogParameter>() {
 
 		public LogParameter createFromParcel(Parcel in) {
@@ -19,16 +35,27 @@ public class LogParameter implements Parcelable {
 		}
 	};
 
+	/**
+	 * @param ID
+	 * @param delta_distance
+	 * @param delta_time
+	 */
 	public LogParameter(int ID, int delta_distance, int delta_time) {
 		this.ID = ID;
 		this.delta_distance = delta_distance;
 		this.delta_time = delta_time;
 	}
 
+	/**
+	 * @param in
+	 */
 	LogParameter(Parcel in) {
 		readFromParcel(in);
 	}
 
+	/**
+	 * 
+	 */
 	public LogParameter() {
 		// TODO Auto-generated constructor stub
 	}
@@ -43,6 +70,9 @@ public class LogParameter implements Parcelable {
 		out.writeInt(delta_time);
 	}
 
+	/**
+	 * @param in
+	 */
 	public void readFromParcel(Parcel in) {
 		ID = in.readInt();
 		delta_distance = in.readInt();
