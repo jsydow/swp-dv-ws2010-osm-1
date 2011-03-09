@@ -13,15 +13,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import core.data.DataMapObject;
-import core.data.DataMedia;
 import core.data.DataStorage;
 import core.data.MetaMedia;
 import core.logger.ServiceConnector;
@@ -83,6 +82,22 @@ public class AddPointActivity extends Activity {
                 android.R.layout.simple_list_item_1, getNodeInformation());
         listNodeInformation();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+        case MetaMedia.TAKE_PHOTO_CODE:
+            if (resultCode == Activity.RESULT_OK) {
+                mm.appendToObject(node);
+            }
+            break;
+        case MetaMedia.TAKE_VIDEO_CODE:
+            if (resultCode == Activity.RESULT_OK) {
+                mm.appendToObject(node);
+            }
+            break;
+        }
     }
 
     @Override
@@ -162,7 +177,7 @@ public class AddPointActivity extends Activity {
      *            not used
      */
     public void addPointMetaBtn(View view) { // method signature including view
-                                             // is required
+        // is required
         final Intent intent = new Intent(this, AddPointMetaActivity.class);
 
         intent.putExtra("DataNodeId", node.getId());
@@ -175,7 +190,7 @@ public class AddPointActivity extends Activity {
      *            not used
      */
     public void cancelBtn(View view) { // method signature including view is
-                                       // required
+        // required
         finish();
     }
 
@@ -184,8 +199,7 @@ public class AddPointActivity extends Activity {
      *            not
      */
     public void makeVideoBtn(View view) {
-        String filename = mm.takeVideo(this);
-        node.addMedia(new DataMedia(mm.getPath(), filename));
+        mm.takeVideo(this);
     }
 
     /**
@@ -229,7 +243,6 @@ public class AddPointActivity extends Activity {
      *            not used
      */
     public void makePictureBtn(View view) {
-        String filename = mm.takePhoto(this);
-        node.addMedia(new DataMedia(mm.getPath(), filename));
+        mm.takePhoto(this);
     }
 }
