@@ -17,10 +17,11 @@
 			android:layout_height="wrap_content" android:text="@string/cancel_btn"
 			android:onClick="cancelBtn" />
 	</LinearLayout>
-	<LinearLayout android:id="@+id/metaMediaBtn_ly" android:layout_width="fill_parent"
-	android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_horizontal">
-	
-	
+	<LinearLayout android:id="@+id/metaMediaBtnPoint_ly"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:gravity="center_horizontal">
+
+
 	</LinearLayout>
 
 	<TextView android:id="@+id/allocateMeta_tv"

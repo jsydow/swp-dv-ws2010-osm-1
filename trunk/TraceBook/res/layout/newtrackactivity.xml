@@ -47,31 +47,14 @@
 				<TextView android:id="@+id/setButtonList_tv"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textSize="15sp" />
-				<LinearLayout android:orientation="horizontal"
-					android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-					<Button android:id="@+id/makePicture_btn"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:drawableTop="@drawable/photo_icon_normal" android:text="@string/makePicture_btn"
-						android:onClick="makePictureBtn" />
+				<LinearLayout android:id="@+id/metaMediaBtnNew_ly"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:orientation="horizontal" android:gravity="center_horizontal">
 
 
-					<Button android:id="@+id/makeVideo_btn"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:drawableTop="@drawable/video_icon_normal" android:text="@string/makeVideo_btn"
-						android:onClick="makeVideoBtn" />
-
-
-					<Button android:id="@+id/makeMemo_btn" android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:drawableTop="@drawable/memo_icon_normal"
-						android:onClick="makeMemoBtn" android:text="@string/makeMemo_btn" />
-
-
-					<Button android:id="@+id/makeNotice_btn"
-						android:layout_width="wrap_content" android:layout_height="wrap_content"
-						android:drawableTop="@drawable/notice_icon_normal"
-						android:onClick="makeNoticeBtn" android:text="@string/makeNotice_btn" />
 				</LinearLayout>
+
 			</LinearLayout>
 			<LinearLayout android:id="@+id/edit_tab"
 				android:orientation="vertical" android:layout_width="fill_parent"
@@ -81,7 +64,7 @@
 					android:layout_width="match_parent" android:layout_height="match_parent"
 					android:layout_weight="1" android:scrollingCache="true"
 					android:divider="#8ac705" android:dividerHeight="1sp"
-					android:drawSelectorOnTop="false"/>
+					android:drawSelectorOnTop="false" />
 
 
 			</LinearLayout>
