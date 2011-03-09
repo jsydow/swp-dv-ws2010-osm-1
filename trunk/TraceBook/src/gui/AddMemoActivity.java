@@ -3,16 +3,26 @@ package gui;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.data.MetaMedia;
 
+/**
+ * @author greentraxas
+ * 
+ */
 public class AddMemoActivity extends Activity {
 
+    /**
+     * MetaMedia object to create new media objects and to receive it.
+     */
     MetaMedia mm = new MetaMedia();
+
+    /**
+     * Here we save a reference to the current DataMapObject which is in use.
+     */
     DataMapObject node;
 
     @Override
@@ -32,16 +42,26 @@ public class AddMemoActivity extends Activity {
 
     }
 
+    /**
+     * This method show for 2 seconds a progressDialog. After 2 Seconds the
+     * recording will be start.
+     */
     public void startMemo() {
-        final ProgressDialog dialog = ProgressDialog.show(this,
-                "Bitte warten..", "Aufnahme beginnt in 3 Sekunden...", true,
-                false);
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        dialog.setMessage("Bitte warten...\nAufnahme startet gleich...");
+        dialog.setCancelable(false);
+        dialog.show();
         new Thread() {
             @Override
             public void run() {
                 try {
-
-                    Thread.sleep(3000);
+                    int step = 0;
+                    while (step < 50) {
+                        Thread.sleep(2000 / 50);
+                        step++;
+                        dialog.incrementProgressBy(2);
+                    }
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -53,9 +73,12 @@ public class AddMemoActivity extends Activity {
 
     }
 
+    /**
+     * This method stop the audio recording and finish the Acitivty.
+     * 
+     * @param view
+     */
     public void stopMemoBtn(View view) {
-        final Intent intent = new Intent(this, NewTrackActivity.class);
-        startActivity(intent);
         mm.stopAudio(node);
         finish();
     }
