@@ -5,77 +5,77 @@ import android.os.Parcelable;
 
 /**
  * @author sahin
- *
+ * 
  */
 public class LogParameter implements Parcelable {
-	/**
+    /**
 	 * 
 	 */
-	public int ID = -1;
-	/**
+    public int ID = -1;
+    /**
 	 * 
 	 */
-	public int delta_distance = 0;
-	/**
+    public int delta_distance = 0;
+    /**
 	 * 
 	 */
-	public int delta_time = 0;
+    public int delta_time = 0;
 
-	/**
+    /**
 	 * 
 	 */
-	public static final Parcelable.Creator<LogParameter> CREATOR = new Parcelable.Creator<LogParameter>() {
+    public static final Parcelable.Creator<LogParameter> CREATOR = new Parcelable.Creator<LogParameter>() {
 
-		public LogParameter createFromParcel(Parcel in) {
-			return new LogParameter(in);
-		}
+        public LogParameter createFromParcel(Parcel in) {
+            return new LogParameter(in);
+        }
 
-		public LogParameter[] newArray(int arg0) {
-			return null;
-		}
-	};
+        public LogParameter[] newArray(int arg0) {
+            return null;
+        }
+    };
 
-	/**
-	 * @param ID
-	 * @param delta_distance
-	 * @param delta_time
-	 */
-	public LogParameter(int ID, int delta_distance, int delta_time) {
-		this.ID = ID;
-		this.delta_distance = delta_distance;
-		this.delta_time = delta_time;
-	}
+    /**
+     * @param ID
+     * @param delta_distance
+     * @param delta_time
+     */
+    public LogParameter(int ID, int delta_distance, int delta_time) {
+        this.ID = ID;
+        this.delta_distance = delta_distance;
+        this.delta_time = delta_time;
+    }
 
-	/**
-	 * @param in
-	 */
-	LogParameter(Parcel in) {
-		readFromParcel(in);
-	}
+    /**
+     * @param in
+     */
+    LogParameter(Parcel in) {
+        readFromParcel(in);
+    }
 
-	/**
+    /**
 	 * 
 	 */
-	public LogParameter() {
-		// TODO Auto-generated constructor stub
-	}
+    public LogParameter() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public int describeContents() {
-		return 0;
-	}
+    public int describeContents() {
+        return 0;
+    }
 
-	public void writeToParcel(Parcel out, int flags) {
-		out.writeInt(ID);
-		out.writeInt(delta_distance);
-		out.writeInt(delta_time);
-	}
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(ID);
+        out.writeInt(delta_distance);
+        out.writeInt(delta_time);
+    }
 
-	/**
-	 * @param in
-	 */
-	public void readFromParcel(Parcel in) {
-		ID = in.readInt();
-		delta_distance = in.readInt();
-		delta_time = in.readInt();
-	}
+    /**
+     * @param in
+     */
+    public void readFromParcel(Parcel in) {
+        ID = in.readInt();
+        delta_distance = in.readInt();
+        delta_time = in.readInt();
+    }
 }
