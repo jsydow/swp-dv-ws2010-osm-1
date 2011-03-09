@@ -73,7 +73,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     public void addOverlay(OverlayItem overlayItem, int nodeId) {
         synchronized (this.overlayItems) {
             this.overlayItems.add(new Pair<OverlayItem, Integer>(overlayItem,
-                    new Integer(nodeId)));
+                    Integer.valueOf(nodeId)));
         }
         populate();
     }
