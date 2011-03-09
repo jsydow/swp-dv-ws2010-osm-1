@@ -128,7 +128,9 @@ public class MapsForgeActivity extends MapActivity {
 
         // create paint list
         colors = new ArrayList<Pair<Paint, Paint>>();
-        colors.add(getPaintPair(Color.rgb(0, 0, 255)));
+        colors.add(getPaintPair(Color.rgb(0, 255, 0)));
+        colors.add(getPaintPair(Color.rgb(0, 0, 230)));
+        colors.add(getPaintPair(Color.rgb(0, 0, 200)));
         colors.add(getPaintPair(Color.rgb(0, 0, 170)));
 
         pointsOverlay = new DataNodeArrayItemizedOverlay(getResources()
