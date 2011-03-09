@@ -29,8 +29,9 @@ import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.data.DataTrack;
-import core.data.MetaMedia;
 import core.logger.ServiceConnector;
+import core.media.PictureRecorder;
+import core.media.Recorder;
 
 /**
  * @author greentraxas The NewTrackActivity is the main activity to record ,
@@ -91,20 +92,19 @@ public class NewTrackActivity extends TabActivity {
     TextView mediaData;
 
     /**
-     * MetaMedia object to create new media objects and to receive it.
+     *
      */
-    MetaMedia mm;
+    PictureRecorder pictureRecorder = new PictureRecorder();
 
-    @Override
     /**
      * Create activity.
      */
+    @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newtrackactivity);
 
-        mm = new MetaMedia();
         // Init TabHost
         initTabHost();
 
@@ -134,9 +134,9 @@ public class NewTrackActivity extends TabActivity {
         DataTrack dt = DataStorage.getInstance().getCurrentTrack();
 
         switch (requestCode) {
-        case MetaMedia.TAKE_PHOTO_CODE:
+        case Recorder.TAKE_PHOTO_CODE:
             if (resultCode == Activity.RESULT_OK) {
-                mm.appendToObject(dt.getCurrentWay());
+                pictureRecorder.appendFileToObject(dt.getCurrentWay());
             }
             break;
         }
@@ -389,7 +389,7 @@ public class NewTrackActivity extends TabActivity {
      *            not used
      */
     public void makePictureBtn(View view) {
-        mm.takePhoto(this);
+        pictureRecorder.startIntent(this);
     }
 
     /**
