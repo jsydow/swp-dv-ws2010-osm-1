@@ -14,17 +14,17 @@ import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TabHost.OnTabChangeListener;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -135,11 +135,6 @@ public class NewTrackActivity extends TabActivity {
 
         switch (requestCode) {
         case MetaMedia.TAKE_PHOTO_CODE:
-            if (resultCode == Activity.RESULT_OK) {
-                mm.appendToObject(dt.getCurrentWay());
-            }
-            break;
-        case MetaMedia.TAKE_VIDEO_CODE:
             if (resultCode == Activity.RESULT_OK) {
                 mm.appendToObject(dt.getCurrentWay());
             }
@@ -269,16 +264,16 @@ public class NewTrackActivity extends TabActivity {
         TabHost tabHost = getTabHost();
 
         // Init TabHost
-        tabHost.addTab(tabHost.newTabSpec("map_tab")
-                .setIndicator(getResources().getString(R.string.map_tab))
-                .setContent(new Intent(this, MapsForgeActivity.class)));
+        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(
+                getResources().getString(R.string.map_tab)).setContent(
+                new Intent(this, MapsForgeActivity.class)));
         // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost.newTabSpec("new_tab")
-                .setIndicator(getResources().getString(R.string.new_tab))
-                .setContent(R.id.new_tab));
-        tabHost.addTab(tabHost.newTabSpec("edit_tab")
-                .setIndicator(getResources().getString(R.string.edit_tab))
-                .setContent(R.id.edit_tab));
+        tabHost.addTab(tabHost.newTabSpec("new_tab").setIndicator(
+                getResources().getString(R.string.new_tab)).setContent(
+                R.id.new_tab));
+        tabHost.addTab(tabHost.newTabSpec("edit_tab").setIndicator(
+                getResources().getString(R.string.edit_tab)).setContent(
+                R.id.edit_tab));
 
         tabHost.setCurrentTab(1);
 
@@ -402,8 +397,6 @@ public class NewTrackActivity extends TabActivity {
      *            not
      */
     public void makeVideoBtn(View view) {
-        // mm.takeVideo(this);
-
         final Intent intent = new Intent(this, RecordVideoActivity.class);
         intent.putExtra("DataNodeId", DataStorage.getInstance()
                 .getCurrentTrack().getCurrentWay().getId());
@@ -432,10 +425,7 @@ public class NewTrackActivity extends TabActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
 
-                DataStorage
-                        .getInstance()
-                        .getCurrentTrack()
-                        .getCurrentWay()
+                DataStorage.getInstance().getCurrentTrack().getCurrentWay()
                         .addMedia(
                                 DataStorage.getInstance().getCurrentTrack()
                                         .saveText(value));
