@@ -15,6 +15,9 @@ import core.data.DataStorage;
 import core.media.VideoRecorder;
 
 /**
+ * Activity that starts recording a video and stops recording it upon hitting a
+ * button each. This activity is closed automatically once recording the video
+ * has been stopped.
  * 
  * @author Sahin Vardar & Huy Dinh
  */
@@ -47,8 +50,10 @@ public class RecordVideoActivity extends Activity implements
     }
 
     /**
+     * This function is called when the "Stop recording" button is clicked.
      * 
      * @param view
+     *            Not used.
      */
     public void onRecordStop(View view) {
         recorder.stop();
@@ -61,8 +66,10 @@ public class RecordVideoActivity extends Activity implements
     }
 
     /**
+     * This function is called when the "Start recording" button is clicked.
      * 
      * @param view
+     *            Not used.
      */
     public void onRecordBtn(View view) {
         camera.unlock();
@@ -71,18 +78,14 @@ public class RecordVideoActivity extends Activity implements
             recorder.prepare(camera, surfaceHolder.getSurface());
             recorder.start();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
             int height) {
-        // TODO Auto-generated method stub
-
         Camera.Parameters p = camera.getParameters();
         p.setPreviewSize(320, 240);
         p.setPreviewFormat(PixelFormat.JPEG);
@@ -91,7 +94,6 @@ public class RecordVideoActivity extends Activity implements
         try {
             camera.setPreviewDisplay(holder);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -108,11 +110,8 @@ public class RecordVideoActivity extends Activity implements
         }
     }
 
-    /**
-     *
-     */
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // Nothing's gonna happen here.
+        // Nothing's gonna happen in here.
     }
 
 }

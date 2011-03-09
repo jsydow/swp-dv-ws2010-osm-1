@@ -51,7 +51,7 @@ public class LoadTrackActivity extends Activity {
     }
 
     /**
-     * just for testing
+     * Just for testing.
      * 
      * @param view
      *            ...

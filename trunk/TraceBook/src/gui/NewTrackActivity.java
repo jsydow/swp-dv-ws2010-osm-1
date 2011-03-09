@@ -54,12 +54,12 @@ public class NewTrackActivity extends TabActivity {
     class MyListener implements OnTabChangeListener {
 
         /**
-         * We use this to have a reference of our NewTracActivity
+         * We use this to have a reference of our NewTrackActivity.
          */
         NewTrackActivity act;
 
         /**
-         * Here we save a reference to our tab object in our NewTracActivtiy
+         * Here we save a reference to our tab object in our NewTracActivity.
          */
         TabHost tab;
 
@@ -76,9 +76,7 @@ public class NewTrackActivity extends TabActivity {
         }
 
         public void onTabChanged(String tabId) {
-            String currentTab = tab.getCurrentTabTag();// TODO Auto-generated
-            // method
-            // stub
+            String currentTab = tab.getCurrentTabTag();
             if (currentTab.equals(tabId)) {
                 act.initListView();
                 tab.invalidate();
@@ -139,6 +137,8 @@ public class NewTrackActivity extends TabActivity {
                 pictureRecorder.appendFileToObject(dt.getCurrentWay());
             }
             break;
+        default:
+            break;
         }
     }
 
@@ -186,7 +186,7 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Init Toggle Buttons for startWay and startArea
+     * Init toggle buttons for startWay and startArea.
      */
     private void initToggleButtons() {
 
@@ -227,7 +227,7 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Init ListView with the list of saved POI, streets and areas
+     * Init ListView with the list of saved POI, streets and areas.
      */
     void initListView() {
         final Intent intent = new Intent(this, AddPointActivity.class);
