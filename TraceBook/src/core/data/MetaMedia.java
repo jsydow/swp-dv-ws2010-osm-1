@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.view.Surface;
 
 /**
  * This class takes care of how different media files are created. Basically,
@@ -61,6 +62,11 @@ public class MetaMedia {
      * A flag that tracks whether any audio recording undergoing right now.
      */
     private boolean isRecordingAudio = false;
+
+    /**
+     * A flag that tracks whether any video recording undergoing right now.
+     */
+    private boolean isRecordingVideo = false;
 
     /**
      * Constructor. Initializes the recorder object for audio recording and sets
@@ -148,6 +154,63 @@ public class MetaMedia {
             appendToObject(parent);
 
             isRecordingAudio = false;
+        }
+    }
+
+    /**
+     * Starts recording a video.
+     * 
+     * @param viewer
+     * @return Blah.
+     */
+    public final String startVideo(Surface viewer) {
+        if (!isRecordingVideo) {
+            currentFilename = getNewFilename(TAKE_VIDEO_CODE);
+
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+            // Possible output formats are 3gpp and MPEG4, e. g.
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            recorder.setOutputFile(getPath());
+
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H263);
+
+            recorder.setPreviewDisplay(viewer);
+
+            try {
+                recorder.prepare();
+                recorder.start();
+                isRecordingVideo = true;
+
+                return currentFilename;
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return "";
+        }
+
+        return "";
+    }
+
+    /**
+     * Stops recording a video.
+     * 
+     * @param parent
+     */
+    public final void stopVideo(DataMediaHolder parent) {
+        if (isRecordingAudio) {
+            recorder.stop();
+            recorder.reset();
+            recorder.release();
+
+            appendToObject(parent);
+
+            isRecordingVideo = false;
         }
     }
 
