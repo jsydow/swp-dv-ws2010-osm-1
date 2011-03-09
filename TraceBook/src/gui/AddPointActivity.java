@@ -19,17 +19,20 @@ import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
 
+/**
+ * @author greentraxas
+ * The purpose of this activity is to add and edit tags to an DataMapObject where
+ * an DataMapObject can be anything from poi to area.
+ *
+ */
 public class AddPointActivity extends Activity {
-
-	ListView listView;
-	TextView nodeIdTv;
-	TextView nodeInfo;
+	
+    
+	/**
+	 * Here we save a reference to the current DataMapObject which is in use
+	 */
 	DataMapObject node;
 	
-	
-	
-	String[] metaInformation;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,12 +74,12 @@ public class AddPointActivity extends Activity {
 	private String[] getNodeInformation() {
 
 		String meta = new String();
-		nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
-		nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
+		TextView nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
+		TextView nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
 		int i = 0;
 
 		Map<String, String> tagMap = node.getTags();
-		metaInformation = new String[tagMap.size()];
+		String[] metaInformation = new String[tagMap.size()];
 		nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " " + node.getId());
 
 		if (tagMap.size() != 0) {
@@ -106,7 +109,7 @@ public class AddPointActivity extends Activity {
 	 */
 	private void listNodeInformation(final ArrayAdapter<String> adapter) {
 		final Intent intent = new Intent(this, AddPointMetaActivity.class);
-		listView = (ListView) findViewById(R.id.allocateMeta_lv);
+		ListView listView = (ListView) findViewById(R.id.allocateMeta_lv);
 		listView.setAdapter(adapter);
 		listView.setTextFilterEnabled(true);
 
