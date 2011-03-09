@@ -119,7 +119,7 @@ public class DataNode extends DataMapObject {
 	/**
 	 * Change the longitude value of this node.
 	 * 
-	 * @param newLat
+	 * @param newlon
 	 *            The new longitude for this node
 	 */
 	public void setLon(double newlon) {

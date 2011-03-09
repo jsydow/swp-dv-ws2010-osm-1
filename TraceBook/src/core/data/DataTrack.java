@@ -38,512 +38,515 @@ import android.util.Xml;
  */
 public class DataTrack extends DataMediaHolder {
 
-	/**
-	 * All Ways and Areas
-	 */
-	private List<DataPointsList> ways;
-	/**
-	 * All POI's
-	 */
-	private List<DataNode> nodes;
+    /**
+     * All Ways and Areas
+     */
+    private List<DataPointsList> ways;
+    /**
+     * All POI's
+     */
+    private List<DataNode> nodes;
 
-	/**
-	 * The currently edited Way.
-	 */
-	private DataPointsList currentWay;
+    /**
+     * The currently edited Way.
+     */
+    private DataPointsList currentWay;
 
-	/**
-	 * Display name of the Track. Serves as id and should therefore be unique.
-	 * Is initialised with the DateTime of the first creation of this object.
-	 */
-	private String name;
+    /**
+     * Display name of the Track. Serves as id and should therefore be unique.
+     * Is initialised with the DateTime of the first creation of this object.
+     */
+    private String name;
 
-	/**
-	 * A Comment of this track
-	 */
-	private String comment;
+    /**
+     * A Comment of this track
+     */
+    private String comment;
 
-	/**
-	 * Constructor which initialises the Track, each Track must have a Date
-	 * time.
-	 * 
-	 * @param datetime
-	 *            The Date time in string representation. Can be null! Null is
-	 *            recommended.
-	 */
-	public DataTrack() {
-		super();
-		ways = new LinkedList<DataPointsList>();
-		nodes = new LinkedList<DataNode>();
-		this.name = getFilenameCompatibleTimeStamp();
-		createNewTrackFolder();
-	}
+    /**
+     * Constructor which initialises the Track, each Track must have a Date
+     * time.
+     */
+    public DataTrack() {
+        super();
+        ways = new LinkedList<DataPointsList>();
+        nodes = new LinkedList<DataNode>();
+        this.name = getFilenameCompatibleTimeStamp();
+        createNewTrackFolder();
+    }
 
-	/**
-	 * Creates a time stamp of the current time which can be used as a filename.
-	 * 
-	 * @return The time stamp String.
-	 */
-	public static String getFilenameCompatibleTimeStamp() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		return sdf.format(new Date());
-	}
+    /**
+     * Creates a time stamp of the current time which can be used as a filename.
+     * 
+     * @return The time stamp String.
+     */
+    public static String getFilenameCompatibleTimeStamp() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        return sdf.format(new Date());
+    }
 
-	/**
-	 * Initialising constructor.
-	 * 
-	 * @param datetime
-	 *            See constructor DataTrack(Datetime).
-	 * @param name
-	 *            The display and foldername of the Track.
-	 */
-	public DataTrack(String name) {
-		this();
-		this.name = name;
-	}
+    /**
+     * Initialising constructor.
+     * 
+     * @param name
+     *            The display and foldername of the Track.
+     */
+    public DataTrack(String name) {
+        this();
+        this.name = name;
+    }
 
-	/**
-	 * Initialising constructor. Note: comment is not implemented yet.
-	 * 
-	 * @param datetime
-	 *            See constructor DataTrack(Datetime).
-	 * @param name
-	 *            See constructor DataTrack(Datetime,Name).
-	 * @param comment
-	 *            Comment that may be displayed for this Track.
-	 */
-	public DataTrack(String name, String comment) {
-		this(name);
-		this.comment = comment;
-	}
+    /**
+     * Initialising constructor. Note: comment is not implemented yet.
+     * 
+     * @param name
+     *            See constructor DataTrack(Datetime,Name).
+     * @param comment
+     *            Comment that may be displayed for this Track.
+     */
+    public DataTrack(String name, String comment) {
+        this(name);
+        this.comment = comment;
+    }
 
-	/**
-	 * Getter-method
-	 * 
-	 * @return The name of the Track.
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * Getter-method
+     * 
+     * @return The name of the Track.
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Setter-method
-	 * 
-	 * @param name
-	 *            The new name of the DataTrack
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * Setter-method
+     * 
+     * @param name
+     *            The new name of the DataTrack
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Getter-method
-	 * 
-	 * @return The comment of the Track.
-	 */
-	public String getComment() {
-		return comment;
-	}
+    /**
+     * Getter-method
+     * 
+     * @return The comment of the Track.
+     */
+    public String getComment() {
+        return comment;
+    }
 
-	/**
-	 * Setter-method
-	 * 
-	 * @param comment
-	 *            The new comment of the Track.
-	 */
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    /**
+     * Setter-method
+     * 
+     * @param comment
+     *            The new comment of the Track.
+     */
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	/**
-	 * Getter-method that returns a list of all nodes. The returned List is the
-	 * one stored in this object. Changing the returned List will therefore
-	 * change this list
-	 * 
-	 * @return All POI's of this Track.
-	 */
-	public List<DataNode> getNodes() {
-		return nodes;
-	}
+    /**
+     * Getter-method that returns a list of all nodes. The returned List is the
+     * one stored in this object. Changing the returned List will therefore
+     * change this list
+     * 
+     * @return All POI's of this Track.
+     */
+    public List<DataNode> getNodes() {
+        return nodes;
+    }
 
-	/**
-	 * Getter-method that returns a list of all Ways. The returned List is the
-	 * one stored in this object. Changing the returned List will therefore
-	 * change this list
-	 * 
-	 * @return All ways of this Track.
-	 */
-	public List<DataPointsList> getWays() {
-		return ways;
-	}
+    /**
+     * Getter-method that returns a list of all Ways. The returned List is the
+     * one stored in this object. Changing the returned List will therefore
+     * change this list
+     * 
+     * @return All ways of this Track.
+     */
+    public List<DataPointsList> getWays() {
+        return ways;
+    }
 
-	/**
-	 * Create a new Node (i.e. POI) and add it to the Track.
-	 * 
-	 * @return The newly created POI.
-	 */
-	public DataNode newNode() {
-		DataNode dn = new DataNode();
-		nodes.add(dn);
-		return dn;
-	}
+    /**
+     * Create a new Node (i.e. POI) and add it to the Track.
+     * 
+     * @return The newly created POI.
+     */
+    public DataNode newNode() {
+        DataNode dn = new DataNode();
+        nodes.add(dn);
+        return dn;
+    }
 
-	/**
-	 * Create a new Node (i.e. POI) and add it to the Track
-	 * 
-	 * @param loc
-	 *            The Location object to be used for constructing the new Node.
-	 * @return The newly created POI.
-	 */
-	public DataNode newNode(Location loc) {
-		DataNode dn = new DataNode(loc);
-		nodes.add(dn);
-		return dn;
-	}
+    /**
+     * Create a new Node (i.e. POI) and add it to the Track
+     * 
+     * @param loc
+     *            The Location object to be used for constructing the new Node.
+     * @return The newly created POI.
+     */
+    public DataNode newNode(Location loc) {
+        DataNode dn = new DataNode(loc);
+        nodes.add(dn);
+        return dn;
+    }
 
-	/**
-	 * This method deletes a Node (POI) of this Track from the devices memory
-	 * and the working memory. If this node does not exist nothing is done.
-	 * 
-	 * @param id
-	 *            The id of the POI to delete.
-	 */
-	public void deleteNode(int id) {
-		ListIterator<DataNode> lit = nodes.listIterator();
-		DataNode dn;
-		while (lit.hasNext()) {
-			dn = lit.next();
-			if (dn.getId() == id) {
-				lit.remove();
-				break;
-			}
-		}
-	}
+    /**
+     * This method deletes a Node (POI) of this Track from the devices memory
+     * and the working memory. If this node does not exist nothing is done.
+     * 
+     * @param id
+     *            The id of the POI to delete.
+     */
+    public void deleteNode(int id) {
+        ListIterator<DataNode> lit = nodes.listIterator();
+        DataNode dn;
+        while (lit.hasNext()) {
+            dn = lit.next();
+            if (dn.getId() == id) {
+                lit.remove();
+                break;
+            }
+        }
+    }
 
-	/**
-	 * Create a new Way/Area in this Track
-	 * 
-	 * @return The newly created Way.
-	 */
-	public DataPointsList newWay() {
-		DataPointsList dpl = new DataPointsList();
-		ways.add(dpl);
-		return dpl;
-	}
+    /**
+     * Create a new Way/Area in this Track
+     * 
+     * @return The newly created Way.
+     */
+    public DataPointsList newWay() {
+        DataPointsList dpl = new DataPointsList();
+        ways.add(dpl);
+        return dpl;
+    }
 
-	/**
-	 * This method deletes a Way of this Track from the devices memory and the
-	 * working memory. If the Way does not exist nothing is done.
-	 * 
-	 * @param id
-	 *            The id of the Way to delete.
-	 */
-	public void deleteWay(int id) {
-		ListIterator<DataPointsList> lit = ways.listIterator();
-		DataPointsList dpl;
-		while (lit.hasNext()) {
-			dpl = lit.next();
-			if (dpl.getId() == id) {
-				lit.remove();
-				break;
-			}
-		}
-	}
+    /**
+     * This method deletes a Way of this Track from the devices memory and the
+     * working memory. If the Way does not exist nothing is done.
+     * 
+     * @param id
+     *            The id of the Way to delete.
+     */
+    public void deleteWay(int id) {
+        ListIterator<DataPointsList> lit = ways.listIterator();
+        DataPointsList dpl;
+        while (lit.hasNext()) {
+            dpl = lit.next();
+            if (dpl.getId() == id) {
+                lit.remove();
+                break;
+            }
+        }
+    }
 
-	/**
-	 * Serialises a track to a XML-file stored on the SD-card in folder
-	 * TraceBook/<track name>.
-	 * 
-	 * @param shouldSerialiseMedia
-	 *            Should media also be serialised? Adding media means that the
-	 *            resulting XML-file is not valid to OSM.
-	 */
-	public void serialise(boolean shouldSerialiseMedia) {
+    /**
+     * Serialises a track to a XML-file stored on the SD-card in folder
+     * TraceBook/<track name>.
+     * 
+     * @param shouldSerialiseMedia
+     *            Should media also be serialised? Adding media means that the
+     *            resulting XML-file is not valid to OSM.
+     */
+    public void serialise(boolean shouldSerialiseMedia) {
 
-		Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
+        Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
 
-		File xmlfile = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "TraceBook" + File.separator + name
-				+ File.separator + "/track.tbt");
-		try {
-			if (xmlfile.exists()) {
-				if (!xmlfile.delete()) {
-					Log.e("TrackSerialisation", "Deleting old file failed");
-					return;
-				}
-			}
-			if (!xmlfile.createNewFile()) {
-				Log.e("TrackSerialisation", "Creating new XML-file failed");
-				return;
-			}
+        File xmlfile = new File(Environment.getExternalStorageDirectory()
+                + File.separator + "TraceBook" + File.separator + name
+                + File.separator + "/track.tbt");
+        try {
+            if (xmlfile.exists()) {
+                if (!xmlfile.delete()) {
+                    Log.e("TrackSerialisation", "Deleting old file failed");
+                    return;
+                }
+            }
+            if (!xmlfile.createNewFile()) {
+                Log.e("TrackSerialisation", "Creating new XML-file failed");
+                return;
+            }
 
-		} catch (IOException e) {
-			Log.e("TrackSerialisation", "Could not create new file");
-		}
-		FileOutputStream fileos = null;
-		try {
-			fileos = new FileOutputStream(xmlfile);
-		} catch (FileNotFoundException e) {
-			Log.e("TrackSerialisation", "Could not open new file");
-		}
+        } catch (IOException e) {
+            Log.e("TrackSerialisation", "Could not create new file");
+        }
+        FileOutputStream fileos = null;
+        try {
+            fileos = new FileOutputStream(xmlfile);
+        } catch (FileNotFoundException e) {
+            Log.e("TrackSerialisation", "Could not open new file");
+        }
 
-		XmlSerializer serializer = Xml.newSerializer();
-		try {
-			serializer.setOutput(fileos, "UTF-8");
-			serializer.startDocument(null, Boolean.valueOf(true));
-			serializer.startTag(null, "osm");
+        XmlSerializer serializer = Xml.newSerializer();
+        try {
+            serializer.setOutput(fileos, "UTF-8");
+            serializer.startDocument(null, Boolean.valueOf(true));
+            serializer.startTag(null, "osm");
 
-			serializer.attribute(null, "version", "0.6");
-			serializer.attribute(null, "generator", "TraceBook");
+            serializer.attribute(null, "version", "0.6");
+            serializer.attribute(null, "generator", "TraceBook");
 
-			for (DataNode dn : nodes) {
-				dn.serialise(serializer, shouldSerialiseMedia);
-			}
-			for (DataPointsList dpl : ways) {
-				dpl.serialiseNodes(serializer, shouldSerialiseMedia);
-			}
-			for (DataPointsList dpl : ways) {
-				dpl.serialiseWay(serializer, shouldSerialiseMedia);
-			}
+            for (DataNode dn : nodes) {
+                dn.serialise(serializer, shouldSerialiseMedia);
+            }
+            for (DataPointsList dpl : ways) {
+                dpl.serialiseNodes(serializer, shouldSerialiseMedia);
+            }
+            for (DataPointsList dpl : ways) {
+                dpl.serialiseWay(serializer, shouldSerialiseMedia);
+            }
 
-			serializer.endTag(null, "osm");
-			serializer.flush();
-		} catch (Exception e) {
-			Log.e("TrackSerialisation", "Could not serialise track");
-		}
+            serializer.endTag(null, "osm");
+            serializer.flush();
+        } catch (Exception e) {
+            Log.e("TrackSerialisation", "Could not serialise track");
+        }
 
-	}
+    }
 
-	/**
-	 * Deletes a Track with all its contents from the devices memory.
-	 */
-	public void delete() {
-		File track = new File(getTrackDirPath());
-		File[] files = track.listFiles();
-		for (File f : files) {
-			if (f.isFile()) {
-				if (!f.delete()) {
-					Log.e("DeleteTrackFile",
-							"Could not delete file " + f.getName()
-									+ " in track " + getName());
-				}
-			}
-		}
-		if (!track.delete()) {
-			Log.e("DeleteTrack", "Could not delete track " + getName());
+    /**
+     * Deletes a Track with all its contents from the devices memory.
+     */
+    public void delete() {
+        File track = new File(getTrackDirPath());
+        File[] files = track.listFiles();
+        for (File f : files) {
+            if (f.isFile()) {
+                if (!f.delete()) {
+                    Log.e("DeleteTrackFile",
+                            "Could not delete file " + f.getName()
+                                    + " in track " + getName());
+                }
+            }
+        }
+        if (!track.delete()) {
+            Log.e("DeleteTrack", "Could not delete track " + getName());
 
-		}
-	}
+        }
+    }
 
-	/**
-	 * Getter-method. The currently edited Way.
-	 * 
-	 * @return The current Way. Current Way can be null if not initialised.
-	 */
-	public DataPointsList getCurrentWay() {
-		return currentWay;
-	}
+    /**
+     * Getter-method. The currently edited Way.
+     * 
+     * @return The current Way. Current Way can be null if not initialised.
+     */
+    public DataPointsList getCurrentWay() {
+        return currentWay;
+    }
 
-	/**
-	 * Sets a Way as currently edited Way. Setter-method.
-	 * 
-	 * @param currentWay
-	 *            The new currently edited Way.
-	 */
-	public DataPointsList setCurrentWay(DataPointsList currentWay) {
-		this.currentWay = currentWay;
-		return currentWay;
-	}
+    /**
+     * Sets a Way as currently edited Way. Setter-method.
+     * 
+     * @param currentWay
+     *            The new currently edited Way.
+     * @return Returns the parameter currentWay for further use.
+     */
+    public DataPointsList setCurrentWay(DataPointsList currentWay) {
+        this.currentWay = currentWay;
+        return currentWay;
+    }
 
-	/**
-	 * This method loads a Track from the devices memory. It uses the
-	 * appropriate ContentProvider. Note: Currently a stub. Note: The parameter
-	 * name may change if another name is better suited for retrieving the Track
-	 * correctly.
-	 * 
-	 * @param name
-	 *            The name of the Track as stored on the memory.
-	 * @return The deserialised DataTrack object or null if such a Track does
-	 *         not exist
-	 */
-	static DataTrack deserialise(String name) {
-		List<DataNode> allnodes = new LinkedList<DataNode>();
-		File track = new File(getTrackDirPath(name));
-		DataTrack ret = new DataTrack(track.getName());
+    /**
+     * This method loads a Track from the devices memory. It uses the
+     * appropriate ContentProvider. Note: Currently a stub. Note: The parameter
+     * name may change if another name is better suited for retrieving the Track
+     * correctly.
+     * 
+     * @param name
+     *            The name of the Track as stored on the memory.
+     * @return The deserialised DataTrack object or null if such a Track does
+     *         not exist
+     */
+    static DataTrack deserialise(String name) {
+        List<DataNode> allnodes = new LinkedList<DataNode>();
+        File track = new File(getTrackDirPath(name));
+        DataTrack ret = new DataTrack(track.getName());
 
-		if (track.isFile()) {
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
+        if (track.isFile()) {
+            DocumentBuilderFactory factory = DocumentBuilderFactory
+                    .newInstance();
 
-			try {
-				DocumentBuilder builder = factory.newDocumentBuilder();
-				Document dom = builder.parse(track);
-				Element osmelement = dom.getDocumentElement(); // root-element
+            try {
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document dom = builder.parse(track);
+                Element osmelement = dom.getDocumentElement(); // root-element
 
-				// all nodes
-				NodeList nodeelements = osmelement.getElementsByTagName("node");
-				for (int i = 0; i < nodeelements.getLength(); ++i) {
-					allnodes.add(DataNode.deserialise(nodeelements.item(i)));
-				}
+                // all nodes
+                NodeList nodeelements = osmelement.getElementsByTagName("node");
+                for (int i = 0; i < nodeelements.getLength(); ++i) {
+                    allnodes.add(DataNode.deserialise(nodeelements.item(i)));
+                }
 
-				// all ways
-				NodeList wayelements = osmelement.getElementsByTagName("way");
-				for (int i = 0; i < wayelements.getLength(); ++i) {
-					DataPointsList dpl = DataPointsList.deserialise(
-							nodeelements.item(i), allnodes);
-					ret.addWay(dpl);
-				}
+                // all ways
+                NodeList wayelements = osmelement.getElementsByTagName("way");
+                for (int i = 0; i < wayelements.getLength(); ++i) {
+                    DataPointsList dpl = DataPointsList.deserialise(
+                            nodeelements.item(i), allnodes);
+                    ret.addWay(dpl);
+                }
 
-				// all media
-				NodeList medianodes = osmelement.getElementsByTagName("way");
-				for (int i = 0; i < medianodes.getLength(); ++i) {
-					NamedNodeMap attributes = medianodes.item(i)
-							.getAttributes();
-					Node path = attributes.getNamedItem("value");
-					// misuse of getTrackDirPath
-					ret.addMedia(DataMedia.deserialise(DataTrack
-							.getTrackDirPath(path.getNodeValue())));
-				}
+                // all media
+                NodeList medianodes = osmelement.getElementsByTagName("way");
+                for (int i = 0; i < medianodes.getLength(); ++i) {
+                    NamedNodeMap attributes = medianodes.item(i)
+                            .getAttributes();
+                    Node path = attributes.getNamedItem("value");
+                    // misuse of getTrackDirPath
+                    ret.addMedia(DataMedia.deserialise(DataTrack
+                            .getTrackDirPath(path.getNodeValue())));
+                }
 
-				// nodes -> POIs
-				ret.getNodes().addAll(allnodes);
+                // nodes -> POIs
+                ret.getNodes().addAll(allnodes);
 
-			} catch (IOException e) {
-				Log.e("TrackDeserialisation", "Error while reading XML file.");
-				return null;
-			} catch (Exception e) {
-				Log.e("TrackDeserialisation", "XML parsing error.");
-				return null;
-			}
-		} else {
-			Log.e("TrackDeserialisation", "Track was not found.");
-			return null;
-		}
+            } catch (IOException e) {
+                Log.e("TrackDeserialisation", "Error while reading XML file.");
+                return null;
+            } catch (Exception e) {
+                Log.e("TrackDeserialisation", "XML parsing error.");
+                return null;
+            }
+        } else {
+            Log.e("TrackDeserialisation", "Track was not found.");
+            return null;
+        }
 
-		return ret;
-	}
+        return ret;
+    }
 
-	public void serialise() {
-		serialise(true);
-	}
+    /**
+     * Serialises a track to a XML-file stored on the SD-card in folder
+     * TraceBook/<track name>. Also serialises all Media. The XML-file is
+     * therefore not OSM compatible.
+     */
+    public void serialise() {
+        serialise(true);
+    }
 
-	public void createNewTrackFolder() {
-		File dir = new File(DataStorage.getTraceBookDirPath() + File.separator
-				+ name);
-		if (!dir.isDirectory()) {
-			if (!dir.mkdir()) {
-				Log.e("DataStorage", "Could not create new track folder "
-						+ name);
-			}
-		}
-	}
+    /**
+     * Creates new folder in .../TraceBook for this Track. Such a directory must
+     * exist when track is serialised.
+     */
+    public void createNewTrackFolder() {
+        File dir = new File(DataStorage.getTraceBookDirPath() + File.separator
+                + name);
+        if (!dir.isDirectory()) {
+            if (!dir.mkdir()) {
+                Log.e("DataStorage", "Could not create new track folder "
+                        + name);
+            }
+        }
+    }
 
-	/**
-	 * Returns the complete absolute path to this Track directory.
-	 * 
-	 * @return path to the track directory
-	 */
-	public String getTrackDirPath() {
-		return DataStorage.getTraceBookDirPath() + File.separator + name;
-	}
+    /**
+     * Returns the complete absolute path to this Track directory.
+     * 
+     * @return path to the track directory
+     */
+    public String getTrackDirPath() {
+        return DataStorage.getTraceBookDirPath() + File.separator + name;
+    }
 
-	/**
-	 * Completes a track directory name to a complete path. Note: Do not changed
-	 * as this method is misused somewhere.
-	 * 
-	 * @param dir
-	 *            Name of the track directory
-	 * @return The complete path to the track directory.
-	 */
-	public static String getTrackDirPath(String dir) {
-		return DataStorage.getTraceBookDirPath() + File.separator + dir;
-	}
+    /**
+     * Completes a track directory name to a complete path. Note: Do not changed
+     * as this method is misused somewhere.
+     * 
+     * @param dir
+     *            Name of the track directory
+     * @return The complete path to the track directory.
+     */
+    public static String getTrackDirPath(String dir) {
+        return DataStorage.getTraceBookDirPath() + File.separator + dir;
+    }
 
-	/**
-	 * Get a DataPointsList with a given id.
-	 * 
-	 * @param id
-	 *            The id of the DataPointsList
-	 * @return The DataPointsList or null if there is none with such an id.
-	 */
-	public DataPointsList getPointsListById(int id) {
-		for (DataPointsList dpl : ways) {
-			if (dpl.getId() == id) {
-				return dpl;
-			}
-		}
-		return null;
-	}
+    /**
+     * Get a DataPointsList with a given id.
+     * 
+     * @param id
+     *            The id of the DataPointsList
+     * @return The DataPointsList or null if there is none with such an id.
+     */
+    public DataPointsList getPointsListById(int id) {
+        for (DataPointsList dpl : ways) {
+            if (dpl.getId() == id) {
+                return dpl;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Get a DataNode with a given id.
-	 * 
-	 * @param id
-	 *            The id of the DataNode
-	 * @return The DataNode or null if there is none with such an id.
-	 */
-	public DataNode getNodeById(int id) {
-		for (DataNode dn : nodes) {
-			if (dn.getId() == id) {
-				return dn;
-			}
-		}
-		return null;
-	}
+    /**
+     * Get a DataNode with a given id.
+     * 
+     * @param id
+     *            The id of the DataNode
+     * @return The DataNode or null if there is none with such an id.
+     */
+    public DataNode getNodeById(int id) {
+        for (DataNode dn : nodes) {
+            if (dn.getId() == id) {
+                return dn;
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Adds a way to the ways of this Track.
-	 * 
-	 * @param way
-	 *            the DataPointsList to be added
-	 */
-	private void addWay(DataPointsList way) {
-		ways.add(way);
-	}
+    /**
+     * Adds a way to the ways of this Track.
+     * 
+     * @param way
+     *            the DataPointsList to be added
+     */
+    private void addWay(DataPointsList way) {
+        ways.add(way);
+    }
 
-	/**
-	 * Search the whole track for an DataMapObject by id. This may be a DataNode
-	 * or DataPointsList.
-	 * 
-	 * @param id
-	 *            The id of the DataMapObject that is being searched for.
-	 * @return The DataMapObject where get_id()==id or null if there is not such
-	 *         an object.
-	 */
-	public DataMapObject getDataMapObjectById(int id) {
+    /**
+     * Search the whole track for an DataMapObject by id. This may be a DataNode
+     * or DataPointsList.
+     * 
+     * @param id
+     *            The id of the DataMapObject that is being searched for.
+     * @return The DataMapObject where get_id()==id or null if there is not such
+     *         an object.
+     */
+    public DataMapObject getDataMapObjectById(int id) {
 
-		DataMapObject res = getNodeById(id);
-		if (res != null) {
-			return res;
-		}
+        DataMapObject res = getNodeById(id);
+        if (res != null) {
+            return res;
+        }
 
-		res = getPointsListById(id);
-		return res;
-	}
+        res = getPointsListById(id);
+        return res;
+    }
 
-	/**
-	 * This method saves a String to a .txt-file and generates a
-	 * DataMedia-object which can be added to any DataMediaHolder.
-	 * 
-	 * @param text
-	 *            The text to save
-	 */
-	public DataMedia saveText(String text) {
-		File txtfile = new File(getTrackDirPath() + File.separator
-				+ getFilenameCompatibleTimeStamp() + ".txt");
-		try {
-			if (txtfile.createNewFile()) {
-				BufferedWriter buf = new BufferedWriter(new FileWriter(txtfile));
-				buf.write(text);
-				buf.close();
-			} else {
-				Log.w("MediaSavingText",
-						"Text file with this timestamp already exists.");
-			}
-		} catch (IOException e) {
-			Log.e("MediaSavingText", "Error while writing text file.");
-			return null;
-		}
-		return new DataMedia(txtfile.getParent(), txtfile.getName());
-	}
+    /**
+     * This method saves a String to a .txt-file and generates a
+     * DataMedia-object which can be added to any DataMediaHolder.
+     * 
+     * @param text
+     *            The text to save
+     * @return DataMedia object which references the Text just saved.
+     */
+    public DataMedia saveText(String text) {
+        File txtfile = new File(getTrackDirPath() + File.separator
+                + getFilenameCompatibleTimeStamp() + ".txt");
+        try {
+            if (txtfile.createNewFile()) {
+                BufferedWriter buf = new BufferedWriter(new FileWriter(txtfile));
+                buf.write(text);
+                buf.close();
+            } else {
+                Log.w("MediaSavingText",
+                        "Text file with this timestamp already exists.");
+            }
+        } catch (IOException e) {
+            Log.e("MediaSavingText", "Error while writing text file.");
+            return null;
+        }
+        return new DataMedia(txtfile.getParent(), txtfile.getName());
+    }
 }
