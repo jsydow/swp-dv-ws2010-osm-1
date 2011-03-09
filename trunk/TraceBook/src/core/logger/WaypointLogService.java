@@ -14,24 +14,52 @@ import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.data.LogParameter;
 
+/**
+ * This background service logs GPS data and stores it in the {@link DataStorage} object
+ * @author benpicco
+ *
+ */
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
 	private static final String BASETAG = "de.fu-berlin.inf.tracebook";
+	
+	/**
+	 * tag of the Intent that signals a change of the current position
+	 */
 	public  static final String UPDTAE_GPS_POS = BASETAG + ".UPDTAE_GPS_POS";
+	
+	/**
+	 * tag of the Intent that signals an update to an object in {@link DataStorage}
+	 */
 	public  static final String UPDTAE_OBJECT = BASETAG + ".UPDTAE_OBJECT";
 	
+	/**
+	 * reference to the {@link DataStorage} singleton
+	 */
 	DataStorage storage			= DataStorage.getInstance();
+	
+	/**
+	 * current node, null if no node with missing GPS location is present, otherwise
+	 * it contains a reference to the {@link DataNode} waiting for a GPS fix 
+	 */
 	DataNode current_node		= null;
 	
+	/**
+	 * Parameters for GPS update intervals
+	 */
 	LogParameter params;
 	
-	Intent gps_intent = new Intent(UPDTAE_GPS_POS);
-	Intent update_intent = new Intent(UPDTAE_OBJECT);
+	private Intent gps_intent = new Intent(UPDTAE_GPS_POS);
+	private Intent update_intent = new Intent(UPDTAE_OBJECT);
 	
-	boolean gps_on = false;
+	private boolean gps_on = false;
+	
+	/**
+	 * one shot mode - no continuous tracking, points are only added to the way on request
+	 */
 	boolean one_shot = false;
 			
-	LocationListener ll = this;
+	private LocationListener ll = this;
 
 	@Override
 	public void onStart(Intent intent, int startId) {
@@ -59,23 +87,36 @@ public class WaypointLogService extends Service implements LocationListener {
 		stopGPS();
 	}
 	
+	/**
+	 * enables GPS updates from the {@link LocationManager}
+	 */
 	void startGPS() {
 		if (!gps_on)
 			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, params.delta_time, params.delta_distance, ll);
 		gps_on = true;
 	}
 	
+	/**
+	 * disables GPS updates from the {@link LocationManager}
+	 */
 	void stopGPS() {
 		if (gps_on)
 			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).removeUpdates(ll);
 		gps_on = false;
 	}
 	
+	/**
+	 * first tries to stop and than to start receiving GPS updates. This effectively reloads the settings for the {@link LocationManager}
+	 */
 	void restartGPS() {
 		stopGPS();
 		startGPS();
 	}
 	
+	/**
+	 * Convenience function to get the current way out of the {@link DataStorage} object
+	 * @return the current {@link DataPointsList} way
+	 */
 	DataPointsList currentWay() {
 		if (storage == null || storage.getCurrentTrack() == null)
 			return null;
