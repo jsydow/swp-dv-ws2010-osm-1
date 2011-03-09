@@ -11,6 +11,9 @@ import android.os.IBinder;
  */
 public class LoggerServiceConnection implements ServiceConnection {
 	
+	/**
+	 * reference for loggerService
+	 */
 	ILoggerService loggerService = null;
 	
 	
@@ -24,6 +27,9 @@ public class LoggerServiceConnection implements ServiceConnection {
 		//Log.d(LOG_TAG, "onServiceDisconnected");
 	}
 	
+	/**
+	 * @return get a reference to the loggerService 
+	 */
 	public ILoggerService getLoggerService() {
 		return loggerService;
 	}
