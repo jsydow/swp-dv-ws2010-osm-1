@@ -74,6 +74,11 @@ public class MapsForgeActivity extends MapActivity {
      */
     List<Pair<Paint, Paint>> colors;
 
+    /**
+     * show a knob for every waypoint
+     */
+    boolean showGnubbel = false;
+
     private int colorID = 0;
 
     /**
@@ -283,7 +288,32 @@ public class MapsForgeActivity extends MapActivity {
                         col.first, col.second));
             }
             routesOverlay.addRoute(l.getOverlayRoute());
+
+            if (showGnubbel) {
+                for (DataNode n : l.getNodes())
+                    pointsOverlay.addOverlay(
+                            getOverlayItem(n.toGeoPoint(),
+                                    R.drawable.marker_blue), n.getId());
+
+            }
         }
+    }
+
+    /**
+     * creates a new OverlayItem
+     * 
+     * @param pos
+     *            position of the marker
+     * @param marker
+     *            id of the Graphics object to use
+     * @return the new OverlayItem
+     */
+    OverlayItem getOverlayItem(GeoPoint pos, int marker) {
+        final OverlayItem oi = new OverlayItem(pos, "", "");
+        Drawable icon = getResources().getDrawable(marker);
+        oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
+
+        return oi;
     }
 
     @Override
@@ -337,23 +367,6 @@ public class MapsForgeActivity extends MapActivity {
         GeoPoint currentGeoPoint = null;
 
         int oldWayId = -1;
-
-        /**
-         * creates a new OverlayItem
-         * 
-         * @param pos
-         *            position of the marker
-         * @param marker
-         *            id of the Graphics object to use
-         * @return the new OverlayItem
-         */
-        private OverlayItem getOverlayItem(GeoPoint pos, int marker) {
-            final OverlayItem oi = new OverlayItem(pos, "", "");
-            Drawable icon = getResources().getDrawable(marker);
-            oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
-
-            return oi;
-        }
 
         void centerOnCurrentPosition() {
             if (currentGeoPoint != null) {
@@ -424,6 +437,11 @@ public class MapsForgeActivity extends MapActivity {
                         final DataNode last_point = way.getNodes().get(
                                 way.getNodes().size() - 1);
                         Log.d(LOG_TAG, "new node in current way: " + last_point);
+                        if (showGnubbel)
+                            pointsOverlay.addOverlay(
+                                    getOverlayItem(last_point.toGeoPoint(),
+                                            R.drawable.marker_blue), last_point
+                                            .getId());
                     }
                 } else if (pointId > 0) { // received an updated POI
                     Log.d(LOG_TAG, "Received node update, id=" + pointId);
