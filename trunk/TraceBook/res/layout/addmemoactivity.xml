@@ -5,7 +5,7 @@
   android:layout_height="fill_parent"
   android:orientation="vertical" >
   
-      	<TextView
+    <TextView
   	android:layout_height="wrap_content"
   	android:layout_width="fill_parent"
   	android:text="Bitte sprechen Sie Ihre Sprachnotiz."
@@ -15,6 +15,11 @@
   <ImageView
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  	android:src="@drawable/microphone_test"/>
-  	
+  android:src="@drawable/microphone_test"/>
+  
+  
+  <Button android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:onClick="stopMemoBtn"
+  android:text="Stoppe Sprachnotiz" android:gravity="center_horizontal" />	
 </LinearLayout>

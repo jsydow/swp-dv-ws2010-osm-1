@@ -73,7 +73,7 @@ public class AddPointActivity extends Activity {
 	 */
 	private String[] getNodeInformation() {
 
-		String meta = new String();
+		String meta = null;
 		TextView nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
 		TextView nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
 		int i = 0;

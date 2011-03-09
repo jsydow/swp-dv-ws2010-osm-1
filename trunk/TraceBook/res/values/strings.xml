@@ -22,7 +22,7 @@
 	<!--  AlertBox values -->
     <string name="addNotice_alert">Notiz hinzufügen</string>
     <string name="addedNotice_alert">Notiz hünzugefügt:</string>
-    <string name="exit_alert">Möchten Sie die aktuelle Seassion stoppen?</string>
+    <string name="exit_alert">Möchten Sie die aktuelle Seassion stoppen und speichern?</string>
     <string name="pause_alert">Möchten Sie die aktuelle Seassion pausieren?</string>
     <string name="yes_alert">Ja</string>
     <string name="no_alert">Nein</string>
