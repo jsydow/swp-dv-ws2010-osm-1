@@ -113,9 +113,9 @@ public class MetaMedia {
 			recorder.setOutputFile(getPath());
 
 			try {
+				recorder.prepare();
 				recorder.start();
 				isRecordingAudio = true;
-				recorder.prepare();
 
 				return currentFilename;
 			} catch (IllegalStateException e) {
