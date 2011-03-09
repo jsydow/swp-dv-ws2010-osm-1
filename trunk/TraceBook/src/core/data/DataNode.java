@@ -23,11 +23,27 @@ import android.util.Log;
 public class DataNode extends DataMapObject {
 
     /**
-     * This constructor initialises the Latitude and Longitude with data from a
+     * This constructor initializes the Latitude and Longitude with data from a
+     * Location object, as well as the DataPointsList that contains this node.
+     * 
+     * @param loc
+     *            The {@link Location} of the new node. Initializes latitude and
+     *            longitude.
+     * @param way
+     *            The {@link DataPointsList} this node is belongs to
+     */
+    public DataNode(Location loc, DataPointsList way) {
+        super();
+        setLocation(loc);
+        setDataPointsList(way);
+    }
+
+    /**
+     * This constructor initializes the Latitude and Longitude with data from a
      * Location object.
      * 
      * @param loc
-     *            The Location of the new node. Initialises latitude and
+     *            The Location of the new node. Initializes latitude and
      *            longitude.
      */
     public DataNode(Location loc) {
@@ -44,9 +60,15 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * The location object associated with this node.
+     * The {@link Location} object associated with this node.
      */
     private Location loc;
+
+    /**
+     * The {@link DataPointsList} object associated with this node. Null if this
+     * node is not part of a DataPointsList.
+     */
+    private DataPointsList way;
 
     /**
      * The overlay Item used by the gui, associated with a certain poi.
@@ -71,6 +93,27 @@ public class DataNode extends DataMapObject {
      */
     public Location getLocation() {
         return loc;
+    }
+
+    /**
+     * Associates this DataNode with a {@link DataPointsList}, meaning this
+     * point is part of the way.
+     * 
+     * @param way
+     *            the way that contains this point
+     */
+    public void setDataPointsList(DataPointsList way) {
+        this.way = way;
+    }
+
+    /**
+     * If this node is part of a {@link DataPointsList}, this function will
+     * return a reference to this object. Otherwise the return value is null.
+     * 
+     * @return the DataPointsList this point is in
+     */
+    public DataPointsList getDataPointsList() {
+        return way;
     }
 
     /**
