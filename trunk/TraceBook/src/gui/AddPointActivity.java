@@ -8,10 +8,12 @@ import Trace.Book.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,37 +22,41 @@ import core.data.DataStorage;
 import core.logger.ServiceConnector;
 
 /**
- * @author greentraxas
- * The purpose of this activity is to add and edit tags to an DataMapObject where
- * an DataMapObject can be anything from poi to area.
- *
+ * @author greentraxas The purpose of this activity is to add and edit tags to
+ *         an DataMapObject where an DataMapObject can be anything from poi to
+ *         area.
+ * 
  */
 public class AddPointActivity extends Activity {
-	
-    
+
 	/**
 	 * Here we save a reference to the current DataMapObject which is in use
 	 */
 	DataMapObject node;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final Bundle extras = getIntent().getExtras();
-		
+
 		/*
 		 * Get the node of the sending Intent
 		 */
 		if (extras != null) {
 
-			if (extras.containsKey("DataNodeId")) {				
+			if (extras.containsKey("DataNodeId")) {
 				int nodeId = extras.getInt("DataNodeId");
-				node = DataStorage.getInstance().getCurrentTrack().getDataMapObjectById(nodeId);
+				node = DataStorage.getInstance().getCurrentTrack()
+						.getDataMapObjectById(nodeId);
 			}
-			
+
 		}
 
 		setContentView(R.layout.addpointactivity);
+
+		LayoutInflater bInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtn_ly);
+		bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
 
 		// Init ServiceConnector
 		ServiceConnector.startService(this);
@@ -80,7 +86,8 @@ public class AddPointActivity extends Activity {
 
 		Map<String, String> tagMap = node.getTags();
 		String[] metaInformation = new String[tagMap.size()];
-		nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " " + node.getId());
+		nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " "
+				+ node.getId());
 
 		if (tagMap.size() != 0) {
 			nodeInfo.setText(R.string.MetaData_tv);
@@ -128,20 +135,21 @@ public class AddPointActivity extends Activity {
 
 	/**
 	 * 
-	 * @param view not used
+	 * @param view
+	 *            not used
 	 */
 	public void addPointMetaBtn(View view) { // method signature including view
 												// is required
 		final Intent intent = new Intent(this, AddPointMetaActivity.class);
-		
-		
+
 		intent.putExtra("DataNodeId", node.getId());
 		startActivity(intent);
 	}
 
 	/**
 	 * 
-	 * @param view not used
+	 * @param view
+	 *            not used
 	 */
 	public void cancelBtn(View view) { // method signature including view is
 										// required
