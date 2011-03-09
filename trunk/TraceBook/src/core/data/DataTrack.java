@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.mapsforge.android.maps.GeoPoint;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -190,6 +191,19 @@ public class DataTrack extends DataMediaHolder {
      * @return The newly created POI.
      */
     public DataNode newNode(Location loc) {
+        DataNode dn = new DataNode(loc);
+        nodes.add(dn);
+        return dn;
+    }
+
+    /**
+     * Create a new Node (i.e. POI) and add it to the Track
+     * 
+     * @param loc
+     *            The GeoPoint object to be used for constructing the new Node
+     * @return The newly created POI
+     */
+    public DataNode newNode(GeoPoint loc) {
         DataNode dn = new DataNode(loc);
         nodes.add(dn);
         return dn;

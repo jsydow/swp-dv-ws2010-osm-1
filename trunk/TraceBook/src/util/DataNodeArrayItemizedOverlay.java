@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.mapsforge.android.maps.ArrayItemizedOverlay;
+import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.OverlayItem;
 
@@ -128,13 +129,15 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
     }
 
-    private final CharSequence[] items = { "Tags", "Delete" };
+    private final CharSequence[] items = { "Tag this", "Delete this" };
 
     @Override
     protected boolean onTap(int index) {
         final int nodeId;
+        final GeoPoint point;
         synchronized (this.overlayItems) {
             nodeId = overlayItems.get(index).second.intValue();
+            point = overlayItems.get(index).first.getPoint();
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
@@ -145,16 +148,15 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                 case 0:
-                    if (nodeId < 0) {
-                        Toast.makeText(context,
-                                "Creation of new POI not supported yet",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        final Intent intent = new Intent(context,
-                                AddPointActivity.class);
+                    final Intent intent = new Intent(context,
+                            AddPointActivity.class);
+                    if (nodeId < 0)
+                        intent.putExtra("DataNodeId",
+                                currentTrack.newNode(point).getId());
+                    else
                         intent.putExtra("DataNodeId", nodeId);
-                        context.startActivity(intent);
-                    }
+
+                    context.startActivity(intent);
                     break;
                 case 1:
                     Toast.makeText(context, "Delete: no implemented yet",
