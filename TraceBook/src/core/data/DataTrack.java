@@ -41,11 +41,11 @@ import android.util.Xml;
 public class DataTrack extends DataMediaHolder {
 
     /**
-     * All Ways and Areas
+     * All Ways and Areas of this track.
      */
     private List<DataPointsList> ways;
     /**
-     * All POI's
+     * All POI's of this track.
      */
     private List<DataNode> nodes;
 
@@ -61,7 +61,7 @@ public class DataTrack extends DataMediaHolder {
     private String name;
 
     /**
-     * A Comment of this track
+     * A Comment of this track.
      */
     private String comment;
 
@@ -112,7 +112,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Getter-method
+     * Getter-method.
      * 
      * @return The name of the Track.
      */
@@ -121,7 +121,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Setter-method
+     * Setter-method.
      * 
      * @param name
      *            The new name of the DataTrack
@@ -131,7 +131,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Getter-method
+     * Getter-method.
      * 
      * @return The comment of the Track.
      */
@@ -282,6 +282,7 @@ public class DataTrack extends DataMediaHolder {
         }
 
         XmlSerializer serializer = Xml.newSerializer();
+
         try {
             serializer.setOutput(fileos, "UTF-8");
             serializer.startDocument(null, Boolean.valueOf(true));
@@ -302,8 +303,14 @@ public class DataTrack extends DataMediaHolder {
 
             serializer.endTag(null, "osm");
             serializer.flush();
-        } catch (Exception e) {
-            Log.e("TrackSerialisation", "Could not serialise track");
+        } catch (IllegalArgumentException e) {
+            Log.e("DataTrackSerialisation",
+                    "Should not happen. Internal error.");
+        } catch (IllegalStateException e) {
+            Log.e("DataTrackSerialisation",
+                    "Should not happen. Internal error.");
+        } catch (IOException e) {
+            Log.e("DataTrackSerialisation", "Error while reading file.");
         }
 
     }
@@ -313,21 +320,15 @@ public class DataTrack extends DataMediaHolder {
      */
     public void delete() {
         DataStorage.deleteDirectory(new File(getTrackDirPath()));
-        /*File track = new File(getTrackDirPath());
-        File[] files = track.listFiles();
-        for (File f : files) {
-            if (f.isFile()) {
-                if (!f.delete()) {
-                    Log.e("DeleteTrackFile",
-                            "Could not delete file " + f.getName()
-                                    + " in track " + getName());
-                }
-            }
-        }
-        if (!track.delete()) {
-            Log.e("DeleteTrack", "Could not delete track " + getName());
-
-        }*/
+        /*
+         * File track = new File(getTrackDirPath()); File[] files =
+         * track.listFiles(); for (File f : files) { if (f.isFile()) { if
+         * (!f.delete()) { Log.e("DeleteTrackFile", "Could not delete file " +
+         * f.getName() + " in track " + getName()); } } } if (!track.delete()) {
+         * Log.e("DeleteTrack", "Could not delete track " + getName());
+         * 
+         * }
+         */
     }
 
     /**
@@ -364,7 +365,8 @@ public class DataTrack extends DataMediaHolder {
      */
     static DataTrack deserialise(String name) {
         List<DataNode> allnodes = new LinkedList<DataNode>();
-        File track = new File(getTrackDirPath(name)+File.separator+"track.tbt");
+        File track = new File(getTrackDirPath(name) + File.separator
+                + "track.tbt");
         DataTrack ret = new DataTrack(track.getParentFile().getName());
 
         if (track.isFile()) {
@@ -375,18 +377,21 @@ public class DataTrack extends DataMediaHolder {
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document dom = builder.parse(track);
                 Element osmelement = dom.getDocumentElement(); // root-element
-                if(osmelement == null) throw new SAXException();
+                if (osmelement == null)
+                    throw new SAXException();
 
                 // all nodes
                 NodeList nodeelements = osmelement.getElementsByTagName("node");
-                if(nodeelements == null) throw new SAXException();
+                if (nodeelements == null)
+                    throw new SAXException();
                 for (int i = 0; i < nodeelements.getLength(); ++i) {
                     allnodes.add(DataNode.deserialise(nodeelements.item(i)));
                 }
 
                 // all ways
                 NodeList wayelements = osmelement.getElementsByTagName("way");
-                if(wayelements == null) throw new SAXException();
+                if (wayelements == null)
+                    throw new SAXException();
                 for (int i = 0; i < wayelements.getLength(); ++i) {
                     DataPointsList dpl = DataPointsList.deserialise(
                             nodeelements.item(i), allnodes);
@@ -395,7 +400,8 @@ public class DataTrack extends DataMediaHolder {
 
                 // all media
                 NodeList medianodes = osmelement.getElementsByTagName("link");
-                if(medianodes == null) throw new SAXException();
+                if (medianodes == null)
+                    throw new SAXException();
                 for (int i = 0; i < medianodes.getLength(); ++i) {
                     NamedNodeMap attributes = medianodes.item(i)
                             .getAttributes();
@@ -419,7 +425,8 @@ public class DataTrack extends DataMediaHolder {
                 return null;
             }
         } else {
-            Log.e("TrackDeserialisation", "Track was not found. Path should be "+track.getPath());
+            Log.e("TrackDeserialisation",
+                    "Track was not found. Path should be " + track.getPath());
             return null;
         }
 
@@ -470,14 +477,16 @@ public class DataTrack extends DataMediaHolder {
     public static String getTrackDirPath(String dir) {
         return DataStorage.getTraceBookDirPath() + File.separator + dir;
     }
-    
+
     /**
-     * Returns the complete String of the path to the track.tbt file of a track. 
-     * @param trackname The String of the track name
+     * Returns the complete String of the path to the track.tbt file of a track.
+     * 
+     * @param trackname
+     *            The String of the track name
      * @return The path as String
      */
     public static String getPathOfTrackTbTFile(String trackname) {
-        return getTrackDirPath(trackname)+File.separator+"track.tbt";
+        return getTrackDirPath(trackname) + File.separator + "track.tbt";
     }
 
     /**
