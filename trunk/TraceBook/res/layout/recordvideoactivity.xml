@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical">
+    <SurfaceView android:id="@+id/surface_camera" xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_centerInParent="true"
+		android:layout_weight="1">
+	</SurfaceView>
+
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
+        <Button android:id="@+id/startRecBtn" android:text="Start" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="onRecordBtn"></Button>
+        <Button android:text="Stop" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/stopRecBtn" android:onClick="onRecordStop"></Button>
+    </LinearLayout>
+</LinearLayout>

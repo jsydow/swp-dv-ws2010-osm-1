@@ -26,5 +26,6 @@
 	<activity android:name="gui.MapsForgeActivity"></activity>
 	<activity android:name="gui.AddPointMetaActivity"></activity>
 	<activity android:name="gui.AddMemoActivity" android:screenOrientation="portrait"></activity>
+	<activity android:name="gui.RecordVideoActivity"></activity>
     </application>
 </manifest>
