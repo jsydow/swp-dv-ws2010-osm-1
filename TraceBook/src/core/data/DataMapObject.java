@@ -35,7 +35,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	protected Map<String, String> tags;
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return the id of the object
 	 */
@@ -67,7 +67,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	}
 
 	/**
-	 * default constructor
+	 * Default constructor.
 	 */
 	public DataMapObject() {
 		super();
@@ -76,7 +76,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	}
 
 	/**
-	 * Comparable-implementation
+	 * Comparable-implementation.
 	 */
 	public int compareTo(Integer arg0) {
 		if (id < arg0.intValue())

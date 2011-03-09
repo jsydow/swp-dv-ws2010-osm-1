@@ -35,12 +35,12 @@ public class DataPointsList extends DataMapObject {
     protected boolean isArea;
 
     /**
-     * Route Object for MapsForge
+     * Route Object for MapsForge.
      */
     private OverlayRoute overlayRoute;
 
     /**
-     * default constructor
+     * Default constructor.
      */
     public DataPointsList() {
         super();
@@ -59,7 +59,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Getter-method
+     * Getter-method.
      * 
      * @return true if object resembles an Area.
      */
@@ -68,7 +68,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Setter-method
+     * Setter-method.
      * 
      * @param isArea
      *            Whether object is an Area.
@@ -187,7 +187,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * sets the OverlayRoute, an object used by MapsForge for visualisation
+     * Sets the OverlayRoute, an object used by MapsForge for visualisation.
      * 
      * @param overlayRoute
      */

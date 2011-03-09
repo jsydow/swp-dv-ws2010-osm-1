@@ -31,16 +31,16 @@ import android.util.Log;
 public class DataStorage {
 
 	/**
-	 * Singleton instance
+	 * Singleton instance.
 	 */
 	private static DataStorage instance;
 	/**
-	 * All loaded Tracks
+	 * All loaded Tracks.
 	 */
 	private List<DataTrack> tracks;
 	/**
 	 * A List of all possible track names on the working memory and devices
-	 * memory
+	 * memory.
 	 */
 	private List<String> names;
 
@@ -50,7 +50,7 @@ public class DataStorage {
 	private int lastID;
 
 	/**
-	 * currently active Track
+	 * Currently active Track.
 	 */
 	private DataTrack currentTrack;
 
@@ -92,7 +92,7 @@ public class DataStorage {
 
 	/**
 	 * Return a String of the path to the TraceBook directory without an ending
-	 * / Path is like: /sdcard/TraceBook
+	 * / Path is like: /sdcard/TraceBook.
 	 * 
 	 * @return path of the TraceBook directory
 	 */
@@ -206,7 +206,7 @@ public class DataStorage {
 	}
 
 	/**
-	 * Getter-method
+	 * Getter-method.
 	 * 
 	 * @return The currently edited Track is returned.
 	 */
