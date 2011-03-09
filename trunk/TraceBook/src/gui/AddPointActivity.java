@@ -7,19 +7,20 @@ import java.util.Map.Entry;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.data.MetaMedia;
@@ -69,7 +70,7 @@ public class AddPointActivity extends Activity {
         setContentView(R.layout.addpointactivity);
         mm = new MetaMedia();
 
-        LayoutInflater bInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnPoint_ly);
         bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
 

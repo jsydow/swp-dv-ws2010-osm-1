@@ -6,6 +6,7 @@ import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -171,7 +172,7 @@ public class NewTrackActivity extends TabActivity {
 
         mediaData.setVisibility(visible);
 
-        LayoutInflater bInflater = (LayoutInflater) getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnNew_ly);
         bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
 
