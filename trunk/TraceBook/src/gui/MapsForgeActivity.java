@@ -2,7 +2,6 @@ package gui;
 
 import java.io.File;
 
-import org.mapsforge.android.maps.ArrayItemizedOverlay;
 import org.mapsforge.android.maps.ArrayRouteOverlay;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.ItemizedOverlay;
@@ -11,6 +10,8 @@ import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.OverlayItem;
 import org.mapsforge.android.maps.OverlayRoute;
+
+import util.MyArrayItemizedOverlay;
 
 import Trace.Book.R;
 import android.app.AlertDialog;
@@ -26,13 +27,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -50,12 +47,24 @@ import core.logger.WaypointLogService;
  * 
  */
 public class MapsForgeActivity extends MapActivity {
-	final static String LOG_TAG = "MapsForgeActivity";
+	private final static String LOG_TAG = "MapsForgeActivity";
 
+	/**
+	 * MapController object to interact with the Map
+	 */
 	MapController mapController;
+	
+	/**
+	 * Overlay containing all areas and ways
+	 */
 	ArrayRouteOverlay routesOverlay;
-	ArrayItemizedOverlay pointsOverlay;
-	BroadcastReceiver gpsReceiver;
+	
+	/**
+	 * Overlay containing all POIs
+	 */
+	MyArrayItemizedOverlay pointsOverlay;
+	
+	private BroadcastReceiver gpsReceiver;
 
 	static Paint paintFill; // TODO: different colors for different tracks
 	static Paint paintOutline;
@@ -89,7 +98,7 @@ public class MapsForgeActivity extends MapActivity {
 		final Drawable defaultMarker = getResources().getDrawable(
 				R.drawable.marker_red);
 
-		pointsOverlay = new ArrayItemizedOverlay(defaultMarker, this);
+		pointsOverlay = new MyArrayItemizedOverlay(defaultMarker, this);
 
 		// create the paint objects for the RouteOverlay and set all parameters
 		paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -232,58 +241,11 @@ public class MapsForgeActivity extends MapActivity {
 		}
 	}
 
-	/**
-	 * This method inflate the Optionsmenu for this activity
-	 * 
-	 * @author greenTraxas
-	 */
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.mapsforgeactivity_contextmenu, menu);
-	}
-
-	/**
-	 * This method catch the selected MenuItem from the ContextMenu of the
-	 * selected View and give following options 1. edit selected Point 2. delete
-	 * selected Point 3. move selected Point to another location
-	 * @param item the item
-	 * @return true, if successful 
-	 *
-	 * @author greentraxas
-	 */
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-				.getMenuInfo();
-		switch (item.getItemId()) {
-		case R.id.editPoint_cm:
-			/*
-			 * DO SOMETHING
-			 */
-			return true;
-		case R.id.deletePoint_cm:
-			/*
-			 * DO SOMETHING
-			 */
-			return true;
-		case R.id.movePoint_cm:
-			/*
-			 * DO SOMETHING
-			 */
-			return true;
-		default:
-			return super.onContextItemSelected(item);
-		}
-	}
-
-	private static void addPoints(ArrayItemizedOverlay overlay) {
+	private static void addPoints(MyArrayItemizedOverlay pointsOverlay2) {
 		for (DataNode n : currentTrack().getNodes()) {
 			if (n.getOverlayItem() == null)
 				n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-			overlay.addOverlay(n.getOverlayItem());
+			pointsOverlay2.addOverlay(n.getOverlayItem());
 		}
 	}
 
@@ -340,7 +302,7 @@ public class MapsForgeActivity extends MapActivity {
 			return oi;
 		}
 		
-		private void centerOnCurrentPosition() {
+		void centerOnCurrentPosition() {
 			mapController.setCenter(currentGeoPoint);			
 		}
 
@@ -382,18 +344,15 @@ public class MapsForgeActivity extends MapActivity {
 						Log.e(LOG_TAG, "Way with ID " + way_id
 								+ " does not exist.");
 					else {
-						if (way.getOverlayRoute() != null) // we can not change
-															// the route, thus
-															// create a new one
-							routesOverlay.removeOverlay(way.getOverlayRoute());
+						if (way.getOverlayRoute() != null) // we can not change the route, thus create a new one
+						    routesOverlay.removeOverlay(way.getOverlayRoute());
 						way.setOverlayRoute(new OverlayRoute(way
-								.toGeoPointArray(), paintFill, paintOutline));
+								        .toGeoPointArray(), paintFill, paintOutline));
 						routesOverlay.addRoute(way.getOverlayRoute());
 						final DataNode last_point = way.getNodes().get(
-								way.getNodes().size() - 1);
+								        way.getNodes().size() - 1);
 						Log.d(LOG_TAG, "new node in current way: " + last_point);
-						pointsOverlay
-								.addOverlay(getOverlayItem(
+						pointsOverlay.addOverlay(getOverlayItem(
 										last_point.toGeoPoint(),
 										R.drawable.marker_blue));
 					}	
@@ -405,7 +364,7 @@ public class MapsForgeActivity extends MapActivity {
 	/**
 	 * gets the current DataTrack for convenience
 	 * 
-	 * @return
+	 * @return the current DataTrack object
 	 */
 	static DataTrack currentTrack() {
 		return DataStorage.getInstance().getCurrentTrack();
