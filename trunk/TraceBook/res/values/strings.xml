@@ -11,10 +11,10 @@
     <string name="trackName">Trackname</string>
     <string name="insertTag">Tag einfügen</string>
     <string name="insertValue">Wert einfügen</string>
-    <string name="nodeId_tv">Konten Id:</string>
+    <string name="nodeId_tv">Knoten-ID:</string>
     <string name="editMeta_tv">Editierung von MetaDaten</string>
     <string name="noMetaData_tv">Es liegen keine MetaDaten vor</string>
-    <string name="MetaData_tv">Der Konten besitzt folgende MetaDaten</string>
+    <string name="MetaData_tv">Der Knoten besitzt folgende MetaDaten</string>
     <string name="setButtonList1_tv">Aktuelle Straße mit MediaDaten versehen</string>
     <string name="setButtonList2_tv">Aktuelle Fläche mit MediaDaten versehen</string>
 
