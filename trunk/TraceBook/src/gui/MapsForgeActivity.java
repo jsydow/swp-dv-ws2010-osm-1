@@ -396,11 +396,11 @@ public class MapsForgeActivity extends MapActivity {
 								.addOverlay(getOverlayItem(
 										last_point.toGeoPoint(),
 										R.drawable.marker_blue));
-					}
 					}	
 				}
 			}
 		}
+	}
 
 	/**
 	 * gets the current DataTrack for convenience
