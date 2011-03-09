@@ -90,13 +90,13 @@ public class NewTrackActivity extends TabActivity {
     TextView mediaData;
 
     /**
-     * MetaMedia object to create new media objects and to receive it
+     * MetaMedia object to create new media objects and to receive it.
      */
     MetaMedia mm;
 
     @Override
     /**
-     * Create activity
+     * Create activity.
      */
     public void onCreate(Bundle savedInstanceState) {
 

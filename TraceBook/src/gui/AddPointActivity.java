@@ -34,17 +34,17 @@ import core.logger.ServiceConnector;
 public class AddPointActivity extends Activity {
 
     /**
-     * Here we save a reference to the current DataMapObject which is in use
+     * Here we save a reference to the current DataMapObject which is in use.
      */
     DataMapObject node;
 
     /**
-     * MetaMedia object to create new media objects and to receive it
+     * MetaMedia object to create new media objects and to receive it.
      */
     MetaMedia mm;
 
     /**
-     * ArrayAdapter object to fill the ListView with MetaInformation
+     * ArrayAdapter object to fill the ListView with MetaInformation.
      */
     ArrayAdapter<String> adapter;
 
