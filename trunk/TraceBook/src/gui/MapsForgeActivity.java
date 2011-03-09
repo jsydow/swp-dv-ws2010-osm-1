@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mapsforge.android.maps.ArrayRouteOverlay;
 import org.mapsforge.android.maps.GeoPoint;
@@ -20,12 +22,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -65,8 +67,30 @@ public class MapsForgeActivity extends MapActivity {
 
     private BroadcastReceiver gpsReceiver;
 
-    static Paint paintFill; // TODO: different colors for different tracks
-    static Paint paintOutline;
+    List<Pair<Paint, Paint>> colors;
+
+    private int colorID;
+
+    private Pair<Paint, Paint> getColor() {
+        colorID = (colorID + 1) % (colors.size() - 1) + 1;
+        return colors.get(colorID);
+    }
+
+    private static Pair<Paint, Paint> getPaintPair(int color) {
+        Paint paintOutline = new Paint();
+        paintOutline.setAntiAlias(true);
+        paintOutline.setStyle(Paint.Style.STROKE);
+        paintOutline.setStrokeWidth(7);
+        paintOutline.setStrokeCap(Paint.Cap.BUTT);
+        paintOutline.setStrokeJoin(Paint.Join.ROUND);
+        paintOutline.setColor(color);
+        paintOutline.setAlpha(96);
+
+        Paint paintFill = new Paint(paintOutline);
+        paintFill.setAlpha(160);
+
+        return new Pair<Paint, Paint>(paintFill, paintOutline);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,33 +113,17 @@ public class MapsForgeActivity extends MapActivity {
 
         mapController = mapView.getController();
 
-        final Drawable defaultMarker = getResources().getDrawable(
-                R.drawable.marker_red);
+        // create paint list
+        colors = new ArrayList<Pair<Paint, Paint>>();
+        colors.add(getPaintPair(Color.BLUE));
+        colors.add(getPaintPair(Color.CYAN));
 
-        pointsOverlay = new DataNodeArrayItemizedOverlay(defaultMarker, this);
+        pointsOverlay = new DataNodeArrayItemizedOverlay(getResources()
+                .getDrawable(R.drawable.marker_red), this);
+        routesOverlay = new ArrayRouteOverlay(null, null);
 
-        // create the paint objects for the RouteOverlay and set all parameters
-        paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintFill.setStyle(Paint.Style.STROKE);
-        paintFill.setColor(Color.BLUE);
-        paintFill.setAlpha(160);
-        paintFill.setStrokeWidth(7);
-        paintFill.setStrokeCap(Paint.Cap.BUTT);
-        paintFill.setStrokeJoin(Paint.Join.ROUND);
-        paintFill.setPathEffect(new DashPathEffect(new float[] { 20, 20 }, 0));
-
-        paintOutline = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintOutline.setStyle(Paint.Style.STROKE);
-        paintOutline.setColor(Color.BLUE);
-        paintOutline.setAlpha(96);
-        paintOutline.setStrokeWidth(7);
-        paintOutline.setStrokeCap(Paint.Cap.BUTT);
-        paintOutline.setStrokeJoin(Paint.Join.ROUND);
-
-        routesOverlay = new ArrayRouteOverlay(paintFill, paintOutline);
-
-        addPoints(pointsOverlay); // when adding a POI this activity is
-                                  // destroyed
+        // as this activity is destroyed when adding a POI, we get all POIs here
+        addPoints(pointsOverlay);
         addWays(routesOverlay);
 
         mapView.getOverlays().add(routesOverlay);
@@ -237,7 +245,7 @@ public class MapsForgeActivity extends MapActivity {
         }
     }
 
-    private static void addPoints(DataNodeArrayItemizedOverlay pointsOverlay2) {
+    private void addPoints(DataNodeArrayItemizedOverlay pointsOverlay2) {
         for (DataNode n : currentTrack().getNodes()) {
             if (n.getOverlayItem() == null)
                 n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
@@ -245,11 +253,13 @@ public class MapsForgeActivity extends MapActivity {
         }
     }
 
-    private static void addWays(ArrayRouteOverlay overlay) {
+    private void addWays(ArrayRouteOverlay overlay) {
         for (DataPointsList l : currentTrack().getWays()) {
-            if (l.getOverlayRoute() == null)
+            if (l.getOverlayRoute() == null) {
+                Pair<Paint, Paint> col = getColor();
                 l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
-                        paintFill, paintOutline));
+                        col.first, col.second));
+            }
             overlay.addRoute(l.getOverlayRoute());
         }
     }
@@ -362,7 +372,8 @@ public class MapsForgeActivity extends MapActivity {
                                                            // create a new one
                             routesOverlay.removeOverlay(way.getOverlayRoute());
                         way.setOverlayRoute(new OverlayRoute(way
-                                .toGeoPointArray(), paintFill, paintOutline));
+                                .toGeoPointArray(), colors.get(0).first, colors
+                                .get(0).first));
                         routesOverlay.addRoute(way.getOverlayRoute());
                         final DataNode last_point = way.getNodes().get(
                                 way.getNodes().size() - 1);
