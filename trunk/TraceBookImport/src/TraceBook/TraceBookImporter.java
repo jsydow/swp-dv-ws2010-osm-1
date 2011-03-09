@@ -22,6 +22,8 @@ import org.openstreetmap.josm.data.gpx.WayPoint;
 import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.gui.layer.GpxLayer;
 import org.openstreetmap.josm.gui.layer.OsmDataLayer;
+import org.openstreetmap.josm.gui.layer.markerlayer.ImageMarker;
+import org.openstreetmap.josm.gui.layer.markerlayer.Marker;
 import org.openstreetmap.josm.gui.layer.markerlayer.MarkerLayer;
 import org.openstreetmap.josm.gui.progress.NullProgressMonitor;
 import org.openstreetmap.josm.gui.progress.ProgressMonitor;
@@ -69,8 +71,11 @@ public class TraceBookImporter extends FileImporter {
 				// // transform CSV into GPX
 
 				DataSet osmdata = new DataSet();
-
+				
 				GpxData gpxData = new GpxData();// r.transformColumbusCSV(fn);
+				GpxLayer gpxLayer = new GpxLayer(gpxData, file.getName());
+				
+				
 				progressMonitor.setTicksCount(3);
 				DocumentBuilderFactory fac = DocumentBuilderFactory
 						.newInstance();
@@ -80,10 +85,12 @@ public class TraceBookImporter extends FileImporter {
 				DecimalFormatSymbols decsymb = new DecimalFormatSymbols();
 				decsymb.setDecimalSeparator('.');
 				DecimalFormat decform = new DecimalFormat("0.0000000", decsymb);
-
+				HashMap<String,Node> NodesMap=new HashMap<String,Node>();
 				for (int i = 0; i < nl.getLength(); i++) {
 					java.util.LinkedList<GpxLink> links = null;
 					WayPoint x = null;
+					Marker m;
+					
 					NamedNodeMap attributes = nl.item(i).getAttributes();
 					Node lat = attributes.getNamedItem("lat");
 					Node lon = attributes.getNamedItem("lon");
@@ -93,6 +100,8 @@ public class TraceBookImporter extends FileImporter {
 
 					org.openstreetmap.josm.data.osm.Node newosmnode = new org.openstreetmap.josm.data.osm.Node();
 					newosmnode.setCoor(latlon);
+					
+					
 					NodeList childs = nl.item(i).getChildNodes();
 					HashMap<String, String> tags=null;
 					for (int a = 0; a < childs.getLength(); a++) {
@@ -115,6 +124,7 @@ public class TraceBookImporter extends FileImporter {
 									.getAttributes().getNamedItem("href")).getValue());
 							GpxLink link = new GpxLink(((Attr)childs.item(a)
 									.getAttributes().getNamedItem("href")).getValue());
+				
 							links.add(link);
 
 						}
@@ -130,8 +140,16 @@ public class TraceBookImporter extends FileImporter {
 					if(tags!=null){
 						newosmnode.setKeys(tags);
 					}
-
+					
 					osmdata.addPrimitive(newosmnode);
+		
+					
+					NodesMap.put(attributes.getNamedItem("id").getNodeName(), nl.item(i));
+				}
+				NodeList nlw = doc.getElementsByTagName("way");
+				for (int i = 0; i < nlw.getLength(); i++) {
+					org.openstreetmap.josm.data.osm.Way newway=new org.openstreetmap.josm.data.osm.Way ();
+					
 				}
 				// doc.getDocumentElement().normalize();
 
@@ -141,11 +159,13 @@ public class TraceBookImporter extends FileImporter {
 				//
 				progressMonitor.setTicksCount(2);
 				OsmDataLayer osmdatalayer = new OsmDataLayer(osmdata, fn, file);
-				GpxLayer gpxLayer = new GpxLayer(gpxData, file.getName());
+				
 
 				// add layer to show way points
-				Main.main.addLayer(gpxLayer);
+				//Main.main.addLayer(gpxLayer);
 				Main.main.addLayer(osmdatalayer);
+
+
 				//
 
 				//
@@ -157,13 +177,15 @@ public class TraceBookImporter extends FileImporter {
 				}
 				progressMonitor.setTicksCount(4);
 
-				if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
-					MarkerLayer ml = new MarkerLayer(gpxData, tr(
-							"Markers from {0}", file.getName()), file, gpxLayer);
-					if (ml.data.size() > 0) {
-						Main.main.addLayer(ml);
-					}
-				}
+//				if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
+//					Main.main.debug("makeautomarkers was true");
+//					MarkerLayer ml = new MarkerLayer(gpxData, tr(
+//							"Markers from {0}", file.getName()), file, gpxLayer);
+//					if (ml.data.size() > 0) {
+//						Main.main.debug("There were markers in the GPXDATA");
+//						Main.main.addLayer(ml);
+//					}
+//				}
 			} catch (Exception e) {
 				// catch and forward exception
 				throw new IllegalDataException(e);
