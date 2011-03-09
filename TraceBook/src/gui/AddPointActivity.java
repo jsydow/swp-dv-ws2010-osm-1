@@ -23,7 +23,6 @@ import android.widget.Toast;
 import core.data.DataMapObject;
 import core.data.DataMedia;
 import core.data.DataStorage;
-import core.data.DataTrack;
 import core.data.MetaMedia;
 import core.logger.ServiceConnector;
 
@@ -186,9 +185,7 @@ public class AddPointActivity extends Activity {
      */
     public void makeVideoBtn(View view) {
         String filename = mm.takeVideo(this);
-        DataTrack currentTrack = DataStorage.getInstance().getCurrentTrack();
-        currentTrack.getCurrentWay().addMedia(
-                new DataMedia(currentTrack.getTrackDirPath(), filename));
+        node.addMedia(new DataMedia(mm.getPath(), filename));
     }
 
     /**
@@ -233,9 +230,6 @@ public class AddPointActivity extends Activity {
      */
     public void makePictureBtn(View view) {
         String filename = mm.takePhoto(this);
-        DataTrack currentTrack = DataStorage.getInstance().getCurrentTrack();
-        currentTrack.getCurrentWay().addMedia(
-                new DataMedia(currentTrack.getTrackDirPath(), filename));
+        node.addMedia(new DataMedia(mm.getPath(), filename));
     }
-
 }
