@@ -1,6 +1,3 @@
-/**
- * 
- */
 package core.media;
 
 import java.io.File;
@@ -13,11 +10,14 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 /**
- * @author Huy Dinh
+ * This class handles creating the intent for taking a photo with the built-in
+ * camera. You *will* have to make sure the picture file is attached to the data
+ * structure appropriately, using the onActivityResult callback provided by the
+ * activity using PictureRecorder.
  * 
+ * @author Huy Dinh
  */
 public class PictureRecorder extends Recorder {
-
     /*
      * (non-Javadoc)
      * 
@@ -34,8 +34,11 @@ public class PictureRecorder extends Recorder {
     }
 
     /**
+     * Creates an intent for acquiring an image and starts an activity for that
+     * intent.
      * 
      * @param activity
+     *            Activity the onActivityResult is called on.
      */
     public void startIntent(Activity activity) {
         final Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
