@@ -400,8 +400,14 @@ public class NewTrackActivity extends TabActivity {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
-                DataStorage.getInstance().getCurrentTrack().getCurrentWay()
-                        .getTags().put("Notice", value);
+
+                DataStorage
+                        .getInstance()
+                        .getCurrentTrack()
+                        .getCurrentWay()
+                        .addMedia(
+                                DataStorage.getInstance().getCurrentTrack()
+                                        .saveText(value));
                 Toast.makeText(
                         getApplicationContext(),
                         getResources().getString(R.string.addNotice_alert)
