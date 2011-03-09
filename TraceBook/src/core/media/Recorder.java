@@ -15,14 +15,21 @@ import core.data.DataStorage;
  */
 public abstract class Recorder {
     /**
-     * Request code for the onActivityResult callback. TAKE_AUDIO_CODE = 100000;
+     * Request code for the onActivityResult callback. RECORD_AUDIO_CODE =
+     * 100000;
      */
     public static final int RECORD_AUDIO_CODE = 100000;
 
     /**
-     * Request code for the onActivityResult callback. TAKE_VIDIO_CODE = 100002;
+     * Request code for the onActivityResult callback. RECORD_VIDIO_CODE =
+     * 100001;
      */
     public static final int RECORD_VIDEO_CODE = 100001;
+
+    /**
+     * Request code for the onActivityResult callback. TAKE_PHOTO_CODE = 100002;
+     */
+    public static final int TAKE_PHOTO_CODE = 100002;
 
     /**
      * Base directory for our media file.
