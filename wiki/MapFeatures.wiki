@@ -2,6 +2,10 @@
 
 A (neither complete, nor "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
 
+= This just in =
+
+Descriptions!
+
 = Snip! =
 
 No DTD (yet?), but a snippet of the resulting XML file.
