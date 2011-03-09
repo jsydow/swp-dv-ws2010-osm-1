@@ -40,15 +40,19 @@ public class RecordVideoActivity extends Activity implements
     }
 
     public void onRecordStop(View view) {
-        // recorder.stop();
-        // camera.lock();
+        recorder.stop();
+        camera.lock();
 
-        media.stopVideo(DataStorage.getInstance().getCurrentTrack()
-                .getCurrentWay());
+        finish();
+
+        // media.stopVideo(DataStorage.getInstance().getCurrentTrack()
+        // .getCurrentWay());
 
     }
 
     public void onRecordBtn(View view) {
+
+        camera.unlock();
 
         recorder = new MediaRecorder();
 
