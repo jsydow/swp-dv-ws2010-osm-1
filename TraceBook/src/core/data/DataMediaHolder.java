@@ -115,7 +115,7 @@ public abstract class DataMediaHolder {
 		DataMedia dm;
 		while (lit.hasNext()) {
 			dm = lit.next();
-			if (dm.get_id() == id) {
+			if (dm.getId() == id) {
 				dm.delete();
 				lit.remove();
 				break;

@@ -25,7 +25,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	 * new objects but it is a program internal id. It should be unique.
 	 * DataStorage.getID() creates one.
 	 */
-	protected int _id;
+	protected int id;
 
 	/**
 	 * tags stores all meta information of this object. These may be the name,
@@ -39,8 +39,8 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	 * 
 	 * @return the id of the object
 	 */
-	public int get_id() {
-		return _id;
+	public int getId() {
+		return id;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	 *            The new id
 	 */
 	void set_id(int id) {
-		this._id = id;
+		this.id = id;
 	}
 
 	/**
@@ -72,16 +72,16 @@ public abstract class DataMapObject extends DataMediaHolder implements
 	public DataMapObject() {
 		super();
 		tags = new HashMap<String, String>();
-		_id = DataStorage.getInstance().getID();
+		id = DataStorage.getInstance().getID();
 	}
 
 	/**
 	 * Comparable-implementation
 	 */
 	public int compareTo(Integer arg0) {
-		if (_id < arg0.intValue())
+		if (id < arg0.intValue())
 			return -1;
-		if (_id > arg0.intValue())
+		if (id > arg0.intValue())
 			return 1;
 		return 0;
 	}

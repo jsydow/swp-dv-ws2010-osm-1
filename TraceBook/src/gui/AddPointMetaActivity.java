@@ -122,7 +122,7 @@ public class AddPointMetaActivity extends Activity {
 
 		}
 		final Intent intent = new Intent(this, AddPointActivity.class);
-		intent.putExtra("DataNodeId", node.get_id());
+		intent.putExtra("DataNodeId", node.getId());
 		startActivity(intent);
 		finish();
 	}
@@ -134,7 +134,7 @@ public class AddPointMetaActivity extends Activity {
 	public void cancelBtn(View view) { // method signature including view is
 										// required
 		final Intent intent = new Intent(this, AddPointActivity.class);
-		intent.putExtra("DataNodeId", node.get_id());
+		intent.putExtra("DataNodeId", node.getId());
 		startActivity(intent);
 	}
 
