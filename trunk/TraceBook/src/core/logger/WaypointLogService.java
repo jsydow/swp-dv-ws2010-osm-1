@@ -187,7 +187,6 @@ public class WaypointLogService extends Service implements LocationListener {
         }
 
         public synchronized int beginArea() {
-            // TODO Auto-generated method stub
             if (currentWay() == null) // start a new way
                 storage.getCurrentTrack().setCurrentWay(
                         storage.getCurrentTrack().newWay());
@@ -198,8 +197,6 @@ public class WaypointLogService extends Service implements LocationListener {
         }
 
         public synchronized int endArea() {
-            // TODO Auto-generated method stub
-
             storage.getCurrentTrack().setCurrentWay(null);
             DataPointsList tmp = currentWay();
 
@@ -239,6 +236,14 @@ public class WaypointLogService extends Service implements LocationListener {
 
         if (current_node != null) { // one_shot or POI mode
             current_node.setLocation(loc); // update node with proper gps fix
+
+            if (currentWay() == null) { // not one_shot mode
+                // inform the MapActivity about the new POI
+                update_intent.putExtra("point_id", current_node.getId());
+                update_intent.putExtra("way_id", -1);
+                sendBroadcast(update_intent);
+            }
+
             current_node = null; // no node waiting for gps pos any more
         } else if (currentWay() != null) { // Continuous mode
             currentWay().newNode(loc); // poi in track was already added before
@@ -246,6 +251,7 @@ public class WaypointLogService extends Service implements LocationListener {
 
         if (currentWay() != null) { // call for an update of the way
             update_intent.putExtra("way_id", currentWay().getId());
+            update_intent.putExtra("point_id", -1);
             sendBroadcast(update_intent);
         }
     }
