@@ -13,8 +13,10 @@ import org.mapsforge.android.maps.OverlayItem;
 import org.mapsforge.android.maps.OverlayRoute;
 
 import Trace.Book.R;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -22,32 +24,42 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.data.DataTrack;
+import core.logger.ServiceConnector;
 import core.logger.WaypointLogService;
 
 /**
- * This class implements a MapsForge Map activity and draws ways and nodes
- * as overlays on it.
- * In the future it will also be possible to modify said nodes and ways. 
+ * This class implements a MapsForge Map activity and draws ways and nodes as
+ * overlays on it. In the future it will also be possible to modify said nodes
+ * and ways.
+ * 
  * @author benpicco
- *
+ * 
  */
 public class MapsForgeActivity extends MapActivity {
 	final static String LOG_TAG = "MapsForgeActivity";
-	
+
 	MapController mapController;
 	ArrayRouteOverlay routesOverlay;
 	ArrayItemizedOverlay pointsOverlay;
 	BroadcastReceiver gpsReceiver;
-	
-	static Paint paintFill;	// TODO: different colors for different tracks
+
+	static Paint paintFill; // TODO: different colors for different tracks
 	static Paint paintOutline;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,20 +76,21 @@ public class MapsForgeActivity extends MapActivity {
 		mapView.setClickable(true);
 		mapView.setBuiltInZoomControls(true);
 		mapView.setMapFile(file.getAbsolutePath());
-		
-		if(android.os.Build.MODEL.equals("sdk")) {
+
+		if (android.os.Build.MODEL.equals("sdk")) {
 			Log.d(LOG_TAG, "Running in emulator - disabling SD cache");
 			mapView.setMemoryCardCacheSize(0);
 		}
-		
+
 		setContentView(mapView);
-		
+
 		mapController = mapView.getController();
-		
-		final Drawable defaultMarker = getResources().getDrawable(R.drawable.marker_red);	
+
+		final Drawable defaultMarker = getResources().getDrawable(
+				R.drawable.marker_red);
 
 		pointsOverlay = new ArrayItemizedOverlay(defaultMarker, this);
-		
+
 		// create the paint objects for the RouteOverlay and set all parameters
 		paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintFill.setStyle(Paint.Style.STROKE);
@@ -95,30 +108,189 @@ public class MapsForgeActivity extends MapActivity {
 		paintOutline.setStrokeWidth(7);
 		paintOutline.setStrokeCap(Paint.Cap.BUTT);
 		paintOutline.setStrokeJoin(Paint.Join.ROUND);
-		
+
 		routesOverlay = new ArrayRouteOverlay(paintFill, paintOutline);
-		
-		addPoints(pointsOverlay); // when adding a POI this activity is destroyed
+
+		addPoints(pointsOverlay); // when adding a POI this activity is
+									// destroyed
 		addWays(routesOverlay);
 
 		mapView.getOverlays().add(routesOverlay);
 		mapView.getOverlays().add(pointsOverlay);
-		
+
 		gpsReceiver = new GPSReceiver();
 	}
-	
+
+	/**
+	 * This method inflate the Optionsmenu for this activity
+	 * 
+	 * @author greentraxas
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.mapsforgeactivity_optionsmenu, menu);
+		return true;
+	}
+
+	/**
+	 * This method catch the selected MenuItem from the Optionsmenu and 1.
+	 * activate the Internet to get more Mapmaterial 2. Center the Map to the
+	 * actual own position 3. Stop tracking, show alert and go back to
+	 * MainActivity 4. Pause tracking and show alert 5. Export actual Seassion
+	 * to...
+	 * @param item the item
+	 * @return true, if successful
+	 *
+	 * @author greentraxas
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.activateMobileInternet_opt:
+			/*
+			 * DO SOMETHING
+			 */
+			return true;
+		case R.id.centerAtOwnPosition_opt:
+			/*
+			 * DO SOMETHING
+			 */
+			return true;
+		case R.id.export_opt:
+			/*
+			 * Do SOMETHING
+			 */
+			return true;
+		case R.id.pause_opt:
+
+			builder.setMessage(getResources().getString(R.string.pause_alert))
+					.setCancelable(false)
+					.setPositiveButton(
+							getResources().getString(R.string.yes_alert),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									try {
+										ServiceConnector.getLoggerService()
+												.stopTrack();
+									} catch (RemoteException e) {
+										e.printStackTrace();
+									}
+									/*
+									 * DO SOMETHING
+									 */
+								}
+							})
+					.setNegativeButton(
+							getResources().getString(R.string.no_alert),
+							new DialogInterface.OnClickListener() {
+
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.cancel();
+								}
+							});
+			builder.show();
+			return true;
+		case R.id.stopTrack_opt:
+			final Intent intent = new Intent(this, main.class);
+			builder.setMessage(getResources().getString(R.string.exit_alert))
+					.setCancelable(false)
+					.setPositiveButton(
+							getResources().getString(R.string.yes_alert),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									try {
+										ServiceConnector.getLoggerService()
+												.stopTrack();
+									} catch (RemoteException e) {
+										e.printStackTrace();
+									}
+									startActivity(intent);
+
+								}
+							})
+					.setNegativeButton(
+							getResources().getString(R.string.no_alert),
+							new DialogInterface.OnClickListener() {
+
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.cancel();
+								}
+							});
+			builder.show();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	/**
+	 * This method inflate the Optionsmenu for this activity
+	 * 
+	 * @author greenTraxas
+	 */
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.mapsforgeactivity_contextmenu, menu);
+	}
+
+	/**
+	 * This method catch the selected MenuItem from the ContextMenu of the
+	 * selected View and give following options 1. edit selected Point 2. delete
+	 * selected Point 3. move selected Point to another location
+	 * @param item the item
+	 * @return true, if successful 
+	 *
+	 * @author greentraxas
+	 */
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		switch (item.getItemId()) {
+		case R.id.editPoint_cm:
+			/*
+			 * DO SOMETHING
+			 */
+			return true;
+		case R.id.deletePoint_cm:
+			/*
+			 * DO SOMETHING
+			 */
+			return true;
+		case R.id.movePoint_cm:
+			/*
+			 * DO SOMETHING
+			 */
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}
+
 	private static void addPoints(ArrayItemizedOverlay overlay) {
-		for(DataNode n : currentTrack().getNodes()) {
-			if(n.getOverlayItem() == null)
+		for (DataNode n : currentTrack().getNodes()) {
+			if (n.getOverlayItem() == null)
 				n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
 			overlay.addOverlay(n.getOverlayItem());
 		}
 	}
-	
+
 	private static void addWays(ArrayRouteOverlay overlay) {
-		for(DataPointsList l : currentTrack().getWays()) {
-			if(l.getOverlayRoute() == null)
-				l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(), paintFill, paintOutline));
+		for (DataPointsList l : currentTrack().getWays()) {
+			if (l.getOverlayRoute() == null)
+				l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
+						paintFill, paintOutline));
 			overlay.addRoute(l.getOverlayRoute());
 		}
 	}
@@ -126,91 +298,112 @@ public class MapsForgeActivity extends MapActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		registerReceiver(gpsReceiver, new IntentFilter(WaypointLogService.UPDTAE_GPS_POS));
-		registerReceiver(gpsReceiver, new IntentFilter(WaypointLogService.UPDTAE_OBJECT));
+		registerReceiver(gpsReceiver, new IntentFilter(
+				WaypointLogService.UPDTAE_GPS_POS));
+		registerReceiver(gpsReceiver, new IntentFilter(
+				WaypointLogService.UPDTAE_OBJECT));
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		unregisterReceiver(gpsReceiver);
 	}
-	
+
 	/**
-	 * This class receives Broadcast Messages from the WaypointLogService in order
-	 * to update the current location and overlays if position or overlay data has
-	 * changed.
+	 * This class receives Broadcast Messages from the WaypointLogService in
+	 * order to update the current location and overlays if position or overlay
+	 * data has changed.
+	 * 
 	 * @author benpicco
-	 *
+	 * 
 	 */
 	private class GPSReceiver extends BroadcastReceiver {
 		OverlayItem current_pos = null;
 
 		/**
 		 * creates a new OverlayItem
-		 * @param pos position of the marker
-		 * @param marker id of the Graphics object to use
+		 * 
+		 * @param pos
+		 *            position of the marker
+		 * @param marker
+		 *            id of the Graphics object to use
 		 * @return
 		 */
 		private OverlayItem getOverlayItem(GeoPoint pos, int marker) {
 			final OverlayItem oi = new OverlayItem(pos, "", "");
-			Drawable icon = getResources().getDrawable(marker);	
+			Drawable icon = getResources().getDrawable(marker);
 			oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
-			
+
 			return oi;
 		}
-		
-		public GPSReceiver() { /* nothing to do here */ }
+
+		public GPSReceiver() { /* nothing to do here */
+		}
 
 		@Override
 		public void onReceive(Context ctx, Intent intend) {
-			
+
 			// Receive current location and do something with it
-			if(intend.getAction().equals(WaypointLogService.UPDTAE_GPS_POS)) {
+			if (intend.getAction().equals(WaypointLogService.UPDTAE_GPS_POS)) {
 				final double lng = intend.getExtras().getDouble("long");
 				final double lat = intend.getExtras().getDouble("lat");
-				
+
 				final GeoPoint pos = new GeoPoint(lat, lng);
-				
+
 				mapController.setCenter(pos);
-				
+
 				Log.d(LOG_TAG, "Location update received " + pos.toString());
-				
-				if(current_pos != null)
+
+				if (current_pos != null)
 					pointsOverlay.removeOverlay(current_pos);
 				current_pos = getOverlayItem(pos, R.drawable.marker_green);
 				pointsOverlay.addOverlay(current_pos);
-				
-				
-			// Receive an update of a way and update the overlay accordingly 
-			} else if(intend.getAction().equals(WaypointLogService.UPDTAE_OBJECT)) {
-				if(currentTrack() == null) {
-					Log.e(LOG_TAG, "Received UPDATE_OBJECT with no current track present.");
+
+				// Receive an update of a way and update the overlay accordingly
+			} else if (intend.getAction().equals(
+					WaypointLogService.UPDTAE_OBJECT)) {
+				if (currentTrack() == null) {
+					Log.e(LOG_TAG,
+							"Received UPDATE_OBJECT with no current track present.");
 					return;
 				}
-				
+
 				int way_id = intend.getExtras().getInt("way_id");
-				if(way_id > 0) {
-					Log.d(LOG_TAG, "Received way update, id="+way_id);
-					DataPointsList way = currentTrack().getPointsListById(way_id);
-					if(way == null)
-						Log.e(LOG_TAG, "Way with ID " + way_id + " does not exist.");
+				if (way_id > 0) {
+					Log.d(LOG_TAG, "Received way update, id=" + way_id);
+					DataPointsList way = currentTrack().getPointsListById(
+							way_id);
+					if (way == null)
+						Log.e(LOG_TAG, "Way with ID " + way_id
+								+ " does not exist.");
 					else {
-						if(way.getOverlayRoute() != null)	// we can not change the route, thus create a new one
+						if (way.getOverlayRoute() != null) // we can not change
+															// the route, thus
+															// create a new one
 							routesOverlay.removeOverlay(way.getOverlayRoute());
-						way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(), paintFill, paintOutline));
+						way.setOverlayRoute(new OverlayRoute(way
+								.toGeoPointArray(), paintFill, paintOutline));
 						routesOverlay.addRoute(way.getOverlayRoute());
+						final DataNode last_point = way.getNodes().get(
+								way.getNodes().size() - 1);
+						Log.d(LOG_TAG, "new node in current way: " + last_point);
+						pointsOverlay
+								.addOverlay(getOverlayItem(
+										last_point.toGeoPoint(),
+										R.drawable.marker_blue));
+					}
 					}	
 				}
 			}
 		}
-	}
-	
+
 	/**
 	 * gets the current DataTrack for convenience
+	 * 
 	 * @return
 	 */
-	static DataTrack currentTrack() { 
+	static DataTrack currentTrack() {
 		return DataStorage.getInstance().getCurrentTrack();
 	}
 }

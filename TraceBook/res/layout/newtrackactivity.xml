@@ -81,7 +81,7 @@
 					android:layout_width="match_parent" android:layout_height="match_parent"
 					android:layout_weight="1" android:scrollingCache="true"
 					android:divider="#8ac705" android:dividerHeight="1sp"
-					android:drawSelectorOnTop="false" />
+					android:drawSelectorOnTop="false"/>
 
 
 			</LinearLayout>
