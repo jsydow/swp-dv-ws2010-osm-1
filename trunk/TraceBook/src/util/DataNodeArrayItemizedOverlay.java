@@ -104,7 +104,16 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         populate();
     }
 
-    private void remove(int id) {
+    /**
+     * removes an {@link OverlayItem} by the ID of the associated
+     * {@link DataNode}
+     * 
+     * @param id
+     *            ID of the {@link DataNode} associated with the
+     *            {@link OverlayItem}, -1 for the marker of the current position
+     *            which is not associated with any DataNode object
+     */
+    void remove(int id) {
         synchronized (this.overlayItems) {
             Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
             while (iter.hasNext())
@@ -159,8 +168,14 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     context.startActivity(intent);
                     break;
                 case 1:
-                    Toast.makeText(context, "Delete: no implemented yet",
-                            Toast.LENGTH_SHORT).show();
+                    if (nodeId < 0)
+                        Toast.makeText(context,
+                                "can not delete current location",
+                                Toast.LENGTH_SHORT).show();
+                    else {
+                        currentTrack.deleteNode(nodeId);
+                        remove(nodeId);
+                    }
                 }
             }
         });
