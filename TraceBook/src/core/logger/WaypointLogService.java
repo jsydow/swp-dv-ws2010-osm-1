@@ -16,9 +16,9 @@ import core.data.LogParameter;
 
 public class WaypointLogService extends Service implements LocationListener {
 	private static final String LOG_TAG = "LOGSERVICE";
-	private static final String basetag = "de.fu-berlin.inf.tracebook";
-	public  static final String UPDTAE_GPS_POS = basetag + ".UPDTAE_GPS_POS";
-	public  static final String UPDTAE_OBJECT = basetag + ".UPDTAE_OBJECT";
+	private static final String BASETAG = "de.fu-berlin.inf.tracebook";
+	public  static final String UPDTAE_GPS_POS = BASETAG + ".UPDTAE_GPS_POS";
+	public  static final String UPDTAE_OBJECT = BASETAG + ".UPDTAE_OBJECT";
 	
 	DataStorage storage			= DataStorage.getInstance();
 	DataNode current_node		= null;
@@ -60,29 +60,30 @@ public class WaypointLogService extends Service implements LocationListener {
 	}
 	
 	void startGPS() {
-		if(!gps_on)
+		if (!gps_on)
 			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, params.delta_time, params.delta_distance, ll);
 		gps_on = true;
 	}
 	
 	void stopGPS() {
-		if(gps_on)
+		if (gps_on)
 			((LocationManager) getSystemService(Context.LOCATION_SERVICE)).removeUpdates(ll);
 		gps_on = false;
 	}
 	
 	void restartGPS() {
-		stopGPS(); startGPS();
+		stopGPS();
+		startGPS();
 	}
 	
-	DataPointsList current_way() {
-		if(storage == null || storage.getCurrentTrack() == null)
+	DataPointsList currentWay() {
+		if (storage == null || storage.getCurrentTrack() == null)
 			return null;
 		return storage.getCurrentTrack().getCurrentWay();
 	}
 
 	/**
-	 * The IAdderService is defined through IDL
+	 * The IAdderService is defined through IDL.
 	 */
 	private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 
@@ -101,34 +102,34 @@ public class WaypointLogService extends Service implements LocationListener {
 			return endWay();
 		}
 		
-		public int createPOI(boolean on_way) {
-			if(on_way && current_way() != null)
-				current_node = current_way().newNode();
+		public int createPOI(boolean onWay) {
+			if (onWay && currentWay() != null)
+				current_node = currentWay().newNode();
 			else
 				current_node = storage.getCurrentTrack().newNode();
 			
 			return current_node.getId();
 		}
 
-		public int beginWay(boolean do_one_shot) {
-			one_shot = do_one_shot;
+		public int beginWay(boolean doOneShot) {
+			one_shot = doOneShot;
 			
-			if(current_way() == null)	// start a new way
+			if (currentWay() == null)	// start a new way
 				storage.getCurrentTrack().setCurrentWay(storage.getCurrentTrack().newWay());
 			
-			if(one_shot)			// in one_shot mode, add a new point
-				current_node = current_way().newNode();
+			if (one_shot)			// in one_shot mode, add a new point
+				current_node = currentWay().newNode();
 				
-			return current_way().getId();
+			return currentWay().getId();
 		}
 
 		public synchronized int endWay() {
 			storage.getCurrentTrack().setCurrentWay(null);
 			
 		
-			DataPointsList tmp = current_way();
+			DataPointsList tmp = currentWay();
 			
-			if(tmp != null)
+			if (tmp != null)
 				return tmp.getId();
 			return -1;
 		}
@@ -136,11 +137,11 @@ public class WaypointLogService extends Service implements LocationListener {
 
 		public synchronized int beginArea() {
 			// TODO Auto-generated method stub			
-			if(current_way() == null)	// start a new way
+			if (currentWay() == null)	// start a new way
 				storage.getCurrentTrack().setCurrentWay(storage.getCurrentTrack().newWay());
 			
-			current_way().setArea(true);			
-			return current_way().getId();
+			currentWay().setArea(true);			
+			return currentWay().getId();
 		
 		}
 
@@ -148,26 +149,26 @@ public class WaypointLogService extends Service implements LocationListener {
 			// TODO Auto-generated method stub
 								
 			storage.getCurrentTrack().setCurrentWay(null);			
-			DataPointsList tmp = current_way();
+			DataPointsList tmp = currentWay();
 			
-			if(tmp != null)
+			if (tmp != null)
 				return tmp.getId();			
 			return 0;
 		}
 
 		public boolean isWayLogging() {
-			if( storage.getCurrentTrack() != null ){
-				if(current_way() != null){
-					return !current_way().isArea();
+			if (storage.getCurrentTrack() != null) {
+				if (currentWay() != null) {
+					return !currentWay().isArea();
 				}
 			}
 			return false;
 		}
 
 		public boolean isAreaLogging() {
-			if( storage.getCurrentTrack() != null ){
-				if(current_way() != null){
-					return current_way().isArea();
+			if (storage.getCurrentTrack() != null) {
+				if (currentWay() != null) {
+					return currentWay().isArea();
 				}
 			}
 			return false;
@@ -175,7 +176,7 @@ public class WaypointLogService extends Service implements LocationListener {
 
 	};
 
-	/** GPS related Methods **/
+	/** GPS related Methods. **/
 	
 	public synchronized void onLocationChanged(Location loc) {
 		Log.d(LOG_TAG, "GPS location changed");
@@ -184,15 +185,15 @@ public class WaypointLogService extends Service implements LocationListener {
 		gps_intent.putExtra("lat",	loc.getLatitude());
 		sendBroadcast(gps_intent);
 				
-		if(current_node != null) {				// one_shot or POI mode
+		if (current_node != null) {				// one_shot or POI mode
 			current_node.setLocation(loc);		// update node with proper gps fix			
 			current_node = null;				// no node waiting for gps pos any more
-		} else if(current_way() != null) {		// Continuous mode
-			current_way().newNode(loc);			// poi in track was already added before
+		} else if (currentWay() != null) {		// Continuous mode
+			currentWay().newNode(loc);			// poi in track was already added before
 		}
 		
-		if(current_way() != null) {				// call for an update of the way
-			update_intent.putExtra("way_id", current_way().getId());
+		if (currentWay() != null) {				// call for an update of the way
+			update_intent.putExtra("way_id", currentWay().getId());
 			sendBroadcast(update_intent);
 		}
 	}
