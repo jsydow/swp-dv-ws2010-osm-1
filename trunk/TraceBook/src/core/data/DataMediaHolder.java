@@ -19,130 +19,130 @@ import org.xmlpull.v1.XmlSerializer;
  * 
  */
 public abstract class DataMediaHolder {
-	/**
-	 * The list of Media.
-	 */
-	protected List<DataMedia> media;
+    /**
+     * The list of Media.
+     */
+    protected List<DataMedia> media;
 
-	/**
-	 * Default constructor.
-	 */
-	public DataMediaHolder() {
-		media = new LinkedList<DataMedia>();
-		this.datetime = getW3CFormattedTimeStamp();
-	}
+    /**
+     * Default constructor.
+     */
+    public DataMediaHolder() {
+        media = new LinkedList<DataMedia>();
+        this.datetime = getW3CFormattedTimeStamp();
+    }
 
-	/**
-	 * Creates a time stamp of the current time formatted according to W3C.
-	 * 
-	 * @return A time stamp String.
-	 */
-	public static String getW3CFormattedTimeStamp() {
-		SimpleDateFormat sdf = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		return sdf.format(new Date());
-	}
+    /**
+     * Creates a time stamp of the current time formatted according to W3C.
+     * 
+     * @return A time stamp String.
+     */
+    public static String getW3CFormattedTimeStamp() {
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        return sdf.format(new Date());
+    }
 
-	/**
-	 * Set the Creation time of this MediaHolder. Used to restore an old
-	 * MediaHolder while deserialisation.
-	 * 
-	 * @param datetime
-	 *            The new time stamp as String.
-	 */
-	public void setDatetime(String datetime) {
-		this.datetime = datetime;
-	}
+    /**
+     * Set the Creation time of this MediaHolder. Used to restore an old
+     * MediaHolder while deserialisation.
+     * 
+     * @param datetime
+     *            The new time stamp as String.
+     */
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
 
-	/**
-	 * The Creation time.
-	 */
-	private String datetime;
+    /**
+     * The Creation time.
+     */
+    private String datetime;
 
-	/**
-	 * Getter-method that returns a list of all media. The returned List is the
-	 * one stored in the MediaHolder. Changing the returned List will therefore
-	 * change this list.
-	 * 
-	 * @return The list of all media
-	 */
-	public List<DataMedia> getMedia() {
-		return media;
-	}
+    /**
+     * Getter-method that returns a list of all media. The returned List is the
+     * one stored in the MediaHolder. Changing the returned List will therefore
+     * change this list.
+     * 
+     * @return The list of all media
+     */
+    public List<DataMedia> getMedia() {
+        return media;
+    }
 
-	/**
-	 * Getter-method. The creation time string.
-	 * 
-	 * @return The creation time of this object as String.
-	 */
-	public String getDatetime() {
-		return datetime;
-	}
+    /**
+     * Getter-method. The creation time string.
+     * 
+     * @return The creation time of this object as String.
+     */
+    public String getDatetime() {
+        return datetime;
+    }
 
-	/**
-	 * Add a new medium to this object.
-	 * 
-	 * @param medium
-	 *            The Media object.
-	 */
-	public void addMedia(DataMedia medium) {
-		media.add(medium);
-	}
+    /**
+     * Add a new medium to this object.
+     * 
+     * @param medium
+     *            The Media object.
+     */
+    public void addMedia(DataMedia medium) {
+        media.add(medium);
+    }
 
-	/**
-	 * This method generates the media-tags (<link>) for a
-	 * DataMediaHolder-object. The enclosing tag must be opened.
-	 * 
-	 * @param serializer
-	 *            An XmlSerializer that is initialised.
-	 */
-	public void serialiseMedia(XmlSerializer serializer) {
-		for (DataMedia m : media) {
-			m.serialise(serializer);
-		}
-	}
+    /**
+     * This method generates the media-tags (<link>) for a
+     * DataMediaHolder-object. The enclosing tag must be opened.
+     * 
+     * @param serializer
+     *            An XmlSerializer that is initialised.
+     */
+    public void serialiseMedia(XmlSerializer serializer) {
+        for (DataMedia m : media) {
+            m.serialise(serializer);
+        }
+    }
 
-	/**
-	 * Deletes a medium from the working memory (i.e. that object) and the
-	 * devices memory. Warning: Make sure no other object has a reference to
-	 * this medium!
-	 * 
-	 * @param id
-	 *            The id of the medium to be deleted.
-	 */
-	public void deleteMedia(int id) {
-		ListIterator<DataMedia> lit = media.listIterator();
-		DataMedia dm;
-		while (lit.hasNext()) {
-			dm = lit.next();
-			if (dm.getId() == id) {
-				dm.delete();
-				lit.remove();
-				break;
-			}
-		}
-	}
+    /**
+     * Deletes a medium from the working memory (i.e. that object) and the
+     * devices memory. Warning: Make sure no other object has a reference to
+     * this medium!
+     * 
+     * @param id
+     *            The id of the medium to be deleted.
+     */
+    public void deleteMedia(int id) {
+        ListIterator<DataMedia> lit = media.listIterator();
+        DataMedia dm;
+        while (lit.hasNext()) {
+            dm = lit.next();
+            if (dm.getId() == id) {
+                dm.delete();
+                lit.remove();
+                break;
+            }
+        }
+    }
 
-	/**
-	 * a_node is a node which has <link>-nodes. This method restores the
-	 * DataMedia-objects from these <link>-nodes.
-	 * 
-	 * @param a_node
-	 *            An XML-node.
-	 */
-	public void deserialiseMedia(Node a_node) {
-		NodeList metanodes = a_node.getChildNodes();
+    /**
+     * a_node is a node which has <link>-nodes. This method restores the
+     * DataMedia-objects from these <link>-nodes.
+     * 
+     * @param aNode
+     *            An XML-node.
+     */
+    public void deserialiseMedia(Node aNode) {
+        NodeList metanodes = aNode.getChildNodes();
 
-		for (int i = 0; i < metanodes.getLength(); ++i) {
-			if (metanodes.item(i).getNodeName().equals("link")) {
+        for (int i = 0; i < metanodes.getLength(); ++i) {
+            if (metanodes.item(i).getNodeName().equals("link")) {
 
-				NamedNodeMap attributes = metanodes.item(i).getAttributes();
-				Node path = attributes.getNamedItem("href");
-				// misuse of getTrackDirPath
-				addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path
-						.getNodeValue())));
+                NamedNodeMap attributes = metanodes.item(i).getAttributes();
+                Node path = attributes.getNamedItem("href");
+                // misuse of getTrackDirPath
+                addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path
+                        .getNodeValue())));
 
-			}
-		}
-	}
+            }
+        }
+    }
 }

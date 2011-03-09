@@ -128,13 +128,13 @@ public class DataPointsList extends DataMapObject {
     /**
      * Searches for a Node in this Track by the specified id.
      * 
-     * @param node_id
+     * @param nodeId
      *            The id of the Node that is being searched for.
      * @return The DataNode where get_id() == id, or null if not found.
      */
-    public DataNode getNodeById(int node_id) {
+    public DataNode getNodeById(int nodeId) {
         for (DataNode dn : nodes) {
-            if (dn.getId() == node_id) {
+            if (dn.getId() == nodeId) {
                 return dn;
             }
         }
@@ -161,16 +161,16 @@ public class DataPointsList extends DataMapObject {
      * This method deletes a Node on the working memory and devices memory
      * completely.
      * 
-     * @param node_id
+     * @param nodeId
      *            The id of the node to be deleted. If this node does not exist
      *            nothing is done.
      */
-    public void deleteNode(int node_id) {
+    public void deleteNode(int nodeId) {
         ListIterator<DataNode> lit = nodes.listIterator();
         DataNode dn;
         while (lit.hasNext()) {
             dn = lit.next();
-            if (dn.getId() == node_id) {
+            if (dn.getId() == nodeId) {
                 lit.remove();
                 break;
             }
@@ -282,7 +282,7 @@ public class DataPointsList extends DataMapObject {
 
         NamedNodeMap nodeattributes = waynode.getAttributes();
         ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
-        ret.set_id(Integer.parseInt(nodeattributes.getNamedItem("id")
+        ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
 
         // tags and media
@@ -295,13 +295,13 @@ public class DataPointsList extends DataMapObject {
 
             if (metanodes.item(i).getNodeName().equals("nd")) {
 
-                int node_id = Integer.parseInt(metanodes.item(i)
-                        .getAttributes().getNamedItem("ref").getNodeValue());
+                int nodeId = Integer.parseInt(metanodes.item(i).getAttributes()
+                        .getNamedItem("ref").getNodeValue());
                 ListIterator<DataNode> it = allnodes.listIterator();
 
                 while (it.hasNext()) {
                     DataNode dn = it.next();
-                    if (dn.getId() == node_id) {
+                    if (dn.getId() == nodeId) {
                         it.remove();
                         ret.nodes.add(dn);
                     }
