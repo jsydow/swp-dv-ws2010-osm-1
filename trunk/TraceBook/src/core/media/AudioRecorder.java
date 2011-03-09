@@ -17,7 +17,7 @@ public class AudioRecorder extends Recorder {
     /**
      * 
      */
-    protected MediaRecorder recorder = new MediaRecorder();
+    MediaRecorder recorder = new MediaRecorder();
 
     /**
      * 
@@ -39,16 +39,6 @@ public class AudioRecorder extends Recorder {
         newFilename = "audio_" + newFilename + ".m4a";
 
         return newFilename;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see core.media.Recorder#init()
-     */
-    @Override
-    public void init() {
-        // Nothing to be done here, really...
     }
 
     /*
