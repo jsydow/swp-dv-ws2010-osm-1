@@ -21,9 +21,11 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import core.data.DataMedia;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
+import core.data.DataTrack;
 import core.data.MetaMedia;
 import core.logger.ServiceConnector;
 
@@ -360,7 +362,10 @@ public class NewTrackActivity extends TabActivity {
      *            not used
      */
     public void makePictureBtn(View view) {
-        mm.takePhoto(this);
+        String filename = mm.takePhoto(this);
+        DataTrack currentTrack = DataStorage.getInstance().getCurrentTrack();
+        currentTrack.getCurrentWay().addMedia(
+                new DataMedia(currentTrack.getTrackDirPath(), filename));
     }
 
     /**
@@ -368,7 +373,10 @@ public class NewTrackActivity extends TabActivity {
      *            not
      */
     public void makeVideoBtn(View view) {
-        mm.takeVideo(this);
+        String filename = mm.takeVideo(this);
+        DataTrack currentTrack = DataStorage.getInstance().getCurrentTrack();
+        currentTrack.getCurrentWay().addMedia(
+                new DataMedia(currentTrack.getTrackDirPath(), filename));
     }
 
     /**
