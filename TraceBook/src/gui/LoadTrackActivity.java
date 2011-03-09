@@ -6,7 +6,9 @@ import core.data.DataStorage;
 import core.data.DataTrack;
 import Trace.Book.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -37,6 +39,7 @@ public class LoadTrackActivity extends Activity {
 		sb.append("\n");
 		storage.deserialiseTrack(lastTrack);
 		DataTrack track = storage.getTrack(lastTrack);
+		storage.setCurrentTrack(track);
 
         sb.append("Last Track is: "+track.getName()+"\n");
 		sb.append("Nodes: "+track.getNodes().size()+"\n");
@@ -44,5 +47,15 @@ public class LoadTrackActivity extends Activity {
         sb.append("Ways: "+track.getWays().size()+"\n");
 		
         ((TextView)findViewById(R.id.track_textview)).setText(sb);
+        storage.setCurrentTrack(track);
+	}
+	
+	/**
+	 * just for testing
+	 * @param view ...
+	 */
+	public void loadLastTrack(View view) {
+	    Intent intent = new Intent(this, NewTrackActivity.class);
+        startActivity(intent);
 	}
 }
