@@ -77,7 +77,7 @@ public class MapsForgeActivity extends MapActivity {
     /**
      * show a knob for every waypoint
      */
-    boolean showGnubbel = false;
+    boolean showGnubbel = true;
 
     private int colorID = 0;
 

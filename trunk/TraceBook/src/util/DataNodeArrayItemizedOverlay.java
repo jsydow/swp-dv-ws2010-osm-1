@@ -173,8 +173,12 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                                 "can not delete current location",
                                 Toast.LENGTH_SHORT).show();
                     else {
-                        currentTrack.deleteNode(nodeId);
-                        remove(nodeId);
+                        if (currentTrack.deleteNode(nodeId))
+                            remove(nodeId);
+                        else
+                            Toast.makeText(context,
+                                    "Can not delete Node id=" + nodeId,
+                                    Toast.LENGTH_SHORT).show();
                     }
                 }
             }
