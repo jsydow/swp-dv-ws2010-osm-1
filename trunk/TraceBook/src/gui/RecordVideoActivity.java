@@ -1,32 +1,41 @@
 package gui;
 
-import java.io.File;
 import java.io.IOException;
 
 import Trace.Book.R;
 import android.app.Activity;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import core.data.DataMapObject;
 import core.data.DataStorage;
-import core.data.MetaMedia;
+import core.media.VideoRecorder;
 
+/**
+ * 
+ * @author Sahin Vardar & Huy Dinh
+ */
 public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {
 
-    SurfaceHolder surfaceHolder;
-    Camera camera;
-    MediaRecorder recorder;
-
-    MetaMedia media;
+    private Camera camera;
+    private SurfaceHolder surfaceHolder;
+    private VideoRecorder recorder = new VideoRecorder();
+    private DataMapObject node;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            int nodeId = extras.getInt("DataNodeId");
+            node = DataStorage.getInstance().getCurrentTrack()
+                    .getDataMapObjectById(nodeId);
+        }
 
         setContentView(R.layout.recordvideoactivity);
 
@@ -35,52 +44,32 @@ public class RecordVideoActivity extends Activity implements
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-        // media.startVideo(surfaceView.getHolder().getSurface());
     }
 
+    /**
+     * 
+     * @param view
+     */
     public void onRecordStop(View view) {
         recorder.stop();
+        recorder.appendFileToObject(node);
+
         camera.lock();
+        camera.stopPreview();
 
         finish();
-
-        // media.stopVideo(DataStorage.getInstance().getCurrentTrack()
-        // .getCurrentWay());
-
     }
 
+    /**
+     * 
+     * @param view
+     */
     public void onRecordBtn(View view) {
-
         camera.unlock();
 
-        recorder = new MediaRecorder();
-
-        recorder.setCamera(camera);
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-
-        recorder.setMaxDuration(1000 * 60);
-
-        File tempFile = new File(DataStorage.getInstance().getCurrentTrack()
-                .getTrackDirPath(), "video.3gp");
-
-        recorder.setOutputFile(tempFile.getPath());
-
-        recorder.setVideoFrameRate(15);
-        recorder.setVideoSize(320, 240);
-
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-        recorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT);
-
-        recorder.setPreviewDisplay(surfaceHolder.getSurface());
-
-        // recorder.setMaxFileSize(maxFileSizeInBytes);
-
         try {
-            recorder.prepare();
+            recorder.prepare(camera, surfaceHolder.getSurface());
+            recorder.start();
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -88,9 +77,6 @@ public class RecordVideoActivity extends Activity implements
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        recorder.start();
-
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -110,26 +96,23 @@ public class RecordVideoActivity extends Activity implements
         }
 
         camera.startPreview();
-
     }
 
-    public void surfaceCreated(SurfaceHolder arg0) {
-        // TODO Auto-generated method stub
-
+    public void surfaceCreated(SurfaceHolder holder) {
         camera = Camera.open();
         if (camera != null) {
             Camera.Parameters params = camera.getParameters();
             camera.setParameters(params);
         } else {
-            // Toast.makeText(getApplicationContext(), "Camera not available!",
-            // Toast.LENGTH_LONG).show();
             finish();
         }
-
     }
 
-    public void surfaceDestroyed(SurfaceHolder arg0) {
-
+    /**
+     *
+     */
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // Nothing's gonna happen here.
     }
 
 }
