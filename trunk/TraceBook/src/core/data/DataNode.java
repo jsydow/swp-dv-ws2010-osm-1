@@ -211,14 +211,20 @@ public class DataNode extends DataMapObject {
      * @return The new DataNode-object
      */
     public static DataNode deserialise(Node nodenode) {
+        // the returned DataNode, must be initialised
         DataNode ret = new DataNode();
 
+        // get all attributes
         NamedNodeMap nodeattributes = nodenode.getAttributes();
+        // get Latitude
         ret.setLat(Double.parseDouble(nodeattributes.getNamedItem("lat")
                 .getNodeValue()));
+        // get Longitude
         ret.setLon(Double.parseDouble(nodeattributes.getNamedItem("lon")
                 .getNodeValue()));
+        // get time stamp
         ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+        // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
 

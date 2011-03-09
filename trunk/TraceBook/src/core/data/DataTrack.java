@@ -140,7 +140,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Setter-method
+     * Setter-method.
      * 
      * @param comment
      *            The new comment of the Track.
@@ -215,7 +215,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Create a new Way/Area in this Track
+     * Create a new Way/Area in this Track.
      * 
      * @return The newly created Way.
      */
@@ -364,9 +364,12 @@ public class DataTrack extends DataMediaHolder {
      *         not exist
      */
     static DataTrack deserialise(String name) {
+        // cache all nodes
         List<DataNode> allnodes = new LinkedList<DataNode>();
+        // XML-file
         File track = new File(getTrackDirPath(name) + File.separator
                 + "track.tbt");
+        // Track that should be filled/initialised
         DataTrack ret = new DataTrack(track.getParentFile().getName());
 
         if (track.isFile()) {
@@ -376,15 +379,18 @@ public class DataTrack extends DataMediaHolder {
             try {
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document dom = builder.parse(track);
+
+                // get <osm>-element
                 Element osmelement = dom.getDocumentElement(); // root-element
                 if (osmelement == null)
                     throw new SAXException();
 
-                // all nodes
+                // get all nodes
                 NodeList nodeelements = osmelement.getElementsByTagName("node");
                 if (nodeelements == null)
                     throw new SAXException();
                 for (int i = 0; i < nodeelements.getLength(); ++i) {
+                    // generate a node
                     allnodes.add(DataNode.deserialise(nodeelements.item(i)));
                 }
 
@@ -393,8 +399,10 @@ public class DataTrack extends DataMediaHolder {
                 if (wayelements == null)
                     throw new SAXException();
                 for (int i = 0; i < wayelements.getLength(); ++i) {
+                    // generate ways
                     DataPointsList dpl = DataPointsList.deserialise(
-                            nodeelements.item(i), allnodes);
+                            wayelements.item(i), allnodes);
+                    // add them
                     ret.addWay(dpl);
                 }
 
@@ -403,15 +411,18 @@ public class DataTrack extends DataMediaHolder {
                 if (medianodes == null)
                     throw new SAXException();
                 for (int i = 0; i < medianodes.getLength(); ++i) {
+                    // get attributes of <link>-node
                     NamedNodeMap attributes = medianodes.item(i)
                             .getAttributes();
-                    Node path = attributes.getNamedItem("value");
-                    // misuse of getTrackDirPath
-                    ret.addMedia(DataMedia.deserialise(DataTrack
-                            .getTrackDirPath(path.getNodeValue())));
+                    // path to medium is value of href-attribute
+                    Node path = attributes.getNamedItem("href");
+                    // path to medium is path to track directory + media name
+                    ret.addMedia(DataMedia.deserialise(ret.getTrackDirPath()
+                            + File.separator + path.getNodeValue()));
                 }
 
-                // nodes -> POIs
+                // nodes -> POIs, all nodes that are still in allnodes are POIs
+                // DataNode.deserialise erase those, that are part of a way
                 ret.getNodes().addAll(allnodes);
 
             } catch (IOException e) {

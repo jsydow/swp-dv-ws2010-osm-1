@@ -278,37 +278,49 @@ public class DataPointsList extends DataMapObject {
      */
     public static DataPointsList deserialise(Node waynode,
             List<DataNode> allnodes) {
+        // the returned DataPointsList
         DataPointsList ret = new DataPointsList();
 
+        // get all attributes
         NamedNodeMap nodeattributes = waynode.getAttributes();
+        // get time stamp
         ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+        // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
+        Log.d("#####DEBUG#####", "Way-id:" + ret.getId());
 
         // tags and media
         ret.deserialiseMedia(waynode);
         ret.deserialiseTags(waynode);
 
         // node references
+        // for all <nd>-child nodes
         NodeList metanodes = waynode.getChildNodes();
         for (int i = 0; i < metanodes.getLength(); ++i) {
 
+            // is <nd>-node?
             if (metanodes.item(i).getNodeName().equals("nd")) {
 
+                // get id of the node referenced
                 int nodeId = Integer.parseInt(metanodes.item(i).getAttributes()
                         .getNamedItem("ref").getNodeValue());
+                // search for this node in allnodes
                 ListIterator<DataNode> it = allnodes.listIterator();
 
                 while (it.hasNext()) {
                     DataNode dn = it.next();
                     if (dn.getId() == nodeId) {
+                        // remove from allnodes this node
                         it.remove();
+                        // add
                         ret.nodes.add(dn);
                     }
                 }
             }
         }
 
+        // is this Way an Area?
         String value = ret.getTags().get("key");
         if (value != null) {
             if (value.equals("yes")) {
