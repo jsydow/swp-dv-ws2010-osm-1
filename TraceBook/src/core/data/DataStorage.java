@@ -237,11 +237,13 @@ public class DataStorage {
      * 
      * @param name
      *            The name of the Track.
+     * @return
      */
-    public void deserialiseTrack(String name) {
+    public DataTrack deserialiseTrack(String name) {
         DataTrack dt = DataTrack.deserialise(name);
         if (dt != null)
             tracks.add(dt);
+        return dt;
     }
 
     /**

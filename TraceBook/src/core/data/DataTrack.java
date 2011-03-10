@@ -421,7 +421,7 @@ public class DataTrack extends DataMediaHolder {
      * @return The deserialised DataTrack object or null if such a Track does
      *         not exist
      */
-    static DataTrack deserialise(String name) {
+    public static DataTrack deserialise(String name) {
         // cache all nodes
         List<DataNode> allnodes = new LinkedList<DataNode>();
         // XML-file
