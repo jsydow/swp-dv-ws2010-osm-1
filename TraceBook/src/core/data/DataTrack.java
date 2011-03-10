@@ -279,18 +279,6 @@ public class DataTrack extends DataMediaHolder {
 
         File xmlfile = new File(getPathOfTrackTbTFile(name));
 
-        /*
-         * try { if (xmlfile.exists()) { if (!xmlfile.delete()) {
-         * Log.e("TrackSerialisation", "Deleting old file failed"); return; } }
-         * if (!xmlfile.createNewFile()) { Log.e("TrackSerialisation",
-         * "Creating new XML-file failed"); return; }
-         * 
-         * } catch (IOException e) { Log.e("TrackSerialisation",
-         * "Could not create new file"); } FileOutputStream fileos = null; try {
-         * fileos = new FileOutputStream(xmlfile); } catch
-         * (FileNotFoundException e) { Log.e("TrackSerialisation",
-         * "Could not open new file"); }
-         */
         FileOutputStream fileos = openFile(xmlfile);
         if (fileos == null) {
             return;
