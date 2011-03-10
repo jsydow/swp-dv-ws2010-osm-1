@@ -187,10 +187,36 @@ public class MapsForgeActivity extends MapActivity {
         gpsReceiver.centerOnCurrentPosition();
     }
 
+    /**
+     * node currently edited
+     */
+    DataNode editNode = null;
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         // TODO handle moving of OverlayItems
-        return super.dispatchTouchEvent(ev);
+
+        if (editNode != null) {
+            GeoPoint projection = mapView.getProjection().fromPixels(
+                    (int) ev.getX(), (int) ev.getY());
+
+            editNode.setLocation(projection);
+            pointsOverlay.removeOverlay(editNode.getId());
+            OverlayItem oi = new OverlayItem(projection, "", "");
+            oi.setMarker(editNode.getOverlayItem().getMarker());
+            editNode.setOverlayItem(oi);
+            pointsOverlay.addOverlay(editNode.getOverlayItem(),
+                    editNode.getId());
+
+            if (ev.getAction() == MotionEvent.ACTION_UP) {
+                Log.d(LOG_TAG,
+                        "Exiting edit mode for point " + editNode.getId());
+                editNode = null;
+            }
+
+            return true;
+        } else
+            return super.dispatchTouchEvent(ev);
     }
 
     /**
@@ -391,6 +417,8 @@ public class MapsForgeActivity extends MapActivity {
                 WaypointLogService.UPDTAE_OBJECT));
         registerReceiver(gpsReceiver, new IntentFilter(
                 DataNodeArrayItemizedOverlay.UPDTAE_WAY));
+        registerReceiver(gpsReceiver, new IntentFilter(
+                DataNodeArrayItemizedOverlay.MOVE_POINT));
 
     }
 
@@ -530,6 +558,11 @@ public class MapsForgeActivity extends MapActivity {
                 Log.d(LOG_TAG, "Nodes of way " + wayId + " have changed.");
 
                 reDrawWay(wayId);
+            } else if (intend.getAction().equals(
+                    DataNodeArrayItemizedOverlay.MOVE_POINT)) {
+                final int nodeId = intend.getExtras().getInt("point_id");
+                editNode = currentTrack().getNodeById(nodeId);
+                Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
             }
         }
 

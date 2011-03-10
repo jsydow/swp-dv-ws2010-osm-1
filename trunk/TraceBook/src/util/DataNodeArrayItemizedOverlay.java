@@ -43,6 +43,11 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     public static final String UPDTAE_WAY = BASETAG + ".UPDTAE_WAY";
 
     /**
+     * Tag of the Intent that signals the start of editing a points location
+     */
+    public static final String MOVE_POINT = BASETAG + ".MODE_POINT";
+
+    /**
      * Context of the MapActivity.
      */
     final Context context;
@@ -56,6 +61,11 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Intent to send updated ways to the MapsForgeView
      */
     final Intent way_intent = new Intent(UPDTAE_WAY);
+
+    /**
+     * Intent to move a point
+     */
+    final Intent move_intent = new Intent(MOVE_POINT);
 
     /**
      * Constructs a new ArrayItemizedOverlay.
@@ -151,7 +161,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
     }
 
-    private final CharSequence[] items = { "Tag this", "Delete this" };
+    private final CharSequence[] items = { "Tag this", "Move this",
+            "Delete this" };
 
     @Override
     protected boolean onTap(int index) {
@@ -181,26 +192,39 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     context.startActivity(intent);
                     break;
                 case 1:
-                    if (nodeId < 0)
+                    if (nodeId < 0) {
+                        Toast.makeText(context,
+                                "You can't move around that way!",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                    move_intent.putExtra("point_id", nodeId);
+                    context.sendBroadcast(move_intent);
+                    break;
+                case 2:
+                    if (nodeId < 0) {
                         Toast.makeText(context,
                                 "can not delete current location",
                                 Toast.LENGTH_SHORT).show();
-                    else {
-                        final DataNode node = currentTrack.getNodeById(nodeId);
-                        DataPointsList way = null;
-                        if (node != null)
-                            way = node.getDataPointsList();
-                        if (currentTrack.deleteNode(nodeId)) {
-                            remove(nodeId);
-                            if (way != null) { // we have to redraw the way
-                                way_intent.putExtra("way_id", way.getId());
-                                context.sendBroadcast(way_intent);
-                            }
-                        } else
-                            Toast.makeText(context,
-                                    "Can not delete Node id=" + nodeId,
-                                    Toast.LENGTH_SHORT).show();
+                        break;
                     }
+
+                    final DataNode node = currentTrack.getNodeById(nodeId);
+                    DataPointsList way = null;
+                    if (node != null)
+                        way = node.getDataPointsList();
+                    if (currentTrack.deleteNode(nodeId)) {
+                        remove(nodeId);
+                        if (way != null) { // we have to redraw the way
+                            way_intent.putExtra("way_id", way.getId());
+                            context.sendBroadcast(way_intent);
+                        }
+                    } else
+                        Toast.makeText(context,
+                                "Can not delete Node id=" + nodeId,
+                                Toast.LENGTH_SHORT).show();
+
                     break;
                 default:
                     break;
