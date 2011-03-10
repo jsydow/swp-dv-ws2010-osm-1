@@ -66,4 +66,10 @@
     <string name="makeVideo_btn">Video</string>
     <string name="makeMemo_btn">Sprachnotiz</string>
     <string name="makeNotice_btn">Notiz</string>
+<string name="loadTrack_load_cm">Track laden</string>
+<string name="loadTrack_rename_cm">Track umbenennen</string>
+<string name="loadTrack_delete_cm">Track löschen</string>
+<string name="loadTrack_info_cm">Infos anzeigen</string>
+<string name="editmapobjects_edit_cm">Bearbeiten</string>
+<string name="editmapobjects_delete_cm">Löschen</string>
 </resources>

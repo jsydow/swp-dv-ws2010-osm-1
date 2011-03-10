@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/loadTrack_load_cm" android:title="@string/loadTrack_load_cm"></item>
+<item android:id="@+id/loadTrack_rename_cm" android:title="@string/loadTrack_rename_cm"></item>
+<item android:id="@+id/loadTrack_delete_cm" android:title="@string/loadTrack_delete_cm"></item>
+<item android:id="@+id/loadTrack_info_cm" android:title="@string/loadTrack_info_cm"></item>
+</menu>
