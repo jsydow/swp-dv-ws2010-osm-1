@@ -107,6 +107,13 @@ public abstract class Recorder {
     }
 
     /**
+     * @return Whether the recorder is recording.
+     */
+    public final boolean isRecording() {
+        return isRecording;
+    }
+
+    /**
      * WARNING: Because of the nature of how the full path to the file is
      * determined, we blatantly assume the returned filename to *NOT* point to
      * an existing file yet. If such a file does exist for any reason, it will
