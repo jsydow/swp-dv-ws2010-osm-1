@@ -26,12 +26,23 @@
 
 	<TextView android:id="@+id/allocateMeta_tv"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:textSize="15sp" android:textStyle="bold" android:textColor="#fff"/>
+		android:textSize="15sp" android:textStyle="bold" android:paddingLeft="7dp" android:paddingBottom="10dp"/>
 
-	<ListView android:id="@+id/allocateMeta_lv"
-	android:layout_width="match_parent" android:layout_height="match_parent"
-	android:layout_weight="1" android:scrollingCache="true"
-	android:divider="#8ac705" android:dividerHeight="1sp"
-	android:drawSelectorOnTop="false" />
+	<LinearLayout android:id="@+id/titleListeView_ly" android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:orientation="horizontal" android:background="#8ac705">
+	
+	<TextView android:id="@+id/titleListViewCat_tv" android:text="@string/titleListViewCat_tv"
+		android:layout_width="150dp" android:layout_height="wrap_content"
+		android:textSize="18sp" android:textColor="#fff" android:paddingLeft="7dp"/>
+	
+	<TextView android:id="@+id/titleListViewVal_tv" android:text="@string/titleListViewVal_tv"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:textSize="18sp" android:textColor="#fff" android:paddingLeft="7dp"/>
+	
+	</LinearLayout>
+	<ListView android:id="@+id/android:list" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:layout_weight="1"
+	android:scrollingCache="true" android:divider="#8ac705"
+	android:dividerHeight="1sp" android:drawSelectorOnTop="false" />
 
 </LinearLayout>

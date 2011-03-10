@@ -18,6 +18,8 @@ import core.logger.ServiceConnector;
 
 /**
  * Start activity of the application.
+ * 
+ * @author greenTraxas
  */
 public class StartActivity extends Activity {
 

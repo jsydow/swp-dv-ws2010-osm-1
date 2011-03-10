@@ -1,31 +1,32 @@
 package gui;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Vector;
 
 import Trace.Book.R;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ParseException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
 import core.media.PictureRecorder;
-import core.media.Recorder;
 
 /**
  * @author greentraxas The purpose of this activity is to add and edit tags to
@@ -33,7 +34,37 @@ import core.media.Recorder;
  *         area.
  * 
  */
-public class AddPointActivity extends Activity {
+public class AddPointActivity extends ListActivity {
+
+    /**
+     * Here we use the LayoutInflater to inflate the Layout for the ListView.
+     */
+    private LayoutInflater mInflater;
+
+    /**
+     * We save our RowData, to fill the CustomAdapter with this.
+     */
+    RowData rd;
+
+    /**
+     * The String[] "category" save all CategoryTags of the node. First we need
+     * this to list all Items in our ListView. Second to send the Tag with an
+     * intent to the AddPointMetaActivity
+     */
+    static String[] category;
+
+    /**
+     * The String[] "value" save all ValueTags of the node. First we need this
+     * to list all Items in our ListView. Second to send the Tag with an intent
+     * to the AddPointMetaActivity
+     */
+    static String[] value;
+
+    /**
+     * The Integer[] "image" will be used for the reference to the imageIcon of
+     * the used CategoryTag.
+     */
+    static Integer[] image;
 
     /**
      * Here we save a reference to the current DataMapObject which is in use.
@@ -41,14 +72,19 @@ public class AddPointActivity extends Activity {
     DataMapObject node;
 
     /**
-     * 
+     * MetaMedia object to create new media objects and to receive it.
      */
-    PictureRecorder pictureRecorder = new PictureRecorder();
+    // MetaMedia mm;
 
     /**
-     * ArrayAdapter object to fill the ListView with MetaInformation.
+     * CustomAdapter for our ListView which we use in this activity.
      */
-    ArrayAdapter<String> adapter;
+    CustomAdapter adapter;
+
+    /**
+    * 
+    */
+    PictureRecorder pictureRecorder = new PictureRecorder();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,98 +110,101 @@ public class AddPointActivity extends Activity {
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnPoint_ly);
         bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
 
-        // Init ServiceConnector
+        // Initial ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
 
         getNodeInformation();
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getNodeInformation());
-        listNodeInformation();
+
+        // Initial Adapter
+        mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        initAdapter();
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-        case Recorder.TAKE_PHOTO_CODE:
-            if (resultCode == Activity.RESULT_OK) {
-                pictureRecorder.appendFileToObject(node);
+    /**
+     * Init our CustomAdapter and fill the RowData with the MetaInformation out
+     * of the two Stringarrays category and value. Set this Adapter for our
+     * ListView.
+     */
+    private void initAdapter() {
+        Vector<RowData> data = new Vector<RowData>();
+        for (int i = 0; i < category.length; i++) {
+            try {
+                rd = new RowData(i, category[i], value[i]);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-            break;
-        default:
-            break;
+            data.add(rd);
+            adapter = new CustomAdapter(this, R.layout.addpointlistview,
+                    R.id.list, data);
+            setListAdapter(adapter);
+            getListView().setTextFilterEnabled(true);
         }
     }
 
+    /**
+     * If a User select a item, we start the AddPointMetaActivty to edit the
+     * MetaData for this Node. The Intent get the Extras: 1. DataNodeId 2.
+     * DataNodeKey (CategoryKey of the selected node) 3. DataNodeValue (the
+     * Value for the CategoryKey of the selected node)
+     */
     @Override
-    protected void onResume() {
-        super.onResume();
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getNodeInformation());
-        listNodeInformation();
+    public void onListItemClick(ListView parent, View v, int position, long id) {
+        final Intent intent = new Intent(this, AddPointMetaActivity.class);
+        RowData rowData = adapter.getItem(position);
+        Toast.makeText(
+                getApplicationContext(),
+                "You have selected " + (position + 1) + "th item" + " "
+                        + rowData.toString(), Toast.LENGTH_SHORT).show();
+
+        intent.putExtra("DataNodeId", node.getId()); //
+        intent.putExtra("DataNodeKey", rowData.mTitle);
+        intent.putExtra("DataNodeValue", rowData.mDetail);
+        startActivity(intent);
+
     }
 
     /**
      * Get the last node and create a String-Array with all MetaData from the
      * Meta-HashMap of this Node. If the HashMap contain no MetaData, the method
      * returns an empty array.
-     * 
-     * @return A Array of Strings, for the Content of the ListeView
-     *         allocateMeta_lv
      */
-    private String[] getNodeInformation() {
-
-        String meta = null;
+    private void getNodeInformation() {
         TextView nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
         TextView nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
+        TextView titleCat = (TextView) findViewById(R.id.titleListViewCat_tv);
+        TextView titleVal = (TextView) findViewById(R.id.titleListViewVal_tv);
         int i = 0;
 
         Map<String, String> tagMap = node.getTags();
-        String[] metaInformation = new String[tagMap.size()];
+        category = new String[tagMap.size()];
+        value = new String[tagMap.size()];
+
         nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " "
                 + node.getId());
 
         if (tagMap.size() != 0) {
             nodeInfo.setText(R.string.MetaData_tv);
+            titleCat.setVisibility(1);
+            titleVal.setVisibility(1);
             Iterator<Entry<String, String>> iterator = tagMap.entrySet()
                     .iterator();
 
             while (iterator.hasNext()) {
                 Map.Entry<String, String> pairs = iterator.next();
-                meta = pairs.getKey() + " - " + pairs.getValue();
-                metaInformation[i] = meta;
+                category[i] = pairs.getKey();
+                value[i] = pairs.getValue();
                 i++;
             }
 
         } else {
             nodeInfo.setText(R.string.noMetaData_tv);
+            titleCat.setVisibility(8);
+            titleVal.setVisibility(8);
 
         }
 
-        return metaInformation;
-    }
-
-    /**
-     * This method creates the ListView with the generated Adapter.
-     */
-    private void listNodeInformation() {
-        final Intent intent = new Intent(this, AddPointMetaActivity.class);
-        ListView listView = (ListView) findViewById(R.id.allocateMeta_lv);
-        listView.setAdapter(adapter);
-        listView.setTextFilterEnabled(true);
-
-        // Get selected item and send toast
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-                intent.putExtra("DataNodeId", node.getId());
-                intent.putExtra("DataNodeKey", adapter.getItem(position));
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(),
-                        ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     /**
@@ -196,7 +235,9 @@ public class AddPointActivity extends Activity {
      *            not
      */
     public void makeVideoBtn(View view) {
-        // TODO: Record a video.
+        final Intent intent = new Intent(this, RecordVideoActivity.class);
+        intent.putExtra("DataNodeId", node.getId());
+        startActivity(intent);
     }
 
     /**
@@ -209,6 +250,9 @@ public class AddPointActivity extends Activity {
     }
 
     /**
+     * This method create a AlertDailog Box to fill in the notice for the actual
+     * node.
+     * 
      * @param view
      */
     public void makeNoticeBtn(View view) {
@@ -218,10 +262,10 @@ public class AddPointActivity extends Activity {
         alert.setTitle(getResources().getString(R.string.addNotice_alert));
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString().trim();
+                String values = input.getText().toString().trim();
 
                 node.addMedia(DataStorage.getInstance().getCurrentTrack()
-                        .saveText(value));
+                        .saveText(values));
             }
         });
 
@@ -242,4 +286,131 @@ public class AddPointActivity extends Activity {
     public void makePictureBtn(View view) {
         pictureRecorder.startIntent(this);
     }
+
+    /**
+     * This class save our RowData for the CustomAdapter. We save the title
+     * (Category) and the detail (Value). Later we can save although imageIds,
+     * to display images for each entry at our ListView
+     */
+    private class RowData {
+        protected int mId;
+        protected String mTitle;
+        protected String mDetail;
+
+        RowData(int id, String title, String detail) {
+            mId = id;
+            mTitle = title;
+            mDetail = detail;
+        }
+
+        @Override
+        /**
+         * The Method build a String out of our RowData 
+         * Useful for Toast or other notification's.
+         */
+        public String toString() {
+            return mId + " " + mTitle + " " + mDetail;
+        }
+    }
+
+    /**
+     * Our CustomAdapter extends the normal ArrayAdapter with out RowData.
+     * 
+     * @author greenTraxas
+     * 
+     */
+    private class CustomAdapter extends ArrayAdapter<RowData> {
+        public CustomAdapter(Context context, int resource,
+                int textViewResourceId, List<RowData> objects) {
+            super(context, resource, textViewResourceId, objects);
+        }
+
+        /**
+         * For every View we used in our CustomAdapter (addpointlistview), we
+         * set the text in this method. The text is comming out of the RowData
+         * at the position of the adapter.
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+            TextView title = null;
+            TextView detail = null;
+
+            RowData rowData = getItem(position);
+            if (null == convertView) {
+                convertView = mInflater
+                        .inflate(R.layout.addpointlistview, null);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            }
+            holder = (ViewHolder) convertView.getTag();
+            title = holder.gettitle();
+            title.setText(rowData.mTitle);
+            detail = holder.getdetail();
+            detail.setText(rowData.mDetail);
+            return convertView;
+        }
+    }
+
+    /**
+     * We need a ViewHolder to get easily the views out of the used layout.
+     * 
+     * @author greenTraxas
+     * 
+     */
+    private class ViewHolder {
+        private View mRow;
+        private TextView title = null;
+        private TextView detail = null;
+
+        public ViewHolder(View row) {
+            mRow = row;
+        }
+
+        public TextView gettitle() {
+            if (null == title) {
+                title = (TextView) mRow.findViewById(R.id.title);
+            }
+            return title;
+        }
+
+        public TextView getdetail() {
+            if (null == detail) {
+                detail = (TextView) mRow.findViewById(R.id.detail);
+            }
+            return detail;
+        }
+    }
+
+    /*
+     * @Override protected void onActivityResult(int requestCode, int
+     * resultCode, Intent intent) { switch (requestCode) { case
+     * MetaMedia.TAKE_PHOTO_CODE: if (resultCode == Activity.RESULT_OK) {
+     * mm.appendToObject(node); } break; case MetaMedia.TAKE_VIDEO_CODE: if
+     * (resultCode == Activity.RESULT_OK) { mm.appendToObject(node); } break; }
+     * }
+     */
+
+    /**
+     * OnResume is called when the activity was adjournment and we come back to
+     * this activity. This method update the ListInformation with the MetaTags
+     * of the Node.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNodeInformation();
+        initAdapter();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
 }

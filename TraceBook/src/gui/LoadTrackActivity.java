@@ -13,6 +13,8 @@ import core.data.DataTrack;
 
 /**
  * The Class LoadTrackActivity.
+ * 
+ * @author greenTraxas
  */
 public class LoadTrackActivity extends Activity {
 

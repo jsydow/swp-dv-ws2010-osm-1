@@ -17,6 +17,8 @@
     <string name="MetaData_tv">Der Knoten besitzt folgende MetaDaten</string>
     <string name="setButtonList1_tv">Aktuelle Straße mit MediaDaten versehen</string>
     <string name="setButtonList2_tv">Aktuelle Fläche mit MediaDaten versehen</string>
+    <string name="titleListViewCat_tv">Schlüssel</string>
+    <string name="titleListViewVal_tv">Wert</string>
 
 
 	<!--  AlertBox values -->
