@@ -59,9 +59,6 @@ public class RecordVideoActivity extends Activity implements
         recorder.stop();
         recorder.appendFileToObject(node);
 
-        camera.lock();
-        camera.stopPreview();
-
         finish();
     }
 
@@ -111,7 +108,9 @@ public class RecordVideoActivity extends Activity implements
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // Nothing's gonna happen in here.
+        camera.lock();
+        camera.stopPreview();
+        camera.release();
     }
 
 }
