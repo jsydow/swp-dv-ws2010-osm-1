@@ -194,20 +194,26 @@ public class MapsForgeActivity extends MapActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        // TODO handle moving of OverlayItems
-
         if (editNode != null) {
             GeoPoint projection = mapView.getProjection().fromPixels(
                     (int) ev.getX(), (int) ev.getY());
 
             editNode.setLocation(projection);
             pointsOverlay.removeOverlay(editNode.getId());
-            OverlayItem oi = new OverlayItem(projection, "", "");
-            oi.setMarker(editNode.getOverlayItem().getMarker());
-            editNode.setOverlayItem(oi);
+            OverlayItem oi = editNode.getOverlayItem();
+
+            OverlayItem newOi = getOverlayItem(projection,
+                    R.drawable.marker_blue); // XXX blue?!
+
+            if (oi != null)
+                newOi.setMarker(oi.getMarker());
+
+            editNode.setOverlayItem(newOi);
             pointsOverlay.addOverlay(editNode.getOverlayItem(),
                     editNode.getId());
 
+            if (editNode.getDataPointsList() != null)
+                reDrawWay(editNode.getDataPointsList());
             if (ev.getAction() == MotionEvent.ACTION_UP) {
                 Log.d(LOG_TAG,
                         "Exiting edit mode for point " + editNode.getId());
@@ -367,6 +373,33 @@ public class MapsForgeActivity extends MapActivity {
                 addGnubbel(l);
 
         }
+    }
+
+    /**
+     * Update the color of a way once its not the current way any more.
+     * 
+     * @param id
+     */
+    void reDrawWay(int id) {
+        if (id <= 0)
+            return;
+        reDrawWay(currentTrack().getPointsListById(id));
+
+    }
+
+    /**
+     * redraw the given way
+     * 
+     * @param way
+     */
+    void reDrawWay(DataPointsList way) {
+        if (way == null)
+            return;
+        routesOverlay.removeOverlay(way.getOverlayRoute());
+        final Pair<Paint, Paint> color = getColor();
+        way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
+                color.first, color.second));
+        routesOverlay.addRoute(way.getOverlayRoute());
     }
 
     private void addGnubbel(DataPointsList way) {
@@ -564,24 +597,6 @@ public class MapsForgeActivity extends MapActivity {
                 editNode = currentTrack().getNodeById(nodeId);
                 Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
             }
-        }
-
-        /**
-         * Update the color of a way once its not the current way any more.
-         * 
-         * @param id
-         */
-        private void reDrawWay(int id) {
-            if (id <= 0)
-                return;
-            DataPointsList way = currentTrack().getPointsListById(id);
-            if (way == null)
-                return;
-            routesOverlay.removeOverlay(way.getOverlayRoute());
-            final Pair<Paint, Paint> color = getColor();
-            way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
-                    color.first, color.second));
-            routesOverlay.addRoute(way.getOverlayRoute());
         }
     }
 
