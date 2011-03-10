@@ -121,13 +121,31 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Setter-method.
+     * Setter-method. Renames a Track in the devices and working memory.
      * 
-     * @param name
+     * @param newname
      *            The new name of the DataTrack
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String newname) {
+        this.name = newname;
+        renameTrack(newname);
+    }
+
+    /**
+     * Renames a Track on the devices memory.
+     * 
+     * @param newname
+     *            The new name of the Track
+     */
+    private void renameTrack(String newname) {
+        File trackdir = new File(getTrackDirPath());
+        if (trackdir.isDirectory()) {
+            if (!trackdir.renameTo(new File(getTrackDirPath(newname)))) {
+                Log.w("RenamingTrack", "Could not rename Track.");
+            }
+        } else {
+            Log.w("RenamingTrack", "Could not find Track " + getName());
+        }
     }
 
     /**
@@ -277,6 +295,10 @@ public class DataTrack extends DataMediaHolder {
 
         Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
 
+        if (!(new File(getTrackDirPath()).isDirectory())) {
+            createNewTrackFolder();
+        }
+
         File xmlfile = new File(getPathOfTrackTbTFile(name));
 
         FileOutputStream fileos = openFile(xmlfile);
@@ -356,15 +378,6 @@ public class DataTrack extends DataMediaHolder {
      */
     public void delete() {
         DataStorage.deleteDirectory(new File(getTrackDirPath()));
-        /*
-         * File track = new File(getTrackDirPath()); File[] files =
-         * track.listFiles(); for (File f : files) { if (f.isFile()) { if
-         * (!f.delete()) { Log.e("DeleteTrackFile", "Could not delete file " +
-         * f.getName() + " in track " + getName()); } } } if (!track.delete()) {
-         * Log.e("DeleteTrack", "Could not delete track " + getName());
-         * 
-         * }
-         */
     }
 
     /**
