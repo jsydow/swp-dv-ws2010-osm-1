@@ -127,8 +127,8 @@ public class DataTrack extends DataMediaHolder {
      *            The new name of the DataTrack
      */
     public void setName(String newname) {
-        this.name = newname;
         renameTrack(newname);
+        this.name = newname;
     }
 
     /**
