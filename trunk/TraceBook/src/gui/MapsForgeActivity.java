@@ -26,6 +26,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.Pair;
@@ -67,7 +68,7 @@ public class MapsForgeActivity extends MapActivity {
      */
     DataNodeArrayItemizedOverlay pointsOverlay;
 
-    private BroadcastReceiver gpsReceiver;
+    private GPSReceiver gpsReceiver;
 
     /**
      * List of possible colors for ways and areas the first color in the list is
@@ -81,6 +82,8 @@ public class MapsForgeActivity extends MapActivity {
     boolean showGnubbel = true;
 
     private int colorID = 0;
+
+    private boolean useInternet = false;
 
     /**
      * Gets a color from the rotating color array.
@@ -116,14 +119,6 @@ public class MapsForgeActivity extends MapActivity {
 
         Log.d(LOG_TAG, "Creating MapActivity");
 
-        File file = new File("/sdcard/", "default.map");
-        if (!file.exists()) {
-            Toast.makeText(getApplicationContext(),
-                    "Unable to open " + file.getAbsolutePath() + "!",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
         // create paint list
         colors = new ArrayList<Pair<Paint, Paint>>();
         colors.add(getPaintPair(Color.rgb(0, 255, 0)));
@@ -139,9 +134,10 @@ public class MapsForgeActivity extends MapActivity {
         addPoints();
         addWays();
 
-        changeMapViewMode(MapViewMode.CANVAS_RENDERER, file);
-
         gpsReceiver = new GPSReceiver();
+
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
+                "/sdcard/default.map"));
     }
 
     /**
@@ -181,6 +177,15 @@ public class MapsForgeActivity extends MapActivity {
         mapController = mapView.getController();
 
         setContentView(mapView);
+
+        final GPSReceiver receiver = gpsReceiver;
+
+        (new Handler()).postDelayed(new Runnable() { // XXX why do we need this
+                                                     // delay?
+                    public void run() {
+                        receiver.centerOnCurrentPosition();
+                    }
+                }, 1000L);
     }
 
     @Override
@@ -220,10 +225,21 @@ public class MapsForgeActivity extends MapActivity {
         // Handle item selection
         switch (item.getItemId()) {
         case R.id.activateMobileInternet_opt:
-            changeMapViewMode(MapViewMode.MAPNIK_TILE_DOWNLOAD, null);
+
+            if (useInternet) {
+                item.setTitle("Use online rendering");
+                changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
+                        "/sdcard/default.map"));
+                useInternet = false;
+            } else {
+                item.setTitle("Use offline rendering");
+                changeMapViewMode(MapViewMode.MAPNIK_TILE_DOWNLOAD, null);
+                useInternet = true;
+            }
+
             return true;
         case R.id.centerAtOwnPosition_opt:
-            ((GPSReceiver) gpsReceiver).centerOnCurrentPosition();
+            gpsReceiver.centerOnCurrentPosition();
             return true;
         case R.id.export_opt:
             /*
@@ -233,7 +249,8 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.pause_opt:
 
             builder.setMessage(getResources().getString(R.string.pause_alert))
-                    .setCancelable(false).setPositiveButton(
+                    .setCancelable(false)
+                    .setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -248,7 +265,8 @@ public class MapsForgeActivity extends MapActivity {
                                      * DO SOMETHING
                                      */
                                 }
-                            }).setNegativeButton(
+                            })
+                    .setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -261,7 +279,8 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.stopTrack_opt:
             builder.setMessage(getResources().getString(R.string.exit_alert))
-                    .setCancelable(false).setPositiveButton(
+                    .setCancelable(false)
+                    .setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -275,7 +294,8 @@ public class MapsForgeActivity extends MapActivity {
                                     finish();
 
                                 }
-                            }).setNegativeButton(
+                            })
+                    .setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -311,8 +331,9 @@ public class MapsForgeActivity extends MapActivity {
 
             if (showGnubbel) {
                 for (DataNode n : l.getNodes())
-                    pointsOverlay.addOverlay(getOverlayItem(n.toGeoPoint(),
-                            R.drawable.marker_blue), n.getId());
+                    pointsOverlay.addOverlay(
+                            getOverlayItem(n.toGeoPoint(),
+                                    R.drawable.marker_blue), n.getId());
 
             }
         }
@@ -375,6 +396,7 @@ public class MapsForgeActivity extends MapActivity {
      * 
      */
     private class GPSReceiver extends BroadcastReceiver {
+
         /**
          * will center the map to the current position if true. This will be set
          * to false once the map is centered, it's used to initially center the
@@ -382,11 +404,14 @@ public class MapsForgeActivity extends MapActivity {
          */
         boolean centerMap = true;
 
-        OverlayItem current_pos = null;
+        /**
+         * the last known {@link GeoPoint}
+         */
         GeoPoint currentGeoPoint = null;
 
-        int oldWayId = -1;
-
+        /**
+         * request the map to be centered to the current position
+         */
         void centerOnCurrentPosition() {
             if (currentGeoPoint != null) {
                 mapController.setCenter(currentGeoPoint);
@@ -394,6 +419,9 @@ public class MapsForgeActivity extends MapActivity {
             } else
                 centerMap = true;
         }
+
+        OverlayItem current_pos = null;
+        int oldWayId = -1;
 
         public GPSReceiver() { /* nothing to do here */
         }
@@ -408,8 +436,9 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng);
 
-                Log.d(LOG_TAG, "Location update received "
-                        + currentGeoPoint.toString());
+                Log.d(LOG_TAG,
+                        "Location update received "
+                                + currentGeoPoint.toString());
 
                 if (current_pos != null)
                     pointsOverlay.removeOverlay(-1);
@@ -424,9 +453,8 @@ public class MapsForgeActivity extends MapActivity {
             } else if (intend.getAction().equals(
                     WaypointLogService.UPDTAE_OBJECT)) {
                 if (currentTrack() == null) {
-                    Log
-                            .e(LOG_TAG,
-                                    "Received UPDATE_OBJECT with no current track present.");
+                    Log.e(LOG_TAG,
+                            "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 
@@ -457,9 +485,10 @@ public class MapsForgeActivity extends MapActivity {
                                 way.getNodes().size() - 1);
                         Log.d(LOG_TAG, "new node in current way: " + lastPoint);
                         if (showGnubbel)
-                            pointsOverlay.addOverlay(getOverlayItem(lastPoint
-                                    .toGeoPoint(), R.drawable.marker_blue),
-                                    lastPoint.getId());
+                            pointsOverlay.addOverlay(
+                                    getOverlayItem(lastPoint.toGeoPoint(),
+                                            R.drawable.marker_blue), lastPoint
+                                            .getId());
                     }
                 } else if (pointId > 0) { // received an updated POI
                     Log.d(LOG_TAG, "Received node update, id=" + pointId);
@@ -469,9 +498,9 @@ public class MapsForgeActivity extends MapActivity {
                                 + " does not exist.");
                     else {
                         Log.d(LOG_TAG, point.toString());
-                        pointsOverlay
-                                .addOverlay(new OverlayItem(point.toGeoPoint(),
-                                        point.getId() + "", ""), pointId);
+                        pointsOverlay.addOverlay(
+                                new OverlayItem(point.toGeoPoint(), point
+                                        .getId() + "", ""), pointId);
                     }
                 }
 
