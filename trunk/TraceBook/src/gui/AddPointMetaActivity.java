@@ -24,7 +24,7 @@ import core.data.DataStorage;
  * depended by their key values. For example when you choose "highway" only
  * highway related values will be given as a list for autocomplete.
  * 
- * @author greentrax
+ * @author greentraxas
  */
 public class AddPointMetaActivity extends Activity {
 
@@ -68,16 +68,12 @@ public class AddPointMetaActivity extends Activity {
                     .getDataMapObjectById(nodeId);
 
             if (extras.containsKey("DataNodeKey")) {
-                String keyValue = extras.getString("DataNodeKey");
-
-                String[] cat = keyValue.split(" - ");
-                if (cat.length != 0) {
-                    autoComplCat.setText(cat[0]);
-                    autoComplVal.setText(cat[1]);
-                } else {
-                    autoComplCat.setText("");
-                    autoComplVal.setText("");
-                }
+                String key = extras.getString("DataNodeKey");
+                autoComplCat.setText(key);
+            }
+            if (extras.containsKey("DataNodeValue")) {
+                String value = extras.getString("DataNodeValue");
+                autoComplVal.setText(value);
             }
 
             ArrayAdapter<String> firstGroupAdapter = new ArrayAdapter<String>(
