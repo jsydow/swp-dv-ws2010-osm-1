@@ -76,4 +76,5 @@
 <string name="loadTrack_info_cm">Infos anzeigen</string>
 <string name="editmapobjects_edit_cm">Bearbeiten</string>
 <string name="editmapobjects_delete_cm">Löschen</string>
+<string name="alert_really_delete_track">Track löschen?</string>
 </resources>
