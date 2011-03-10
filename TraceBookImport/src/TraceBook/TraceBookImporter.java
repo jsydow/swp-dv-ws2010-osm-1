@@ -24,6 +24,7 @@ import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.WayData;
 import org.openstreetmap.josm.gui.layer.GpxLayer;
 import org.openstreetmap.josm.gui.layer.OsmDataLayer;
+import org.openstreetmap.josm.gui.layer.markerlayer.AudioMarker;
 import org.openstreetmap.josm.gui.layer.markerlayer.ImageMarker;
 import org.openstreetmap.josm.gui.layer.markerlayer.Marker;
 import org.openstreetmap.josm.gui.layer.markerlayer.MarkerLayer;
@@ -150,17 +151,29 @@ public class TraceBookImporter extends FileImporter {
                                     + File.separatorChar
                                     + ((Attr) childs.item(a).getAttributes()
                                             .getNamedItem("href")).getValue());
-                            File relativePath = new File(file.getParent()+File.separatorChar +((Attr) childs.item(a)
-                                    .getAttributes().getNamedItem("href"))
-                                    .getValue());
+                            File relativePath = new File(file.getParent()
+                                    + File.separatorChar
+                                    + ((Attr) childs.item(a).getAttributes()
+                                            .getNamedItem("href")).getValue());
                             String uri = relativePath.toURI().toString();
                             Main.main.debug(uri);
-                            Marker mr = ImageMarker.create(latlon, uri, ml,
-                                    1.0, 1.0);
-                            if (mr == null)
-                                Main.main
-                                        .debug("THIS FUCKING MARKER IS EMPTY!!!");
-                            ml.data.add(mr);
+                            if (uri.endsWith(".png") || uri.endsWith(".jpg")
+                                    || uri.endsWith(".jpeg")
+                                    || uri.endsWith(".gif")) {
+                                Marker mr = ImageMarker.create(latlon, uri, ml,
+                                        1.0, 1.0);
+                                if (mr == null)
+                                    Main.main
+                                            .debug("THIS FUCKING MARKER IS EMPTY!!!");
+                                ml.data.add(mr);
+                            } else if (uri.endsWith(".wav")) {
+                                Marker mr = AudioMarker.create(latlon,
+                                        "Audio comment", uri, ml, 1.0, 1.0);
+                                if (mr == null)
+                                    Main.main
+                                            .debug("THIS FUCKING MARKER IS EMPTY!!!");
+                                ml.data.add(mr);
+                            }
 
                         }
                     }
