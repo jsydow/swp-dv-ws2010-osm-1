@@ -57,6 +57,8 @@ public class MapsForgeActivity extends MapActivity {
      */
     MapController mapController;
 
+    private String defaultMap = "/sdcard/default.map";
+
     private MapView mapView;
 
     /**
@@ -149,8 +151,7 @@ public class MapsForgeActivity extends MapActivity {
 
         gpsReceiver = new GPSReceiver();
 
-        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
-                "/sdcard/default.map"));
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(defaultMap));
     }
 
     /**
@@ -227,7 +228,7 @@ public class MapsForgeActivity extends MapActivity {
             if (useInternet) {
                 item.setTitle("Use online rendering");
                 changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
-                        "/sdcard/default.map"));
+                        defaultMap));
             } else {
                 item.setTitle("Use offline rendering");
                 changeMapViewMode(MapViewMode.MAPNIK_TILE_DOWNLOAD, null);
