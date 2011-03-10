@@ -1,7 +1,9 @@
 package gui;
 
+import gui.adapter.CustomAdapter;
+import gui.adapter.RowData;
+
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
@@ -16,8 +18,6 @@ import android.net.ParseException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -72,11 +72,6 @@ public class AddPointActivity extends ListActivity {
     DataMapObject node;
 
     /**
-     * MetaMedia object to create new media objects and to receive it.
-     */
-    // MetaMedia mm;
-
-    /**
      * CustomAdapter for our ListView which we use in this activity.
      */
     CustomAdapter adapter;
@@ -119,7 +114,6 @@ public class AddPointActivity extends ListActivity {
         // Initial Adapter
         mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         initAdapter();
-
     }
 
     /**
@@ -135,12 +129,13 @@ public class AddPointActivity extends ListActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             data.add(rd);
-            adapter = new CustomAdapter(this, R.layout.addpointlistview,
-                    R.id.list, data);
-            setListAdapter(adapter);
-            getListView().setTextFilterEnabled(true);
         }
+        adapter = new CustomAdapter(this, R.layout.addpointlistview, R.id.list,
+                data, mInflater);
+        setListAdapter(adapter);
+        getListView().setTextFilterEnabled(true);
     }
 
     /**
@@ -159,8 +154,8 @@ public class AddPointActivity extends ListActivity {
                         + rowData.toString(), Toast.LENGTH_SHORT).show();
 
         intent.putExtra("DataNodeId", node.getId()); //
-        intent.putExtra("DataNodeKey", rowData.mTitle);
-        intent.putExtra("DataNodeValue", rowData.mDetail);
+        intent.putExtra("DataNodeKey", rowData.getmTitle());
+        intent.putExtra("DataNodeValue", rowData.getmDetail());
         startActivity(intent);
 
     }
@@ -285,101 +280,6 @@ public class AddPointActivity extends ListActivity {
      */
     public void makePictureBtn(View view) {
         pictureRecorder.startIntent(this);
-    }
-
-    /**
-     * This class save our RowData for the CustomAdapter. We save the title
-     * (Category) and the detail (Value). Later we can save although imageIds,
-     * to display images for each entry at our ListView
-     */
-    private class RowData {
-        protected int mId;
-        protected String mTitle;
-        protected String mDetail;
-
-        RowData(int id, String title, String detail) {
-            mId = id;
-            mTitle = title;
-            mDetail = detail;
-        }
-
-        @Override
-        /**
-         * The Method build a String out of our RowData 
-         * Useful for Toast or other notification's.
-         */
-        public String toString() {
-            return mId + " " + mTitle + " " + mDetail;
-        }
-    }
-
-    /**
-     * Our CustomAdapter extends the normal ArrayAdapter with out RowData.
-     * 
-     * @author greenTraxas
-     * 
-     */
-    private class CustomAdapter extends ArrayAdapter<RowData> {
-        public CustomAdapter(Context context, int resource,
-                int textViewResourceId, List<RowData> objects) {
-            super(context, resource, textViewResourceId, objects);
-        }
-
-        /**
-         * For every View we used in our CustomAdapter (addpointlistview), we
-         * set the text in this method. The text is comming out of the RowData
-         * at the position of the adapter.
-         */
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            TextView title = null;
-            TextView detail = null;
-
-            RowData rowData = getItem(position);
-            if (null == convertView) {
-                convertView = mInflater
-                        .inflate(R.layout.addpointlistview, null);
-                holder = new ViewHolder(convertView);
-                convertView.setTag(holder);
-            }
-            holder = (ViewHolder) convertView.getTag();
-            title = holder.gettitle();
-            title.setText(rowData.mTitle);
-            detail = holder.getdetail();
-            detail.setText(rowData.mDetail);
-            return convertView;
-        }
-    }
-
-    /**
-     * We need a ViewHolder to get easily the views out of the used layout.
-     * 
-     * @author greenTraxas
-     * 
-     */
-    private class ViewHolder {
-        private View mRow;
-        private TextView title = null;
-        private TextView detail = null;
-
-        public ViewHolder(View row) {
-            mRow = row;
-        }
-
-        public TextView gettitle() {
-            if (null == title) {
-                title = (TextView) mRow.findViewById(R.id.title);
-            }
-            return title;
-        }
-
-        public TextView getdetail() {
-            if (null == detail) {
-                detail = (TextView) mRow.findViewById(R.id.detail);
-            }
-            return detail;
-        }
     }
 
     /*
