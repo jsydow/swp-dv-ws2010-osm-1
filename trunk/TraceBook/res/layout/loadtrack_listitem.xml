@@ -18,14 +18,7 @@
 	android:paddingBottom="7dp">
 </TextView>
 
-<Button 
-	android:text="  x  " 
-	android:id="@+id/load_track_delete_button" 
-	android:layout_width="48dp" 
-	android:layout_height="wrap_content"
-	android:onClick="deleteTrackBtn"
-	android:textColor="#FF0000"
-	android:typeface="sans"></Button>
+
 
 	
 </LinearLayout>
