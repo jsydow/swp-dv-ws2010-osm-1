@@ -237,7 +237,6 @@ public class MapsForgeActivity extends MapActivity {
             builder.show();
             return true;
         case R.id.stopTrack_opt:
-            final Intent intent = new Intent(this, StartActivity.class);
             builder.setMessage(getResources().getString(R.string.exit_alert))
                     .setCancelable(false)
                     .setPositiveButton(
@@ -251,7 +250,7 @@ public class MapsForgeActivity extends MapActivity {
                                     } catch (RemoteException e) {
                                         e.printStackTrace();
                                     }
-                                    startActivity(intent);
+                                    finish();
 
                                 }
                             })
