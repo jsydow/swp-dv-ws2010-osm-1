@@ -56,8 +56,10 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordStop(View view) {
-        recorder.stop();
-        recorder.appendFileToObject(node);
+        if (recorder.isRecording()) {
+            recorder.stop();
+            recorder.appendFileToObject(node);
+        }
 
         finish();
     }
@@ -112,5 +114,4 @@ public class RecordVideoActivity extends Activity implements
         camera.stopPreview();
         camera.release();
     }
-
 }
