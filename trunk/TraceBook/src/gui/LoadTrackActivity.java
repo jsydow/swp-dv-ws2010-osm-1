@@ -5,12 +5,20 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import core.data.DataStorage;
 import core.data.DataTrack;
 
@@ -62,7 +70,84 @@ public class LoadTrackActivity extends ListActivity {
 
         adapter = new LoadTrackArrayAdapter(this);
         setListAdapter(adapter);
+        registerForContextMenu(getListView());
 
+    }
+
+    /**
+     * Create ContextMenu for this activity.
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.loadtrack_contextmenu, menu);
+    }
+
+    /**
+     * This method create the ContextMenu for the Item which was selected. Fill
+     * the Adapter with the new MetaData and draw the ListView again.
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+        final String trackname = adapter.getItem((int) info.id);
+
+        switch (item.getItemId()) {
+        case R.id.loadTrack_load_cm:
+            DataTrack track = DataStorage.getInstance().deserialiseTrack(
+                    trackname);
+            DataStorage.getInstance().setCurrentTrack(track);
+            final Intent intent = new Intent(this, NewTrackActivity.class);
+            startActivity(intent);
+
+            return true;
+
+        case R.id.loadTrack_rename_cm:
+
+            final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            final EditText input = new EditText(this);
+            alert.setView(input);
+            alert.setTitle(getResources().getString(R.string.addNotice_alert));
+            alert.setPositiveButton("Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                int whichButton) {
+                            String value = input.getText().toString().trim();
+
+                            DataTrack.deserialise(trackname).setName(value);
+
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    getResources().getString(
+                                            R.string.addNotice_alert)
+                                            + " " + value, Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+
+            alert.setNegativeButton("Cancel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                int whichButton) {
+                            dialog.cancel();
+                        }
+                    });
+            alert.show();
+
+            return true;
+
+        case R.id.loadTrack_info_cm:
+
+            return true;
+        case R.id.loadTrack_delete_cm:
+
+            //$FALL-THROUGH$
+        default:
+            return super.onContextItemSelected(item);
+        }
     }
 
     /**
