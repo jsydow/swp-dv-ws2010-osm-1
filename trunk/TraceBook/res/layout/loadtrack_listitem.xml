@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+<TextView 
+	android:text="Track" 
+	android:id="@+id/load_track_item_text" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" 
+	android:includeFontPadding="true"
+	android:textSize="22sp"
+	android:paddingLeft="7dp"
+	android:paddingTop="7dp"
+	android:paddingBottom="7dp">
+</TextView>
+
+<Button 
+	android:text="x" 
+	android:id="@+id/Button01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:onClick="deleteTrackBtn"
+	android:textColor="#FF0000"
+	android:typeface="sans"></Button>
+	
+</LinearLayout>
