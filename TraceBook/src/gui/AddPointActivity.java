@@ -179,6 +179,7 @@ public class AddPointActivity extends ListActivity {
             intent.putExtra("DataNodeValue", rowData.getmDetail());
             startActivity(intent);
 
+            //$FALL-THROUGH$
         default:
             return super.onContextItemSelected(item);
         }
