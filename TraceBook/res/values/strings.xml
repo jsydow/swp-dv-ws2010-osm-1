@@ -33,11 +33,15 @@
     <string name="preferences_opt">Einstellungen</string>
     <string name="close_opt">Beenden</string>
     <string name="centerAtOwnPosition_opt">Ausrichten</string>
-    <string name="activateMobileInternet_opt">Internet aktivieren</string>
+    <string name="activateMobileInternet_opt">Onlinerendering starten</string>
+    <string name="deactivateMobileInternet_opt">Onlinerendering stoppen</string>
     <string name="stopTrack_opt">Aufnahme stoppen</string>
+    <string name="resumeTrack_opt">Aufnahme fortsetzen</string>
     <string name="help_opt">Hilfe</string>
     <string name="export_opt">Exportieren</string>
     <string name="pause_opt">Pause</string>
+    <string name="setMapLocation_opt">Mapfile</string>
+    <string name="showToggleWayPoints_op">Toggle Wegpunkte</string>
     
     <!--  Contextmenu values -->
 	<string name="deleteTag_cm">Tag löschen</string>

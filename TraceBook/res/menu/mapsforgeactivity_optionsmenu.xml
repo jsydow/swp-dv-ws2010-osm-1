@@ -15,4 +15,8 @@
 
 	<item android:id="@+id/export_opt" android:title="@string/export_opt"
 		android:icon="@android:drawable/ic_menu_upload" />
+		
+	<item android:id="@+id/showToggleWayPoints_opt" android:title="@string/showToggleWayPoints_op"/>	
+	
+	<item android:id="@+id/setMapLocation_opt" android:title="@string/setMapLocation_opt"/>
 </menu>
