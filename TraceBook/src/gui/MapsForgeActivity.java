@@ -10,6 +10,7 @@ import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
+import org.mapsforge.android.maps.MapViewMode;
 import org.mapsforge.android.maps.OverlayItem;
 import org.mapsforge.android.maps.OverlayRoute;
 
@@ -123,15 +124,6 @@ public class MapsForgeActivity extends MapActivity {
             return;
         }
 
-        MapView mapView = new MapView(this);
-        mapView.setClickable(true);
-        mapView.setBuiltInZoomControls(true);
-        mapView.setMapFile(file.getAbsolutePath());
-
-        setContentView(mapView);
-
-        mapController = mapView.getController();
-
         // create paint list
         colors = new ArrayList<Pair<Paint, Paint>>();
         colors.add(getPaintPair(Color.rgb(0, 255, 0)));
@@ -147,10 +139,48 @@ public class MapsForgeActivity extends MapActivity {
         addPoints();
         addWays();
 
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, file);
+
+        gpsReceiver = new GPSReceiver();
+    }
+
+    /**
+     * Changes the render mode of the map. Possible modes are specified in
+     * {@link MapViewMode}, if file is specified and the CANVAS_RENDERER mode is
+     * selected, the map will be rendered offline. If the file does not exist,
+     * it will default to fetching the tiles from the Internet
+     * 
+     * @param mode
+     *            {@link MapViewMode} render mode
+     * @param file
+     *            map file for offline rendering
+     */
+    void changeMapViewMode(MapViewMode mode, File file) {
+        MapViewMode modeLocal = mode;
+        final MapView mapView = new MapView(this);
+
+        if (mode == MapViewMode.CANVAS_RENDERER) {
+            if (file == null || !file.exists()) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Unable to open map file, fetching tiles from Internet.",
+                        Toast.LENGTH_LONG).show();
+                modeLocal = MapViewMode.OSMARENDER_TILE_DOWNLOAD;
+            } else
+                mapView.setMapFile(file.getAbsolutePath());
+        }
+
+        mapView.setMapViewMode(modeLocal);
+
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+
         mapView.getOverlays().add(routesOverlay);
         mapView.getOverlays().add(pointsOverlay);
 
-        gpsReceiver = new GPSReceiver();
+        mapController = mapView.getController();
+
+        setContentView(mapView);
     }
 
     @Override
@@ -190,15 +220,10 @@ public class MapsForgeActivity extends MapActivity {
         // Handle item selection
         switch (item.getItemId()) {
         case R.id.activateMobileInternet_opt:
-            /*
-             * DO SOMETHING
-             */
+            changeMapViewMode(MapViewMode.MAPNIK_TILE_DOWNLOAD, null);
             return true;
         case R.id.centerAtOwnPosition_opt:
             ((GPSReceiver) gpsReceiver).centerOnCurrentPosition();
-            /*
-             * DO SOMETHING
-             */
             return true;
         case R.id.export_opt:
             /*
