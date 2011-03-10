@@ -101,6 +101,8 @@ public class LoadTrackActivity extends ListActivity {
 
                             DataTrack.deserialise(trackname).setName(value);
 
+                            updateAdapter();
+
                             Toast.makeText(
                                     getApplicationContext(),
                                     getResources().getString(
@@ -206,6 +208,6 @@ public class LoadTrackActivity extends ListActivity {
          * for (String name : DataStorage.getInstance().getAllTracks()) {
          * adapter.add(name); }
          */
-        // adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 }
