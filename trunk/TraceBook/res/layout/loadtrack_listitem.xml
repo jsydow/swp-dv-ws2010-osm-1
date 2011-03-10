@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
   
+	<ListView android:id="@+id/list" android:layout_width="1px"
+		android:layout_height="1px" android:layout_weight="1">
+	</ListView>  
 <TextView 
 	android:text="Track" 
 	android:id="@+id/load_track_item_text" 
@@ -24,5 +26,6 @@
 	android:onClick="deleteTrackBtn"
 	android:textColor="#FF0000"
 	android:typeface="sans"></Button>
+
 	
 </LinearLayout>
