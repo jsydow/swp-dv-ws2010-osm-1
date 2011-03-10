@@ -578,6 +578,13 @@ public class DataTrack extends DataMediaHolder {
                 return dn;
             }
         }
+
+        for (DataPointsList dpl : ways) {
+            DataNode dn = dpl.getNodeById(id);
+            if (dn != null)
+                return dn;
+        }
+
         return null;
     }
 

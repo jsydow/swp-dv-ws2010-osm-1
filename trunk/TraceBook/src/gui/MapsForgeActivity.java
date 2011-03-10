@@ -371,6 +371,8 @@ public class MapsForgeActivity extends MapActivity {
                 WaypointLogService.UPDTAE_GPS_POS));
         registerReceiver(gpsReceiver, new IntentFilter(
                 WaypointLogService.UPDTAE_OBJECT));
+        registerReceiver(gpsReceiver, new IntentFilter(
+                DataNodeArrayItemizedOverlay.UPDTAE_WAY));
 
     }
 
@@ -504,6 +506,12 @@ public class MapsForgeActivity extends MapActivity {
                     }
                 }
 
+            } else if (intend.getAction().equals(
+                    DataNodeArrayItemizedOverlay.UPDTAE_WAY)) {
+                int wayId = intend.getExtras().getInt("way_id");
+                Log.d(LOG_TAG, "Nodes of way " + wayId + " have changed.");
+
+                reDrawWay(wayId);
             }
         }
 
@@ -519,7 +527,7 @@ public class MapsForgeActivity extends MapActivity {
             if (way == null)
                 return;
             routesOverlay.removeOverlay(way.getOverlayRoute());
-            Pair<Paint, Paint> color = getColor();
+            final Pair<Paint, Paint> color = getColor();
             way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
                     color.first, color.second));
             routesOverlay.addRoute(way.getOverlayRoute());

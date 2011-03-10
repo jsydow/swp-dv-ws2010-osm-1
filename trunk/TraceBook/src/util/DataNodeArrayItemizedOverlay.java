@@ -18,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.widget.Toast;
 import core.data.DataNode;
+import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.data.DataTrack;
 
@@ -34,6 +35,13 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
     private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
 
+    private static final String BASETAG = "de.fu-berlin.inf.tracebook";
+
+    /**
+     * Tag of the Intent that signals an update of a way.
+     */
+    public static final String UPDTAE_WAY = BASETAG + ".UPDTAE_WAY";
+
     /**
      * Context of the MapActivity.
      */
@@ -43,6 +51,11 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Reference to the current DataTrack.
      */
     DataTrack currentTrack;
+
+    /**
+     * Intent to send updated ways to the MapsForgeView
+     */
+    final Intent way_intent = new Intent(UPDTAE_WAY);
 
     /**
      * Constructs a new ArrayItemizedOverlay.
@@ -160,8 +173,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     final Intent intent = new Intent(context,
                             AddPointActivity.class);
                     if (nodeId < 0)
-                        intent.putExtra("DataNodeId", currentTrack.newNode(
-                                point).getId());
+                        intent.putExtra("DataNodeId",
+                                currentTrack.newNode(point).getId());
                     else
                         intent.putExtra("DataNodeId", nodeId);
 
@@ -173,9 +186,17 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                                 "can not delete current location",
                                 Toast.LENGTH_SHORT).show();
                     else {
-                        if (currentTrack.deleteNode(nodeId))
+                        final DataNode node = currentTrack.getNodeById(nodeId);
+                        DataPointsList way = null;
+                        if (node != null)
+                            way = node.getDataPointsList();
+                        if (currentTrack.deleteNode(nodeId)) {
                             remove(nodeId);
-                        else
+                            if (way != null) { // we have to redraw the way
+                                way_intent.putExtra("way_id", way.getId());
+                                context.sendBroadcast(way_intent);
+                            }
+                        } else
                             Toast.makeText(context,
                                     "Can not delete Node id=" + nodeId,
                                     Toast.LENGTH_SHORT).show();

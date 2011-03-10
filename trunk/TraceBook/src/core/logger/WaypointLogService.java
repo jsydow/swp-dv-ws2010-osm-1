@@ -53,8 +53,8 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     LogParameter params;
 
-    private Intent gps_intent = new Intent(UPDTAE_GPS_POS);
-    private Intent update_intent = new Intent(UPDTAE_OBJECT);
+    private final Intent gps_intent = new Intent(UPDTAE_GPS_POS);
+    private final Intent update_intent = new Intent(UPDTAE_OBJECT);
 
     private boolean gps_on = false;
 
