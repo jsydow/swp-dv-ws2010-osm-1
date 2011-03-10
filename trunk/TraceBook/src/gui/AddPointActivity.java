@@ -1,12 +1,14 @@
 package gui;
 
-import gui.adapter.CustomAdapter;
-import gui.adapter.RowData;
+import gui.adapter.GenericAdapter;
+import gui.adapter.GenericAdapterData;
+import gui.adapter.GenericItemDescription;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Vector;
 
 import Trace.Book.R;
 import android.app.AlertDialog;
@@ -14,7 +16,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -45,11 +46,6 @@ public class AddPointActivity extends ListActivity {
     private LayoutInflater mInflater;
 
     /**
-     * We save our RowData, to fill the CustomAdapter with this.
-     */
-    RowData rd;
-
-    /**
      * The String[] "category" save all CategoryTags of the node. First we need
      * this to list all Items in our ListView. Second to send the Tag with an
      * intent to the AddPointMetaActivity
@@ -75,9 +71,9 @@ public class AddPointActivity extends ListActivity {
     DataMapObject node;
 
     /**
-     * CustomAdapter for our ListView which we use in this activity.
+     * GenericAdapter for our ListView which we use in this activity.
      */
-    CustomAdapter adapter;
+    GenericAdapter adapter;
 
     /**
      * PicutreRecoder to take pictures.
@@ -125,19 +121,42 @@ public class AddPointActivity extends ListActivity {
      * ListView.
      */
     private void initAdapter() {
-        Vector<RowData> data = new Vector<RowData>();
-        for (int i = 0; i < category.length; i++) {
-            try {
-                rd = new RowData(i, category[i], value[i]);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+        // Vector<RowData> data = new Vector<RowData>();
+        // for (int i = 0; i < category.length; i++) {
+        // try {
+        // rd = new RowData(i, category[i], value[i]);
+        // } catch (ParseException e) {
+        // e.printStackTrace();
+        // }
+        //
+        // data.add(rd);
+        // }
+        // adapter = new CustomAdapter(this, R.layout.addpointlistview,
+        // R.id.list,
+        // data, mInflater);
+        // setListAdapter(adapter);
 
-            data.add(rd);
+        GenericItemDescription desc = new GenericItemDescription();
+
+        desc.addResourceId("NodeKey", R.id.title);
+        desc.addResourceId("NodeValue", R.id.detail);
+
+        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+
+        for (int i = 0; i < category.length; i++) {
+
+            GenericAdapterData itemData = new GenericAdapterData(desc);
+            itemData.SetText("NodeKey", category[i]);
+            itemData.SetText("NodeValue", value[i]);
+
+            data.add(itemData);
         }
-        adapter = new CustomAdapter(this, R.layout.addpointlistview, R.id.list,
-                data, mInflater);
+
+        adapter = new GenericAdapter(this, R.layout.addpointlistview,
+                R.id.list, data, mInflater);
+
         setListAdapter(adapter);
+
         getListView().setTextFilterEnabled(true);
     }
 
@@ -162,10 +181,13 @@ public class AddPointActivity extends ListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                 .getMenuInfo();
+
+        GenericAdapterData itemData = adapter.getItem((int) info.id);
+
         switch (item.getItemId()) {
         case R.id.deleteTag_cm:
 
-            node.getTags().remove(adapter.getItem((int) info.id).getmTitle());
+            node.getTags().remove(itemData.getText("NodeKey"));
             getNodeInformation();
             initAdapter();
             adapter.notifyDataSetChanged();
@@ -173,10 +195,9 @@ public class AddPointActivity extends ListActivity {
         case R.id.renameTag_cm:
             final Intent intent = new Intent(this, AddPointMetaActivity.class);
 
-            RowData rowData = adapter.getItem((int) info.id);
             intent.putExtra("DataNodeId", node.getId()); //
-            intent.putExtra("DataNodeKey", rowData.getmTitle());
-            intent.putExtra("DataNodeValue", rowData.getmDetail());
+            intent.putExtra("DataNodeKey", itemData.getText("NodeKey"));
+            intent.putExtra("DataNodeValue", itemData.getText("NodeValue"));
             startActivity(intent);
 
             //$FALL-THROUGH$
