@@ -39,6 +39,12 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Importer class for TraceBookTrack files
+ * 
+ * @author anubis
+ * 
+ */
 public class TraceBookImporter extends FileImporter {
     public static final String TRACEBOOK_FILE_EXT = "tbt";
     public static final String TRACEBOOK_FILE_EXT_DOT = ".";
@@ -216,6 +222,7 @@ public class TraceBookImporter extends FileImporter {
                     newway.setOsmId(1l, wd.getVersion());
                     List<org.openstreetmap.josm.data.osm.Node> waynodes = new LinkedList<org.openstreetmap.josm.data.osm.Node>();
                     NodeList childs = nlw.item(i).getChildNodes();
+                    HashMap<String, String> tags = null;
                     for (int a = 0; a < childs.getLength(); a++) {
 
                         if (childs.item(a).getNodeName().equalsIgnoreCase("nd")) {
@@ -231,6 +238,15 @@ public class TraceBookImporter extends FileImporter {
                                         + "" + ") to way " + newway.getId());
                             }
                         }
+                        if (childs.item(a).getNodeName()
+                                .equalsIgnoreCase("tag")) {
+                            if (tags == null)
+                                tags = new HashMap<String, String>();
+                            tags.put(((Attr) childs.item(a).getAttributes()
+                                    .getNamedItem("k")).getValue(),
+                                    ((Attr) childs.item(a).getAttributes()
+                                            .getNamedItem("v")).getValue());
+                        }
                     }
                     if (nlw.item(i).getAttributes().getNamedItem("timestamp") != null)
                         newway.setTimestamp(DateUtils.fromString(((Attr) nlw
@@ -238,11 +254,8 @@ public class TraceBookImporter extends FileImporter {
                                         "timestamp")).getValue()));
                     newway.setVisible(true);
                     newway.setNodes(waynodes);
-                    if (nlw.item(i).getAttributes().getNamedItem("area") != null
-                            && ((Attr) nlw.item(i).getAttributes()
-                                    .getNamedItem("area")).getValue()
-                                    .equalsIgnoreCase("yes")) {
-
+                    if (tags != null) {
+                        newway.setKeys(tags);
                     }
                     osmdata.addPrimitive(newway);
 
