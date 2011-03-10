@@ -26,7 +26,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.RemoteException;
 import android.util.Log;
 import android.util.Pair;
@@ -57,6 +56,8 @@ public class MapsForgeActivity extends MapActivity {
      * MapController object to interact with the Map.
      */
     MapController mapController;
+
+    private MapView mapView;
 
     /**
      * Overlay containing all areas and ways.
@@ -134,6 +135,18 @@ public class MapsForgeActivity extends MapActivity {
         addPoints();
         addWays();
 
+        mapView = new MapView(this);
+
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+
+        mapView.getOverlays().add(routesOverlay);
+        mapView.getOverlays().add(pointsOverlay);
+
+        mapController = mapView.getController();
+
+        setContentView(mapView);
+
         gpsReceiver = new GPSReceiver();
 
         changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
@@ -153,7 +166,6 @@ public class MapsForgeActivity extends MapActivity {
      */
     void changeMapViewMode(MapViewMode mode, File file) {
         MapViewMode modeLocal = mode;
-        final MapView mapView = new MapView(this);
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
@@ -162,30 +174,16 @@ public class MapsForgeActivity extends MapActivity {
                         "Unable to open map file, fetching tiles from Internet.",
                         Toast.LENGTH_LONG).show();
                 modeLocal = MapViewMode.OSMARENDER_TILE_DOWNLOAD;
-            } else
+            } else {
+                mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
+                                                   // specify a mapsfile when in
+                                                   // Online mode
                 mapView.setMapFile(file.getAbsolutePath());
+            }
         }
-
         mapView.setMapViewMode(modeLocal);
 
-        mapView.setClickable(true);
-        mapView.setBuiltInZoomControls(true);
-
-        mapView.getOverlays().add(routesOverlay);
-        mapView.getOverlays().add(pointsOverlay);
-
-        mapController = mapView.getController();
-
-        setContentView(mapView);
-
-        final GPSReceiver receiver = gpsReceiver;
-
-        (new Handler()).postDelayed(new Runnable() { // XXX why do we need this
-                                                     // delay?
-                    public void run() {
-                        receiver.centerOnCurrentPosition();
-                    }
-                }, 1000L);
+        gpsReceiver.centerOnCurrentPosition();
     }
 
     @Override
