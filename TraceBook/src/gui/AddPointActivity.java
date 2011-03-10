@@ -16,13 +16,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
@@ -77,8 +80,8 @@ public class AddPointActivity extends ListActivity {
     CustomAdapter adapter;
 
     /**
-    * 
-    */
+     * PicutreRecoder to take pictures.
+     */
     PictureRecorder pictureRecorder = new PictureRecorder();
 
     @Override
@@ -108,7 +111,7 @@ public class AddPointActivity extends ListActivity {
         // Initial ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
-
+        registerForContextMenu(getListView());
         getNodeInformation();
 
         // Initial Adapter
@@ -139,25 +142,46 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
-     * If a User select a item, we start the AddPointMetaActivty to edit the
-     * MetaData for this Node. The Intent get the Extras: 1. DataNodeId 2.
-     * DataNodeKey (CategoryKey of the selected node) 3. DataNodeValue (the
-     * Value for the CategoryKey of the selected node)
+     * Create ContextMenu for this activity.
      */
     @Override
-    public void onListItemClick(ListView parent, View v, int position, long id) {
-        final Intent intent = new Intent(this, AddPointMetaActivity.class);
-        RowData rowData = adapter.getItem(position);
-        Toast.makeText(
-                getApplicationContext(),
-                "You have selected " + (position + 1) + "th item" + " "
-                        + rowData.toString(), Toast.LENGTH_SHORT).show();
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.editmeta_contextmenu, menu);
+    }
 
-        intent.putExtra("DataNodeId", node.getId()); //
-        intent.putExtra("DataNodeKey", rowData.getmTitle());
-        intent.putExtra("DataNodeValue", rowData.getmDetail());
-        startActivity(intent);
+    /**
+     * This method create the ContextMenu for the Item which was selected. 1.
+     * deleteTag: delete the selected MetaTag from the node. 2. renameTag: open
+     * AddPointMetaActivity to rename the selected MetaTag. Fill the Adapter
+     * with the new MetaData and draw the ListView again.
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+        switch (item.getItemId()) {
+        case R.id.deleteTag_cm:
 
+            node.getTags().remove(adapter.getItem((int) info.id).getmTitle());
+            getNodeInformation();
+            initAdapter();
+            adapter.notifyDataSetChanged();
+            return true;
+        case R.id.renameTag_cm:
+            final Intent intent = new Intent(this, AddPointMetaActivity.class);
+
+            RowData rowData = adapter.getItem((int) info.id);
+            intent.putExtra("DataNodeId", node.getId()); //
+            intent.putExtra("DataNodeKey", rowData.getmTitle());
+            intent.putExtra("DataNodeValue", rowData.getmDetail());
+            startActivity(intent);
+
+        default:
+            return super.onContextItemSelected(item);
+        }
     }
 
     /**
