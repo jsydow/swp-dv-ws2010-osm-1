@@ -46,7 +46,7 @@ public class AudioRecorder extends Recorder {
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         // Possible output formats are 3gpp and MPEG4, e. g.
         recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         recorder.setOutputFile(getPath());
 
         try {
