@@ -230,16 +230,25 @@ public class MapsForgeActivity extends MapActivity {
                 item.setTitle("Use online rendering");
                 changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
                         "/sdcard/default.map"));
-                useInternet = false;
             } else {
                 item.setTitle("Use offline rendering");
                 changeMapViewMode(MapViewMode.MAPNIK_TILE_DOWNLOAD, null);
-                useInternet = true;
             }
+            useInternet = !useInternet;
 
             return true;
         case R.id.centerAtOwnPosition_opt:
             gpsReceiver.centerOnCurrentPosition();
+            return true;
+        case R.id.showToggleWayPoints_opt:
+            showGnubbel = !showGnubbel;
+            pointsOverlay.clear();
+
+            for (DataPointsList dpl : currentTrack().getWays())
+                if (showGnubbel)
+                    addGnubbel(dpl);
+                else
+                    removeGnubbel(dpl);
             return true;
         case R.id.export_opt:
             /*
@@ -329,14 +338,24 @@ public class MapsForgeActivity extends MapActivity {
             }
             routesOverlay.addRoute(l.getOverlayRoute());
 
-            if (showGnubbel) {
-                for (DataNode n : l.getNodes())
-                    pointsOverlay.addOverlay(
-                            getOverlayItem(n.toGeoPoint(),
-                                    R.drawable.marker_blue), n.getId());
+            if (showGnubbel)
+                addGnubbel(l);
 
-            }
         }
+    }
+
+    private void addGnubbel(DataPointsList way) {
+        for (DataNode n : way.getNodes()) {
+            if (n.getOverlayItem() == null)
+                n.setOverlayItem(getOverlayItem(n.toGeoPoint(),
+                        R.drawable.marker_blue));
+            pointsOverlay.addOverlay(n.getOverlayItem(), n.getId());
+        }
+    }
+
+    private void removeGnubbel(DataPointsList way) {
+        for (DataNode n : way.getNodes())
+            pointsOverlay.removeOverlay(n.getId());
     }
 
     /**
