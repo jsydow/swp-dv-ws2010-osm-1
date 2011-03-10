@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
- * TODO: Javadoc!
+ * This class provides methods for controlling the {@link WaypointLogService}
  */
 public class ServiceConnector {
     private static final String LOG_TAG = "LOGSERVICECLIENT";
@@ -16,8 +15,8 @@ public class ServiceConnector {
     private static Activity activity = null;
 
     /**
-	 * 
-	 */
+     * Default constructor
+     */
     protected ServiceConnector() {
         super();
     }
@@ -34,10 +33,8 @@ public class ServiceConnector {
                     WaypointLogService.class.getName());
             activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
             Log.d(LOG_TAG, "bindService()");
-        } else {
-            Toast.makeText(activity, "Cannot bind - service already bound",
-                    Toast.LENGTH_SHORT).show();
-        }
+        } else
+            Log.d(LOG_TAG, "Cannot bind - service already bound");
     }
 
     /**
@@ -48,23 +45,21 @@ public class ServiceConnector {
             activity.unbindService(conn);
             conn = null;
             Log.d(LOG_TAG, "unbindService()");
-        } else {
-            Toast.makeText(activity, "Cannot unbind - service not bound",
-                    Toast.LENGTH_SHORT).show();
-        }
+        } else
+            Log.d(LOG_TAG, "Cannot unbind - service not bound");
     }
 
     /**
      * Start the logging service (collect GPS data).
      * 
      * @param act
-     *            reference to an activty for which the service should be binded
+     *            reference to an activity for which the service should be
+     *            binded
      */
     public static void startService(Activity act) {
         activity = act;
         if (started) {
-            Toast.makeText(activity, "Service already started",
-                    Toast.LENGTH_SHORT).show();
+            Log.d(LOG_TAG, "Service already started");
         } else {
             Intent i = new Intent();
             i.setClassName(activity.getPackageName(),
@@ -80,10 +75,8 @@ public class ServiceConnector {
      */
     public static void stopService() {
         if (!started) {
-            Toast.makeText(activity, "Service not yet started",
-                    Toast.LENGTH_SHORT).show();
+            Log.d(LOG_TAG, "Service not yet started");
         } else {
-
             Intent i = new Intent();
             i.setClassName(activity.getPackageName(),
                     WaypointLogService.class.getName());
@@ -96,7 +89,7 @@ public class ServiceConnector {
      * @return get a reference to the loggerService
      */
     public static ILoggerService getLoggerService() {
-        // danger
+        // danger - ?!
         return conn.getLoggerService();
     }
 

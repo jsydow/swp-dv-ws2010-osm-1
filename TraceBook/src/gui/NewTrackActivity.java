@@ -51,7 +51,7 @@ public class NewTrackActivity extends TabActivity {
      *         different tab views when changing the tabs. So you see always an
      *         updated view of your data.
      */
-    class MyListener implements OnTabChangeListener {
+    static class MyListener implements OnTabChangeListener {
 
         /**
          * We use this to have a reference of our NewTrackActivity.
