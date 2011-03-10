@@ -1,8 +1,10 @@
 package gui;
 
 import Trace.Book.R;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import core.data.DataStorage;
+import core.data.DataTrack;
 
 /**
  * The Class LoadTrackActivity.
@@ -17,6 +20,11 @@ import core.data.DataStorage;
  * @author greenTraxas
  */
 public class LoadTrackActivity extends ListActivity {
+
+    /**
+     * 
+     */
+    LoadTrackArrayAdapter adapter;
 
     /**
      * @author js
@@ -52,7 +60,8 @@ public class LoadTrackActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setListAdapter(new LoadTrackArrayAdapter(this));
+        adapter = new LoadTrackArrayAdapter(this);
+        setListAdapter(adapter);
 
     }
 
@@ -70,6 +79,43 @@ public class LoadTrackActivity extends ListActivity {
             return;
         }
         Log.w("BUTTON", (String) v.getTag());
+        deleteTrack((String) v.getTag());
+    }
+
+    private void deleteTrack(final String trname) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(
+                getResources().getString(R.string.alert_really_delete_track))
+                .setCancelable(false)
+                .setPositiveButton(
+                        getResources().getString(R.string.yes_alert),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                DataTrack.delete(trname);
+                                Log.d("DEBUG", "delete " + trname);
+                                // updateAdapter();
+                            }
+                        })
+                .setNegativeButton(getResources().getString(R.string.no_alert),
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                dialog.cancel();
+                            }
+                        });
+        builder.show();
+    }
+
+    /**
+     * 
+     */
+    void updateAdapter() {
+        adapter.clear();
+        for (String name : DataStorage.getInstance().getAllTracks()) {
+            adapter.add(name);
+        }
+        adapter.notifyDataSetChanged();
     }
 
 }

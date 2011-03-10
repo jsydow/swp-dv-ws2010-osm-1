@@ -381,6 +381,15 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
+     * Deletes a Track with all its contents from the devices memory.
+     * 
+     * @param trackname
+     */
+    public static void delete(String trackname) {
+        DataStorage.deleteDirectory(new File(getTrackDirPath(trackname)));
+    }
+
+    /**
      * Getter-method. The currently edited Way.
      * 
      * @return The current Way. Current Way can be null if not initialised.
