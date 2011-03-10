@@ -26,7 +26,6 @@ import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
-import android.os.Environment;
 import android.util.Log;
 import android.util.Xml;
 
@@ -278,29 +277,23 @@ public class DataTrack extends DataMediaHolder {
 
         Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
 
-        File xmlfile = new File(Environment.getExternalStorageDirectory()
-                + File.separator + "TraceBook" + File.separator + name
-                + File.separator + "/track.tbt");
-        try {
-            if (xmlfile.exists()) {
-                if (!xmlfile.delete()) {
-                    Log.e("TrackSerialisation", "Deleting old file failed");
-                    return;
-                }
-            }
-            if (!xmlfile.createNewFile()) {
-                Log.e("TrackSerialisation", "Creating new XML-file failed");
-                return;
-            }
+        File xmlfile = new File(getPathOfTrackTbTFile(name));
 
-        } catch (IOException e) {
-            Log.e("TrackSerialisation", "Could not create new file");
-        }
-        FileOutputStream fileos = null;
-        try {
-            fileos = new FileOutputStream(xmlfile);
-        } catch (FileNotFoundException e) {
-            Log.e("TrackSerialisation", "Could not open new file");
+        /*
+         * try { if (xmlfile.exists()) { if (!xmlfile.delete()) {
+         * Log.e("TrackSerialisation", "Deleting old file failed"); return; } }
+         * if (!xmlfile.createNewFile()) { Log.e("TrackSerialisation",
+         * "Creating new XML-file failed"); return; }
+         * 
+         * } catch (IOException e) { Log.e("TrackSerialisation",
+         * "Could not create new file"); } FileOutputStream fileos = null; try {
+         * fileos = new FileOutputStream(xmlfile); } catch
+         * (FileNotFoundException e) { Log.e("TrackSerialisation",
+         * "Could not open new file"); }
+         */
+        FileOutputStream fileos = openFile(xmlfile);
+        if (fileos == null) {
+            return;
         }
 
         XmlSerializer serializer = Xml.newSerializer();
@@ -333,8 +326,41 @@ public class DataTrack extends DataMediaHolder {
                     "Should not happen. Internal error.");
         } catch (IOException e) {
             Log.e("DataTrackSerialisation", "Error while reading file.");
+        } finally {
+            try {
+                fileos.close();
+            } catch (IOException e) {
+                // do nothing
+            }
         }
 
+    }
+
+    private static FileOutputStream openFile(File file) {
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    Log.e("OpenFile", "Deleting old file " + file.getName()
+                            + " failed");
+                    return null;
+                }
+            }
+            if (!file.createNewFile()) {
+                Log.e("OpenFile", "Creating new file " + file.getName()
+                        + " failed");
+                return null;
+            }
+
+        } catch (IOException e) {
+            Log.e("OpenFile", "Could not create new file " + file.getPath());
+        }
+        FileOutputStream fileos = null;
+        try {
+            fileos = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            Log.e("OpenFile", "Could not open new file " + file.getPath());
+        }
+        return fileos;
     }
 
     /**
