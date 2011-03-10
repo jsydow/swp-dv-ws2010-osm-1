@@ -149,7 +149,7 @@ public class NewTrackActivity extends TabActivity {
      * be saved.
      * 
      * @param active
-     *            turn the visibilty of the buttonlist and textview off/on
+     *            turn the visibilty of the buttonlist and textview on/off
      * @param button
      *            signals the method which button was selected. 1 for street
      *            togglebutton 2 for area toggle button and else 0
