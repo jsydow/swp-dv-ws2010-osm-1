@@ -102,6 +102,18 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     /**
+     * Adds the DataNode to the overlay, assuming a OverlayItem was already
+     * specified.
+     * 
+     * @param node
+     *            The DataNode - must contain a OverlayItem as well as a unique
+     *            ID
+     */
+    public void addOverlay(DataNode node) {
+        addOverlay(node.getOverlayItem(), node.getId());
+    }
+
+    /**
      * Removes all items from the overlay.
      */
     public void clear() {

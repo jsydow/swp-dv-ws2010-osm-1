@@ -199,18 +199,13 @@ public class MapsForgeActivity extends MapActivity {
                     (int) ev.getX(), (int) ev.getY());
 
             editNode.setLocation(projection);
+            // it is save to assume we have a marker here as this is the only
+            // way we could make this node editable
+            final Drawable marker = editNode.getOverlayItem().getMarker();
+            editNode.setOverlayItem(getOverlayItem(projection, marker));
+
             pointsOverlay.removeOverlay(editNode.getId());
-            OverlayItem oi = editNode.getOverlayItem();
-
-            OverlayItem newOi = getOverlayItem(projection,
-                    R.drawable.marker_blue); // XXX blue?!
-
-            if (oi != null)
-                newOi.setMarker(oi.getMarker());
-
-            editNode.setOverlayItem(newOi);
-            pointsOverlay.addOverlay(editNode.getOverlayItem(),
-                    editNode.getId());
+            pointsOverlay.addOverlay(editNode);
 
             if (editNode.getDataPointsList() != null)
                 reDrawWay(editNode.getDataPointsList());
@@ -356,7 +351,7 @@ public class MapsForgeActivity extends MapActivity {
         for (DataNode n : currentTrack().getNodes()) {
             if (n.getOverlayItem() == null)
                 n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-            pointsOverlay.addOverlay(n.getOverlayItem(), n.getId());
+            pointsOverlay.addOverlay(n);
         }
     }
 
@@ -407,7 +402,7 @@ public class MapsForgeActivity extends MapActivity {
             if (n.getOverlayItem() == null)
                 n.setOverlayItem(getOverlayItem(n.toGeoPoint(),
                         R.drawable.marker_blue));
-            pointsOverlay.addOverlay(n.getOverlayItem(), n.getId());
+            pointsOverlay.addOverlay(n);
         }
     }
 
@@ -426,10 +421,25 @@ public class MapsForgeActivity extends MapActivity {
      * @return the new OverlayItem
      */
     OverlayItem getOverlayItem(GeoPoint pos, int marker) {
-        final OverlayItem oi = new OverlayItem(pos, "", "");
+        final OverlayItem oi = new OverlayItem(pos, null, null);
         Drawable icon = getResources().getDrawable(marker);
         oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
 
+        return oi;
+    }
+
+    /**
+     * Creates a new OverlayItem
+     * 
+     * @param pos
+     *            position of the marker
+     * @param marker
+     *            Graphics object to be displayed at the position
+     * @return the new OverlayItem
+     */
+    OverlayItem getOverlayItem(GeoPoint pos, Drawable marker) {
+        final OverlayItem oi = new OverlayItem(pos, null, null);
+        oi.setMarker(marker);
         return oi;
     }
 
@@ -565,20 +575,22 @@ public class MapsForgeActivity extends MapActivity {
                         final DataNode lastPoint = way.getNodes().get(
                                 way.getNodes().size() - 1);
                         Log.d(LOG_TAG, "new node in current way: " + lastPoint);
-                        if (showGnubbel)
-                            pointsOverlay.addOverlay(
-                                    getOverlayItem(lastPoint.toGeoPoint(),
-                                            R.drawable.marker_blue), lastPoint
-                                            .getId());
+                        if (showGnubbel) {
+                            lastPoint.setOverlayItem(getOverlayItem(
+                                    lastPoint.toGeoPoint(),
+                                    R.drawable.marker_blue));
+                            pointsOverlay.addOverlay(lastPoint);
+                        }
                     }
-                } else if (pointId > 0) { // received an updated POI
+                } else if (pointId > 0) { // received an updated POI -
+                                          // when does this actually happen?
                     Log.d(LOG_TAG, "Received node update, id=" + pointId);
                     DataNode point = currentTrack().getNodeById(pointId);
                     if (point == null)
                         Log.e(LOG_TAG, "Node with ID " + pointId
                                 + " does not exist.");
                     else {
-                        Log.d(LOG_TAG, point.toString());
+                        Log.d(LOG_TAG, point.toString()); // XXX is this sound?
                         pointsOverlay.addOverlay(
                                 new OverlayItem(point.toGeoPoint(), point
                                         .getId() + "", ""), pointId);
