@@ -19,13 +19,14 @@ import org.openstreetmap.josm.actions.AutoScaleAction;
 import org.openstreetmap.josm.actions.ExtensionFileFilter;
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.data.gpx.GpxData;
-import org.openstreetmap.josm.data.gpx.GpxLink;
 import org.openstreetmap.josm.data.gpx.WayPoint;
 import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.WayData;
 import org.openstreetmap.josm.gui.layer.GpxLayer;
 import org.openstreetmap.josm.gui.layer.OsmDataLayer;
+import org.openstreetmap.josm.gui.layer.markerlayer.ImageMarker;
 import org.openstreetmap.josm.gui.layer.markerlayer.Marker;
+import org.openstreetmap.josm.gui.layer.markerlayer.MarkerLayer;
 import org.openstreetmap.josm.gui.progress.NullProgressMonitor;
 import org.openstreetmap.josm.gui.progress.ProgressMonitor;
 import org.openstreetmap.josm.io.FileImporter;
@@ -88,6 +89,10 @@ public class TraceBookImporter extends FileImporter {
 
                 GpxData gpxData = new GpxData();// r.transformColumbusCSV(fn);
                 GpxLayer gpxLayer = new GpxLayer(gpxData, file.getName());
+                Main.main.addLayer(gpxLayer);
+                MarkerLayer ml = null;
+                ml = new MarkerLayer(gpxData, tr("Markers from {0}", file
+                        .getName()), file, gpxLayer);
 
                 progressMonitor.setTicksCount(3);
                 DocumentBuilderFactory fac = DocumentBuilderFactory
@@ -97,12 +102,10 @@ public class TraceBookImporter extends FileImporter {
                 NodeList nl = doc.getElementsByTagName("node");
                 DecimalFormatSymbols decsymb = new DecimalFormatSymbols();
                 decsymb.setDecimalSeparator('.');
+
                 DecimalFormat decform = new DecimalFormat("0.0000000", decsymb);
                 HashMap<String, org.openstreetmap.josm.data.osm.Node> NodesMap = new HashMap<String, org.openstreetmap.josm.data.osm.Node>();
                 for (int i = 0; i < nl.getLength(); i++) {
-                    java.util.LinkedList<GpxLink> links = null;
-                    WayPoint x = null;
-                    Marker m;
 
                     NamedNodeMap attributes = nl.item(i).getAttributes();
                     Node lat = attributes.getNamedItem("lat");
@@ -137,33 +140,31 @@ public class TraceBookImporter extends FileImporter {
                                             .getNamedItem("v")).getValue());
                         }
 
-                        // if (childs.item(a).getNodeName().equalsIgnoreCase(
-                        // "link")) {
-                        // if (links == null)
-                        // links = new LinkedList<GpxLink>();
-                        // if (x == null)
-                        // x = new WayPoint(latlon);
-                        // Main.main.debug("child: "
-                        // + childs.item(a).getNodeName()
-                        // + " : "
-                        // + ((Attr) childs.item(a).getAttributes()
-                        // .getNamedItem("href")).getValue());
-                        // GpxLink link = new GpxLink(((Attr) childs.item(a)
-                        // .getAttributes().getNamedItem("href"))
-                        // .getValue());
-                        //
-                        // links.add(link);
-                        //
-                        // }
-                    }
-                    if (links != null && x != null) {
+                        if (childs.item(a).getNodeName().equalsIgnoreCase(
+                                "link")) {
+                            WayPoint x = new WayPoint(latlon);
+                            Main.main.debug("child: "
+                                    + childs.item(a).getNodeName()
+                                    + " : "
+                                    + file.getParent()
+                                    + File.separatorChar
+                                    + ((Attr) childs.item(a).getAttributes()
+                                            .getNamedItem("href")).getValue());
+                            File relativePath = new File(file.getParent()+File.separatorChar +((Attr) childs.item(a)
+                                    .getAttributes().getNamedItem("href"))
+                                    .getValue());
+                            String uri = relativePath.toURI().toString();
+                            Main.main.debug(uri);
+                            Marker mr = ImageMarker.create(latlon, uri, ml,
+                                    1.0, 1.0);
+                            if (mr == null)
+                                Main.main
+                                        .debug("THIS FUCKING MARKER IS EMPTY!!!");
+                            ml.data.add(mr);
 
-                        x.attr.put(GpxData.META_TIME, attributes.getNamedItem(
-                                "timestamp").getNodeName());
-                        x.setTime();
-                        x.attr.put(GpxData.META_LINKS, links);
-                        gpxData.waypoints.add(x);
+                        }
                     }
+
                     if (tags != null) {
                         newosmnode.setKeys(tags);
                     }
@@ -233,8 +234,10 @@ public class TraceBookImporter extends FileImporter {
                     osmdata.addPrimitive(newway);
 
                 }
-                // doc.getDocumentElement().normalize();
 
+                // doc.getDocumentElement().normalize();
+                Main.main.debug("Items in the GpxLayer: "
+                        + gpxLayer.data.waypoints.size());
                 progressMonitor.setTicksCount(1);
                 //
                 // r.dropBufferLists();
@@ -245,7 +248,9 @@ public class TraceBookImporter extends FileImporter {
                 // add layer to show way points
                 // Main.main.addLayer(gpxLayer);
                 Main.main.addLayer(osmdatalayer);
-
+                Main.main.removeLayer(gpxLayer);// Dirty hack to avoid
+                // nullpointer exception in
+                // markerlayer
                 //
 
                 //
@@ -257,15 +262,21 @@ public class TraceBookImporter extends FileImporter {
                 }
                 progressMonitor.setTicksCount(4);
 
-                // if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
-                // Main.main.debug("makeautomarkers was true");
-                // MarkerLayer ml = new MarkerLayer(gpxData, tr(
-                // "Markers from {0}", file.getName()), file, gpxLayer);
-                // if (ml.data.size() > 0) {
-                // Main.main.debug("There were markers in the GPXDATA");
-                // Main.main.addLayer(ml);
-                // }
-                // }
+                if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
+                    Main.main.debug("makeautomarkers was true");
+
+                    // Main.main.addLayer(ml);
+                    if (ml.data.size() > 0) {
+                        Main.main.debug("There were markers in the GPXDATA");
+                        for (Marker m : ml.data) {
+                            if (m == null)
+                                Main.main.debug("Null Marker!");
+                            else
+                                Main.main.debug("Valid Marker!");
+                        }
+                        Main.main.addLayer(ml);
+                    }
+                }
             } catch (Exception e) {
                 // catch and forward exception
                 throw new IllegalDataException(e);
