@@ -1,5 +1,12 @@
 package gui;
 
+import gui.adapter.GenericAdapter;
+import gui.adapter.GenericAdapterData;
+import gui.adapter.GenericItemDescription;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import Trace.Book.R;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -10,14 +17,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import core.data.DataStorage;
 import core.data.DataTrack;
@@ -30,34 +35,9 @@ import core.data.DataTrack;
 public class LoadTrackActivity extends ListActivity {
 
     /**
-     * 
+     * GenericAdapter for our ListView which we use in this activity.
      */
-    LoadTrackArrayAdapter adapter;
-
-    /**
-     * @author js
-     * 
-     */
-    public static class LoadTrackArrayAdapter extends ArrayAdapter<String> {
-        /**
-         * @param context
-         */
-        LoadTrackArrayAdapter(Context context) {
-            super(context, R.layout.loadtrack_listitem,
-                    R.id.load_track_item_text, DataStorage.getInstance()
-                            .getAllTracks());
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-            String trackname = ((TextView) (view
-                    .findViewById(R.id.load_track_item_text))).getText()
-                    .toString();
-            view.findViewById(R.id.load_track_delete_button).setTag(trackname);
-            return view;
-        }
-    }
+    GenericAdapter adapter;
 
     /*
      * (non-Javadoc)
@@ -68,8 +48,7 @@ public class LoadTrackActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new LoadTrackArrayAdapter(this);
-        setListAdapter(adapter);
+        updateAdapter();
         registerForContextMenu(getListView());
 
     }
@@ -93,7 +72,10 @@ public class LoadTrackActivity extends ListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                 .getMenuInfo();
-        final String trackname = adapter.getItem((int) info.id);
+
+        GenericAdapterData data = adapter.getItem((int) info.id);
+
+        final String trackname = data.getText("TrackName");
 
         switch (item.getItemId()) {
         case R.id.loadTrack_load_cm:
@@ -110,7 +92,7 @@ public class LoadTrackActivity extends ListActivity {
             final AlertDialog.Builder alert = new AlertDialog.Builder(this);
             final EditText input = new EditText(this);
             alert.setView(input);
-            alert.setTitle(getResources().getString(R.string.addNotice_alert));
+            alert.setTitle(getResources().getString(R.string.rename_alert));
             alert.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
@@ -196,11 +178,34 @@ public class LoadTrackActivity extends ListActivity {
      * 
      */
     void updateAdapter() {
-        adapter.clear();
-        for (String name : DataStorage.getInstance().getAllTracks()) {
-            adapter.add(name);
-        }
-        adapter.notifyDataSetChanged();
-    }
 
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        GenericItemDescription desc = new GenericItemDescription();
+
+        desc.addResourceId("TrackName", R.id.load_track_item_text);
+
+        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+
+        for (String name : DataStorage.getInstance().getAllTracks()) {
+            GenericAdapterData dataItem = new GenericAdapterData(desc);
+            dataItem.SetText("TrackName", name);
+
+            data.add(dataItem);
+
+        }
+
+        adapter = new GenericAdapter(this, R.layout.loadtrack_listitem,
+                R.id.list, data, layoutInflater);
+
+        setListAdapter(adapter);
+
+        getListView().setTextFilterEnabled(true);
+
+        /*
+         * for (String name : DataStorage.getInstance().getAllTracks()) {
+         * adapter.add(name); }
+         */
+        // adapter.notifyDataSetChanged();
+    }
 }

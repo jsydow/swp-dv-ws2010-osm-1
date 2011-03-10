@@ -23,6 +23,7 @@
 
 	<!--  AlertBox values -->
     <string name="addNotice_alert">Notiz hinzufügen</string>
+    <string name="rename_alert">Track umbenennen </string>
     <string name="addedNotice_alert">Notiz hünzugefügt:</string>
     <string name="exit_alert">Möchten Sie die aktuelle Session stoppen und speichern?</string>
     <string name="pause_alert">Möchten Sie die aktuelle Session pausieren?</string>
