@@ -9,6 +9,7 @@ import java.util.List;
 
 import Trace.Book.R;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,8 +22,11 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import core.data.DataStorage;
 import core.data.DataTrack;
@@ -125,20 +129,54 @@ public class LoadTrackActivity extends ListActivity {
             return true;
 
         case R.id.loadTrack_info_cm:
-            // TODO
-            // The idea is to show a dialog which displays all the information.
-            // Information are: name, time stamp, number of points, number of
-            // ways
-            // number of media and comment.
-            // For every Track there is an additional XML-file (info.xml) which
-            // contains these
-            // information. As it is smaller than track.tbt it is more efficient
-            // to
-            // load it instead of the whole track.tbt. This functionality is not
-            // implemented yet.
             DataTrackInfo trackinfo = DataTrackInfo.deserialise(trackname);
-            Log.d("test", trackinfo.getName() + " " + trackinfo.getTimestamp()
-                    + "...");
+
+            final Dialog dialog = new Dialog(this);
+            // dialog.getWindow().setGravity(Gravity.FILL);
+            dialog.setContentView(R.layout.trackinfo_dialog);
+            dialog.setTitle(R.string.trackInfoDialog_title);
+            dialog.setCancelable(true);
+
+            // set up name
+            TextView textname = (TextView) dialog
+                    .findViewById(R.id.trackInfoDialog_name);
+            textname.setText(trackinfo.getName());
+
+            // set up comment
+            TextView textcomment = (TextView) dialog
+                    .findViewById(R.id.trackInfoDialog_comment);
+            textcomment.setText(trackinfo.getComment());
+
+            // set up time
+            TextView texttime = (TextView) dialog
+                    .findViewById(R.id.trackInfoDialog_timestamp);
+            texttime.setText(trackinfo.getTimestamp());
+
+            // set up pois
+            TextView textpois = (TextView) dialog
+                    .findViewById(R.id.trackInfoDialog_pois);
+            textpois.setText(Integer.toString(trackinfo.getNumberOfPOIs()));
+
+            // set up ways
+            TextView textways = (TextView) dialog
+                    .findViewById(R.id.trackInfoDialog_ways);
+            textways.setText(Integer.toString(trackinfo.getNumberOfWays()));
+
+            // set up media
+            TextView textmedia = (TextView) dialog
+                    .findViewById(R.id.trackInfoDialog_media);
+            textmedia.setText(Integer.toString(trackinfo.getNumberOfMedia()));
+
+            // set up button
+            Button button = (Button) dialog
+                    .findViewById(R.id.trackInfoDialog_backbtn);
+            button.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    dialog.cancel();
+                }
+            });
+            // now that the dialog is set up, it's time to show it
+            dialog.show();
 
             return true;
         case R.id.loadTrack_delete_cm:

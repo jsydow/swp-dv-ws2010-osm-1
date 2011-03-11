@@ -81,4 +81,12 @@
 <string name="back_btn">Speichern</string>
 <string name="no_information">keine Information vorhanden</string>
 <string name="editComment_btn">Track Kommentar bearbeiten</string>
+<string name="trackInfoDialog_name">Trackname:</string>
+<string name="trackInfoDialog_comment">Kommentar:</string>
+<string name="trackInfoDialog_timestamp">Zeitstempel:</string>
+<string name="trackInfoDialog_pois">Anzahl Points of Interest:</string>
+<string name="trackInfoDialog_ways">Anzahl Wege:</string>
+<string name="trackInfoDialog_media">Anzahl Medien:</string>
+<string name="trackInfoDialog_backbtn">OK</string>
+<string name="trackInfoDialog_title">Trackinformationen</string>
 </resources>
