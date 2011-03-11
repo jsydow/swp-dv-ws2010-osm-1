@@ -65,7 +65,7 @@
     <string name="stopTrack_btn">Speichern und beenden</string>
     <string name="poi_btn">Point of intrest</string>
     <string name="save_btn">Speichern</string>
-    <string name="cancel_btn">Beenden</string>
+    <string name="cancel_btn">Zurück</string>
     <string name="addMeta_btn">Hinzufügen</string>
     <string name="makePicture_btn">Foto</string>
     <string name="makeVideo_btn">Video</string>
