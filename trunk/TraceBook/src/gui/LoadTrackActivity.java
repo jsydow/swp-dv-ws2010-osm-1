@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import core.data.DataStorage;
 import core.data.DataTrack;
+import core.data.DataTrackInfo;
 
 /**
  * The Class LoadTrackActivity.
@@ -135,6 +136,9 @@ public class LoadTrackActivity extends ListActivity {
             // to
             // load it instead of the whole track.tbt. This functionality is not
             // implemented yet.
+            DataTrackInfo trackinfo = DataTrackInfo.deserialise(trackname);
+            Log.d("test", trackinfo.getName() + " " + trackinfo.getTimestamp()
+                    + "...");
 
             return true;
         case R.id.loadTrack_delete_cm:
