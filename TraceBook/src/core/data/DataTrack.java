@@ -425,8 +425,7 @@ public class DataTrack extends DataMediaHolder {
         // cache all nodes
         List<DataNode> allnodes = new LinkedList<DataNode>();
         // XML-file
-        File track = new File(getTrackDirPath(name) + File.separator
-                + "track.tbt");
+        File track = new File(getPathOfTrackTbTFile(name));
         // Track that should be filled/initialised
         DataTrack ret = new DataTrack(track.getParentFile().getName());
 
