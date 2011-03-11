@@ -74,6 +74,7 @@ public class DataTrack extends DataMediaHolder {
         ways = new LinkedList<DataPointsList>();
         nodes = new LinkedList<DataNode>();
         this.name = getFilenameCompatibleTimeStamp();
+        this.comment = "";
         createNewTrackFolder();
     }
 
@@ -292,6 +293,7 @@ public class DataTrack extends DataMediaHolder {
      *            resulting XML-file is not valid to OSM.
      */
     public void serialise(boolean shouldSerialiseMedia) {
+        int totalMedia = media.size();
 
         Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
 
@@ -318,13 +320,17 @@ public class DataTrack extends DataMediaHolder {
 
             for (DataNode dn : nodes) {
                 dn.serialise(serializer, shouldSerialiseMedia);
+                totalMedia += dn.getMedia().size();
             }
             for (DataPointsList dpl : ways) {
                 dpl.serialiseNodes(serializer, shouldSerialiseMedia);
+                totalMedia += dpl.getMedia().size();
             }
             for (DataPointsList dpl : ways) {
                 dpl.serialiseWay(serializer, shouldSerialiseMedia);
             }
+
+            serialiseMedia(serializer);
 
             serializer.endTag(null, "osm");
             serializer.flush();
@@ -344,9 +350,19 @@ public class DataTrack extends DataMediaHolder {
             }
         }
 
+        (new DataTrackInfo(name, getDatetime(), comment, nodes.size(),
+                ways.size(), totalMedia)).serialise();
+
     }
 
-    private static FileOutputStream openFile(File file) {
+    /**
+     * Open a file as FileOutputStream deleting any old existing file.
+     * 
+     * @param file
+     *            The file to be opened.
+     * @return the opened FileOutPutStream.
+     */
+    static FileOutputStream openFile(File file) {
         try {
             if (file.exists()) {
                 if (!file.delete()) {
