@@ -65,7 +65,7 @@
     <string name="stopTrack_btn">Speichern und beenden</string>
     <string name="poi_btn">Point of intrest</string>
     <string name="save_btn">Speichern</string>
-    <string name="cancel_btn">Zurück</string>
+    <string name="cancel_btn">Abbrechen</string>
     <string name="addMeta_btn">Hinzufügen</string>
     <string name="makePicture_btn">Foto</string>
     <string name="makeVideo_btn">Video</string>
@@ -78,4 +78,5 @@
 <string name="editmapobjects_edit_cm">Bearbeiten</string>
 <string name="editmapobjects_delete_cm">Löschen</string>
 <string name="alert_really_delete_track">Track löschen?</string>
+<string name="back_btn">Speichern</string>
 </resources>
