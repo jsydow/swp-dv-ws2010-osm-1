@@ -409,13 +409,42 @@ public class NewTrackActivity extends TabActivity {
      * @param view
      *            not used
      */
+    public void editCommentBtn(View view) {
+        final DataTrack track = DataStorage.getInstance().getCurrentTrack();
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        input.setText(track.getComment());
+        alert.setView(input);
+        alert.setTitle(getResources().getString(R.string.addNotice_alert));
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString().trim();
+
+                track.setComment(value);
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+        alert.show();
+    }
+
+    /**
+     * @param view
+     *            not used
+     */
     public void makePictureBtn(View view) {
         pictureRecorder.startIntent(this);
     }
 
     /**
      * @param view
-     *            not
+     *            not used
      */
     public void makeVideoBtn(View view) {
         final Intent intent = new Intent(this, RecordVideoActivity.class);

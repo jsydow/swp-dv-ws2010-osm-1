@@ -80,4 +80,5 @@
 <string name="alert_really_delete_track">Track löschen?</string>
 <string name="back_btn">Speichern</string>
 <string name="no_information">keine Information vorhanden</string>
+<string name="editComment_btn">Track Kommentar bearbeiten</string>
 </resources>
