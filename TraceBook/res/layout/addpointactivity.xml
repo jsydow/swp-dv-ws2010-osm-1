@@ -14,7 +14,7 @@
 			android:onClick="addPointMetaBtn" />
 
 		<Button android:id="@+id/cancel2_btn" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/cancel_btn"
+			android:layout_height="wrap_content" android:text="@string/back_btn"
 			android:onClick="cancelBtn" />
 	</LinearLayout>
 	<LinearLayout android:id="@+id/metaMediaBtnPoint_ly"

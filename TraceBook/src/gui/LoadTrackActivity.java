@@ -124,14 +124,49 @@ public class LoadTrackActivity extends ListActivity {
             return true;
 
         case R.id.loadTrack_info_cm:
+            // TODO
+            // The idea is to show a dialog which displays all the information.
+            // Information are: name, time stamp, number of points, number of
+            // ways
+            // number of media and comment.
+            // For every Track there is an additional XML-file (info.xml) which
+            // contains these
+            // information. As it is smaller than track.tbt it is more efficient
+            // to
+            // load it instead of the whole track.tbt. This functionality is not
+            // implemented yet.
 
             return true;
         case R.id.loadTrack_delete_cm:
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(
+                    getResources()
+                            .getString(R.string.alert_really_delete_track))
+                    .setCancelable(false)
+                    .setPositiveButton(
+                            getResources().getString(R.string.yes_alert),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                        int id) {
 
-            //$FALL-THROUGH$
-        default:
-            return super.onContextItemSelected(item);
+                                    DataTrack.deserialise(trackname).delete();
+                                    // may crash here (did so previously).
+                                    updateAdapter();
+
+                                }
+                            })
+                    .setNegativeButton(
+                            getResources().getString(R.string.no_alert),
+                            new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog,
+                                        int which) {
+                                    dialog.cancel();
+                                }
+                            });
+            builder.show();
         }
+        return super.onContextItemSelected(item);
     }
 
     /**
