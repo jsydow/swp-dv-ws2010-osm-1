@@ -438,12 +438,18 @@ public class DataTrack extends DataMediaHolder {
      *         not exist
      */
     public static DataTrack deserialise(String name) {
+
         // cache all nodes
         List<DataNode> allnodes = new LinkedList<DataNode>();
         // XML-file
         File track = new File(getPathOfTrackTbTFile(name));
         // Track that should be filled/initialised
         DataTrack ret = new DataTrack(track.getParentFile().getName());
+        DataTrackInfo info = DataTrackInfo.deserialise(name);
+        if (info != null) {
+            ret.setComment(info.getComment());
+            ret.setDatetime(info.getTimestamp());
+        }
 
         if (track.isFile()) {
             DocumentBuilderFactory factory = DocumentBuilderFactory
