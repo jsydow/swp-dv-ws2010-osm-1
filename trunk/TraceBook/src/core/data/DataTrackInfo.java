@@ -1,6 +1,7 @@
 package core.data;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -12,18 +13,46 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlSerializer;
 
 import android.util.Log;
+import android.util.Xml;
 
 /**
  * A class that simply holds information of a track. It is a class that only
- * provides information but cannot edit them. Use deserialise to get such an
+ * provides information but cannot edit them. Use deserialise() to get such an
  * object.
  * 
  * @author js
  * 
  */
 public class DataTrackInfo {
+
+    /**
+     * An initialising constructor.
+     * 
+     * @param timestamp
+     *            The time stamp of a track.
+     * @param name
+     *            The name of a track (Its directory name).
+     * @param comment
+     *            The comment of a track.
+     * @param numberOfPOIs
+     *            The number of points of interest a track has.
+     * @param numberOfWays
+     *            The number of ways a track has.
+     * @param numberOfMedia
+     *            The total number of media a track has.
+     */
+    DataTrackInfo(String name, String timestamp, String comment,
+            int numberOfPOIs, int numberOfWays, int numberOfMedia) {
+        this.timestamp = timestamp;
+        this.name = name;
+        this.comment = comment;
+        this.numberOfPOIs = numberOfPOIs;
+        this.numberOfWays = numberOfWays;
+        this.numberOfMedia = numberOfMedia;
+    }
 
     private final static String no_info = "keine Information";
 
@@ -163,6 +192,71 @@ public class DataTrackInfo {
             info = null;
         }
         return info;
+    }
+
+    /**
+     * Serialises the track info. Creates a info.xml file in the directory of
+     * the track.
+     */
+    public void serialise() {
+        File file = new File(DataTrack.getTrackDirPath(name) + File.separator
+                + "info.xml");
+        FileOutputStream fileos = DataTrack.openFile(file);
+        if (fileos == null) {
+            return;
+        }
+        XmlSerializer serializer = Xml.newSerializer();
+
+        try {
+            serializer.setOutput(fileos, "UTF-8");
+            serializer.startDocument(null, Boolean.valueOf(true));
+            serializer.startTag(null, "info");
+
+            serializer.startTag(null, "data");
+            serializer.attribute(null, "key", "timestamp");
+            serializer.attribute(null, "value", timestamp);
+            serializer.endTag(null, "data");
+
+            serializer.startTag(null, "data");
+            serializer.attribute(null, "key", "comment");
+            serializer.attribute(null, "value", comment);
+            serializer.endTag(null, "data");
+
+            serializer.startTag(null, "data");
+            serializer.attribute(null, "key", "pois");
+            serializer.attribute(null, "value", Integer.toString(numberOfPOIs));
+            serializer.endTag(null, "data");
+
+            serializer.startTag(null, "data");
+            serializer.attribute(null, "key", "ways");
+            serializer.attribute(null, "value", Integer.toString(numberOfWays));
+            serializer.endTag(null, "data");
+
+            serializer.startTag(null, "data");
+            serializer.attribute(null, "key", "media");
+            serializer
+                    .attribute(null, "value", Integer.toString(numberOfMedia));
+            serializer.endTag(null, "data");
+
+            serializer.endTag(null, "info");
+            serializer.flush();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                fileos.close();
+            } catch (IOException e) {
+                // do nothing
+            }
+        }
+
     }
 
 }

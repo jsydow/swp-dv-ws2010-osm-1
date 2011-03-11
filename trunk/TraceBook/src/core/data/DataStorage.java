@@ -285,6 +285,7 @@ public class DataStorage {
         for (DataTrack dt : tracks) {
             names.add(dt.getName());
         }
+
         removeDuplicatesInStringList(names);
     }
 

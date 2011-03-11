@@ -129,6 +129,7 @@ public class DataMedia {
         this.path = path;
         this.name = name;
         this.type = getTypeFromFilename(name);
+        Log.d("###TEST###", name + " " + path);
     }
 
     /**
