@@ -62,7 +62,6 @@ public class AddMemoActivity extends Activity {
                         dialog.incrementProgressBy(2);
                     }
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 dialog.dismiss();
