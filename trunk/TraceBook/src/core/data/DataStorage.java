@@ -307,4 +307,13 @@ public class DataStorage {
         tracks.clear();
     }
 
+    /**
+     * 
+     */
+    public void unloadAllTracks() {
+        tracks.clear();
+        setCurrentTrack(null);
+        updateNames();
+    }
+
 }
