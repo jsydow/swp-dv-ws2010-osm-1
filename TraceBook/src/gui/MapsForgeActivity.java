@@ -170,15 +170,16 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Unable to open map file, fetching tiles from Internet.",
-                        Toast.LENGTH_LONG).show();
+                Toast
+                        .makeText(
+                                getApplicationContext(),
+                                "Unable to open map file, fetching tiles from Internet.",
+                                Toast.LENGTH_LONG).show();
                 modeLocal = MapViewMode.OSMARENDER_TILE_DOWNLOAD;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
-                                                   // specify a mapsfile when in
-                                                   // Online mode
+                // specify a mapsfile when in
+                // Online mode
                 mapView.setMapFile(file.getAbsolutePath());
             }
         }
@@ -188,7 +189,7 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * node currently edited
+     * Node currently edited.
      */
     DataNode editNode = null;
 
@@ -210,8 +211,8 @@ public class MapsForgeActivity extends MapActivity {
             if (editNode.getDataPointsList() != null)
                 reDrawWay(editNode.getDataPointsList());
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                Log.d(LOG_TAG,
-                        "Exiting edit mode for point " + editNode.getId());
+                Log.d(LOG_TAG, "Exiting edit mode for point "
+                        + editNode.getId());
                 editNode = null;
             }
 
@@ -284,8 +285,7 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.pause_opt:
 
             builder.setMessage(getResources().getString(R.string.pause_alert))
-                    .setCancelable(false)
-                    .setPositiveButton(
+                    .setCancelable(false).setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -300,8 +300,7 @@ public class MapsForgeActivity extends MapActivity {
                                      * DO SOMETHING
                                      */
                                 }
-                            })
-                    .setNegativeButton(
+                            }).setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -314,8 +313,7 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.stopTrack_opt:
             builder.setMessage(getResources().getString(R.string.exit_alert))
-                    .setCancelable(false)
-                    .setPositiveButton(
+                    .setCancelable(false).setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -329,8 +327,7 @@ public class MapsForgeActivity extends MapActivity {
                                     finish();
 
                                 }
-                            })
-                    .setNegativeButton(
+                            }).setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -383,7 +380,7 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * redraw the given way
+     * Redraw the given way.
      * 
      * @param way
      */
@@ -429,7 +426,7 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * Creates a new OverlayItem
+     * Creates a new OverlayItem.
      * 
      * @param pos
      *            position of the marker
@@ -496,12 +493,12 @@ public class MapsForgeActivity extends MapActivity {
         boolean centerMap = true;
 
         /**
-         * the last known {@link GeoPoint}
+         * The last known {@link GeoPoint}.
          */
         GeoPoint currentGeoPoint = null;
 
         /**
-         * request the map to be centered to the current position
+         * Request the map to be centered to the current position.
          */
         void centerOnCurrentPosition() {
             if (currentGeoPoint != null) {
@@ -527,9 +524,8 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng);
 
-                Log.d(LOG_TAG,
-                        "Location update received "
-                                + currentGeoPoint.toString());
+                Log.d(LOG_TAG, "Location update received "
+                        + currentGeoPoint.toString());
 
                 if (current_pos != null)
                     pointsOverlay.removeOverlay(-1);
@@ -544,8 +540,9 @@ public class MapsForgeActivity extends MapActivity {
             } else if (intend.getAction().equals(
                     WaypointLogService.UPDTAE_OBJECT)) {
                 if (currentTrack() == null) {
-                    Log.e(LOG_TAG,
-                            "Received UPDATE_OBJECT with no current track present.");
+                    Log
+                            .e(LOG_TAG,
+                                    "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 
@@ -576,14 +573,13 @@ public class MapsForgeActivity extends MapActivity {
                                 way.getNodes().size() - 1);
                         Log.d(LOG_TAG, "new node in current way: " + lastPoint);
                         if (showGnubbel) {
-                            lastPoint.setOverlayItem(getOverlayItem(
-                                    lastPoint.toGeoPoint(),
-                                    R.drawable.marker_blue));
+                            lastPoint.setOverlayItem(getOverlayItem(lastPoint
+                                    .toGeoPoint(), R.drawable.marker_blue));
                             pointsOverlay.addOverlay(lastPoint);
                         }
                     }
                 } else if (pointId > 0) { // received an updated POI -
-                                          // when does this actually happen?
+                    // when does this actually happen?
                     Log.d(LOG_TAG, "Received node update, id=" + pointId);
                     DataNode point = currentTrack().getNodeById(pointId);
                     if (point == null)
@@ -591,9 +587,9 @@ public class MapsForgeActivity extends MapActivity {
                                 + " does not exist.");
                     else {
                         Log.d(LOG_TAG, point.toString()); // XXX is this sound?
-                        pointsOverlay.addOverlay(
-                                new OverlayItem(point.toGeoPoint(), point
-                                        .getId() + "", ""), pointId);
+                        pointsOverlay
+                                .addOverlay(new OverlayItem(point.toGeoPoint(),
+                                        point.getId() + "", ""), pointId);
                     }
                 }
 
