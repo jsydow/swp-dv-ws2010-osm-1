@@ -601,10 +601,10 @@ public class MapsForgeActivity extends MapActivity {
                         Log.e(LOG_TAG, "Node with ID " + pointId
                                 + " does not exist.");
                     else {
-                        Log.d(LOG_TAG, point.toString()); // XXX is this sound?
-                        pointsOverlay.addOverlay(
-                                new OverlayItem(point.toGeoPoint(), point
-                                        .getId() + "", ""), pointId);
+                        if (point.getOverlayItem() == null)
+                            point.setOverlayItem(new OverlayItem(point
+                                    .toGeoPoint(), point.getId() + "", ""));
+                        pointsOverlay.addOverlay(point);
                     }
                 }
 
