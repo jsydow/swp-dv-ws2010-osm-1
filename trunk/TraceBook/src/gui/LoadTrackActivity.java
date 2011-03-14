@@ -268,7 +268,7 @@ public class LoadTrackActivity extends ListActivity {
 
         for (String name : DataStorage.getInstance().getAllTracks()) {
             GenericAdapterData dataItem = new GenericAdapterData(desc);
-            dataItem.SetText("TrackName", name);
+            dataItem.setText("TrackName", name);
 
             data.add(dataItem);
 
