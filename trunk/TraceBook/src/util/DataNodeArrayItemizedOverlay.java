@@ -4,17 +4,18 @@ import gui.AddPointActivity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.mapsforge.android.maps.ArrayItemizedOverlay;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.OverlayItem;
 
+import Trace.Book.R;
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.widget.Toast;
 import core.data.DataNode;
@@ -40,7 +41,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     /**
      * Tag of the Intent that signals an update of a way.
      */
-    public static final String UPDTAE_WAY = BASETAG + ".UPDTAE_WAY";
+    public static final String UPDATE_WAY = BASETAG + ".UPDATE_WAY";
 
     /**
      * Tag of the Intent that signals the start of editing a points location.
@@ -50,7 +51,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     /**
      * Context of the MapActivity.
      */
-    final Context context;
+    final Activity context;
 
     /**
      * Reference to the current DataTrack.
@@ -60,26 +61,28 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     /**
      * Intent to send updated ways to the MapsForgeView.
      */
-    final Intent way_intent = new Intent(UPDTAE_WAY);
+    final Intent way_intent = new Intent(UPDATE_WAY);
 
     /**
      * Intent to move a point.
      */
     final Intent move_intent = new Intent(MOVE_POINT);
 
+    private DataPointsListArrayRouteOverlay routesOverlay;
+
     /**
      * Constructs a new ArrayItemizedOverlay.
      * 
-     * @param defaultMarker
-     *            the default marker (may be null). This marker is aligned to
-     *            the center of its bottom line to allow for conical symbols
-     *            such as a pin or a needle.
      * @param context
      *            the reference to the application context.
+     * @param routesOverlay
      */
-    public DataNodeArrayItemizedOverlay(Drawable defaultMarker, Context context) {
-        super(defaultMarker == null ? null : boundCenterBottom(defaultMarker));
+    public DataNodeArrayItemizedOverlay(Activity context,
+            DataPointsListArrayRouteOverlay routesOverlay) {
+        super(boundCenterBottom(context.getResources().getDrawable(
+                R.drawable.marker_red)));
         this.context = context;
+        this.routesOverlay = routesOverlay;
         this.overlayItems = new ArrayList<Pair<OverlayItem, Integer>>(
                 ARRAY_LIST_INITIAL_CAPACITY);
         this.currentTrack = DataStorage.getInstance().getCurrentTrack();
@@ -111,6 +114,62 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      */
     public void addOverlay(DataNode node) {
         addOverlay(node.getOverlayItem(), node.getId());
+    }
+
+    /**
+     * Updates the OverlayItem marking the current position.
+     * 
+     * @param currentPos
+     */
+    public void setCurrentPosition(GeoPoint currentPos) {
+        updateItem(currentPos, -1, R.drawable.marker_green);
+    }
+
+    /**
+     * Update the Item with the given id (change it's position or icon).
+     * 
+     * @param currentPos
+     * @param id
+     * @param icon
+     */
+    public void updateItem(GeoPoint currentPos, int id, int icon) {
+        for (int i = 0; i < overlayItems.size(); ++i)
+            if (overlayItems.get(i).second.intValue() == id) {
+                OverlayItem oi = Helper.getOverlayItem(currentPos,
+                        overlayItems.get(i).first.getMarker());
+                overlayItems.set(i, new Pair<OverlayItem, Integer>(oi,
+                        overlayItems.get(i).second));
+
+                if (id > 0) { // redraw way when point was moved
+                    DataNode node = Helper.currentTrack().getNodeById(id);
+                    if (node != null) {
+                        node.setLocation(currentPos);
+                        node.setOverlayItem(oi);
+
+                        if (node.getDataPointsList() != null)
+                            routesOverlay.reDrawWay(node.getDataPointsList()
+                                    .getId());
+                    }
+                }
+                populate();
+                return;
+            }
+        // no OverlayItem was yet added
+        addOverlay(Helper.getOverlayItem(currentPos, icon, context), id);
+        populate();
+    }
+
+    /**
+     * Add a list of POIs to the overlay.
+     * 
+     * @param nodes
+     */
+    public void addPoints(List<DataNode> nodes) {
+        for (DataNode n : nodes) {
+            if (n.getOverlayItem() == null)
+                n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
+            addOverlay(n);
+        }
     }
 
     /**
@@ -192,7 +251,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
-                case 0:
+                case 0: // Tag this
                     final Intent intent = new Intent(context,
                             AddPointActivity.class);
                     if (nodeId < 0)
@@ -203,7 +262,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
                     context.startActivity(intent);
                     break;
-                case 1:
+                case 1: // move this
                     if (nodeId < 0) {
                         Toast.makeText(context,
                                 "You can't move around that way!",
@@ -214,7 +273,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     move_intent.putExtra("point_id", nodeId);
                     context.sendBroadcast(move_intent);
                     break;
-                case 2:
+                case 2: // delete this
                     if (nodeId < 0) {
                         Toast.makeText(context,
                                 "can not delete current location",
@@ -246,5 +305,9 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
         builder.show();
         return true;
+    }
+
+    public void setRoutesOverlay(DataPointsListArrayRouteOverlay routesOverlay) {
+        this.routesOverlay = routesOverlay;
     }
 }
