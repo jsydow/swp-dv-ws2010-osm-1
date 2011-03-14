@@ -53,7 +53,6 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
             int textViewResourceId, List<GenericAdapterData> objects,
             LayoutInflater layInf) {
         super(context, resource, textViewResourceId, objects);
-        // TODO Auto-generated constructor stub
         layoutId = resource;
         layoutInflater = layInf;
         dataList = objects;
