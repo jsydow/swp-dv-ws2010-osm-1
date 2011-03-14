@@ -110,7 +110,6 @@ public class StartActivity extends Activity {
             try {
                 ServiceConnector.getLoggerService().stopTrack();
             } catch (RemoteException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             ServiceConnector.stopService();
