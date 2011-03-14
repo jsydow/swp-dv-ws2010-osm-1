@@ -54,12 +54,12 @@ public class DataTrackInfo {
         this.numberOfMedia = numberOfMedia;
     }
 
-    private final static String no_info = "keine Information";
+    private static final String NOINFO = "keine Information";
 
     private DataTrackInfo() {
-        timestamp = no_info;
-        comment = no_info;
-        name = no_info;
+        timestamp = NOINFO;
+        comment = NOINFO;
+        name = NOINFO;
         numberOfPOIs = -1;
         numberOfWays = -1;
         numberOfMedia = -1;
@@ -129,6 +129,8 @@ public class DataTrackInfo {
     public static DataTrackInfo deserialise(String trackname) {
         DataTrackInfo info = new DataTrackInfo();
         info.name = trackname;
+        info.comment = NOINFO;
+        info.timestamp = NOINFO;
 
         File trackinfo = new File(DataTrack.getTrackDirPath(trackname)
                 + File.separator + "info.xml");
@@ -253,7 +255,8 @@ public class DataTrackInfo {
             try {
                 fileos.close();
             } catch (IOException e) {
-                // do nothing
+                Log.e("TrackInfo",
+                        "Could not close closed file. Should not happen.");
             }
         }
 
