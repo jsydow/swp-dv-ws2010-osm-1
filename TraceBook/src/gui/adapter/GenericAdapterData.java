@@ -53,7 +53,7 @@ public class GenericAdapterData {
      * @author SakirSoft The class representation to handle TextView data
      * 
      */
-    class TextItem implements GenericItem {
+    static class TextItem implements GenericItem {
 
         /**
          * Reference to a string which will be used to fill a text view.
@@ -93,7 +93,7 @@ public class GenericAdapterData {
      * @author SakirSoft The class representation to handle ImageView data
      * 
      */
-    class ImageItem implements GenericItem {
+    static class ImageItem implements GenericItem {
 
         /**
          * The resource id to an image.
@@ -120,7 +120,7 @@ public class GenericAdapterData {
      * @author SakirSoft
      * 
      */
-    class ButtonItem implements GenericItem {
+    static class ButtonItem implements GenericItem {
 
         /**
          * Reference to an onClickListener whichh will be called when an onClick

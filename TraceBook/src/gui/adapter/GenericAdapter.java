@@ -20,26 +20,26 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
 
     /**
      * The layout id where the view elements are stored for on custom item in
-     * the list view.
+     * the list view
      */
     int layoutId;
 
     /**
      * A reference to a layoutInflater which will be used to inflate the custom
-     * view for an item in the list view.
+     * view for an item in the list view
      * 
      */
     LayoutInflater layoutInflater;
 
     /**
      * A reference to a list of GenericAdapterData which will be used to fill
-     * the list.
+     * the list
      * 
      */
     List<GenericAdapterData> dataList;
 
     /**
-     * The Standart constructor for an ArrayAdapter plus a reference to a
+     * The standard constructor for an ArrayAdapter plus a reference to a
      * LayoutInflater.
      * 
      * @param context
