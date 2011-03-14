@@ -243,15 +243,8 @@ public class DataTrackInfo {
 
             serializer.endTag(null, "info");
             serializer.flush();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.d(LOG_TAG, e.getMessage());
         } finally {
             try {
                 fileos.close();
