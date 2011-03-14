@@ -29,7 +29,7 @@ import core.data.DataStorage;
 public class AddPointMetaActivity extends Activity {
 
     /**
-     * @author greentraxas A simple enum class for tags
+     * A simple enum class for tags.
      */
     enum Tags {
         /**
@@ -44,7 +44,6 @@ public class AddPointMetaActivity extends Activity {
          * 
          */
         USEFUL
-
     }
 
     /**
@@ -134,17 +133,13 @@ public class AddPointMetaActivity extends Activity {
      * @param view
      */
     public void saveBtn(View view) {
-
         final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.autoComplete_Value);
         final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.autoComplete_Cat);
 
         if (node != null) {
-
             node.getTags().put(autoComplCat.getText().toString(),
                     autoComplVal.getText().toString());
-
         }
-
         finish();
     }
 
