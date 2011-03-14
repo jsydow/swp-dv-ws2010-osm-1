@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class ServiceConnector {
     private static final String LOG_TAG = "LOGSERVICECLIENT";
-    private static LoggerServiceConnection conn = null;
+    private static volatile LoggerServiceConnection conn = null;
     private static boolean started = false;
     private static Activity activity = null;
 
