@@ -188,8 +188,7 @@ public class LoadTrackActivity extends ListActivity {
                     .setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                        int id) {
+                                public void onClick(DialogInterface d, int id) {
 
                                     DataTrack.deserialise(trackname).delete();
                                     // may crash here (did so previously).
@@ -201,15 +200,14 @@ public class LoadTrackActivity extends ListActivity {
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    dialog.cancel();
+                                public void onClick(DialogInterface d, int which) {
+                                    d.cancel();
                                 }
                             });
             builder.show();
             break;
         default:
-            break;
+            break; // do nothing
         }
         return super.onContextItemSelected(item);
     }
