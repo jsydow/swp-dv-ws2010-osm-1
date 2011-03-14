@@ -157,9 +157,12 @@ public class WaypointLogService extends Service implements LocationListener {
         public int stopTrack() {
             stopGPS();
 
-            storage.getCurrentTrack().serialise();
+            if (storage.getCurrentTrack() != null) {
+                storage.getCurrentTrack().serialise();
+                return endWay();
+            }
 
-            return endWay();
+            return -1;
         }
 
         public int createPOI(boolean onWay) {
