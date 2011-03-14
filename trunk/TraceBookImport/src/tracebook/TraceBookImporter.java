@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.AutoScaleAction;
@@ -34,10 +36,12 @@ import org.openstreetmap.josm.io.FileImporter;
 import org.openstreetmap.josm.io.IllegalDataException;
 import org.openstreetmap.josm.tools.DateUtils;
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Importer class for TraceBookTrack files.
@@ -312,6 +316,18 @@ public class TraceBookImporter extends FileImporter {
             } catch (NullPointerException e) {
                 // catch and forward exception
                 throw new IllegalDataException(e);
+            } catch (ParserConfigurationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (SAXException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (DOMException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             } finally { // take care of monitor...
                 myProgressMonitor.finishTask();
             }
