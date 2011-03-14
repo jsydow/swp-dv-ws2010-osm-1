@@ -45,8 +45,8 @@ public class DataNode extends DataMapObject {
      */
     public DataNode(GeoPoint gp, DataPointsList way) {
         super();
-        this.loc = gp;
-        this.way = way;
+        this.coordinates = gp;
+        this.parentWay = way;
     }
 
     /**
@@ -86,13 +86,13 @@ public class DataNode extends DataMapObject {
     /**
      * The {@link GeoPoint} object associated with this node.
      */
-    private GeoPoint loc;
+    private GeoPoint coordinates;
 
     /**
      * The {@link DataPointsList} object associated with this node. Null if this
      * node is not part of a DataPointsList.
      */
-    private DataPointsList way;
+    private DataPointsList parentWay;
 
     /**
      * The overlay Item used by the gui, associated with a certain poi.
@@ -108,9 +108,9 @@ public class DataNode extends DataMapObject {
      */
     public void setLocation(Location loc) {
         if (loc == null)
-            this.loc = null;
+            this.coordinates = null;
         else
-            this.loc = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+            this.coordinates = new GeoPoint(loc.getLatitude(), loc.getLongitude());
     }
 
     /**
@@ -120,7 +120,7 @@ public class DataNode extends DataMapObject {
      *            new position of the node
      */
     public void setLocation(GeoPoint gp) {
-        this.loc = gp;
+        this.coordinates = gp;
     }
 
     /**
@@ -131,7 +131,7 @@ public class DataNode extends DataMapObject {
      *            the way that contains this point
      */
     public void setDataPointsList(DataPointsList way) {
-        this.way = way;
+        this.parentWay = way;
     }
 
     /**
@@ -141,7 +141,7 @@ public class DataNode extends DataMapObject {
      * @return the DataPointsList this point is in
      */
     public DataPointsList getDataPointsList() {
-        return way;
+        return parentWay;
     }
 
     /**
@@ -150,9 +150,9 @@ public class DataNode extends DataMapObject {
      * @return The longitude
      */
     public double getLon() {
-        if (loc == null)
+        if (coordinates == null)
             return 0;
-        return loc.getLongitude();
+        return coordinates.getLongitude();
     }
 
     /**
@@ -161,9 +161,9 @@ public class DataNode extends DataMapObject {
      * @return The latitude
      */
     public double getLat() {
-        if (loc == null)
+        if (coordinates == null)
             return 0;
-        return loc.getLatitude();
+        return coordinates.getLatitude();
     }
 
     /**
@@ -174,7 +174,7 @@ public class DataNode extends DataMapObject {
      * @return true if the Node contains data of a valid GPS fix
      */
     public boolean isValid() {
-        return loc != null;
+        return coordinates != null;
     }
 
     /**
@@ -231,7 +231,7 @@ public class DataNode extends DataMapObject {
      * @return a GeoPoint with the coordinates of the DataNode
      */
     public GeoPoint toGeoPoint() {
-        return loc;
+        return coordinates;
     }
 
     /**
