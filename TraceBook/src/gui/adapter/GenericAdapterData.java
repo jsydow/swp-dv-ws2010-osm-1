@@ -76,8 +76,6 @@ public class GenericAdapterData {
         }
 
         public void fillItem(View view, int id) {
-            // TODO Auto-generated method stub
-
             textView = (TextView) view.findViewById(id);
             textView.setText(text);
 
@@ -113,7 +111,6 @@ public class GenericAdapterData {
         }
 
         public void fillItem(View view, int id) {
-            // TODO Auto-generated method stub
             ImageView imageView = (ImageView) view.findViewById(id);
             imageView.setImageResource(imageId);
             imageView.invalidate();
@@ -143,7 +140,6 @@ public class GenericAdapterData {
         }
 
         public void fillItem(View view, int id) {
-            // TODO Auto-generated method stub
             Button button = (Button) view.findViewById(id);
             button.setOnClickListener(onClickListener);
 
