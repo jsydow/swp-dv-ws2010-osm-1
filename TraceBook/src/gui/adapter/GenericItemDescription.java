@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class GenericItemDescription {
     /**
-     * Map to associate a String tag with an id
+     * Map to associate a String tag with an id.
      * 
      */
     Map<String, Integer> resourceIds = new HashMap<String, Integer>();
