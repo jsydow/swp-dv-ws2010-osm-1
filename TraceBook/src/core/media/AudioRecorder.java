@@ -17,7 +17,7 @@ public class AudioRecorder extends Recorder {
     private MediaRecorder recorder = new MediaRecorder();
 
     /*
-     * (non-Javadoc)
+     * (non-Javadoc)!
      * 
      * @see core.media.Recorder#getNewFilename()
      */
