@@ -342,13 +342,13 @@ public class NewTrackActivity extends TabActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
+                                setTrackName();
                                 try {
                                     ServiceConnector.getLoggerService()
                                             .stopTrack();
                                 } catch (RemoteException e) {
                                     e.printStackTrace();
                                 }
-                                setTrackName();
 
                             }
                         })
