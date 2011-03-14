@@ -1,4 +1,4 @@
-package TraceBook;
+package tracebook;
 
 import static org.openstreetmap.josm.tools.I18n.tr;
 
@@ -40,7 +40,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Importer class for TraceBookTrack files
+ * Importer class for TraceBookTrack files.
  * 
  * @author anubis
  * 
@@ -65,7 +65,7 @@ public class TraceBookImporter extends FileImporter {
      * 
      * @param file
      *            The file reference to use for opening.
-     * @param progressMonitor
+     * @param myProgressMonitor
      *            The ProgressMonitor used to track the loading progress.
      * @throws IllegalDataException
      *             Is thrown when the handled data is not parseable.
@@ -76,15 +76,17 @@ public class TraceBookImporter extends FileImporter {
     public void importData(File file, ProgressMonitor progressMonitor)
             throws IOException, IllegalDataException {
         String fn = file.getPath();
-
+        ProgressMonitor myProgressMonitor;
         if (progressMonitor == null) { // make sure that there is a progress
             // monitor...
-            progressMonitor = NullProgressMonitor.INSTANCE;
+            myProgressMonitor = NullProgressMonitor.INSTANCE;
+        } else {
+            myProgressMonitor = progressMonitor;
         }
 
-        progressMonitor.beginTask(String.format("Importing TBT file %s...",
+        myProgressMonitor.beginTask(String.format("Importing TBT file %s...",
                 file.getName(), 4));
-        progressMonitor.setTicksCount(1);
+        myProgressMonitor.setTicksCount(1);
 
         if (fn.toLowerCase().endsWith(TRACEBOOK_FILE_EXT)) {
             try {
@@ -94,14 +96,14 @@ public class TraceBookImporter extends FileImporter {
 
                 DataSet osmdata = new DataSet();
 
-                GpxData gpxData = new GpxData();// r.transformColumbusCSV(fn);
+                GpxData gpxData = new GpxData(); // r.transformColumbusCSV(fn);
                 GpxLayer gpxLayer = new GpxLayer(gpxData, file.getName());
                 Main.main.addLayer(gpxLayer);
                 MarkerLayer ml = null;
                 ml = new MarkerLayer(gpxData, tr("Markers from {0}", file
                         .getName()), file, gpxLayer);
 
-                progressMonitor.setTicksCount(3);
+                myProgressMonitor.setTicksCount(3);
                 DocumentBuilderFactory fac = DocumentBuilderFactory
                         .newInstance();
                 DocumentBuilder dom = fac.newDocumentBuilder();
@@ -111,7 +113,7 @@ public class TraceBookImporter extends FileImporter {
                 decsymb.setDecimalSeparator('.');
 
                 DecimalFormat decform = new DecimalFormat("0.0000000", decsymb);
-                HashMap<String, org.openstreetmap.josm.data.osm.Node> NodesMap = new HashMap<String, org.openstreetmap.josm.data.osm.Node>();
+                HashMap<String, org.openstreetmap.josm.data.osm.Node> nodesMap = new HashMap<String, org.openstreetmap.josm.data.osm.Node>();
                 for (int i = 0; i < nl.getLength(); i++) {
 
                     NamedNodeMap attributes = nl.item(i).getAttributes();
@@ -195,7 +197,7 @@ public class TraceBookImporter extends FileImporter {
                             .debug("new nodes id: "
                                     + ((Attr) attributes.getNamedItem("id"))
                                             .getValue());
-                    NodesMap.put(((Attr) attributes.getNamedItem("id"))
+                    nodesMap.put(((Attr) attributes.getNamedItem("id"))
                             .getValue(), newosmnode);
                 }
                 NodeList nlw = doc.getElementsByTagName("way");
@@ -219,22 +221,22 @@ public class TraceBookImporter extends FileImporter {
                     newway.load(wd);
                     Date date = new Date();
 
-                    newway.setOsmId(1l, wd.getVersion());
+                    newway.setOsmId(1L, wd.getVersion());
                     List<org.openstreetmap.josm.data.osm.Node> waynodes = new LinkedList<org.openstreetmap.josm.data.osm.Node>();
                     NodeList childs = nlw.item(i).getChildNodes();
                     HashMap<String, String> tags = null;
                     for (int a = 0; a < childs.getLength(); a++) {
 
                         if (childs.item(a).getNodeName().equalsIgnoreCase("nd")) {
-                            String Key = ((Attr) childs.item(a).getAttributes()
+                            String key = ((Attr) childs.item(a).getAttributes()
                                     .getNamedItem("ref")).getValue();
-                            if (NodesMap.get(Key) == null)
+                            if (nodesMap.get(key) == null)
                                 Main.main
                                         .debug("Hey we got a null node, impossible to add it to a way!");
                             else {
-                                waynodes.add(NodesMap.get(Key));
+                                waynodes.add(nodesMap.get(key));
                                 // newway.addNode(NodesMap.get(Key));
-                                Main.main.debug("Adding node " + Key + " ("
+                                Main.main.debug("Adding node " + key + " ("
                                         + "" + ") to way " + newway.getId());
                             }
                         }
@@ -264,17 +266,18 @@ public class TraceBookImporter extends FileImporter {
                 // doc.getDocumentElement().normalize();
                 Main.main.debug("Items in the GpxLayer: "
                         + gpxLayer.data.waypoints.size());
-                progressMonitor.setTicksCount(1);
+                myProgressMonitor.setTicksCount(1);
                 //
                 // r.dropBufferLists();
                 //
-                progressMonitor.setTicksCount(2);
+                myProgressMonitor.setTicksCount(2);
                 OsmDataLayer osmdatalayer = new OsmDataLayer(osmdata, fn, file);
 
                 // add layer to show way points
                 // Main.main.addLayer(gpxLayer);
                 Main.main.addLayer(osmdatalayer);
-                Main.main.removeLayer(gpxLayer);// Dirty hack to avoid
+                Main.main.removeLayer(gpxLayer);
+                // Dirty hack to avoid
                 // nullpointer exception in
                 // markerlayer
                 //
@@ -282,11 +285,11 @@ public class TraceBookImporter extends FileImporter {
                 //
                 // // ... and scale view appropriately - if wished by user
                 // if (!ColumbusCSVPreferences.dontZoom())
-                {
-                    AutoScaleAction action = new AutoScaleAction("data");
-                    action.autoScale();
-                }
-                progressMonitor.setTicksCount(4);
+
+                AutoScaleAction action = new AutoScaleAction("data");
+                action.autoScale();
+
+                myProgressMonitor.setTicksCount(4);
 
                 if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
                     Main.main.debug("makeautomarkers was true");
@@ -303,11 +306,14 @@ public class TraceBookImporter extends FileImporter {
                         Main.main.addLayer(ml);
                     }
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
+                // catch and forward exception
+                throw new IllegalDataException(e);
+            } catch (NullPointerException e) {
                 // catch and forward exception
                 throw new IllegalDataException(e);
             } finally { // take care of monitor...
-                progressMonitor.finishTask();
+                myProgressMonitor.finishTask();
             }
         } else {
             throw new IOException(
