@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import Trace.Book.R;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
@@ -18,19 +19,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import core.data.DataMapObject;
 import core.data.DataStorage;
+import core.data.DataTrack;
 import core.logger.ServiceConnector;
 import core.media.PictureRecorder;
+import core.media.Recorder;
 
 /**
  * @author greentraxas The purpose of this activity is to add and edit tags to
@@ -359,4 +362,18 @@ public class AddPointActivity extends ListActivity {
         super.onStart();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        DataTrack dt = DataStorage.getInstance().getCurrentTrack();
+
+        switch (requestCode) {
+        case Recorder.TAKE_PHOTO_CODE:
+            if (resultCode == Activity.RESULT_OK) {
+                pictureRecorder.appendFileToObject(dt.getCurrentWay());
+            }
+            break;
+        default:
+            break;
+        }
+    }
 }
