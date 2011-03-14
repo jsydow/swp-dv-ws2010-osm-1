@@ -35,9 +35,10 @@ import core.media.PictureRecorder;
 import core.media.Recorder;
 
 /**
- * @author greentraxas The purpose of this activity is to add and edit tags to
- *         an DataMapObject where an DataMapObject can be anything from poi to
- *         area.
+ * The purpose of this activity is to add and edit tags to an DataMapObject
+ * where an DataMapObject can be anything from poi to area.
+ * 
+ * @author greentraxas
  * 
  */
 public class AddPointActivity extends ListActivity {
@@ -46,26 +47,6 @@ public class AddPointActivity extends ListActivity {
      * Here we use the LayoutInflater to inflate the Layout for the ListView.
      */
     private LayoutInflater mInflater;
-
-    /**
-     * The String[] "category" save all CategoryTags of the node. First we need
-     * this to list all Items in our ListView. Second to send the Tag with an
-     * intent to the AddPointMetaActivity
-     */
-    static String[] category;
-
-    /**
-     * The String[] "value" save all ValueTags of the node. First we need this
-     * to list all Items in our ListView. Second to send the Tag with an intent
-     * to the AddPointMetaActivity
-     */
-    static String[] value;
-
-    /**
-     * The Integer[] "image" will be used for the reference to the imageIcon of
-     * the used CategoryTag.
-     */
-    static Integer[] image;
 
     /**
      * Here we save a reference to the current DataMapObject which is in use.
@@ -109,8 +90,9 @@ public class AddPointActivity extends ListActivity {
         // Initial ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
+
         registerForContextMenu(getListView());
-        getNodeInformation();
+        setNodeInformation();
 
         // Initial Adapter
         mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -129,21 +111,22 @@ public class AddPointActivity extends ListActivity {
         desc.addResourceId("NodeValue", R.id.detail);
 
         List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+        Iterator<Entry<String, String>> iterator = node.getTags().entrySet()
+                .iterator();
 
-        for (int i = 0; i < category.length; i++) {
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> pairs = iterator.next();
 
-            GenericAdapterData itemData = new GenericAdapterData(desc);
-            itemData.setText("NodeKey", category[i]);
-            itemData.setText("NodeValue", value[i]);
+            GenericAdapterData item = new GenericAdapterData(desc);
+            item.setText("NodeKey", pairs.getKey());
+            item.setText("NodeValue", pairs.getValue());
 
-            data.add(itemData);
+            data.add(item);
         }
-
         adapter = new GenericAdapter(this, R.layout.addpointlistview,
                 R.id.list, data, mInflater);
 
         setListAdapter(adapter);
-
         getListView().setTextFilterEnabled(true);
     }
 
@@ -175,14 +158,14 @@ public class AddPointActivity extends ListActivity {
         case R.id.deleteTag_cm:
 
             node.getTags().remove(itemData.getText("NodeKey"));
-            getNodeInformation();
+            setNodeInformation();
             initAdapter();
             adapter.notifyDataSetChanged();
             return true;
         case R.id.renameTag_cm:
             final Intent intent = new Intent(this, AddPointMetaActivity.class);
 
-            intent.putExtra("DataNodeId", node.getId()); //
+            intent.putExtra("DataNodeId", node.getId());
             intent.putExtra("DataNodeKey", itemData.getText("NodeKey"));
             intent.putExtra("DataNodeValue", itemData.getText("NodeValue"));
             startActivity(intent);
@@ -198,17 +181,13 @@ public class AddPointActivity extends ListActivity {
      * Meta-HashMap of this Node. If the HashMap contain no MetaData, the method
      * returns an empty array.
      */
-    private void getNodeInformation() {
+    private void setNodeInformation() {
         TextView nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
         TextView nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
         TextView titleCat = (TextView) findViewById(R.id.titleListViewCat_tv);
         TextView titleVal = (TextView) findViewById(R.id.titleListViewVal_tv);
-        int i = 0;
 
         Map<String, String> tagMap = node.getTags();
-        category = new String[tagMap.size()];
-        value = new String[tagMap.size()];
-
         nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " "
                 + node.getId());
 
@@ -216,15 +195,6 @@ public class AddPointActivity extends ListActivity {
             nodeInfo.setText(R.string.MetaData_tv);
             titleCat.setVisibility(1);
             titleVal.setVisibility(1);
-            Iterator<Entry<String, String>> iterator = tagMap.entrySet()
-                    .iterator();
-
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> pairs = iterator.next();
-                category[i] = pairs.getKey();
-                value[i] = pairs.getValue();
-                i++;
-            }
 
         } else {
             nodeInfo.setText(R.string.noMetaData_tv);
@@ -335,7 +305,7 @@ public class AddPointActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getNodeInformation();
+        setNodeInformation();
         initAdapter();
     }
 
