@@ -11,23 +11,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * @author SakirSoft The GenericAdapterData helps you to define content for
- *         currently tree types of different views. 1. TextView 2. ImageView 3.
- *         Button
+ * The GenericAdapterData helps you to define content for currently tree types
+ * of different views. 1. TextView 2. ImageView 3. Button.
  * 
- *         One instance of a GenericAdapterData represents the date for one item
- *         in the list view. Where one item can hold one or more views. You can
- *         associate views with String tags via the GenericItemDesciption class.
+ * One instance of a GenericAdapterData represents the date for one item in the
+ * list view. Where one item can hold one or more views. You can associate views
+ * with String tags via the GenericItemDesciption class.
  * 
- *         This class provides you easy acces to fill your views with the right
- *         data.
+ * This class provides you easy acces to fill your views with the right data.
+ * 
+ * @author SakirSoft
+ * 
+ * 
  * 
  */
 public class GenericAdapterData {
 
     /**
-     * @author SakirSoft An enum to define the three different types of view in
-     *         a item
+     * An enum to define the three different types of views in a item.
+     * 
+     * @author SakirSoft
      */
     enum ItemTypes {
         /**
@@ -50,8 +53,9 @@ public class GenericAdapterData {
     }
 
     /**
-     * @author SakirSoft The class representation to handle TextView data
+     * The class representation to handle TextView data.
      * 
+     * @author SakirSoft
      */
     static class TextItem implements GenericItem {
 
@@ -81,7 +85,7 @@ public class GenericAdapterData {
 
         /**
          * @return returns the current text of the TextView which is connect
-         *         with this item
+         *         with this item.
          */
         public String getCurrentText() {
             return textView.getText().toString();
@@ -90,8 +94,9 @@ public class GenericAdapterData {
     }
 
     /**
-     * @author SakirSoft The class representation to handle ImageView data
+     * The class representation to handle ImageView data.
      * 
+     * @author SakirSoft
      */
     static class ImageItem implements GenericItem {
 
@@ -117,13 +122,15 @@ public class GenericAdapterData {
     }
 
     /**
+     * The class representation to handle Button data.
+     * 
      * @author SakirSoft
      * 
      */
     static class ButtonItem implements GenericItem {
 
         /**
-         * Reference to an onClickListener whichh will be called when an onClick
+         * Reference to an onClickListener which will be called when an onClick
          * event occurs.
          */
         View.OnClickListener onClickListener;
@@ -145,16 +152,19 @@ public class GenericAdapterData {
     }
 
     /**
-     * 
+     * reference to a description object. See @GenericItemDescription
      */
     GenericItemDescription description;
     /**
-     * 
+     * map items to string tags
      */
     Map<String, GenericItem> items = new HashMap<String, GenericItem>();
 
     /**
+     * 
      * @param desc
+     *            reference to a GenericItemDescription object which will handle
+     *            the mapping of tags to view objects.
      */
     public GenericAdapterData(GenericItemDescription desc) {
         description = desc;
@@ -177,7 +187,10 @@ public class GenericAdapterData {
 
     /**
      * @param tag
+     *            tag which is associated with an given TextView.
      * @param text
+     *            text to set.
+     * 
      */
     public void setText(String tag, String text) {
         items.put(tag, new TextItem(text));
@@ -185,7 +198,10 @@ public class GenericAdapterData {
 
     /**
      * @param tag
+     *            tag which is associated with a given ImageView.
      * @param image
+     *            resource id of an image
+     * 
      */
     public void setImage(String tag, int image) {
         items.put(tag, new ImageItem(image));
@@ -193,7 +209,11 @@ public class GenericAdapterData {
 
     /**
      * @param tag
+     *            tag which is associated with a given Button.
      * @param onClickListener
+     *            reference to a onClickListener which will be called when the
+     *            given button is clicked.
+     * 
      */
     public void setButtonCallback(String tag,
             View.OnClickListener onClickListener) {
