@@ -146,8 +146,8 @@ public class AddPointActivity extends ListActivity {
         for (int i = 0; i < category.length; i++) {
 
             GenericAdapterData itemData = new GenericAdapterData(desc);
-            itemData.SetText("NodeKey", category[i]);
-            itemData.SetText("NodeValue", value[i]);
+            itemData.setText("NodeKey", category[i]);
+            itemData.setText("NodeValue", value[i]);
 
             data.add(itemData);
         }

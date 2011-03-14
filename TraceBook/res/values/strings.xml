@@ -29,6 +29,7 @@
     <string name="pause_alert">Möchten Sie die aktuelle Session pausieren?</string>
     <string name="yes_alert">Ja</string>
     <string name="no_alert">Nein</string>
+    <string name="alert_really_delete_track">Track löschen?</string>
     
   	<!--  Optionmenu values -->
     <string name="preferences_opt">Einstellungen</string>
@@ -50,6 +51,12 @@
 	<string name="deletePoint_cm">Punkt löschen</string>
 	<string name="editPoint_cm">Punkt editieren</string>
 	<string name="movePoint_cm">Punkt verschieben</string>
+	<string name="loadTrack_load_cm">Track laden</string>
+	<string name="loadTrack_rename_cm">Track umbenennen</string>
+	<string name="loadTrack_delete_cm">Track löschen</string>
+	<string name="loadTrack_info_cm">Infos anzeigen</string>
+	<string name="editmapobjects_edit_cm">Bearbeiten</string>
+	<string name="editmapobjects_delete_cm">Löschen</string>
    
    <!-- Tab values -->
     <string name="map_tab">Karte</string>
@@ -71,13 +78,6 @@
     <string name="makeVideo_btn">Video</string>
     <string name="makeMemo_btn">Sprachnotiz</string>
     <string name="makeNotice_btn">Notiz</string>
-<string name="loadTrack_load_cm">Track laden</string>
-<string name="loadTrack_rename_cm">Track umbenennen</string>
-<string name="loadTrack_delete_cm">Track löschen</string>
-<string name="loadTrack_info_cm">Infos anzeigen</string>
-<string name="editmapobjects_edit_cm">Bearbeiten</string>
-<string name="editmapobjects_delete_cm">Löschen</string>
-<string name="alert_really_delete_track">Track löschen?</string>
 <string name="back_btn">Speichern</string>
 <string name="no_information">keine Information vorhanden</string>
 <string name="editComment_btn">Track Kommentar bearbeiten</string>
