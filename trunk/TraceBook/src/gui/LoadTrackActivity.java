@@ -26,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import core.data.DataStorage;
@@ -300,5 +301,27 @@ public class LoadTrackActivity extends ListActivity {
          * adapter.add(name); }
          */
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * If a listitem selected, the method will load the track.
+     */
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        GenericAdapterData data = adapter.getItem(position);
+        final String trackname = data.getText("TrackName");
+        DataTrack track = DataStorage.getInstance().deserialiseTrack(trackname);
+        if (track != null) {
+            DataStorage.getInstance().setCurrentTrack(track);
+            final Intent intent = new Intent(this, NewTrackActivity.class);
+            startActivity(intent);
+        } else {
+            Log.e("RenameTrack", "Track to load was not found or is corrupt.");
+            Toast.makeText(getApplicationContext(),
+                    "Track to load could not be opened. Missing or corrupt.",
+                    Toast.LENGTH_SHORT).show();
+        }
+        super.onListItemClick(l, v, position, id);
     }
 }
