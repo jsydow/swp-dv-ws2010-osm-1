@@ -71,10 +71,10 @@ public class LogParameter implements Parcelable {
     }
 
     /**
-	 * 
-	 */
+     * Good for nothing constructor.
+     */
     public LogParameter() {
-        // TODO Auto-generated constructor stub
+        // Does nothing. Literally.
     }
 
     public int describeContents() {
