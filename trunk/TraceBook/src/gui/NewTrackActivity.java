@@ -14,17 +14,17 @@ import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -34,13 +34,14 @@ import core.media.PictureRecorder;
 import core.media.Recorder;
 
 /**
- * @author greentraxas The NewTrackActivity is the main activity to record ,
- *         edit and see your ways, areas and POIS. The activity is divided in
- *         three part via tabs. The first one is the map view where you can see
- *         your collected way points in a convenient way. The second one is the
- *         main tab where you can set the your POI's, ways and areas. In the
- *         third one you can choose your collected, add new tags, remove tags
- *         remove pois etc.
+ * The NewTrackActivity is the main activity to record , edit and see your ways,
+ * areas and POIS. The activity is divided in three part via tabs. The first one
+ * is the map view where you can see your collected way points in a convenient
+ * way. The second one is the main tab where you can set the your POI's, ways
+ * and areas. In the third one you can choose your collected, add new tags,
+ * remove tags remove pois etc.
+ * 
+ * @author greentraxas
  * 
  * 
  */
@@ -85,12 +86,12 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-	 * 
-	 */
+     * TextView which shows the current text for media buttons.
+     */
     TextView mediaData;
 
     /**
-     *
+     * Reference to a pictureRecorder to record pictures.
      */
     PictureRecorder pictureRecorder = new PictureRecorder();
 
@@ -114,7 +115,6 @@ public class NewTrackActivity extends TabActivity {
         ServiceConnector.initService();
 
         setButtonList(false, 0);
-        initToggleButtons();
 
         TabHost myTabHost = getTabHost();
         myTabHost.setOnTabChangedListener(new MyListener(this, myTabHost));
@@ -186,45 +186,6 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Init toggle buttons for startWay and startArea.
-     */
-    private void initToggleButtons() {
-
-        ToggleButton startWay = (ToggleButton) findViewById(R.id.startWay_Tbtn);
-        ToggleButton startArea = (ToggleButton) findViewById(R.id.startArea_Tbtn);
-
-        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
-        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
-
-        try {
-            boolean toggle = ServiceConnector.getLoggerService().isWayLogging();
-            startWay.setChecked(toggle);
-            areaToggle.setClickable(!toggle);
-
-            if (toggle)
-                setButtonList(true, 1);
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            boolean toggle = ServiceConnector.getLoggerService()
-                    .isAreaLogging();
-
-            startArea.setChecked(toggle);
-            streetToggle.setClickable(!toggle);
-
-            if (toggle)
-                setButtonList(true, 2);
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Init ListView with the list of saved POI, streets and areas.
      */
     void initListView() {
@@ -262,26 +223,28 @@ public class NewTrackActivity extends TabActivity {
         TabHost tabHost = getTabHost();
 
         // Init TabHost
-        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(
-                getResources().getString(R.string.map_tab)).setContent(
-                new Intent(this, MapsForgeActivity.class)));
+        tabHost.addTab(tabHost.newTabSpec("map_tab")
+                .setIndicator(getResources().getString(R.string.map_tab))
+                .setContent(new Intent(this, MapsForgeActivity.class)));
         // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost.newTabSpec("new_tab").setIndicator(
-                getResources().getString(R.string.new_tab)).setContent(
-                R.id.new_tab));
-        tabHost.addTab(tabHost.newTabSpec("edit_tab").setIndicator(
-                getResources().getString(R.string.edit_tab)).setContent(
-                R.id.edit_tab));
+        tabHost.addTab(tabHost.newTabSpec("new_tab")
+                .setIndicator(getResources().getString(R.string.new_tab))
+                .setContent(R.id.new_tab));
+        tabHost.addTab(tabHost.newTabSpec("edit_tab")
+                .setIndicator(getResources().getString(R.string.edit_tab))
+                .setContent(R.id.edit_tab));
 
-        tabHost.setCurrentTab(1);
+        // set the default tap to our MapTab
+        tabHost.setCurrentTab(0);
 
     }
 
     /**
-     * Method is called if StartWay-Togglebutton pressed. Start and stop way
+     * Method is called if startWay-Togglebutton pressed. Start and stop way
      * tracking.
      * 
      * @param view
+     *            not used
      */
     public void startWayTbtn(View view) {
         ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
@@ -308,10 +271,11 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Method is called if StartArea-Togglebutton pressed. Start and stop area
+     * Method is called if startArea-Togglebutton pressed. Start and stop area
      * tracking.
      * 
      * @param view
+     *            not used
      */
     public void startAreaTbtn(View view) {
         ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
@@ -324,6 +288,7 @@ public class NewTrackActivity extends TabActivity {
                 ServiceConnector.getLoggerService().beginArea();
 
             } catch (RemoteException e) {
+
                 e.printStackTrace();
             }
         } else {
@@ -331,7 +296,6 @@ public class NewTrackActivity extends TabActivity {
             setButtonList(false, 0);
             try {
                 ServiceConnector.getLoggerService().endArea();
-
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -345,6 +309,7 @@ public class NewTrackActivity extends TabActivity {
      * insert Meta-Tags for the last Node.
      * 
      * @param view
+     *            not used
      */
     public void addPointBtn(View view) {
         int nodeId = 0;
@@ -370,7 +335,8 @@ public class NewTrackActivity extends TabActivity {
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getResources().getString(R.string.exit_alert))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         getResources().getString(R.string.yes_alert),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -384,8 +350,8 @@ public class NewTrackActivity extends TabActivity {
                                 setTrackName();
 
                             }
-                        }).setNegativeButton(
-                        getResources().getString(R.string.no_alert),
+                        })
+                .setNegativeButton(getResources().getString(R.string.no_alert),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
@@ -498,7 +464,10 @@ public class NewTrackActivity extends TabActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
 
-                DataStorage.getInstance().getCurrentTrack().getCurrentWay()
+                DataStorage
+                        .getInstance()
+                        .getCurrentTrack()
+                        .getCurrentWay()
                         .addMedia(
                                 DataStorage.getInstance().getCurrentTrack()
                                         .saveText(value));
