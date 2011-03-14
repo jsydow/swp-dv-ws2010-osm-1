@@ -179,16 +179,15 @@ public class WaypointLogService extends Service implements LocationListener {
 
         public synchronized int endWay() {
             DataPointsList tmp = currentWay();
+
             storage.getCurrentTrack().setCurrentWay(null);
 
-            /* do not store empty ways */
-            if (tmp.getNodes().size() == 0) {
-                storage.getCurrentTrack().deleteWay(tmp.getId());
-                tmp = null;
-            }
-
             if (tmp != null)
-                return tmp.getId();
+                /* do not store empty ways */
+                if (tmp.getNodes().size() == 0)
+                    storage.getCurrentTrack().deleteWay(tmp.getId());
+                else
+                    return tmp.getId();
             return -1;
         }
 
