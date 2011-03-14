@@ -56,6 +56,7 @@ public class DataTrackInfo {
     }
 
     private static final String NOINFO = "keine Information";
+    private static final String NOINFOFILEFOUND = "Es liegen keine Informationen zu dem Track vor.";
 
     private DataTrackInfo() {
         timestamp = NOINFO;
@@ -181,18 +182,14 @@ public class DataTrackInfo {
 
             } catch (ParserConfigurationException e) {
                 Log.e("DeserialisingDataTrackInfo", "This should not happen!");
-                info = null;
             } catch (SAXException e) {
                 Log.e("DeserialisingDataTrackInfo", "XML-file is not valid.!");
-                info = null;
             } catch (IOException e) {
                 Log.e("DeserialisingDataTrackInfo",
-                        "Erro while reading XML file!");
-                info = null;
+                        "Error while reading XML file!");
             }
-
         } else {
-            info = null;
+            info.comment = NOINFOFILEFOUND;
         }
         return info;
     }
