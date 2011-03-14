@@ -1,5 +1,0 @@
-#summary Here be CheckStyle
-
-= XML file =
-
-http://userpage.fu-berlin.de/hdinh/checks.xml
