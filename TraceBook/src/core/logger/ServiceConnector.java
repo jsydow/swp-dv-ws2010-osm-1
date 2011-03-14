@@ -24,13 +24,13 @@ public class ServiceConnector {
     /**
      * Bind the logger service to this activity.
      */
-    public static void initService() {
+    synchronized public static void initService() {
 
         if (conn == null) {
             conn = new LoggerServiceConnection();
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(), WaypointLogService.class
-                    .getName());
+            i.setClassName(activity.getPackageName(),
+                    WaypointLogService.class.getName());
             activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
             Log.d(LOG_TAG, "bindService()");
         } else
@@ -40,7 +40,7 @@ public class ServiceConnector {
     /**
      * Release the logger service.
      */
-    public static void releaseService() {
+    synchronized public static void releaseService() {
         if (conn != null) {
             activity.unbindService(conn);
             conn = null;
@@ -62,8 +62,8 @@ public class ServiceConnector {
             Log.d(LOG_TAG, "Service already started");
         } else {
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(), WaypointLogService.class
-                    .getName());
+            i.setClassName(activity.getPackageName(),
+                    WaypointLogService.class.getName());
             activity.startService(i);
             Log.d(LOG_TAG, "startService()");
             started = true;
@@ -78,8 +78,8 @@ public class ServiceConnector {
             Log.d(LOG_TAG, "Service not yet started");
         } else {
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(), WaypointLogService.class
-                    .getName());
+            i.setClassName(activity.getPackageName(),
+                    WaypointLogService.class.getName());
             activity.stopService(i);
             Log.d(LOG_TAG, "stopService()");
         }
