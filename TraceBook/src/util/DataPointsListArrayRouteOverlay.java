@@ -127,6 +127,10 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
                 color.first, color.second));
         addRoute(way.getOverlayRoute());
+        if (showGnubbel) {
+            removeGnubbel(way); // XXX
+            addGnubbel(way);
+        }
     }
 
     /**
@@ -157,6 +161,9 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
             pointsOverlay.removeOverlay(n.getId());
     }
 
+    /**
+     * enable/disable the drawing of waypoint markers
+     */
     public void toggleGnubbel() {
         showGnubbel = !showGnubbel;
 

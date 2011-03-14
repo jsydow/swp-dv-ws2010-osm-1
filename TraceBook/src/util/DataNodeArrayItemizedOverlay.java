@@ -307,6 +307,12 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         return true;
     }
 
+    /**
+     * we need to set the RoutesOverlay as the class will be created after this
+     * one…
+     * 
+     * @param routesOverlay
+     */
     public void setRoutesOverlay(DataPointsListArrayRouteOverlay routesOverlay) {
         this.routesOverlay = routesOverlay;
     }
