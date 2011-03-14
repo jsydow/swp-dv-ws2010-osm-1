@@ -229,45 +229,48 @@ public class DataPointsList extends DataMapObject {
      */
     public void serialiseWay(XmlSerializer serializer,
             boolean shouldSerialiseMedia) {
-        try {
-            serializer.startTag(null, "way");
-            serializer.attribute(null, "version", "1");
-            serializer.attribute(null, "timestamp", getDatetime());
-            serializer.attribute(null, "id", Integer.toString(getId()));
+        if (nodes.size() > 0) {
+            try {
+                serializer.startTag(null, "way");
+                serializer.attribute(null, "version", "1");
+                serializer.attribute(null, "timestamp", getDatetime());
+                serializer.attribute(null, "id", Integer.toString(getId()));
 
-            for (DataNode dn : nodes) {
-                serializer.startTag(null, "nd");
+                for (DataNode dn : nodes) {
+                    serializer.startTag(null, "nd");
 
-                serializer.attribute(null, "ref", Integer.toString(dn.getId()));
+                    serializer.attribute(null, "ref",
+                            Integer.toString(dn.getId()));
 
-                serializer.endTag(null, "nd");
+                    serializer.endTag(null, "nd");
+                }
+                if (this.isArea && nodes.size() > 0) {
+                    DataNode lastNode = nodes.getFirst();
+                    serializer.startTag(null, "nd");
+                    serializer.attribute(null, "ref",
+                            Integer.toString(lastNode.getId()));
+                    serializer.endTag(null, "nd");
+
+                    serializer.startTag(null, "tag");
+                    serializer.attribute(null, "k", "area");
+                    serializer.attribute(null, "v", "yes");
+                    serializer.endTag(null, "tag");
+                }
+
+                serialiseTags(serializer);
+                if (shouldSerialiseMedia) {
+                    serialiseMedia(serializer);
+                }
+
+                serializer.endTag(null, "way");
+
+            } catch (IllegalArgumentException e) {
+                Log.e("WaySerialisation", "Should not happen");
+            } catch (IllegalStateException e) {
+                Log.e("WaySerialisation", "Illegal state");
+            } catch (IOException e) {
+                Log.e("WaySerialisation", "Could not serialise way");
             }
-            if (this.isArea && nodes.size() > 0) {
-                DataNode lastNode = nodes.getFirst();
-                serializer.startTag(null, "nd");
-                serializer.attribute(null, "ref",
-                        Integer.toString(lastNode.getId()));
-                serializer.endTag(null, "nd");
-
-                serializer.startTag(null, "tag");
-                serializer.attribute(null, "k", "area");
-                serializer.attribute(null, "v", "yes");
-                serializer.endTag(null, "tag");
-            }
-
-            serialiseTags(serializer);
-            if (shouldSerialiseMedia) {
-                serialiseMedia(serializer);
-            }
-
-            serializer.endTag(null, "way");
-
-        } catch (IllegalArgumentException e) {
-            Log.e("WaySerialisation", "Should not happen");
-        } catch (IllegalStateException e) {
-            Log.e("WaySerialisation", "Illegal state");
-        } catch (IOException e) {
-            Log.e("WaySerialisation", "Could not serialise way");
         }
     }
 
