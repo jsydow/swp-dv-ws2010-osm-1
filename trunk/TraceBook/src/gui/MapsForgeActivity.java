@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import core.data.DataNode;
-import core.data.DataPointsList;
 import core.logger.ServiceConnector;
 import core.logger.WaypointLogService;
 
@@ -360,7 +359,6 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng); // we also need this
                                                           // to center the map
-
                 Log.d(LOG_TAG,
                         "Location update received "
                                 + currentGeoPoint.toString());
@@ -383,19 +381,13 @@ public class MapsForgeActivity extends MapActivity {
                 int pointId = intend.getExtras().getInt("point_id");
 
                 if (wayId > 0) {
-                    if (wayId != oldWayId) {
+                    if (wayId != oldWayId) { // TODO
                         routesOverlay.reDrawWay(oldWayId);
                         oldWayId = wayId;
                     }
                     Log.d(LOG_TAG, "Received way update, id=" + wayId);
-                    DataPointsList way = Helper.currentTrack()
-                            .getPointsListById(wayId);
-                    if (way == null)
-                        Log.e(LOG_TAG, "Way with ID " + wayId
-                                + " does not exist.");
-                    else {
-                        routesOverlay.reDrawWay(wayId);
-                    }
+                    routesOverlay.reDrawWay(wayId);
+
                 } else if (pointId > 0) { // received an updated POI -
                     // when does this actually happen?
                     Log.d(LOG_TAG, "Received node update, id=" + pointId);
