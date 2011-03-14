@@ -12,7 +12,6 @@ import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
-import core.data.LogParameter;
 
 /**
  * This background service logs GPS data and stores it in the
@@ -51,7 +50,12 @@ public class WaypointLogService extends Service implements LocationListener {
     /**
      * Parameters for GPS update intervals.
      */
-    LogParameter params;
+    protected int deltaDistance = 0;
+
+    /**
+     * 
+     */
+    protected int deltaTime = 0;
 
     private final Intent gps_intent = new Intent(UPDTAE_GPS_POS);
     private final Intent update_intent = new Intent(UPDTAE_OBJECT);
@@ -82,7 +86,6 @@ public class WaypointLogService extends Service implements LocationListener {
     public void onCreate() {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
-        params = new LogParameter();
     }
 
     @Override
@@ -99,8 +102,7 @@ public class WaypointLogService extends Service implements LocationListener {
         if (!gps_on)
             ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
                     .requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            params.getDeltaTime(), params.getDeltaDistance(),
-                            ll);
+                            deltaTime, deltaDistance, ll);
         gps_on = true;
     }
 
@@ -140,8 +142,13 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 
-        public void addTrack(LogParameter param) {
-            params = param;
+        public void addTrackWithGpsParams(int dTime, int dDistance) {
+            deltaTime = dTime;
+            deltaDistance = dDistance;
+            addTrack();
+        }
+
+        public void addTrack() {
             restartGPS();
 
             storage.setCurrentTrack(storage.newTrack());
