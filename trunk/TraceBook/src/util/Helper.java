@@ -19,7 +19,10 @@ import core.data.DataTrack;
  * @author benpicco
  * 
  */
-public class Helper {
+public final class Helper {
+    private Helper() { // do nothing - why checkstyle, why?!
+    }
+
     /**
      * Creates a new OverlayItem.
      * 
@@ -65,7 +68,7 @@ public class Helper {
     }
 
     /**
-     * gets the current way in the current {@link DataTrack}
+     * gets the current way in the current {@link DataTrack}.
      * 
      * @return the current {@link DataPointsList} ways
      */
@@ -74,7 +77,7 @@ public class Helper {
     }
 
     /**
-     * gets the list of Nodes in current {@link DataTrack}
+     * gets the list of Nodes in current {@link DataTrack}.
      * 
      * @return the current list of {@link DataNode}s
      */

@@ -309,7 +309,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
     /**
      * we need to set the RoutesOverlay as the class will be created after this
-     * one…
+     * one.
      * 
      * @param routesOverlay
      */
