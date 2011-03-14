@@ -31,16 +31,16 @@ public class GenericAdapterData {
      */
     enum ItemTypes {
         /**
-         * TextView
+         * TextView.
          */
         ItemType_Text,
         /**
-         * ImageView
+         * ImageView.
          */
         ItemType_Image,
 
         /**
-         * Button
+         * Button.
          */
         ItemType_Button,
     }
@@ -56,11 +56,11 @@ public class GenericAdapterData {
     class TextItem implements GenericItem {
 
         /**
-         * Reference to a string which will be used to fill a text view
+         * Reference to a string which will be used to fill a text view.
          */
         String text;
         /**
-         * Reference to a textView to which this item is connect with
+         * Reference to a textView to which this item is connect with.
          */
         TextView textView;
 
@@ -96,7 +96,7 @@ public class GenericAdapterData {
     class ImageItem implements GenericItem {
 
         /**
-         * The resource id to an image
+         * The resource id to an image.
          */
         int imageId;
 
