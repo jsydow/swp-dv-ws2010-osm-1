@@ -99,7 +99,8 @@ public class WaypointLogService extends Service implements LocationListener {
         if (!gps_on)
             ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
                     .requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            params.deltaTime, params.deltaDistance, ll);
+                            params.getDeltaTime(), params.getDeltaDistance(),
+                            ll);
         gps_on = true;
     }
 
