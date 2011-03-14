@@ -27,6 +27,7 @@ import android.util.Xml;
  * 
  */
 public class DataTrackInfo {
+    private static final String LOG_TAG = "DataTrackInfo";
 
     /**
      * An initialising constructor.
@@ -255,8 +256,7 @@ public class DataTrackInfo {
             try {
                 fileos.close();
             } catch (IOException e) {
-                Log.e("TrackInfo",
-                        "Could not close closed file. Should not happen.");
+                Log.e(LOG_TAG, "Unable to read file: " + e.getMessage());
             }
         }
 
