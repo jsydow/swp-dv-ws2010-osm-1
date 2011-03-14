@@ -19,15 +19,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
@@ -123,21 +123,6 @@ public class AddPointActivity extends ListActivity {
      * ListView.
      */
     private void initAdapter() {
-        // Vector<RowData> data = new Vector<RowData>();
-        // for (int i = 0; i < category.length; i++) {
-        // try {
-        // rd = new RowData(i, category[i], value[i]);
-        // } catch (ParseException e) {
-        // e.printStackTrace();
-        // }
-        //
-        // data.add(rd);
-        // }
-        // adapter = new CustomAdapter(this, R.layout.addpointlistview,
-        // R.id.list,
-        // data, mInflater);
-        // setListAdapter(adapter);
-
         GenericItemDescription desc = new GenericItemDescription();
 
         desc.addResourceId("NodeKey", R.id.title);
@@ -251,6 +236,7 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * The Method for the AddPointMeta Button, to save metadata for this node.
      * 
      * @param view
      *            not used
@@ -264,6 +250,7 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * The Method for the cancel Button to finish the Activty.
      * 
      * @param view
      *            not used
@@ -274,8 +261,11 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * The Method for the makeVideo Button (MediaTags) to start the
+     * RecordActivity.
+     * 
      * @param view
-     *            not
+     *            not used
      */
     public void makeVideoBtn(View view) {
         final Intent intent = new Intent(this, RecordVideoActivity.class);
@@ -284,6 +274,9 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * The Method for the makeMemo Button (MediaTags) to start recording a Memo
+     * at the AddMemoActivty.
+     * 
      * @param view
      */
     public void makeMemoBtn(View view) {
@@ -297,6 +290,7 @@ public class AddPointActivity extends ListActivity {
      * node.
      * 
      * @param view
+     *            not used
      */
     public void makeNoticeBtn(View view) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -323,21 +317,15 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * The Method for the makePicture Button. The Method start the standard
+     * cameraActivty.
+     * 
      * @param view
      *            not used
      */
     public void makePictureBtn(View view) {
         pictureRecorder.startIntent(this);
     }
-
-    /*
-     * @Override protected void onActivityResult(int requestCode, int
-     * resultCode, Intent intent) { switch (requestCode) { case
-     * MetaMedia.TAKE_PHOTO_CODE: if (resultCode == Activity.RESULT_OK) {
-     * mm.appendToObject(node); } break; case MetaMedia.TAKE_VIDEO_CODE: if
-     * (resultCode == Activity.RESULT_OK) { mm.appendToObject(node); } break; }
-     * }
-     */
 
     /**
      * OnResume is called when the activity was adjournment and we come back to
