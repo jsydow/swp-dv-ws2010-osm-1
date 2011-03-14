@@ -17,17 +17,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import core.data.DataStorage;
 import core.data.DataTrack;
 import core.data.DataTrackInfo;
@@ -131,52 +131,52 @@ public class LoadTrackActivity extends ListActivity {
         case R.id.loadTrack_info_cm:
             DataTrackInfo trackinfo = DataTrackInfo.deserialise(trackname);
 
-            final Dialog dialog = new Dialog(this);
+            final Dialog infoDialog = new Dialog(this);
             // dialog.getWindow().setGravity(Gravity.FILL);
-            dialog.setContentView(R.layout.trackinfo_dialog);
-            dialog.setTitle(R.string.trackInfoDialog_title);
-            dialog.setCancelable(true);
+            infoDialog.setContentView(R.layout.trackinfo_dialog);
+            infoDialog.setTitle(R.string.trackInfoDialog_title);
+            infoDialog.setCancelable(true);
 
             // set up name
-            TextView textname = (TextView) dialog
+            TextView textname = (TextView) infoDialog
                     .findViewById(R.id.trackInfoDialog_name);
             textname.setText(trackinfo.getName());
 
             // set up comment
-            TextView textcomment = (TextView) dialog
+            TextView textcomment = (TextView) infoDialog
                     .findViewById(R.id.trackInfoDialog_comment);
             textcomment.setText(trackinfo.getComment());
 
             // set up time
-            TextView texttime = (TextView) dialog
+            TextView texttime = (TextView) infoDialog
                     .findViewById(R.id.trackInfoDialog_timestamp);
             texttime.setText(trackinfo.getTimestamp());
 
             // set up pois
-            TextView textpois = (TextView) dialog
+            TextView textpois = (TextView) infoDialog
                     .findViewById(R.id.trackInfoDialog_pois);
             textpois.setText(Integer.toString(trackinfo.getNumberOfPOIs()));
 
             // set up ways
-            TextView textways = (TextView) dialog
+            TextView textways = (TextView) infoDialog
                     .findViewById(R.id.trackInfoDialog_ways);
             textways.setText(Integer.toString(trackinfo.getNumberOfWays()));
 
             // set up media
-            TextView textmedia = (TextView) dialog
+            TextView textmedia = (TextView) infoDialog
                     .findViewById(R.id.trackInfoDialog_media);
             textmedia.setText(Integer.toString(trackinfo.getNumberOfMedia()));
 
             // set up button
-            Button button = (Button) dialog
+            Button button = (Button) infoDialog
                     .findViewById(R.id.trackInfoDialog_backbtn);
             button.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    dialog.cancel();
+                    infoDialog.cancel();
                 }
             });
             // now that the dialog is set up, it's time to show it
-            dialog.show();
+            infoDialog.show();
 
             return true;
         case R.id.loadTrack_delete_cm:
@@ -184,7 +184,8 @@ public class LoadTrackActivity extends ListActivity {
             builder.setMessage(
                     getResources()
                             .getString(R.string.alert_really_delete_track))
-                    .setCancelable(false).setPositiveButton(
+                    .setCancelable(false)
+                    .setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -195,7 +196,8 @@ public class LoadTrackActivity extends ListActivity {
                                     updateAdapter();
 
                                 }
-                            }).setNegativeButton(
+                            })
+                    .setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -205,7 +207,7 @@ public class LoadTrackActivity extends ListActivity {
                                 }
                             });
             builder.show();
-
+            break;
         default:
             break;
         }
@@ -233,7 +235,8 @@ public class LoadTrackActivity extends ListActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(
                 getResources().getString(R.string.alert_really_delete_track))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         getResources().getString(R.string.yes_alert),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -241,8 +244,8 @@ public class LoadTrackActivity extends ListActivity {
                                 Log.d("DEBUG", "delete " + trname);
                                 // updateAdapter();
                             }
-                        }).setNegativeButton(
-                        getResources().getString(R.string.no_alert),
+                        })
+                .setNegativeButton(getResources().getString(R.string.no_alert),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
