@@ -196,8 +196,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     final Intent intent = new Intent(context,
                             AddPointActivity.class);
                     if (nodeId < 0)
-                        intent.putExtra("DataNodeId", currentTrack.newNode(
-                                point).getId());
+                        intent.putExtra("DataNodeId",
+                                currentTrack.newNode(point).getId());
                     else
                         intent.putExtra("DataNodeId", nodeId);
 

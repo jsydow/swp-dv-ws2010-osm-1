@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 /**
- * @author SakirSoft The GenericAdapter class helps us it reduce the number of
+ * @author SakirSoft
+ * 
+ *         The GenericAdapter class helps us it reduce the number of
  *         customizable ArrayAdapter classes. You can use it for all of you
  *         custom ListView layouts. It needs a layoutInflater and a reference to
  *         a list of GenericAdapterData. Each element in the list describes one
