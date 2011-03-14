@@ -357,6 +357,8 @@ public class MapsForgeActivity extends MapActivity {
 
     private void addWays() {
         for (DataPointsList l : currentTrack().getWays()) {
+            if (l.getNodes().size() == 0) // skip empty ways
+                continue;
             if (l.getOverlayRoute() == null) {
                 Pair<Paint, Paint> col = getColor();
                 l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
