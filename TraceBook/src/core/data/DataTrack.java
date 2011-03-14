@@ -346,7 +346,8 @@ public class DataTrack extends DataMediaHolder {
             try {
                 fileos.close();
             } catch (IOException e) {
-                // do nothing
+                Log.e("TrackInfo",
+                        "Could not close closed file. Should not happen.");
             }
         }
 
