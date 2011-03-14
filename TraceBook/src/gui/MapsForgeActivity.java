@@ -100,8 +100,8 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * generates a pair of paint objects with the same color, but different
-     * levels of transparency
+     * Generates a pair of paint objects with the same color, but different
+     * levels of transparency.
      */
     private static Pair<Paint, Paint> getPaintPair(int color) {
         Paint paintOutline = new Paint();

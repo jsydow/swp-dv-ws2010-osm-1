@@ -152,7 +152,7 @@ public class GenericAdapterData {
      */
     GenericItemDescription description;
     /**
-     * map items to string tags
+     * map items to string tags.
      */
     Map<String, GenericItem> items = new HashMap<String, GenericItem>();
 
