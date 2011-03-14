@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.openstreetmap.josm.actions.AutoScaleAction;
 import org.openstreetmap.josm.actions.ExtensionFileFilter;
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.data.gpx.GpxData;
-import org.openstreetmap.josm.data.gpx.WayPoint;
 import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.WayData;
 import org.openstreetmap.josm.gui.layer.GpxLayer;
@@ -50,15 +48,28 @@ import org.xml.sax.SAXException;
  * 
  */
 public class TraceBookImporter extends FileImporter {
+    /**
+     * 
+     */
     public static final String TRACEBOOK_FILE_EXT = "tbt";
+    /**
+     * 
+     */
     public static final String TRACEBOOK_FILE_EXT_DOT = ".";
 
+    /**
+     * 
+     */
     public TraceBookImporter() {
         this(new ExtensionFileFilter(TRACEBOOK_FILE_EXT, TRACEBOOK_FILE_EXT,
                 tr("TraceBook Track Files (*" + TRACEBOOK_FILE_EXT_DOT
                         + TRACEBOOK_FILE_EXT + ")")));
     }
 
+    /**
+     * 
+     * @param filter
+     */
     public TraceBookImporter(ExtensionFileFilter filter) {
         super(filter);
         // TODO Auto-generated constructor stub
@@ -69,7 +80,7 @@ public class TraceBookImporter extends FileImporter {
      * 
      * @param file
      *            The file reference to use for opening.
-     * @param myProgressMonitor
+     * @param progressMonitor
      *            The ProgressMonitor used to track the loading progress.
      * @throws IllegalDataException
      *             Is thrown when the handled data is not parseable.
@@ -88,6 +99,7 @@ public class TraceBookImporter extends FileImporter {
             myProgressMonitor = progressMonitor;
         }
 
+        // TODO: Count a little bit more exactly than up to 4.
         myProgressMonitor.beginTask(String.format("Importing TBT file %s...",
                 file.getName(), 4));
         myProgressMonitor.setTicksCount(1);
@@ -137,7 +149,7 @@ public class TraceBookImporter extends FileImporter {
                     // .getValue()));
                     // newosmnode.setVisible(true);
                     newosmnode.setCoor(latlon);
-                    Main.main.debug("created new node: "
+                    Main.debug("created new node: "
                             + Long.toString(newosmnode.getId()));
                     NodeList childs = nl.item(i).getChildNodes();
                     HashMap<String, String> tags = null;
@@ -155,8 +167,7 @@ public class TraceBookImporter extends FileImporter {
 
                         if (childs.item(a).getNodeName().equalsIgnoreCase(
                                 "link")) {
-                            WayPoint x = new WayPoint(latlon);
-                            Main.main.debug("child: "
+                            Main.debug("child: "
                                     + childs.item(a).getNodeName()
                                     + " : "
                                     + file.getParent()
@@ -168,22 +179,20 @@ public class TraceBookImporter extends FileImporter {
                                     + ((Attr) childs.item(a).getAttributes()
                                             .getNamedItem("href")).getValue());
                             String uri = relativePath.toURI().toString();
-                            Main.main.debug(uri);
+                            Main.debug(uri);
                             if (uri.endsWith(".png") || uri.endsWith(".jpg")
                                     || uri.endsWith(".jpeg")
                                     || uri.endsWith(".gif")) {
                                 Marker mr = ImageMarker.create(latlon, uri, ml,
                                         1.0, 1.0);
                                 if (mr == null)
-                                    Main.main
-                                            .debug("THIS FUCKING MARKER IS EMPTY!!!");
+                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
                             } else if (uri.endsWith(".wav")) {
                                 Marker mr = AudioMarker.create(latlon,
                                         "Audio comment", uri, ml, 1.0, 1.0);
                                 if (mr == null)
-                                    Main.main
-                                            .debug("THIS FUCKING MARKER IS EMPTY!!!");
+                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
                             }
 
@@ -197,7 +206,7 @@ public class TraceBookImporter extends FileImporter {
                             .item(i).getAttributes().getNamedItem("timestamp"))
                             .getValue()));
                     osmdata.addPrimitive(newosmnode);
-                    Main.main
+                    Main
                             .debug("new nodes id: "
                                     + ((Attr) attributes.getNamedItem("id"))
                                             .getValue());
@@ -223,8 +232,6 @@ public class TraceBookImporter extends FileImporter {
 
                     org.openstreetmap.josm.data.osm.Way newway = new org.openstreetmap.josm.data.osm.Way();
                     newway.load(wd);
-                    Date date = new Date();
-
                     newway.setOsmId(1L, wd.getVersion());
                     List<org.openstreetmap.josm.data.osm.Node> waynodes = new LinkedList<org.openstreetmap.josm.data.osm.Node>();
                     NodeList childs = nlw.item(i).getChildNodes();
@@ -235,13 +242,13 @@ public class TraceBookImporter extends FileImporter {
                             String key = ((Attr) childs.item(a).getAttributes()
                                     .getNamedItem("ref")).getValue();
                             if (nodesMap.get(key) == null)
-                                Main.main
+                                Main
                                         .debug("Hey we got a null node, impossible to add it to a way!");
                             else {
                                 waynodes.add(nodesMap.get(key));
                                 // newway.addNode(NodesMap.get(Key));
-                                Main.main.debug("Adding node " + key + " ("
-                                        + "" + ") to way " + newway.getId());
+                                Main.debug("Adding node " + key + " (" + ""
+                                        + ") to way " + newway.getId());
                             }
                         }
                         if (childs.item(a).getNodeName()
@@ -268,7 +275,7 @@ public class TraceBookImporter extends FileImporter {
                 }
 
                 // doc.getDocumentElement().normalize();
-                Main.main.debug("Items in the GpxLayer: "
+                Main.debug("Items in the GpxLayer: "
                         + gpxLayer.data.waypoints.size());
                 myProgressMonitor.setTicksCount(1);
                 //
@@ -296,16 +303,16 @@ public class TraceBookImporter extends FileImporter {
                 myProgressMonitor.setTicksCount(4);
 
                 if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
-                    Main.main.debug("makeautomarkers was true");
+                    Main.debug("makeautomarkers was true");
 
                     // Main.main.addLayer(ml);
                     if (ml.data.size() > 0) {
-                        Main.main.debug("There were markers in the GPXDATA");
+                        Main.debug("There were markers in the GPXDATA");
                         for (Marker m : ml.data) {
                             if (m == null)
-                                Main.main.debug("Null Marker!");
+                                Main.debug("Null Marker!");
                             else
-                                Main.main.debug("Valid Marker!");
+                                Main.debug("Valid Marker!");
                         }
                         Main.main.addLayer(ml);
                     }
@@ -317,17 +324,17 @@ public class TraceBookImporter extends FileImporter {
                 // catch and forward exception
                 throw new IllegalDataException(e);
             } catch (ParserConfigurationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // catch and forward exception
+                throw new IllegalDataException(e);
             } catch (SAXException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // catch and forward exception
+                throw new IllegalDataException(e);
             } catch (DOMException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // catch and forward exception
+                throw new IllegalDataException(e);
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // catch and forward exception
+                throw new IllegalDataException(e);
             } finally { // take care of monitor...
                 myProgressMonitor.finishTask();
             }
