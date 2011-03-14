@@ -236,7 +236,7 @@ public class NewTrackActivity extends TabActivity {
                 .setContent(R.id.edit_tab));
 
         // set the default tap to our MapTab
-        tabHost.setCurrentTab(0);
+        tabHost.setCurrentTab(1);
 
     }
 
@@ -343,12 +343,6 @@ public class NewTrackActivity extends TabActivity {
                             public void onClick(DialogInterface dialog, int id) {
 
                                 setTrackName();
-                                try {
-                                    ServiceConnector.getLoggerService()
-                                            .stopTrack();
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                }
 
                             }
                         })
@@ -372,16 +366,19 @@ public class NewTrackActivity extends TabActivity {
         final EditText input = new EditText(this);
         alert.setView(input);
         alert.setTitle(getResources().getString(R.string.rename_alert));
+        input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
-
-                DataStorage.getInstance().getCurrentTrack().setName(value);
+                if (!value.equals("")) {
+                    DataStorage.getInstance().getCurrentTrack().setName(value);
+                }
 
                 Toast.makeText(
                         getApplicationContext(),
                         getResources().getString(R.string.addNotice_alert)
                                 + " " + value, Toast.LENGTH_SHORT).show();
+
                 finish();
             }
         });

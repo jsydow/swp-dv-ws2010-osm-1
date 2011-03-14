@@ -322,4 +322,10 @@ public class LoadTrackActivity extends ListActivity {
         }
         super.onListItemClick(l, v, position, id);
     }
+
+    @Override
+    protected void onResume() {
+        updateAdapter();
+        super.onResume();
+    }
 }
