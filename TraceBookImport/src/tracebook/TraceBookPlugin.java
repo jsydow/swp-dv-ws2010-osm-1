@@ -5,7 +5,7 @@ import org.openstreetmap.josm.plugins.Plugin;
 import org.openstreetmap.josm.plugins.PluginInformation;
 
 /**
- * Plugin class which handles TraceBookTrack (*.tbt) files
+ * Plugin class which handles TraceBookTrack (*.tbt) files.
  * 
  * @author anubis
  * 
