@@ -389,7 +389,7 @@ public class NewTrackActivity extends TabActivity {
                                 } catch (RemoteException e) {
                                     e.printStackTrace();
                                 }
-                                finish();
+                                setTrackName();
 
                             }
                         })
@@ -403,6 +403,37 @@ public class NewTrackActivity extends TabActivity {
                         });
         builder.show();
 
+    }
+
+    /**
+     * Set Trackname for the currentTrack. Finish NewTrackActivity.
+     */
+    void setTrackName() {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        alert.setTitle(getResources().getString(R.string.rename_alert));
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString().trim();
+
+                DataStorage.getInstance().getCurrentTrack().setName(value);
+
+                Toast.makeText(
+                        getApplicationContext(),
+                        getResources().getString(R.string.addNotice_alert)
+                                + " " + value, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+        alert.show();
     }
 
     /**
