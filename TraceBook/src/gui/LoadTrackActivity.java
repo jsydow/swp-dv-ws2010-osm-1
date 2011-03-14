@@ -53,10 +53,8 @@ public class LoadTrackActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         updateAdapter();
         registerForContextMenu(getListView());
-
     }
 
     /**
