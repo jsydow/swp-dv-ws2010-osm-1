@@ -17,17 +17,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import core.data.DataStorage;
 import core.data.DataTrack;
 import core.data.DataTrackInfo;
@@ -184,8 +184,7 @@ public class LoadTrackActivity extends ListActivity {
             builder.setMessage(
                     getResources()
                             .getString(R.string.alert_really_delete_track))
-                    .setCancelable(false)
-                    .setPositiveButton(
+                    .setCancelable(false).setPositiveButton(
                             getResources().getString(R.string.yes_alert),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
@@ -196,8 +195,7 @@ public class LoadTrackActivity extends ListActivity {
                                     updateAdapter();
 
                                 }
-                            })
-                    .setNegativeButton(
+                            }).setNegativeButton(
                             getResources().getString(R.string.no_alert),
                             new DialogInterface.OnClickListener() {
 
@@ -207,6 +205,9 @@ public class LoadTrackActivity extends ListActivity {
                                 }
                             });
             builder.show();
+
+        default:
+            break;
         }
         return super.onContextItemSelected(item);
     }
@@ -232,8 +233,7 @@ public class LoadTrackActivity extends ListActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(
                 getResources().getString(R.string.alert_really_delete_track))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         getResources().getString(R.string.yes_alert),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -241,8 +241,8 @@ public class LoadTrackActivity extends ListActivity {
                                 Log.d("DEBUG", "delete " + trname);
                                 // updateAdapter();
                             }
-                        })
-                .setNegativeButton(getResources().getString(R.string.no_alert),
+                        }).setNegativeButton(
+                        getResources().getString(R.string.no_alert),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,

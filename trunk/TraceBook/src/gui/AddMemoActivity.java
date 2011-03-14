@@ -51,7 +51,7 @@ public class AddMemoActivity extends Activity {
         dialog.setMessage("Bitte warten...\nAufnahme startet gleich...");
         dialog.setCancelable(false);
         dialog.show();
-        new Thread() {
+        (new Thread() {
             @Override
             public void run() {
                 try {
@@ -68,7 +68,7 @@ public class AddMemoActivity extends Activity {
                 dialog.dismiss();
                 recorder.start();
             }
-        }.start();
+        }).start();
     }
 
     /**
