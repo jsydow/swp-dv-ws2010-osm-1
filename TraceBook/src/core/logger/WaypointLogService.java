@@ -160,7 +160,7 @@ public class WaypointLogService extends Service implements LocationListener {
             if (storage.getCurrentTrack() != null) {
                 storage.getCurrentTrack().serialise();
                 storage.unloadAllTracks();
-                return endWay();
+                return 1;
             }
 
             return -1;
@@ -188,6 +188,7 @@ public class WaypointLogService extends Service implements LocationListener {
             return currentWay().getId();
         }
 
+        // currently unused.
         public synchronized int endWay() {
             DataPointsList tmp = currentWay();
 
