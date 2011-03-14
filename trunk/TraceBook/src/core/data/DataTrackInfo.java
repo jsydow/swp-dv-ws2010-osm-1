@@ -243,8 +243,12 @@ public class DataTrackInfo {
 
             serializer.endTag(null, "info");
             serializer.flush();
-        } catch (Exception e) {
-            Log.d(LOG_TAG, e.getMessage());
+        } catch (IllegalArgumentException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        } catch (IllegalStateException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        } catch (IOException e) {
+            Log.e(LOG_TAG, e.getMessage());
         } finally {
             try {
                 fileos.close();
