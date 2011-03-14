@@ -14,17 +14,17 @@ import android.os.RemoteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TabHost.OnTabChangeListener;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -205,7 +205,6 @@ public class NewTrackActivity extends TabActivity {
                 setButtonList(true, 1);
 
         } catch (RemoteException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -221,7 +220,6 @@ public class NewTrackActivity extends TabActivity {
                 setButtonList(true, 2);
 
         } catch (RemoteException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -264,16 +262,16 @@ public class NewTrackActivity extends TabActivity {
         TabHost tabHost = getTabHost();
 
         // Init TabHost
-        tabHost.addTab(tabHost.newTabSpec("map_tab")
-                .setIndicator(getResources().getString(R.string.map_tab))
-                .setContent(new Intent(this, MapsForgeActivity.class)));
+        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(
+                getResources().getString(R.string.map_tab)).setContent(
+                new Intent(this, MapsForgeActivity.class)));
         // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost.newTabSpec("new_tab")
-                .setIndicator(getResources().getString(R.string.new_tab))
-                .setContent(R.id.new_tab));
-        tabHost.addTab(tabHost.newTabSpec("edit_tab")
-                .setIndicator(getResources().getString(R.string.edit_tab))
-                .setContent(R.id.edit_tab));
+        tabHost.addTab(tabHost.newTabSpec("new_tab").setIndicator(
+                getResources().getString(R.string.new_tab)).setContent(
+                R.id.new_tab));
+        tabHost.addTab(tabHost.newTabSpec("edit_tab").setIndicator(
+                getResources().getString(R.string.edit_tab)).setContent(
+                R.id.edit_tab));
 
         tabHost.setCurrentTab(1);
 
@@ -296,7 +294,6 @@ public class NewTrackActivity extends TabActivity {
                 ServiceConnector.getLoggerService().beginWay(false);
 
             } catch (RemoteException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else {
@@ -305,7 +302,6 @@ public class NewTrackActivity extends TabActivity {
             try {
                 ServiceConnector.getLoggerService().endWay();
             } catch (RemoteException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -328,7 +324,6 @@ public class NewTrackActivity extends TabActivity {
                 ServiceConnector.getLoggerService().beginArea();
 
             } catch (RemoteException e) {
-                // TODO: handle exception
                 e.printStackTrace();
             }
         } else {
@@ -338,7 +333,6 @@ public class NewTrackActivity extends TabActivity {
                 ServiceConnector.getLoggerService().endArea();
 
             } catch (RemoteException e) {
-                // TODO: handle exception
                 e.printStackTrace();
             }
 
@@ -358,7 +352,6 @@ public class NewTrackActivity extends TabActivity {
         try {
             nodeId = ServiceConnector.getLoggerService().createPOI(false);
         } catch (RemoteException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -377,8 +370,7 @@ public class NewTrackActivity extends TabActivity {
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getResources().getString(R.string.exit_alert))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         getResources().getString(R.string.yes_alert),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -392,8 +384,8 @@ public class NewTrackActivity extends TabActivity {
                                 setTrackName();
 
                             }
-                        })
-                .setNegativeButton(getResources().getString(R.string.no_alert),
+                        }).setNegativeButton(
+                        getResources().getString(R.string.no_alert),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
@@ -506,10 +498,7 @@ public class NewTrackActivity extends TabActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString().trim();
 
-                DataStorage
-                        .getInstance()
-                        .getCurrentTrack()
-                        .getCurrentWay()
+                DataStorage.getInstance().getCurrentTrack().getCurrentWay()
                         .addMedia(
                                 DataStorage.getInstance().getCurrentTrack()
                                         .saveText(value));
