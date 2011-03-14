@@ -86,9 +86,18 @@ public class LoadTrackActivity extends ListActivity {
         case R.id.loadTrack_load_cm:
             DataTrack track = DataStorage.getInstance().deserialiseTrack(
                     trackname);
-            DataStorage.getInstance().setCurrentTrack(track);
-            final Intent intent = new Intent(this, NewTrackActivity.class);
-            startActivity(intent);
+            if (track != null) {
+                DataStorage.getInstance().setCurrentTrack(track);
+                final Intent intent = new Intent(this, NewTrackActivity.class);
+                startActivity(intent);
+            } else {
+                Log.e("RenameTrack",
+                        "Track to load was not found or is corrupt.");
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Track to load could not be opened. Missing or corrupt.",
+                        Toast.LENGTH_SHORT).show();
+            }
 
             return true;
 
@@ -104,16 +113,20 @@ public class LoadTrackActivity extends ListActivity {
                                 int whichButton) {
                             String value = input.getText().toString().trim();
 
-                            DataTrack.deserialise(trackname).setName(value);
+                            DataTrack renametrack = DataTrack
+                                    .deserialise(trackname);
+                            if (renametrack != null) {
+                                renametrack.setName(value);
+                            } else {
+                                Log.e("RenameTrack",
+                                        "Track to rename was not found or is corrupt.");
+                                Toast.makeText(getApplicationContext(),
+                                        "Track to rename could not be opened.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
                             updateAdapter();
 
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    getResources().getString(
-                                            R.string.addNotice_alert)
-                                            + " " + value, Toast.LENGTH_SHORT)
-                                    .show();
                         }
                     });
 
@@ -190,7 +203,7 @@ public class LoadTrackActivity extends ListActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface d, int id) {
 
-                                    DataTrack.deserialise(trackname).delete();
+                                    DataTrack.delete(trackname);
                                     // may crash here (did so previously).
                                     updateAdapter();
 
