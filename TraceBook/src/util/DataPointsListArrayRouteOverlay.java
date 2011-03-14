@@ -162,7 +162,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     }
 
     /**
-     * enable/disable the drawing of waypoint markers
+     * enable/disable the drawing of waypoint markers.
      */
     public void toggleGnubbel() {
         showGnubbel = !showGnubbel;
