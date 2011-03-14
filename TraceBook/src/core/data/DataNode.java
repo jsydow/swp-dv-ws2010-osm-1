@@ -110,7 +110,8 @@ public class DataNode extends DataMapObject {
         if (loc == null)
             this.coordinates = null;
         else
-            this.coordinates = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+            this.coordinates = new GeoPoint(loc.getLatitude(),
+                    loc.getLongitude());
     }
 
     /**
@@ -275,9 +276,7 @@ public class DataNode extends DataMapObject {
                 .getNamedItem("lon").getNodeValue());
         ret.setLocation(new GeoPoint(lat, lon));
         // get time stamp
-        ret
-                .setDatetime(nodeattributes.getNamedItem("timestamp")
-                        .getNodeValue());
+        ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
