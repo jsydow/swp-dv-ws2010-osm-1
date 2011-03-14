@@ -43,7 +43,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     public static final String UPDTAE_WAY = BASETAG + ".UPDTAE_WAY";
 
     /**
-     * Tag of the Intent that signals the start of editing a points location
+     * Tag of the Intent that signals the start of editing a points location.
      */
     public static final String MOVE_POINT = BASETAG + ".MODE_POINT";
 
@@ -58,12 +58,12 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     DataTrack currentTrack;
 
     /**
-     * Intent to send updated ways to the MapsForgeView
+     * Intent to send updated ways to the MapsForgeView.
      */
     final Intent way_intent = new Intent(UPDTAE_WAY);
 
     /**
-     * Intent to move a point
+     * Intent to move a point.
      */
     final Intent move_intent = new Intent(MOVE_POINT);
 
@@ -196,8 +196,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     final Intent intent = new Intent(context,
                             AddPointActivity.class);
                     if (nodeId < 0)
-                        intent.putExtra("DataNodeId",
-                                currentTrack.newNode(point).getId());
+                        intent.putExtra("DataNodeId", currentTrack.newNode(
+                                point).getId());
                     else
                         intent.putExtra("DataNodeId", nodeId);
 
