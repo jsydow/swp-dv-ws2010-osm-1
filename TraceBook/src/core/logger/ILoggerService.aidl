@@ -1,7 +1,5 @@
 package core.logger;
 
-import core.data.LogParameter;
-
 interface ILoggerService {
 
 	/**
@@ -16,7 +14,13 @@ interface ILoggerService {
 	 * specified in param and all so obtained points are automatically added
 	 * to the track.
 	 */
-	void addTrack(in LogParameter param); 
+	void addTrackWithGpsParams(int dTime, int dDistance);
+	
+	/**
+	*
+	*
+	*/
+	void addTrack(); 
 	
 	/**
 	* @return id of the track

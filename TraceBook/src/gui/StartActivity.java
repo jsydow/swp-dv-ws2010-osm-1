@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import core.data.LogParameter;
 import core.logger.ServiceConnector;
 
 /**
@@ -57,10 +56,8 @@ public class StartActivity extends Activity {
      */
     public void newTrackBtn(View view) {
 
-        LogParameter param = new LogParameter();
-
         try {
-            ServiceConnector.getLoggerService().addTrack(param);
+            ServiceConnector.getLoggerService().addTrack();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
