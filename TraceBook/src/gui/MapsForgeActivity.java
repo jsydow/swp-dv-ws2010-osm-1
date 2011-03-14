@@ -51,15 +51,21 @@ import core.logger.WaypointLogService;
  */
 public class MapsForgeActivity extends MapActivity {
     private static final String LOG_TAG = "MapsForgeActivity";
+    private String defaultMap = "/sdcard/default.map";
+    private MapView mapView;
+    private GPSReceiver gpsReceiver;
+    private int colorID = 0;
+    private boolean useInternet = false;
+
+    /**
+     * Node currently edited.
+     */
+    DataNode editNode = null;
 
     /**
      * MapController object to interact with the Map.
      */
     MapController mapController;
-
-    private String defaultMap = "/sdcard/default.map";
-
-    private MapView mapView;
 
     /**
      * Overlay containing all areas and ways.
@@ -70,8 +76,6 @@ public class MapsForgeActivity extends MapActivity {
      * Overlay containing all POIs.
      */
     DataNodeArrayItemizedOverlay pointsOverlay;
-
-    private GPSReceiver gpsReceiver;
 
     /**
      * List of possible colors for ways and areas the first color in the list is
@@ -84,10 +88,6 @@ public class MapsForgeActivity extends MapActivity {
      */
     boolean showGnubbel = true;
 
-    private int colorID = 0;
-
-    private boolean useInternet = false;
-
     /**
      * Gets a color from the rotating color array.
      * 
@@ -99,6 +99,10 @@ public class MapsForgeActivity extends MapActivity {
         return colors.get(colorID);
     }
 
+    /**
+     * generates a pair of paint objects with the same color, but different
+     * levels of transparency
+     */
     private static Pair<Paint, Paint> getPaintPair(int color) {
         Paint paintOutline = new Paint();
         paintOutline.setAntiAlias(true);
@@ -114,44 +118,6 @@ public class MapsForgeActivity extends MapActivity {
         paintFill.setAlpha(160);
 
         return new Pair<Paint, Paint>(paintFill, paintOutline);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Log.d(LOG_TAG, "Creating MapActivity");
-
-        // create paint list
-        colors = new ArrayList<Pair<Paint, Paint>>();
-        colors.add(getPaintPair(Color.rgb(0, 255, 0)));
-        colors.add(getPaintPair(Color.rgb(0, 0, 230)));
-        colors.add(getPaintPair(Color.rgb(0, 0, 200)));
-        colors.add(getPaintPair(Color.rgb(0, 0, 170)));
-
-        pointsOverlay = new DataNodeArrayItemizedOverlay(getResources()
-                .getDrawable(R.drawable.marker_red), this);
-        routesOverlay = new ArrayRouteOverlay(null, null);
-
-        // as this activity is destroyed when adding a POI, we get all POIs here
-        addPoints();
-        addWays();
-
-        mapView = new MapView(this);
-
-        mapView.setClickable(true);
-        mapView.setBuiltInZoomControls(true);
-
-        mapView.getOverlays().add(routesOverlay);
-        mapView.getOverlays().add(pointsOverlay);
-
-        mapController = mapView.getController();
-
-        setContentView(mapView);
-
-        gpsReceiver = new GPSReceiver();
-
-        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(defaultMap));
     }
 
     /**
@@ -187,10 +153,186 @@ public class MapsForgeActivity extends MapActivity {
         gpsReceiver.centerOnCurrentPosition();
     }
 
+    /* Overlay related methods */
+
+    private void addPoints() {
+        for (DataNode n : currentTrack().getNodes()) {
+            if (n.getOverlayItem() == null)
+                n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
+            pointsOverlay.addOverlay(n);
+        }
+    }
+
+    private void addWays() {
+        for (DataPointsList l : currentTrack().getWays()) {
+            if (l.getNodes().size() == 0) // skip empty ways
+                continue;
+            if (l.getOverlayRoute() == null) {
+                Pair<Paint, Paint> col = getColor();
+                l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
+                        col.first, col.second));
+            }
+            routesOverlay.addRoute(l.getOverlayRoute());
+
+            if (showGnubbel)
+                addGnubbel(l);
+        }
+    }
+
     /**
-     * Node currently edited.
+     * Update the color of a way once its not the current way any more.
+     * 
+     * @param id
      */
-    DataNode editNode = null;
+    void reDrawWay(int id) {
+        if (id <= 0)
+            return;
+        reDrawWay(currentTrack().getPointsListById(id));
+    }
+
+    /**
+     * Redraw the given way.
+     * 
+     * @param way
+     */
+    void reDrawWay(DataPointsList way) {
+        if (way == null)
+            return;
+        routesOverlay.removeOverlay(way.getOverlayRoute());
+        final Pair<Paint, Paint> color = getColor();
+        way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
+                color.first, color.second));
+        routesOverlay.addRoute(way.getOverlayRoute());
+    }
+
+    private void addGnubbel(DataPointsList way) {
+        for (DataNode n : way.getNodes()) {
+            if (n.getOverlayItem() == null)
+                n.setOverlayItem(getOverlayItem(n.toGeoPoint(),
+                        R.drawable.marker_blue));
+            pointsOverlay.addOverlay(n);
+        }
+    }
+
+    private void removeGnubbel(DataPointsList way) {
+        for (DataNode n : way.getNodes())
+            pointsOverlay.removeOverlay(n.getId());
+    }
+
+    /**
+     * Creates a new OverlayItem.
+     * 
+     * @param pos
+     *            position of the marker
+     * @param marker
+     *            id of the Graphics object to use
+     * @return the new OverlayItem
+     */
+    OverlayItem getOverlayItem(GeoPoint pos, int marker) {
+        final OverlayItem oi = new OverlayItem(pos, null, null);
+        Drawable icon = getResources().getDrawable(marker);
+        oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
+
+        return oi;
+    }
+
+    /**
+     * Creates a new OverlayItem.
+     * 
+     * @param pos
+     *            position of the marker
+     * @param marker
+     *            Graphics object to be displayed at the position
+     * @return the new OverlayItem
+     */
+    OverlayItem getOverlayItem(GeoPoint pos, Drawable marker) {
+        final OverlayItem oi = new OverlayItem(pos, null, null);
+        oi.setMarker(marker);
+        return oi;
+    }
+
+    /**
+     * Gets the current DataTrack for convenience.
+     * 
+     * @return the current DataTrack object
+     */
+    static DataTrack currentTrack() {
+        return DataStorage.getInstance().getCurrentTrack();
+    }
+
+    /* MapActivity methods */
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Log.d(LOG_TAG, "Creating MapActivity");
+
+        // create paint list
+        colors = new ArrayList<Pair<Paint, Paint>>();
+        colors.add(getPaintPair(Color.rgb(0, 255, 0)));
+        colors.add(getPaintPair(Color.rgb(0, 0, 230)));
+        colors.add(getPaintPair(Color.rgb(0, 0, 200)));
+        colors.add(getPaintPair(Color.rgb(0, 0, 170)));
+
+        pointsOverlay = new DataNodeArrayItemizedOverlay(getResources()
+                .getDrawable(R.drawable.marker_red), this);
+        routesOverlay = new ArrayRouteOverlay(null, null);
+
+        // as this activity is destroyed when adding a POI, we get all POIs here
+        addPoints();
+        addWays();
+
+        mapView = new MapView(this);
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+
+        mapView.getOverlays().add(routesOverlay);
+        mapView.getOverlays().add(pointsOverlay);
+
+        mapController = mapView.getController();
+
+        setContentView(mapView);
+
+        gpsReceiver = new GPSReceiver();
+
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(defaultMap));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_TAG, "Resuming MapActivity");
+
+        // redraw all overlays to account for the events we've missed paused
+        routesOverlay.clear();
+        pointsOverlay.clear();
+        addPoints();
+        addWays();
+
+        registerReceiver(gpsReceiver, new IntentFilter(
+                WaypointLogService.UPDTAE_GPS_POS));
+        registerReceiver(gpsReceiver, new IntentFilter(
+                WaypointLogService.UPDTAE_OBJECT));
+        registerReceiver(gpsReceiver, new IntentFilter(
+                DataNodeArrayItemizedOverlay.UPDTAE_WAY));
+        registerReceiver(gpsReceiver, new IntentFilter(
+                DataNodeArrayItemizedOverlay.MOVE_POINT));
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(LOG_TAG, "Pausing MapActivity");
+        unregisterReceiver(gpsReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_TAG, "Destroying map activity");
+    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -347,139 +489,6 @@ public class MapsForgeActivity extends MapActivity {
         }
     }
 
-    private void addPoints() {
-        for (DataNode n : currentTrack().getNodes()) {
-            if (n.getOverlayItem() == null)
-                n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-            pointsOverlay.addOverlay(n);
-        }
-    }
-
-    private void addWays() {
-        for (DataPointsList l : currentTrack().getWays()) {
-            if (l.getNodes().size() == 0) // skip empty ways
-                continue;
-            if (l.getOverlayRoute() == null) {
-                Pair<Paint, Paint> col = getColor();
-                l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
-                        col.first, col.second));
-            }
-            routesOverlay.addRoute(l.getOverlayRoute());
-
-            if (showGnubbel)
-                addGnubbel(l);
-
-        }
-    }
-
-    /**
-     * Update the color of a way once its not the current way any more.
-     * 
-     * @param id
-     */
-    void reDrawWay(int id) {
-        if (id <= 0)
-            return;
-        reDrawWay(currentTrack().getPointsListById(id));
-
-    }
-
-    /**
-     * Redraw the given way.
-     * 
-     * @param way
-     */
-    void reDrawWay(DataPointsList way) {
-        if (way == null)
-            return;
-        routesOverlay.removeOverlay(way.getOverlayRoute());
-        final Pair<Paint, Paint> color = getColor();
-        way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
-                color.first, color.second));
-        routesOverlay.addRoute(way.getOverlayRoute());
-    }
-
-    private void addGnubbel(DataPointsList way) {
-        for (DataNode n : way.getNodes()) {
-            if (n.getOverlayItem() == null)
-                n.setOverlayItem(getOverlayItem(n.toGeoPoint(),
-                        R.drawable.marker_blue));
-            pointsOverlay.addOverlay(n);
-        }
-    }
-
-    private void removeGnubbel(DataPointsList way) {
-        for (DataNode n : way.getNodes())
-            pointsOverlay.removeOverlay(n.getId());
-    }
-
-    /**
-     * Creates a new OverlayItem.
-     * 
-     * @param pos
-     *            position of the marker
-     * @param marker
-     *            id of the Graphics object to use
-     * @return the new OverlayItem
-     */
-    OverlayItem getOverlayItem(GeoPoint pos, int marker) {
-        final OverlayItem oi = new OverlayItem(pos, null, null);
-        Drawable icon = getResources().getDrawable(marker);
-        oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
-
-        return oi;
-    }
-
-    /**
-     * Creates a new OverlayItem.
-     * 
-     * @param pos
-     *            position of the marker
-     * @param marker
-     *            Graphics object to be displayed at the position
-     * @return the new OverlayItem
-     */
-    OverlayItem getOverlayItem(GeoPoint pos, Drawable marker) {
-        final OverlayItem oi = new OverlayItem(pos, null, null);
-        oi.setMarker(marker);
-        return oi;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(LOG_TAG, "Resuming MapActivity");
-
-        // redraw all overlays to account for the events we've missed paused
-        routesOverlay.clear();
-        pointsOverlay.clear();
-        addPoints();
-        addWays();
-
-        registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.UPDTAE_GPS_POS));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.UPDTAE_OBJECT));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                DataNodeArrayItemizedOverlay.UPDTAE_WAY));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                DataNodeArrayItemizedOverlay.MOVE_POINT));
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(LOG_TAG, "Pausing MapActivity");
-        unregisterReceiver(gpsReceiver);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(LOG_TAG, "Destroying map activity");
-    }
-
     /**
      * This class receives Broadcast Messages from the WaypointLogService in
      * order to update the current location and overlays if position or overlay
@@ -612,14 +621,5 @@ public class MapsForgeActivity extends MapActivity {
                 Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
             }
         }
-    }
-
-    /**
-     * Gets the current DataTrack for convenience.
-     * 
-     * @return the current DataTrack object
-     */
-    static DataTrack currentTrack() {
-        return DataStorage.getInstance().getCurrentTrack();
     }
 }
