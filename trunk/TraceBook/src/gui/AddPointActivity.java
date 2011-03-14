@@ -30,7 +30,6 @@ import android.widget.TextView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import core.data.DataMapObject;
 import core.data.DataStorage;
-import core.data.DataTrack;
 import core.logger.ServiceConnector;
 import core.media.PictureRecorder;
 import core.media.Recorder;
@@ -364,12 +363,10 @@ public class AddPointActivity extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DataTrack dt = DataStorage.getInstance().getCurrentTrack();
-
         switch (requestCode) {
         case Recorder.TAKE_PHOTO_CODE:
             if (resultCode == Activity.RESULT_OK) {
-                pictureRecorder.appendFileToObject(dt.getCurrentWay());
+                pictureRecorder.appendFileToObject(node);
             }
             break;
         default:
