@@ -150,6 +150,16 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
+     * @param oldTrackName
+     * @param newTrackName
+     */
+    public static void rename(String oldTrackName, String newTrackName) {
+        DataTrack oldTrack = new DataTrack();
+        oldTrack.renameTrack(newTrackName);
+        return;
+    }
+
+    /**
      * Getter-method.
      * 
      * @return The comment of the Track.

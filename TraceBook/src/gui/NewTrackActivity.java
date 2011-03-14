@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -524,5 +525,15 @@ public class NewTrackActivity extends TabActivity {
         }
 
         return poiList;
+    }
+
+    @Override
+    public void finish() {
+        try {
+            ServiceConnector.getLoggerService().stopTrack();
+        } catch (RemoteException e) {
+            Log.w("StopTrack", "Could not connect to LoggerService.");
+        }
+        super.finish();
     }
 }
