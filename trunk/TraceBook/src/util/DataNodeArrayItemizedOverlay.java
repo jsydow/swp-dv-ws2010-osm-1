@@ -142,27 +142,31 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      *            (new) icon of the marker
      */
     public void updateItem(GeoPoint pos, int id, int icon) {
-        for (int i = 0; i < overlayItems.size(); ++i)
-            if (overlayItems.get(i).second.intValue() == id) {
-                OverlayItem oi = Helper.getOverlayItem(pos,
-                        overlayItems.get(i).first.getMarker());
-                overlayItems.get(i).first = oi; // update the OverlayItem (not
-                                                // necessarily has a DataNode)
+        synchronized (this.overlayItems) {
+            for (int i = 0; i < overlayItems.size(); ++i)
+                if (overlayItems.get(i).second.intValue() == id) {
+                    OverlayItem oi = Helper.getOverlayItem(pos,
+                            overlayItems.get(i).first.getMarker());
+                    overlayItems.get(i).first = oi; // update the OverlayItem
+                                                    // (not
+                                                    // necessarily has a
+                                                    // DataNode)
 
-                if (id > 0) { // redraw way when point was moved
-                    DataNode node = Helper.currentTrack().getNodeById(id);
-                    if (node != null) {
-                        node.setLocation(pos); // update the actual DataNode
-                        node.setOverlayItem(oi);
+                    if (id > 0) { // redraw way when point was moved
+                        DataNode node = Helper.currentTrack().getNodeById(id);
+                        if (node != null) {
+                            node.setLocation(pos); // update the actual DataNode
+                            node.setOverlayItem(oi);
 
-                        if (node.getDataPointsList() != null)
-                            routesOverlay.reDrawWay(node.getDataPointsList()
-                                    .getId());
+                            if (node.getDataPointsList() != null)
+                                routesOverlay.reDrawWay(node
+                                        .getDataPointsList().getId());
+                        }
                     }
+                    populate();
+                    return;
                 }
-                populate();
-                return;
-            }
+        }
         // no OverlayItem was yet added
         addOverlay(Helper.getOverlayItem(pos, icon, context), id);
         populate();
