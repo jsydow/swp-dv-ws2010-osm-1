@@ -16,11 +16,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.RemoteException;
 import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.data.DataTrack;
+import core.logger.ServiceConnector;
 
 /**
  * ArrayItemizedOverlay is a thread-safe implementation of the
@@ -34,7 +36,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private static final int ARRAY_LIST_INITIAL_CAPACITY = 8;
     private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
     private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
-
+    private static final String LOG_TAG = "DNAIO";
     private static final String BASETAG = "de.fu-berlin.inf.tracebook";
 
     /**
@@ -345,7 +347,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
 
         public CharSequence[] getItems() {
-            return tag_way ? items_way : items_default;
+            return tagging() ? items_way : items_default;
         }
 
         private GeoPoint point;
@@ -354,7 +356,9 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
             this.point = point;
         }
 
-        private boolean tag_way = false; // XXX
+        private boolean tagging() {
+            return Helper.currentTrack().getCurrentWay() != null;
+        }
 
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
@@ -366,11 +370,22 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
                 context.startActivity(intent);
                 break;
-            case 1:
-                tag_way = !tag_way;
+            case 1: // Start/Stop way
+                try {
+                    if (tagging())
+                        ServiceConnector.getLoggerService().endWay();
+                    else
+                        ServiceConnector.getLoggerService().beginWay(true);
+                } catch (RemoteException e) {
+                    Helper.handleNastyException(context, e, LOG_TAG);
+                }
                 break;
-            case 2:
-
+            case 2: // add waypoint
+                try {
+                    ServiceConnector.getLoggerService().beginWay(true);
+                } catch (RemoteException e) {
+                    Helper.handleNastyException(context, e, LOG_TAG);
+                }
                 break;
             default:
                 break;

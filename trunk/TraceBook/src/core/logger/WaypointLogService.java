@@ -262,7 +262,7 @@ public class WaypointLogService extends Service implements LocationListener {
             }
 
             current_node = null; // no node waiting for gps pos any more
-        } else if (currentWay() != null) { // Continuous mode
+        } else if (currentWay() != null && !one_shot) { // Continuous mode
             currentWay().newNode(loc); // poi in track was already added before
         }
 

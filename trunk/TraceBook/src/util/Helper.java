@@ -7,7 +7,10 @@ import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.OverlayItem;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -89,5 +92,25 @@ public final class Helper {
             return DataStorage.getInstance().getCurrentTrack().getNodes();
         }
         return null;
+    }
+
+    /**
+     * Do something to handle a fatal exception in user interaction namely show
+     * a toast and log the error.
+     * 
+     * @param context
+     *            Context of the Activity
+     * @param ex
+     *            Exception that occurred
+     * @param LOG_TAG
+     *            tag of the class the exception occurred in
+     */
+    public static void handleNastyException(Context context, Exception ex,
+            String LOG_TAG) {
+        Toast.makeText(
+                context,
+                "An error occured. Please restart the application and try again.",
+                Toast.LENGTH_LONG).show();
+        Log.e(LOG_TAG, ex.getMessage());
     }
 }
