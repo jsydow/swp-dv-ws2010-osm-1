@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import Trace.Book.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.util.Log;
@@ -151,9 +152,9 @@ public class AddPointMetaActivity extends Activity {
      *            not used
      */
     public void searchBtn(View view) {
-        /**
-         * TODO
-         */
+        final Intent intent = new Intent(this, FullTextSearchActivity.class);
+        startActivity(intent);
+
     }
 
     /**
