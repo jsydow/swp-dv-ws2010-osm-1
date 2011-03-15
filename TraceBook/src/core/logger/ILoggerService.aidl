@@ -45,24 +45,19 @@ interface ILoggerService {
 	int createPOI(boolean on_way);
 	
 	/**
-	* Tells the service to begin a new way and to add way points to it
+	* Tells the service to begin a new way and to add way points to it.
 	*/	
-	int beginWay(boolean do_one_shot);
+	int beginWayA(boolean oneShotMode, boolean isArea);
+	/**
+	 * starts a new way 
+	 */
+	int beginWay(boolean oneShotMode);
 	
 	/**
 	* Tells the service to end way point adding the a way 
 	*/
 	int endWay();
 	
-	/**
-	* Tells the service to begin a new area and to add way points to it
-	*/	
-	int beginArea();
-	
-	/**
-	* Tells the service to end area point adding the a way 
-	*/
-	int endArea();
 	
 	/**
 	* @return true if currently a way is recorded
