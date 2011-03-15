@@ -19,7 +19,7 @@ import core.media.VideoRecorder;
  * button each. This activity is closed automatically once recording the video
  * has been stopped.
  * 
- * @author Sahin Vardar & Huy Dinh
+ *
  */
 public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {

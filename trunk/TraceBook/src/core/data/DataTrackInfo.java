@@ -23,7 +23,7 @@ import android.util.Xml;
  * provides information but cannot edit them. Use deserialise() to get such an
  * object.
  * 
- * @author js
+ *
  * 
  */
 public class DataTrackInfo {

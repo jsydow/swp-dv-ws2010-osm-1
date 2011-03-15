@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 /**
  * 
- * @author Sahin
+ *
  * 
  */
 public class FullTextSearchActivity extends ListActivity {
@@ -20,7 +20,7 @@ public class FullTextSearchActivity extends ListActivity {
      * text matches with the description text, the result will be displayed in
      * the listview.
      * 
-     * @author sahin
+     *
      * 
      */
     static class MyTextWatcher implements TextWatcher {

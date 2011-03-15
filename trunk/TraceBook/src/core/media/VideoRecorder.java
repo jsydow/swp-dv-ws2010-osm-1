@@ -12,7 +12,7 @@ import android.view.Surface;
  * This class provides required methods for interacting with the MediaRecorder
  * in order to acquire a video file.
  * 
- * @author Huy Dinh
+ *
  */
 public class VideoRecorder extends Recorder {
     private MediaRecorder recorder = new MediaRecorder();

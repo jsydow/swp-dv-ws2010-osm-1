@@ -15,7 +15,7 @@ import android.provider.MediaStore;
  * structure appropriately, using the onActivityResult callback provided by the
  * activity using PictureRecorder.
  * 
- * @author Huy Dinh
+ *
  */
 public class PictureRecorder extends Recorder {
     /*

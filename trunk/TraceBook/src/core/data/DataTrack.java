@@ -35,7 +35,7 @@ import android.util.Xml;
  * the program. All data he collects with this one usage in then grouped in a
  * Track. A Track is not like a simple Way from place A to B but can contain it.
  * 
- * @author js
+ *
  * 
  */
 public class DataTrack extends DataMediaHolder {

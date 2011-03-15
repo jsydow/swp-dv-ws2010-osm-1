@@ -38,7 +38,7 @@ import core.media.Recorder;
  * The purpose of this activity is to add and edit tags to an DataMapObject
  * where an DataMapObject can be anything from poi to area.
  * 
- * @author greentraxas
+ *
  * 
  */
 public class AddPointActivity extends ListActivity {

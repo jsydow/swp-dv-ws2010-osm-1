@@ -14,7 +14,7 @@ import android.util.Log;
  * background memory of the device. Only the name and path of the actual medium
  * is stored in this object.
  * 
- * @author js
+ *
  * 
  */
 public class DataMedia {

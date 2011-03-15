@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 /**
- * @author greentraxas
+ *
  * 
  */
 public class PreferencesActivity extends PreferenceActivity {

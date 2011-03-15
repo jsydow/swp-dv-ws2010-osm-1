@@ -36,7 +36,7 @@ import core.data.DataTrackInfo;
 /**
  * The Class LoadTrackActivity.
  * 
- * @author greenTraxas
+ *
  */
 public class LoadTrackActivity extends ListActivity {
 

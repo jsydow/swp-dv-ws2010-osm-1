@@ -25,7 +25,7 @@ import android.util.Log;
  * 
  * It is a Singleton!
  * 
- * @author js
+ *
  * 
  */
 public class DataStorage {

@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
  * It needs a layoutInflater and a reference to a list of GenericAdapterData.
  * Each element in the list describes one element in a list view.
  * 
- * @author SakirSoft
+ *
  * 
  */
 public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 /**
- * @author Marc Sperling
+ *
  * 
  */
 public class HelpWebView extends Activity {
