@@ -81,11 +81,11 @@ public class AddPointActivity extends ListActivity {
 
         }
 
-        setContentView(R.layout.addpointactivity);
+        setContentView(R.layout.layout_addpointactivity);
 
         LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnPoint_ly);
-        bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
+        LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.ly_addpointaAtivity_metaMediaBtnPoint);
+        bInflater.inflate(R.layout.dynamic_metamediabuttons, layoutHolder);
 
         // Initial ServiceConnector
         ServiceConnector.startService(this);
@@ -123,7 +123,7 @@ public class AddPointActivity extends ListActivity {
 
             data.add(item);
         }
-        adapter = new GenericAdapter(this, R.layout.addpointlistview,
+        adapter = new GenericAdapter(this, R.layout.listview_addpoint,
                 R.id.list, data, mInflater);
 
         setListAdapter(adapter);
@@ -138,7 +138,7 @@ public class AddPointActivity extends ListActivity {
             ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.editmeta_contextmenu, menu);
+        inflater.inflate(R.menu.contextmenu_addpointactivity, menu);
     }
 
     /**
@@ -155,14 +155,14 @@ public class AddPointActivity extends ListActivity {
         GenericAdapterData itemData = adapter.getItem((int) info.id);
 
         switch (item.getItemId()) {
-        case R.id.deleteTag_cm:
+        case R.id.cm_addpointActivity_deleteTag:
 
             node.getTags().remove(itemData.getText("NodeKey"));
             setNodeInformation();
             initAdapter();
             adapter.notifyDataSetChanged();
             return true;
-        case R.id.renameTag_cm:
+        case R.id.cm_addpointActivity_renameTag:
             final Intent intent = new Intent(this, AddPointMetaActivity.class);
 
             intent.putExtra("DataNodeId", node.getId());
@@ -182,22 +182,23 @@ public class AddPointActivity extends ListActivity {
      * returns an empty array.
      */
     private void setNodeInformation() {
-        TextView nodeIdTv = (TextView) findViewById(R.id.nodeId_tv);
-        TextView nodeInfo = (TextView) findViewById(R.id.allocateMeta_tv);
-        TextView titleCat = (TextView) findViewById(R.id.titleListViewCat_tv);
-        TextView titleVal = (TextView) findViewById(R.id.titleListViewVal_tv);
+        TextView nodeIdTv = (TextView) findViewById(R.id.tv_addpointActivity_nodeId);
+        TextView nodeInfo = (TextView) findViewById(R.id.tv_addpointActivity_allocateMeta);
+        TextView titleCat = (TextView) findViewById(R.id.tv_addpointActivity_titleListViewCat);
+        TextView titleVal = (TextView) findViewById(R.id.tv_addpointActivity_titleListViewVal);
 
         Map<String, String> tagMap = node.getTags();
-        nodeIdTv.setText(getResources().getString(R.string.nodeId_tv) + " "
-                + node.getId());
+        nodeIdTv.setText(getResources().getString(
+                R.string.tv_addpointActivity_nodeId)
+                + " " + node.getId());
 
         if (tagMap.size() != 0) {
-            nodeInfo.setText(R.string.MetaData_tv);
+            nodeInfo.setText(R.string.tv_addpointActivity_MetaData);
             titleCat.setVisibility(1);
             titleVal.setVisibility(1);
 
         } else {
-            nodeInfo.setText(R.string.noMetaData_tv);
+            nodeInfo.setText(R.string.tv_addpointActivity_noMetaData);
             titleCat.setVisibility(8);
             titleVal.setVisibility(8);
 
@@ -266,7 +267,8 @@ public class AddPointActivity extends ListActivity {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
         alert.setView(input);
-        alert.setTitle(getResources().getString(R.string.addNotice_alert));
+        alert.setTitle(getResources()
+                .getString(R.string.alert_global_addNotice));
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String values = input.getText().toString().trim();

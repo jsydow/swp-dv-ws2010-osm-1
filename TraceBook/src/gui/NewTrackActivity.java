@@ -103,7 +103,7 @@ public class NewTrackActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.newtrackactivity);
+        setContentView(R.layout.layout_newtrackactivity);
 
         // Init TabHost
         initTabHost();
@@ -160,29 +160,29 @@ public class NewTrackActivity extends TabActivity {
         if (active)
             visible = 1;
 
-        mediaData = (TextView) findViewById(R.id.setButtonList_tv);
+        mediaData = (TextView) findViewById(R.id.tv_newtrackActivity_setButtonList);
         if (button == 1)
-            mediaData.setText(R.string.setButtonList1_tv);
+            mediaData.setText(R.string.tv_newtrackActivity_setButtonList1);
         else if (button == 2)
-            mediaData.setText(R.string.setButtonList2_tv);
+            mediaData.setText(R.string.tv_newtrackActivity_setButtonList2);
 
         mediaData.setVisibility(visible);
 
         LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.metaMediaBtnNew_ly);
-        bInflater.inflate(R.layout.metamediabuttons, layoutHolder);
+        LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.ly_newtrackActivity_metaMediaBtnNew);
+        bInflater.inflate(R.layout.dynamic_metamediabuttons, layoutHolder);
 
         Button makePictureBtn = (Button) layoutHolder
-                .findViewById(R.id.makePicture_btn);
+                .findViewById(R.id.btn_addMetaMedia_makePicture);
         makePictureBtn.setVisibility(visible);
         Button makeVideoBtn = (Button) layoutHolder
-                .findViewById(R.id.makeVideo_btn);
+                .findViewById(R.id.btn_addMetaMedia_makeVideo);
         makeVideoBtn.setVisibility(visible);
         Button makeMemoBtn = (Button) layoutHolder
-                .findViewById(R.id.makeMemo_btn);
+                .findViewById(R.id.btn_addMetaMedia_makeMemo);
         makeMemoBtn.setVisibility(visible);
         Button makeNoticeBtn = (Button) layoutHolder
-                .findViewById(R.id.makeNotice_btn);
+                .findViewById(R.id.btn_addMetaMedia_makeNotice);
         makeNoticeBtn.setVisibility(visible);
     }
 
@@ -224,16 +224,25 @@ public class NewTrackActivity extends TabActivity {
         TabHost tabHost = getTabHost();
 
         // Init TabHost
-        tabHost.addTab(tabHost.newTabSpec("map_tab")
-                .setIndicator(getResources().getString(R.string.map_tab))
+        tabHost.addTab(tabHost
+                .newTabSpec("map_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_map))
                 .setContent(new Intent(this, MapsForgeActivity.class)));
         // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost.newTabSpec("new_tab")
-                .setIndicator(getResources().getString(R.string.new_tab))
-                .setContent(R.id.new_tab));
-        tabHost.addTab(tabHost.newTabSpec("edit_tab")
-                .setIndicator(getResources().getString(R.string.edit_tab))
-                .setContent(R.id.edit_tab));
+        tabHost.addTab(tabHost
+                .newTabSpec("new_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_new))
+                .setContent(R.id.tab_newtrackActivity_new));
+        tabHost.addTab(tabHost
+                .newTabSpec("edit_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_edit))
+                .setContent(R.id.tab_newtrackactivity_edit));
 
         // set the default tap to our MapTab
         tabHost.setCurrentTab(1);
@@ -248,8 +257,8 @@ public class NewTrackActivity extends TabActivity {
      *            not used
      */
     public void startWayTbtn(View view) {
-        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
-        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
+        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
+        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
         String check = streetToggle.getText().toString();
         if (check.equals(streetToggle.getTextOn().toString())) {
             areaToggle.setClickable(false);
@@ -279,8 +288,8 @@ public class NewTrackActivity extends TabActivity {
      *            not used
      */
     public void startAreaTbtn(View view) {
-        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.startArea_Tbtn);
-        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.startWay_Tbtn);
+        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
+        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
         String check = areaToggle.getText().toString();
         if (check.equals(areaToggle.getTextOn().toString())) {
             streetToggle.setClickable(false);
@@ -335,10 +344,10 @@ public class NewTrackActivity extends TabActivity {
      */
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getResources().getString(R.string.exit_alert))
+        builder.setMessage(getResources().getString(R.string.alert_global_exit))
                 .setCancelable(false)
                 .setPositiveButton(
-                        getResources().getString(R.string.yes_alert),
+                        getResources().getString(R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
@@ -346,7 +355,8 @@ public class NewTrackActivity extends TabActivity {
 
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.no_alert),
+                .setNegativeButton(
+                        getResources().getString(R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
@@ -365,25 +375,33 @@ public class NewTrackActivity extends TabActivity {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
         alert.setView(input);
-        alert.setTitle(getResources().getString(R.string.rename_alert));
+        alert.setTitle(getResources().getString(
+                R.string.alert_newtrackActivity_setTrackName));
         input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString().trim();
-                if (!value.equals("")) {
-                    DataStorage.getInstance().getCurrentTrack().setName(value);
-                }
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
+                        if (!value.equals("")) {
+                            DataStorage.getInstance().getCurrentTrack()
+                                    .setName(value);
+                        }
 
-                Toast.makeText(
-                        getApplicationContext(),
-                        getResources().getString(R.string.addNotice_alert)
-                                + " " + value, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                getResources()
+                                        .getString(
+                                                R.string.alert_newtrackActivity_trackName)
+                                        + " " + value, Toast.LENGTH_SHORT)
+                                .show();
 
-                finish();
-            }
-        });
+                        finish();
+                    }
+                });
 
-        alert.setNegativeButton("Cancel",
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
@@ -402,17 +420,21 @@ public class NewTrackActivity extends TabActivity {
         final EditText input = new EditText(this);
         input.setText(track.getComment());
         alert.setView(input);
-        alert.setTitle(getResources().getString(R.string.addNotice_alert));
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString().trim();
+        alert.setTitle(getResources().getString(
+                R.string.alert_newtrackActivity_addTrackNotice));
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
 
-                track.setComment(value);
+                        track.setComment(value);
 
-            }
-        });
+                    }
+                });
 
-        alert.setNegativeButton("Cancel",
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
@@ -457,26 +479,33 @@ public class NewTrackActivity extends TabActivity {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
         alert.setView(input);
-        alert.setTitle(getResources().getString(R.string.addNotice_alert));
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString().trim();
+        alert.setTitle(getResources()
+                .getString(R.string.alert_global_addNotice));
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
 
-                DataStorage
-                        .getInstance()
-                        .getCurrentTrack()
-                        .getCurrentWay()
-                        .addMedia(
-                                DataStorage.getInstance().getCurrentTrack()
-                                        .saveText(value));
-                Toast.makeText(
-                        getApplicationContext(),
-                        getResources().getString(R.string.addNotice_alert)
-                                + " " + value, Toast.LENGTH_SHORT).show();
-            }
-        });
+                        DataStorage
+                                .getInstance()
+                                .getCurrentTrack()
+                                .getCurrentWay()
+                                .addMedia(
+                                        DataStorage.getInstance()
+                                                .getCurrentTrack()
+                                                .saveText(value));
+                        Toast.makeText(
+                                getApplicationContext(),
+                                getResources().getString(
+                                        R.string.alert_global_addedNotice)
+                                        + " " + value, Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
 
-        alert.setNegativeButton("Cancel",
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
@@ -507,17 +536,17 @@ public class NewTrackActivity extends TabActivity {
         int i = 0;
         for (DataNode dn : nodeList) {
             poiList[i] = dn.getId() + ": "
-                    + getResources().getString(R.string.POI);
+                    + getResources().getString(R.string.string_global_poi);
             i++;
         }
 
         for (DataPointsList wl : wayList) {
             if (wl.isArea())
                 poiList[i] = wl.getId() + ": "
-                        + getResources().getString(R.string.Area);
+                        + getResources().getString(R.string.string_global_area);
             else
                 poiList[i] = wl.getId() + ": "
-                        + getResources().getString(R.string.Way);
+                        + getResources().getString(R.string.string_global_way);
             i++;
         }
 

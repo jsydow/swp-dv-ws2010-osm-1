@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  @author greenTraxas -->
+<menu   xmlns:android="http://schemas.android.com/apk/res/android">
+  <item 
+  	android:id="@+id/opt_startActivity_preferences"
+  	android:title="@string/opt_startActivity_preferences"
+  	android:icon="@android:drawable/ic_menu_preferences"/>
+  
+  <item
+  	android:id="@+id/opt_startActivity_close"
+  	android:title="@string/opt_startActivity_close"
+  	android:icon="@android:drawable/ic_menu_close_clear_cancel"/>
+</menu>

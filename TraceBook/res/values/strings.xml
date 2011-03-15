@@ -1,92 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--  @author greenTraxas -->
 <resources>
-    <!-- Textview values -->
-    <string name="welcome">Willkommen bei TraceBook.</string>
-    <string name="POI">POI</string>
-    <string name="Way">Way</string>
-    <string name="Area">Area</string>
+    <!-- String values -->
+    <string name="string_global_poi">POI</string>
+    <string name="string_global_way">Way</string>
+    <string name="string_global_area">Area</string>
+    <string name="string_trackInfoDialog_title">Trackinformationen</string>
+    
+    <!--  App values -->
     <string name="app_name">TraceBook</string>
-    <string name="newTrack">Neuer Track</string>
-    <string name="loadTrack">Lade Track</string>
-    <string name="trackName">Trackname</string>
-    <string name="insertTag">Tag einfügen</string>
-    <string name="insertValue">Wert einfügen</string>
-    <string name="nodeId_tv">Knoten-ID:</string>
-    <string name="editMeta_tv">Editierung von MetaDaten</string>
-    <string name="noMetaData_tv">Es liegen keine MetaDaten vor</string>
-    <string name="MetaData_tv">Der Knoten besitzt folgende MetaDaten</string>
-    <string name="setButtonList1_tv">Aktuelle Straße mit MediaDaten versehen</string>
-    <string name="setButtonList2_tv">Aktuelle Fläche mit MediaDaten versehen</string>
-    <string name="titleListViewCat_tv">Schlüssel</string>
-    <string name="titleListViewVal_tv">Wert</string>
 
+	<!--  TextViews values -->
+	<string name="tv_startActivity_welcome">Willkommen bei TraceBook</string>
+	<string name="tv_addpointActivity_nodeId">Knoten-ID:</string>
+	<string name="tv_addpointmetaActivity_insertTag">Tag einfügen</string>
+    <string name="tv_addpointmetaActivity_insertValue">Wert einfügen</string>
+    <string name="tv_addpointActivity_editMeta">Editierung von MetaDaten</string>
+    <string name="tv_addpointActivity_noMetaData">Es liegen keine MetaDaten vor</string>
+    <string name="tv_addpointActivity_MetaData">Der Knoten besitzt folgende MetaDaten</string>
+    <string name="tv_newtrackActivity_setButtonList1">Aktuelle Straße mit MediaDaten versehen</string>
+    <string name="tv_newtrackActivity_setButtonList2">Aktuelle Fläche mit MediaDaten versehen</string>
+    <string name="tv_addpointActivity_titleListViewCat">Schlüssel</string>
+    <string name="tv_addpointActivity_titleListViewVal">Wert</string>
+    <string name="tv_trackInfoDialog_name">Trackname:</string>
+	<string name="tv_trackInfoDialog_comment">Kommentar:</string>
+	<string name="tv_trackInfoDialog_timestamp">Zeitstempel:</string>
+	<string name="tv_trackInfoDialog_pois">Anzahl Points of Interest:</string>
+	<string name="tv_trackInfoDialog_ways">Anzahl Wege:</string>
+	<string name="tv_trackInfoDialog_media">Anzahl Medien:</string>
+	<string name="tv_trackInfoDialog_noInformation">keine Information vorhanden</string>
+	<string name="tv_trackInfoDialog_trackName">Trackname</string>
+	<string name="tv_trackInfoDialog_timestampText">TimeStamp:</string>
+	<string name="tv_trackInfoDialog_poisText">Anzahl der gespeicherten POIs:</string>
+	<string name="tv_trackInfoDialog_waysText">Anzahl der gespeicherten Wege:</string>
+	<string name="tv_trackInfoDialog_commentText">Kommentar:</string>
+	<string name="tv_trackInfoDialog_nameText">Name:</string>
+	<string name="tv_trackInfoDialog_mediaText">MediaDaten:</string>
+	<string name="tv_addmemoActivity_stopRecord">Stoppe Sprachnotiz</string>
+	<string name="tv_addmemoActivity_record"> Ihre Sprachnotiz wird aufgezeichnet</string>
 
 	<!--  AlertBox values -->
-    <string name="addNotice_alert">Notiz hinzufügen</string>
-    <string name="rename_alert">Track umbenennen </string>
-    <string name="addedNotice_alert">Notiz hünzugefügt:</string>
-    <string name="exit_alert">Möchten Sie die aktuelle Session stoppen und speichern?</string>
-    <string name="pause_alert">Möchten Sie die aktuelle Session pausieren?</string>
-    <string name="yes_alert">Ja</string>
-    <string name="no_alert">Nein</string>
-    <string name="alert_really_delete_track">Track löschen?</string>
+	<string name="alert_global_cancel">Cancel</string>
+	<string name="alert_global_ok">Ok</string>
+	<string name="alert_global_yes">Ja</string>
+    <string name="alert_global_no">Nein</string>
+    <string name="alert_global_addNotice">Notiz hinzufügen</string>
+    <string name="alert_global_addedNotice">Notiz hünzugefügt:</string>
+    <string name="alert_global_exit">Möchten Sie die aktuelle Session stoppen und speichern?</string>
+    <string name="alert_mapsforgeActivity_pause">Möchten Sie die aktuelle Session pausieren?</string>
+    <string name="alert_newtrackActivity_rename">Node umbenennen</string>
+    <string name="alert_newtrackActivity_setTrackName">Bitte Tracknamen vergeben</string>
+    <string name="alert_newtrackActivity_trackName">Ihr Track heißt:</string>
+    <string name="alert_newtrackActivity_addTrackNotice">Tracknotiz hinzufügen</string>
+    <string name="alert_loadtrackActivity_rename">Track umbenennen</string>
+    <string name="alert_loadtrackActivity_deleteTrack">Track löschen?</string>
     
   	<!--  Optionmenu values -->
-    <string name="preferences_opt">Einstellungen</string>
-    <string name="close_opt">Beenden</string>
-    <string name="centerAtOwnPosition_opt">Ausrichten</string>
-    <string name="activateMobileInternet_opt">Onlinerendering starten</string>
-    <string name="deactivateMobileInternet_opt">Onlinerendering stoppen</string>
-    <string name="stopTrack_opt">Aufnahme stoppen</string>
-    <string name="resumeTrack_opt">Aufnahme fortsetzen</string>
-    <string name="help_opt">Hilfe</string>
-    <string name="export_opt">Exportieren</string>
-    <string name="pause_opt">Pause</string>
-    <string name="setMapLocation_opt">Mapfile</string>
-    <string name="showToggleWayPoints_op">Toggle Wegpunkte</string>
+    <string name="opt_startActivity_preferences">Einstellungen</string>
+    <string name="opt_startActivity_close">Beenden</string>
+    <string name="opt_mapsforgeActivity_centerAtOwnPosition">Ausrichten</string>
+    <string name="opt_mapsforgeActivity_activateMobileInternet">Online Karte</string>
+    <string name="opt_mapsforgeActivity_deactivateMobileInternet">Offline Karte</string>
+    <string name="opt_mapsforgeActivity_stopTrack">Aufnahme stoppen</string>
+    <string name="opt_mapsforgeActivity_resumeTrack">Aufnahme fortsetzen</string>
+    <string name="opt_mapsforgeActivity_help">Hilfe</string>
+    <string name="opt_mapsforgeActivity_export">Exportieren</string>
+    <string name="opt_mapsforgeActivity_pause">Pause</string>
+    <string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
+    <string name="opt_mapsforgeActivity_showToggleWayPoints">Toggle Wegpunkte</string>
     
     <!--  Contextmenu values -->
-	<string name="deleteTag_cm">Tag löschen</string>
-	<string name="renameTag_cm">Tag ändern</string>
-	<string name="deletePoint_cm">Punkt löschen</string>
-	<string name="editPoint_cm">Punkt editieren</string>
-	<string name="movePoint_cm">Punkt verschieben</string>
-	<string name="loadTrack_load_cm">Track laden</string>
-	<string name="loadTrack_rename_cm">Track umbenennen</string>
-	<string name="loadTrack_delete_cm">Track löschen</string>
-	<string name="loadTrack_info_cm">Infos anzeigen</string>
-	<string name="editmapobjects_edit_cm">Bearbeiten</string>
-	<string name="editmapobjects_delete_cm">Löschen</string>
+	<string name="cm_addpointActivity_deleteTag">Tag löschen</string>
+	<string name="cm_addpointActivity_renameTag">Tag ändern</string>
+	<string name="cm_mapsforgeActivity_deletePoint">Punkt löschen</string>
+	<string name="cm_mapsforgeActivity_editPoint">Punkt editieren</string>
+	<string name="cm_mapsforgeActivity_movePoint">Punkt verschieben</string>
+	<string name="cm_loadtrackActivity_load">Track laden</string>
+	<string name="cm_loadtrackActivity_rename">Track umbenennen</string>
+	<string name="cm_loadtrackActivity_delete">Track löschen</string>
+	<string name="cm_loadtrackActivity_info">Infos anzeigen</string>
+	<string name="cm_editmapobjects_edit">Bearbeiten</string>
+	<string name="cm_editmapobjects_delete">Löschen</string>
    
    <!-- Tab values -->
-    <string name="map_tab">Karte</string>
-    <string name="new_tab">Neu</string>
-    <string name="edit_tab">Ändern</string>
+    <string name="tab_newtrackActivity_map">Karte</string>
+    <string name="tab_newtrackActivity_new">Neu</string>
+    <string name="tab_newtrackActivity_edit">Ändern</string>
    
    <!--  Button values -->
-    <string name="streetOn_btn">Straßenanfang</string>
-    <string name="streetOff_btn">Straßenende</string>
-    <string name="areaOn_btn">Flächenanfang</string>
-    <string name="areaOff_btn">Flächenende</string>
-    <string name="addPoint_btn">Point Of Interest hinzufügen</string>
-    <string name="stopTrack_btn">Speichern und beenden</string>
-    <string name="poi_btn">Point of intrest</string>
-    <string name="save_btn">Speichern</string>
-    <string name="cancel_btn">Abbrechen</string>
-    <string name="addMeta_btn">Hinzufügen</string>
-    <string name="makePicture_btn">Foto</string>
-    <string name="makeVideo_btn">Video</string>
-    <string name="makeMemo_btn">Sprachnotiz</string>
-    <string name="makeNotice_btn">Notiz</string>
-<string name="back_btn">Speichern</string>
-<string name="no_information">keine Information vorhanden</string>
-<string name="editComment_btn">Track Kommentar bearbeiten</string>
-<string name="trackInfoDialog_name">Trackname:</string>
-<string name="trackInfoDialog_comment">Kommentar:</string>
-<string name="trackInfoDialog_timestamp">Zeitstempel:</string>
-<string name="trackInfoDialog_pois">Anzahl Points of Interest:</string>
-<string name="trackInfoDialog_ways">Anzahl Wege:</string>
-<string name="trackInfoDialog_media">Anzahl Medien:</string>
-<string name="trackInfoDialog_backbtn">OK</string>
-<string name="trackInfoDialog_title">Trackinformationen</string>
+    <string name="tbtn_newtrackActivity_streetOn">Straßenanfang</string>
+    <string name="tbtn_newtrackActivity_streetOff">Straßenende</string>
+    <string name="tbtn_newtrackActivity_areaOn">Flächenanfang</string>
+    <string name="tbtn_newtrackActivity_areaOff">Flächenende</string>
+    <string name="btn_startActivity_newTrack">Neuer Track</string>
+    <string name="btn_startActivity_loadTrack">Lade Track</string>
+    <string name="btn_recordvideoActivity_startRec">Start</string>
+    <string name="btn_recordvideoActivity_stopRec">Stopp</string>
+    <string name="btn_newtrackActivity_addPoint">Point Of Interest hinzufügen</string>
+    <string name="btn_newtrackActivity_stopTrack">Speichern und beenden</string>
+    <string name="btn_newtrackActivity_editComment">Track Kommentar bearbeiten</string>
+    <string name="btn_addpointmetaActivity_poi">Point of intrest</string>
+    <string name="btn_addpointmetaActivity_save">Speichern</string>
+    <string name="btn_addpointmetaActivity_cancel">Abbrechen</string>
+    <string name="btn_addpointActivity_addMeta">Hinzufügen</string>
+    <string name="btn_addpointActivity_back">Speichern</string>
+    <string name="btn_addMetaMedia_makePicture">Foto</string>
+    <string name="btn_addMetaMedia_makeVideo">Video</string>
+    <string name="btn_addMetaMedia_makeMemo">Sprachnotiz</string>
+    <string name="btn_addMetaMedia_makeNotice">Notiz</string>
+	<string name="btn_trackInfoDialog">OK</string>
+	<string name="btn_trackInfoDialog_back">Zurück</string>
+	
 </resources>
