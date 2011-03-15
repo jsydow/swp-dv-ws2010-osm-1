@@ -73,8 +73,9 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Constructs a new ArrayItemizedOverlay.
      * 
      * @param context
-     *            the reference to the application context.
+     *            a reference to the MapActivity.
      * @param routesOverlay
+     *            reference to the routesOverlay associated with the MapActivity
      */
     public DataNodeArrayItemizedOverlay(Activity context,
             DataPointsListArrayRouteOverlay routesOverlay) {
@@ -119,6 +120,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Updates the OverlayItem marking the current position.
      * 
      * @param currentPos
+     *            current position, marker will be set there
      */
     public void setCurrentPosition(GeoPoint currentPos) {
         updateItem(currentPos, -1, R.drawable.marker_green);
@@ -127,14 +129,17 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     /**
      * Update the Item with the given id (change it's position or icon).
      * 
-     * @param currentPos
+     * @param pos
+     *            new position
      * @param id
+     *            id of the {@link DataNode}
      * @param icon
+     *            (new) icon of the marker
      */
-    public void updateItem(GeoPoint currentPos, int id, int icon) {
+    public void updateItem(GeoPoint pos, int id, int icon) {
         for (int i = 0; i < overlayItems.size(); ++i)
             if (overlayItems.get(i).second.intValue() == id) {
-                OverlayItem oi = Helper.getOverlayItem(currentPos,
+                OverlayItem oi = Helper.getOverlayItem(pos,
                         overlayItems.get(i).first.getMarker());
                 overlayItems.set(i, new Pair<OverlayItem, Integer>(oi,
                         overlayItems.get(i).second));
@@ -142,7 +147,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 if (id > 0) { // redraw way when point was moved
                     DataNode node = Helper.currentTrack().getNodeById(id);
                     if (node != null) {
-                        node.setLocation(currentPos);
+                        node.setLocation(pos);
                         node.setOverlayItem(oi);
 
                         if (node.getDataPointsList() != null)
@@ -154,7 +159,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 return;
             }
         // no OverlayItem was yet added
-        addOverlay(Helper.getOverlayItem(currentPos, icon, context), id);
+        addOverlay(Helper.getOverlayItem(pos, icon, context), id);
         populate();
     }
 
@@ -162,6 +167,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Add a list of POIs to the overlay.
      * 
      * @param nodes
+     *            {@link DataNode}s to be added to overlay
      */
     public void addPoints(List<DataNode> nodes) {
         for (DataNode n : nodes) {
@@ -231,8 +237,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
     }
 
-    private final CharSequence[] items = { "Tag this", "Move this",
-            "Delete this" };
+    private DefaultListener contextMenueListener = new DefaultListener();
+    private CurrentPosListener contextMenueCurrentPosListener = new CurrentPosListener();
 
     @Override
     protected boolean onTap(int index) {
@@ -246,64 +252,113 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         builder.setTitle("id: " + nodeId);
 
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                case 0: // Tag this
-                    final Intent intent = new Intent(context,
-                            AddPointActivity.class);
-                    if (nodeId < 0)
-                        intent.putExtra("DataNodeId",
-                                currentTrack.newNode(point).getId());
-                    else
-                        intent.putExtra("DataNodeId", nodeId);
-
-                    context.startActivity(intent);
-                    break;
-                case 1: // move this
-                    if (nodeId < 0) {
-                        Toast.makeText(context,
-                                "You can't move around that way!",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-
-                    move_intent.putExtra("point_id", nodeId);
-                    context.sendBroadcast(move_intent);
-                    break;
-                case 2: // delete this
-                    if (nodeId < 0) {
-                        Toast.makeText(context,
-                                "can not delete current location",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-
-                    final DataNode node = currentTrack.getNodeById(nodeId);
-                    DataPointsList way = null;
-                    if (node != null)
-                        way = node.getDataPointsList();
-                    if (currentTrack.deleteNode(nodeId)) {
-                        remove(nodeId);
-                        if (way != null) { // we have to redraw the way
-                            way_intent.putExtra("way_id", way.getId());
-                            context.sendBroadcast(way_intent);
-                        }
-                    } else
-                        Toast.makeText(context,
-                                "Can not delete Node id=" + nodeId,
-                                Toast.LENGTH_SHORT).show();
-
-                    break;
-                default:
-                    break;
-                }
-            }
-        });
+        if (nodeId > 0) {
+            contextMenueListener.setNodeId(nodeId);
+            builder.setItems(contextMenueListener.getItems(),
+                    contextMenueListener);
+        } else {
+            contextMenueCurrentPosListener.setPos(point);
+            builder.setItems(contextMenueCurrentPosListener.getItems(),
+                    contextMenueCurrentPosListener);
+        }
 
         builder.show();
         return true;
+    }
+
+    private class DefaultListener implements DialogInterface.OnClickListener {
+        private final CharSequence[] items = { "Tag this", "Move this",
+                "Delete this" };
+
+        public DefaultListener() {
+            // do nothing
+        }
+
+        public CharSequence[] getItems() {
+            return items;
+        }
+
+        private int nodeId = 0;
+
+        public void setNodeId(int id) {
+            nodeId = id;
+        }
+
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+            case 0: // Tag this
+                final Intent intent = new Intent(context,
+                        AddPointActivity.class);
+                intent.putExtra("DataNodeId", nodeId);
+
+                context.startActivity(intent);
+                break;
+            case 1: // move this
+                move_intent.putExtra("point_id", nodeId);
+                context.sendBroadcast(move_intent);
+                break;
+            case 2: // delete this
+                final DataNode node = currentTrack.getNodeById(nodeId);
+                DataPointsList way = null;
+                if (node != null)
+                    way = node.getDataPointsList();
+                if (currentTrack.deleteNode(nodeId)) {
+                    remove(nodeId);
+                    if (way != null) { // we have to redraw the way
+                        way_intent.putExtra("way_id", way.getId());
+                        context.sendBroadcast(way_intent);
+                    }
+                } else
+                    Toast.makeText(context, "Can not delete Node id=" + nodeId,
+                            Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    private class CurrentPosListener implements DialogInterface.OnClickListener {
+        private final CharSequence[] items_default = { "Tag this", "Start way" };
+        private final CharSequence[] items_way = { "Tag this", "End way",
+                "Add Waypoint" };
+
+        public CurrentPosListener() {
+            // do nothing
+        }
+
+        public CharSequence[] getItems() {
+            return tag_way ? items_way : items_default;
+        }
+
+        private GeoPoint point;
+
+        public void setPos(GeoPoint point) {
+            this.point = point;
+        }
+
+        private boolean tag_way = false; // XXX
+
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+            case 0: // Tag this
+                final Intent intent = new Intent(context,
+                        AddPointActivity.class);
+                intent.putExtra("DataNodeId", currentTrack.newNode(point)
+                        .getId());
+
+                context.startActivity(intent);
+                break;
+            case 1:
+                tag_way = !tag_way;
+                break;
+            case 2:
+
+                break;
+            default:
+                break;
+            }
+        }
     }
 
     /**
@@ -311,6 +366,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * one.
      * 
      * @param routesOverlay
+     *            the routesOverlay also on the MapActivity
      */
     public void setRoutesOverlay(DataPointsListArrayRouteOverlay routesOverlay) {
         this.routesOverlay = routesOverlay;

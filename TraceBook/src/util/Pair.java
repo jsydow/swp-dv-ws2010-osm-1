@@ -12,12 +12,12 @@ package util;
  */
 public class Pair<A, B> {
     /**
-     * first value stored in the Pair
+     * first value stored in the Pair.
      */
     public A first;
 
     /**
-     * second value stored in the Pair
+     * second value stored in the Pair.
      */
     public B second;
 

@@ -37,9 +37,14 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     private DataNodeArrayItemizedOverlay pointsOverlay;
 
     /**
+     * sets overlays and generates color array.
      * 
      * @param context
+     *            a reference to the MapActivity
      * @param pointsOverlay
+     *            a reference to the pointsOverlay that also is bound to the
+     *            MapActivity
+     * 
      */
     public DataPointsListArrayRouteOverlay(Activity context,
             DataNodeArrayItemizedOverlay pointsOverlay) {
@@ -94,6 +99,8 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      * Add a list of ways to the Overlay.
      * 
      * @param ways
+     *            a list of the {@link DataPointsList}s, adding all of them to
+     *            the overlay
      */
     public void addWays(List<DataPointsList> ways) {
         for (DataPointsList l : ways) {
@@ -115,9 +122,11 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      * Redraw the given way.
      * 
      * @param way
+     *            way to be redrawn
      * @param editing
+     *            is the way the currently edited way?
      */
-    public void reDrawWay(DataPointsList way, boolean editing) {
+    private void reDrawWay(DataPointsList way, boolean editing) {
         if (way == null)
             return;
 
@@ -136,6 +145,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      * Update the color of a way once its not the current way any more.
      * 
      * @param id
+     *            id of the {@link DataPointsList} to be redrawn
      */
     public void reDrawWay(int id) {
         if (id <= 0)
