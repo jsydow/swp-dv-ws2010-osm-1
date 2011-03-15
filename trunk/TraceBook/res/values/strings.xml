@@ -37,7 +37,7 @@
 	<string name="tv_trackInfoDialog_nameText">Name:</string>
 	<string name="tv_trackInfoDialog_mediaText">MediaDaten:</string>
 	<string name="tv_addmemoActivity_stopRecord">Stoppe Sprachnotiz</string>
-	<string name="tv_addmemoActivity_record"> Ihre Sprachnotiz wird aufgezeichnet</string>
+	<string name="tv_addmemoActivity_record"> Ihre Sprachnotiz wird aufgezeichnet...</string>
 	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
 	<string name="tv_aboutActivity_creditsTeam">\n
 	David Beyer - anubis@cstilch.de\n
@@ -51,6 +51,7 @@
 	<string name="tv_aboutActivity_license">GPL3</string>
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90</string>
+	<string name="tv_listviewedit_idTitle">ID: </string>
 	
 	<!--  Edit Text values-->
 	<string name="et_fulltextsearchActivity_search">Suchen...</string>
