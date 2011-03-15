@@ -1,5 +1,6 @@
 package core.logger;
 
+import util.Helper;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -27,13 +28,18 @@ public class WaypointLogService extends Service implements LocationListener {
     /**
      * Tag of the Intent that signals a change of the current position.
      */
-    public static final String UPDATE_GPS_POS = BASETAG + ".UPDTAE_GPS_POS";
+    public static final String UPDATE_GPS_POS = BASETAG + ".UPDATE_GPS_POS";
 
     /**
      * Tag of the Intent that signals an update to an object in
      * {@link DataStorage}.
      */
-    public static final String UPDATE_OBJECT = BASETAG + ".UPDTAE_OBJECT";
+    public static final String UPDATE_OBJECT = BASETAG + ".UPDATE_OBJECT";
+
+    /**
+     * Tag of the Intent that signals a way was closed.
+     */
+    public static final String END_WAY = BASETAG + ".END_WAY";
 
     /**
      * Reference to the {@link DataStorage} singleton.
@@ -59,6 +65,10 @@ public class WaypointLogService extends Service implements LocationListener {
 
     private final Intent gps_intent = new Intent(UPDATE_GPS_POS);
     private final Intent update_intent = new Intent(UPDATE_OBJECT);
+    /**
+     * intent used to signal the end of a way.
+     */
+    final Intent end_way = new Intent(END_WAY);
 
     private boolean gps_on = false;
 
@@ -188,7 +198,6 @@ public class WaypointLogService extends Service implements LocationListener {
             return currentWay().getId();
         }
 
-        // currently unused.
         public synchronized int endWay() {
             DataPointsList tmp = currentWay();
 
@@ -198,8 +207,13 @@ public class WaypointLogService extends Service implements LocationListener {
                 /* do not store empty ways */
                 if (tmp.getNodes().size() == 0)
                     storage.getCurrentTrack().deleteWay(tmp.getId());
-                else
+                else {
+                    if (!one_shot)
+                        Helper.smoothenPoints(tmp.getNodes(), 3, 3);
+                    end_way.putExtra("way_id", tmp.getId());
+                    sendBroadcast(end_way);
                     return tmp.getId();
+                }
             return -1;
         }
 
@@ -213,7 +227,8 @@ public class WaypointLogService extends Service implements LocationListener {
 
         }
 
-        public synchronized int endArea() {
+        public synchronized int endArea() { // do we really need this? TODO
+                                            // merge with endWay()
             storage.getCurrentTrack().setCurrentWay(null);
             DataPointsList tmp = currentWay();
 

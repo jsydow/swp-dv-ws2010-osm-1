@@ -160,10 +160,13 @@ public class MapsForgeActivity extends MapActivity {
         pointsOverlay.clear();
         fillOverlays();
 
+        // TODO: rather use one intend and switch over the action
         registerReceiver(gpsReceiver, new IntentFilter(
                 WaypointLogService.UPDATE_GPS_POS));
         registerReceiver(gpsReceiver, new IntentFilter(
                 WaypointLogService.UPDATE_OBJECT));
+        registerReceiver(gpsReceiver, new IntentFilter(
+                WaypointLogService.END_WAY));
         registerReceiver(gpsReceiver, new IntentFilter(
                 DataNodeArrayItemizedOverlay.UPDATE_WAY));
         registerReceiver(gpsReceiver, new IntentFilter(
@@ -369,8 +372,6 @@ public class MapsForgeActivity extends MapActivity {
                 centerMap = true;
         }
 
-        int oldWayId = -1;
-
         public GPSReceiver() { /* nothing to do here */
         }
 
@@ -405,12 +406,10 @@ public class MapsForgeActivity extends MapActivity {
                 int wayId = intend.getExtras().getInt("way_id");
                 int pointId = intend.getExtras().getInt("point_id");
 
-                if (wayId > 0) {
-                    updateWay(wayId);
-
-                } else if (pointId > 0) {
+                if (wayId > 0)
+                    routesOverlay.reDrawWay(wayId);
+                else if (pointId > 0)
                     updatePoint(pointId);
-                }
 
             } else if (intend.getAction().equals(
                     DataNodeArrayItemizedOverlay.UPDATE_WAY)) {
@@ -425,17 +424,10 @@ public class MapsForgeActivity extends MapActivity {
                     editNode = Helper.currentTrack().getNodeById(nodeId);
                     Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
                 }
-            }
-        }
+            } else if (intend.getAction().equals(WaypointLogService.END_WAY)) {
+                routesOverlay.reDrawWay(intend.getExtras().getInt("way_id"));
 
-        private void updateWay(int newWayId) {
-            // TODO comment here please
-            if (newWayId != oldWayId) { // TODO
-                routesOverlay.reDrawWay(oldWayId);
-                oldWayId = newWayId;
             }
-            Log.d(LOG_TAG, "Received way update, id=" + newWayId);
-            routesOverlay.reDrawWay(newWayId);
         }
 
         private void updatePoint(int pointId) {

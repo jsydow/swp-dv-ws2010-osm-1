@@ -1,6 +1,8 @@
 package util;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.ItemizedOverlay;
@@ -134,4 +136,64 @@ public final class Helper {
                 Toast.LENGTH_LONG).show();
         Log.e(logTag, ex.getMessage());
     }
+
+    /**
+     * smoothen the {@link DataNode}s by calculating the mean of 3 consecutive
+     * points.
+     * 
+     * @param nodes
+     *            The list of DataNodes representing the way
+     * @param weight
+     *            the factor by which the original point is higher weighted then
+     *            it's bufferSize-1 successors
+     * @param bufferSize
+     *            the amount of points to use for the calculation
+     */
+    public static void smoothenPoints(List<DataNode> nodes, int weight,
+            int bufferSize) {
+        if (nodes == null)
+            return;
+
+        Queue<DataNode> ringbuffer = new LinkedList<DataNode>();
+
+        for (DataNode n : nodes) {
+            if (!n.isValid())
+                continue;
+
+            ringbuffer.add(n);
+
+            if (ringbuffer.size() < bufferSize)
+                continue;
+
+            double latsum = 0;
+            double lonsum = 0;
+            boolean first = true;
+            for (DataNode nr : ringbuffer)
+                if (first) {
+                    first = false;
+                    latsum += nr.getLat() * weight;
+                    lonsum += nr.getLon() * weight;
+                } else {
+                    latsum += nr.getLat();
+                    lonsum += nr.getLon();
+                }
+
+            // the ringbuffer is an element smaller now
+            ringbuffer.poll().setLocation(
+                    new GeoPoint(
+                            latsum / ((double) ringbuffer.size() + weight),
+                            lonsum / ((double) ringbuffer.size() + weight)));
+
+        }
+    }
+
+    // public static List<DataNode> filterPoints(DataPointsList dpl) {
+    // List<DataNode> newNodes = new LinkedList<DataNode>();
+    // List<DataNode> oldNodes = dpl.getNodes();
+    //
+    // newNodes.add(oldNodes.get(0));
+    //
+    // return newNodes;
+    //
+    // }
 }
