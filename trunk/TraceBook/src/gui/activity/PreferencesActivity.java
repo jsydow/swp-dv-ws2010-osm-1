@@ -1,4 +1,4 @@
-package gui;
+package gui.activity;
 
 import Trace.Book.R;
 import android.os.Bundle;

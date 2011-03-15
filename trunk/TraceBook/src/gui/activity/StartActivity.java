@@ -1,4 +1,4 @@
-package gui;
+package gui.activity;
 
 import java.io.File;
 
