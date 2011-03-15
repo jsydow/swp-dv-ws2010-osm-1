@@ -39,9 +39,12 @@ public class DataNode extends DataMapObject {
     }
 
     /**
+     * Constructs a DataNode of a Way with given coordinates.
      * 
      * @param gp
+     *            The coordinates of this node
      * @param way
+     *            The parent way.
      */
     public DataNode(GeoPoint gp, DataPointsList way) {
         super();
@@ -249,6 +252,7 @@ public class DataNode extends DataMapObject {
      * Set the OverlayItem, used by MapsForgeActivity.
      * 
      * @param overlayItem
+     *            The new Overlayitem.
      */
     public void setOverlayItem(OverlayItem overlayItem) {
         this.overlayItem = overlayItem;

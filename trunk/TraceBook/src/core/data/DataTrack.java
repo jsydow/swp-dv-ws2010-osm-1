@@ -150,8 +150,12 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
+     * Renames a Track on the devices memory.
+     * 
      * @param oldTrackName
+     *            Name of the track as it is on the devices memory.
      * @param newTrackName
+     *            The new name of the track.
      */
     public static void rename(String oldTrackName, String newTrackName) {
         DataTrack oldTrack = new DataTrack();
@@ -410,6 +414,7 @@ public class DataTrack extends DataMediaHolder {
      * Deletes a Track with all its contents from the devices memory.
      * 
      * @param trackname
+     *            The name of the track/directory.
      */
     public static void delete(String trackname) {
         DataStorage.deleteDirectory(new File(getTrackDirPath(trackname)));
