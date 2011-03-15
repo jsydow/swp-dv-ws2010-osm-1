@@ -1,1 +1,36 @@
-#summary Placeholder for media stuff.
+#summary Acquiring audio, video and image files.
+
+= Introduction =
+
+One of the features the product owner asked for at the beginning of the second sprint is the capability of recording audio and video files, as well as taking photos for both ways/areas and points of interest.
+
+Ideally, we would not have to deal with the details of how acquiring such files is done, because we would just use intents for those tasks. But as the world is not a place where wishes come true that easily, we will actually have to put some work into this.
+
+= Common concepts =
+
+== Internal representation, data structure ==
+
+For every single media file, there is a !DataMedia object that is "attached" to a !DataMediaHolder object. To do so, every recorder class has a method 
+
+{{{
+    /**
+     * Attaches the recorded media file to the given node of our data structure.
+     * 
+     * @param parent
+     *            Node to attach the recorded file to.
+     * @return A reference to the created media file object in the global data
+     *         structure.
+     */
+    public DataMedia appendFileToObject(DataMediaHolder parent) {
+        DataMedia dm = new DataMedia(getPath(), getFilename());
+
+        parent.addMedia(dm);
+        return dm;
+    }
+}}}
+
+that does exactly that, whereas said !DataMediaHolder object is passed to this method as a reference.
+
+== Internal representation, file system ==
+
+Since each track has its own folder (in /sdcard/TraceBook/), we can just put new media files into the folder of the track. The filenames contain the media type (audio|image|video), and a human readable timestamp (yyyy-MM-dd_HH-mm-ss). The suffixes are chosen according to their file types (.jpg, .m4a, or .mp4).
