@@ -185,6 +185,12 @@ public class WaypointLogService extends Service implements LocationListener {
             return current_node.getId();
         }
 
+        public int beginWayA(boolean doOneShot, boolean isArea) {
+            int ret = beginWay(doOneShot);
+            currentWay().setArea(isArea);
+            return ret;
+        }
+
         public int beginWay(boolean doOneShot) {
             one_shot = doOneShot;
 
@@ -215,26 +221,6 @@ public class WaypointLogService extends Service implements LocationListener {
                     return tmp.getId();
                 }
             return -1;
-        }
-
-        public synchronized int beginArea() {
-            if (currentWay() == null) // start a new way
-                storage.getCurrentTrack().setCurrentWay(
-                        storage.getCurrentTrack().newWay());
-
-            currentWay().setArea(true);
-            return currentWay().getId();
-
-        }
-
-        public synchronized int endArea() { // do we really need this? TODO
-                                            // merge with endWay()
-            storage.getCurrentTrack().setCurrentWay(null);
-            DataPointsList tmp = currentWay();
-
-            if (tmp != null)
-                return tmp.getId();
-            return 0;
         }
 
         public boolean isWayLogging() {

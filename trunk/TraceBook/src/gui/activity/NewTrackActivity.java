@@ -343,7 +343,7 @@ public class NewTrackActivity extends TabActivity {
             streetToggle.setClickable(false);
             setButtonList(true, 2);
             try {
-                ServiceConnector.getLoggerService().beginArea();
+                ServiceConnector.getLoggerService().beginWayA(false, true);
 
             } catch (RemoteException e) {
 
@@ -353,7 +353,7 @@ public class NewTrackActivity extends TabActivity {
             streetToggle.setClickable(true);
             setButtonList(false, 0);
             try {
-                ServiceConnector.getLoggerService().endArea();
+                ServiceConnector.getLoggerService().endWay();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
