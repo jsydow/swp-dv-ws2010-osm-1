@@ -27,13 +27,13 @@ public class WaypointLogService extends Service implements LocationListener {
     /**
      * Tag of the Intent that signals a change of the current position.
      */
-    public static final String UPDTAE_GPS_POS = BASETAG + ".UPDTAE_GPS_POS";
+    public static final String UPDATE_GPS_POS = BASETAG + ".UPDTAE_GPS_POS";
 
     /**
      * Tag of the Intent that signals an update to an object in
      * {@link DataStorage}.
      */
-    public static final String UPDTAE_OBJECT = BASETAG + ".UPDTAE_OBJECT";
+    public static final String UPDATE_OBJECT = BASETAG + ".UPDTAE_OBJECT";
 
     /**
      * Reference to the {@link DataStorage} singleton.
@@ -57,8 +57,8 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     protected int deltaTime = 0;
 
-    private final Intent gps_intent = new Intent(UPDTAE_GPS_POS);
-    private final Intent update_intent = new Intent(UPDTAE_OBJECT);
+    private final Intent gps_intent = new Intent(UPDATE_GPS_POS);
+    private final Intent update_intent = new Intent(UPDATE_OBJECT);
 
     private boolean gps_on = false;
 

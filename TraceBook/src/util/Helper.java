@@ -73,7 +73,10 @@ public final class Helper {
      * @return the current {@link DataPointsList} ways
      */
     public static List<DataPointsList> getWays() {
-        return DataStorage.getInstance().getCurrentTrack().getWays();
+        if (DataStorage.getInstance().getCurrentTrack() != null) {
+            return DataStorage.getInstance().getCurrentTrack().getWays();
+        }
+        return null;
     }
 
     /**
@@ -82,6 +85,9 @@ public final class Helper {
      * @return the current list of {@link DataNode}s
      */
     public static List<DataNode> getNodes() {
-        return DataStorage.getInstance().getCurrentTrack().getNodes();
+        if (DataStorage.getInstance().getCurrentTrack() != null) {
+            return DataStorage.getInstance().getCurrentTrack().getNodes();
+        }
+        return null;
     }
 }
