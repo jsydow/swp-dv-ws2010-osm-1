@@ -4,6 +4,7 @@ import gui.adapter.GenericAdapter;
 import gui.adapter.GenericAdapterData;
 import gui.adapter.GenericItemDescription;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -216,6 +217,7 @@ public class NewTrackActivity extends TabActivity {
 
         for (DataNode dn : nodeList) {
             GenericAdapterData item = new GenericAdapterData(desc);
+
             item.setText("NodeId", "" + dn.getId());
             item.setText("NodeCoord",
                     "Lat: " + dn.getLat() + " Long: " + dn.getLon());
@@ -225,6 +227,8 @@ public class NewTrackActivity extends TabActivity {
             data.add(item);
 
         }
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
 
         for (DataPointsList dn : wayList) {
             GenericAdapterData item = new GenericAdapterData(desc);
@@ -235,10 +239,12 @@ public class NewTrackActivity extends TabActivity {
                 DataNode end = dn.getNodes().get(dn.getNodes().size() - 1);
 
                 String endCoord = dn.isArea() ? "" : (" End Lat: "
-                        + end.getLat() + " Long: " + end.getLon());
+                        + nf.format(end.getLat()) + " Long: " + nf.format(end
+                        .getLon()));
 
-                item.setText("NodeCoord", "Start Lat: " + start.getLat()
-                        + " Long: " + start.getLon() + endCoord);
+                item.setText("NodeCoord",
+                        "Start Lat: " + nf.format(start.getLat()) + " Long: "
+                                + nf.format(start.getLon()) + endCoord);
             }
 
             item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
@@ -249,7 +255,7 @@ public class NewTrackActivity extends TabActivity {
 
         }
 
-        GenericAdapter adapter = new GenericAdapter(this,
+        final GenericAdapter adapter = new GenericAdapter(this,
                 R.layout.listview_edit, R.id.tracks_lvw, data, null);
 
         listView.setAdapter(adapter);
@@ -258,6 +264,11 @@ public class NewTrackActivity extends TabActivity {
         listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
+
+                GenericAdapterData data = adapter.getItem(position);
+                int nodeId = Integer.parseInt(data.getText("NodeId"));
+                intent.putExtra("DataNodeId", nodeId);
+                startActivity(intent);
             }
         });
 
