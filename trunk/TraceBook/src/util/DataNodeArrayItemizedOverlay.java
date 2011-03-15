@@ -263,13 +263,15 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
-        builder.setTitle("id: " + nodeId);
 
         if (nodeId > 0) {
+            builder.setTitle("id: " + nodeId);
             contextMenueListener.setNodeId(nodeId);
             builder.setItems(contextMenueListener.getItems(),
                     contextMenueListener);
         } else {
+            builder.setTitle(context.getResources().getString(
+                    R.string.cm_DataNodeArrayItemizedOverlay_my_pos));
             contextMenueCurrentPosListener.setPos(point);
             builder.setItems(contextMenueCurrentPosListener.getItems(),
                     contextMenueCurrentPosListener);

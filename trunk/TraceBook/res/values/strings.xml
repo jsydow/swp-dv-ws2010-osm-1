@@ -106,6 +106,7 @@
 	<string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_add">Add waypoint</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_my_pos">Current Location</string>
    
    <!-- Tab values -->
     <string name="tab_newtrackActivity_map">Karte</string>
