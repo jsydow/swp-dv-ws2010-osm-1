@@ -22,18 +22,27 @@ A tarball containing XML files for several languages (now with more data) is ava
 	<xs:element name="value">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="description" type="xs:string" minOccurs="0" />
-				<xs:element name="uri" type="xs:string" minOccurs="0" />
-				<xs:element name="useful" minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:attribute name="v" type="xs:string" use="required" />
-					</xs:complexType>
-				</xs:element>
+				<xs:element ref="description" minOccurs="0" />
+				<xs:element ref="uri" minOccurs="0" />
+				<xs:element ref="useful" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="isArea" type="xs:boolean" default="false" />
 			<xs:attribute name="isNode" type="xs:boolean" default="false" />
 			<xs:attribute name="isWay" type="xs:boolean" default="false" />
 			<xs:attribute name="type" type="xs:string" use="required" />
+			<xs:attribute name="v" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Element: description -->
+	<xs:element name="description" type="xs:string" />
+	
+	<!-- Element: uri -->
+	<xs:element name="uri" type="xs:anyURI" />
+	
+	<!-- Element: useful -->
+	<xs:element name="useful">
+		<xs:complexType>
 			<xs:attribute name="v" type="xs:string" use="required" />
 		</xs:complexType>
 	</xs:element>
