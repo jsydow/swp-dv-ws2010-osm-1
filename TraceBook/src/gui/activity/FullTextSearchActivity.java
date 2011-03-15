@@ -5,6 +5,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 /**
@@ -37,6 +38,8 @@ public class FullTextSearchActivity extends ListActivity {
 
         public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                 int arg3) {
+
+            Log.d(ACTIVITY_SERVICE, arg0.toString());
             // TODO Auto-generated method stub
 
         }

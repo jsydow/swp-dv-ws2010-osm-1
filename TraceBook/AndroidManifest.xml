@@ -28,5 +28,6 @@
 	<activity android:name="gui.activity.AddMemoActivity" android:screenOrientation="portrait"></activity>
 	<activity android:name="gui.activity.RecordVideoActivity" android:screenOrientation="landscape"></activity>
 	<activity android:name="gui.activity.AboutActivity"></activity>
+	<activity android:name="gui.activity.FullTextSearchActivity"></activity>
     </application>
 </manifest>
