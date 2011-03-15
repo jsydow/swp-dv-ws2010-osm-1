@@ -131,6 +131,7 @@ public class AddPointMetaActivity extends Activity {
      * activity.
      * 
      * @param view
+     *            not used
      */
     public void saveBtn(View view) {
         final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_value);
