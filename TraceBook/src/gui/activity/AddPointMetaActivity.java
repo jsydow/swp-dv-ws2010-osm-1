@@ -146,7 +146,7 @@ public class AddPointMetaActivity extends Activity {
     }
 
     /**
-     * Start FullTextSearch Activity
+     * Start FullTextSearch Activity.
      * 
      * @param view
      *            not used

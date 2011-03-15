@@ -22,7 +22,7 @@ public class FullTextSearchActivity extends ListActivity {
      * @author sahin
      * 
      */
-    class myTextWatcher implements TextWatcher {
+    class MyTextWatcher implements TextWatcher {
 
         public void afterTextChanged(Editable arg0) {
             // TODO Auto-generated method stub
@@ -49,7 +49,7 @@ public class FullTextSearchActivity extends ListActivity {
         setContentView(R.layout.layout_fulltextsearchactivity);
 
         EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
-        editBox.addTextChangedListener(new myTextWatcher());
+        editBox.addTextChangedListener(new MyTextWatcher());
 
     }
 }
