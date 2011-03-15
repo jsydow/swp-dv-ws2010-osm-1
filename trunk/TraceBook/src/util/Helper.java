@@ -123,15 +123,15 @@ public final class Helper {
      *            Context of the Activity
      * @param ex
      *            Exception that occurred
-     * @param LOG_TAG
+     * @param logTag
      *            tag of the class the exception occurred in
      */
     public static void handleNastyException(Context context, Exception ex,
-            String LOG_TAG) {
+            String logTag) {
         Toast.makeText(
                 context,
                 "An error occured. Please restart the application and try again.",
                 Toast.LENGTH_LONG).show();
-        Log.e(LOG_TAG, ex.getMessage());
+        Log.e(logTag, ex.getMessage());
     }
 }
