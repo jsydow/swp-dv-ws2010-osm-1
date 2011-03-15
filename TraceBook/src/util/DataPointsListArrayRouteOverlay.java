@@ -1,6 +1,6 @@
 package util;
 
-import gui.MapsForgeActivity;
+import gui.activity.MapsForgeActivity;
 
 import java.util.ArrayList;
 import java.util.List;

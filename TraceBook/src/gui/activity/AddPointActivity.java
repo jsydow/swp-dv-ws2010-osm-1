@@ -1,4 +1,4 @@
-package gui;
+package gui.activity;
 
 import gui.adapter.GenericAdapter;
 import gui.adapter.GenericAdapterData;

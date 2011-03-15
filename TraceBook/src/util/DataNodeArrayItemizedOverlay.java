@@ -1,6 +1,6 @@
 package util;
 
-import gui.AddPointActivity;
+import gui.activity.AddPointActivity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
