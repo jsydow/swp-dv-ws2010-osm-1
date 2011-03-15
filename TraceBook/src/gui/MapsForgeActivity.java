@@ -408,23 +408,8 @@ public class MapsForgeActivity extends MapActivity {
                 if (wayId > 0) {
                     updateWay(wayId);
 
-                } else if (pointId > 0) { // received an updated POI -
-                    // when does this actually happen?
-                    Log.d(LOG_TAG, "Received node update, id=" + pointId);
-
-                    DataNode point = null;
-                    if (Helper.currentTrack() != null) {
-                        point = Helper.currentTrack().getNodeById(pointId);
-                    }
-                    if (point == null)
-                        Log.e(LOG_TAG, "Node with ID " + pointId
-                                + " does not exist.");
-                    else {
-                        if (point.getOverlayItem() == null)
-                            point.setOverlayItem(new OverlayItem(point
-                                    .toGeoPoint(), point.getId() + "", ""));
-                        pointsOverlay.addOverlay(point);
-                    }
+                } else if (pointId > 0) {
+                    updatePoint(pointId);
                 }
 
             } else if (intend.getAction().equals(
@@ -451,6 +436,25 @@ public class MapsForgeActivity extends MapActivity {
             }
             Log.d(LOG_TAG, "Received way update, id=" + newWayId);
             routesOverlay.reDrawWay(newWayId);
+        }
+
+        private void updatePoint(int pointId) {
+            // received an updated POI -
+            // when does this actually happen?
+            Log.d(LOG_TAG, "Received node update, id=" + pointId);
+
+            DataNode point = null;
+            if (Helper.currentTrack() != null) {
+                point = Helper.currentTrack().getNodeById(pointId);
+            }
+            if (point == null)
+                Log.e(LOG_TAG, "Node with ID " + pointId + " does not exist.");
+            else {
+                if (point.getOverlayItem() == null)
+                    point.setOverlayItem(new OverlayItem(point.toGeoPoint(),
+                            point.getId() + "", ""));
+                pointsOverlay.addOverlay(point);
+            }
         }
     }
 }
