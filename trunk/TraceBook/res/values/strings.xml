@@ -50,7 +50,7 @@
 	<string name="tv_aboutActivity_licenseTitle">Lizens:</string>
 	<string name="tv_aboutActivity_license">GPL3</string>
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
-	<string name="tv_aboutActivity_version">0.90</string>
+	<string name="tv_aboutActivity_version">0.90 Beta</string>
 	<string name="tv_listviewedit_idTitle">ID: </string>
 	
 	<!--  Edit Text values-->
