@@ -1,6 +1,6 @@
 #summary Map features in an XML file.
 
-A (neither complete, nor "correct") list of map features: http://userpage.fu-berlin.de/hdinh/tags.xml
+A tarball containing XML files for several languages (now with more data) is available at http://userpage.fu-berlin.de/hdinh/xml.tar.bz2
 
 = This just in =
 
