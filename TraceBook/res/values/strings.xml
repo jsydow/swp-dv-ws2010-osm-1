@@ -81,6 +81,13 @@
 	<string name="cm_loadtrackActivity_info">Infos anzeigen</string>
 	<string name="cm_editmapobjects_edit">Bearbeiten</string>
 	<string name="cm_editmapobjects_delete">Löschen</string>
+
+	<string name="cm_DataNodeArrayItemizedOverlay_tag">Tag this</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_delete">Delete this</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_way_add">Add waypoint</string>
    
    <!-- Tab values -->
     <string name="tab_newtrackActivity_map">Karte</string>
@@ -108,7 +115,6 @@
     <string name="btn_addMetaMedia_makeVideo">Video</string>
     <string name="btn_addMetaMedia_makeMemo">Sprachnotiz</string>
     <string name="btn_addMetaMedia_makeNotice">Notiz</string>
-	<string name="btn_trackInfoDialog">OK</string>
-	<string name="btn_trackInfoDialog_back">Zurück</string>
-	
+    <string name="btn_trackInfoDialog">OK</string>
+    <string name="btn_trackInfoDialog_back">Zurück</string>
 </resources>

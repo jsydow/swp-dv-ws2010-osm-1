@@ -86,6 +86,9 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         this.overlayItems = new ArrayList<Pair<OverlayItem, Integer>>(
                 ARRAY_LIST_INITIAL_CAPACITY);
         this.currentTrack = DataStorage.getInstance().getCurrentTrack();
+
+        contextMenueListener = new DefaultListener();
+        contextMenueCurrentPosListener = new CurrentPosListener();
     }
 
     /**
@@ -237,8 +240,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
     }
 
-    private DefaultListener contextMenueListener = new DefaultListener();
-    private CurrentPosListener contextMenueCurrentPosListener = new CurrentPosListener();
+    private DefaultListener contextMenueListener;
+    private CurrentPosListener contextMenueCurrentPosListener;
 
     @Override
     protected boolean onTap(int index) {
@@ -267,8 +270,13 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     private class DefaultListener implements DialogInterface.OnClickListener {
-        private final CharSequence[] items = { "Tag this", "Move this",
-                "Delete this" };
+        private final CharSequence[] items = {
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_move),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_delete) };
 
         public DefaultListener() {
             // do nothing
@@ -319,9 +327,18 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     private class CurrentPosListener implements DialogInterface.OnClickListener {
-        private final CharSequence[] items_default = { "Tag this", "Start way" };
-        private final CharSequence[] items_way = { "Tag this", "End way",
-                "Add Waypoint" };
+        private final CharSequence[] items_default = {
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_start) };
+        private final CharSequence[] items_way = {
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_end),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_add) };
 
         public CurrentPosListener() {
             // do nothing
