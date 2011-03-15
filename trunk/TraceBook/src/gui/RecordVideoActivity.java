@@ -71,7 +71,7 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordBtn(View view) {
-        camera.unlock();
+        // camera.unlock();
 
         try {
             recorder.prepare(camera, surfaceHolder.getSurface());
@@ -110,7 +110,7 @@ public class RecordVideoActivity extends Activity implements
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.lock();
+        // camera.lock();
         camera.stopPreview();
         camera.release();
     }

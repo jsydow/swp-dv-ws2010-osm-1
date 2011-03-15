@@ -43,8 +43,8 @@
 		android:textSize="18sp" android:textColor="#fff" android:paddingLeft="7dp"/>
 	
 	</LinearLayout>
-	<ListView android:id="@+id/android:list" android:layout_width="match_parent"
-	android:layout_height="match_parent" android:layout_weight="1"
+	<ListView android:id="@+id/android:list" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:layout_weight="1"
 	android:scrollingCache="true" android:divider="#8ac705"
 	android:dividerHeight="1sp" android:drawSelectorOnTop="false" />
 
