@@ -249,6 +249,7 @@ public class AddPointActivity extends ListActivity {
      * at the AddMemoActivty.
      * 
      * @param view
+     *            unused
      */
     public void makeMemoBtn(View view) {
         final Intent intent = new Intent(this, AddMemoActivity.class);

@@ -71,9 +71,10 @@ public class AddMemoActivity extends Activity {
     }
 
     /**
-     * This method stop the audio recording and finish the Acitivty.
+     * This method stop the audio recording and finish the {@link Activity}.
      * 
      * @param view
+     *            no used
      */
     public void stopMemoBtn(View view) {
         recorder.stop();
