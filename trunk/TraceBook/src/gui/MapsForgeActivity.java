@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.File;
+import java.util.List;
 
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.MapActivity;
@@ -28,6 +29,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import core.data.DataNode;
+import core.data.DataPointsList;
 import core.logger.ServiceConnector;
 import core.logger.WaypointLogService;
 
@@ -102,6 +104,21 @@ public class MapsForgeActivity extends MapActivity {
         gpsReceiver.centerOnCurrentPosition();
     }
 
+    private void changeMapViewToOfflineRendering() {
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(defaultMap));
+    }
+
+    private void fillOverlays() {
+        List<DataNode> nodes = Helper.currentTrack().getNodes();
+        if (nodes != null) {
+            pointsOverlay.addPoints(nodes);
+        }
+        List<DataPointsList> ways = Helper.currentTrack().getWays();
+        if (nodes != null) {
+            routesOverlay.addWays(ways);
+        }
+    }
+
     /* MapActivity methods */
 
     @Override
@@ -115,8 +132,7 @@ public class MapsForgeActivity extends MapActivity {
         pointsOverlay.setRoutesOverlay(routesOverlay);
 
         // as this activity is destroyed when adding a POI, we get all POIs here
-        pointsOverlay.addPoints(Helper.currentTrack().getNodes());
-        routesOverlay.addWays(Helper.currentTrack().getWays());
+        fillOverlays();
 
         mapView = new MapView(this);
         mapView.setClickable(true);
@@ -131,7 +147,7 @@ public class MapsForgeActivity extends MapActivity {
 
         gpsReceiver = new GPSReceiver();
 
-        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(defaultMap));
+        changeMapViewToOfflineRendering();
     }
 
     @Override
@@ -142,13 +158,12 @@ public class MapsForgeActivity extends MapActivity {
         // redraw all overlays to account for the events we've missed paused
         routesOverlay.clear();
         pointsOverlay.clear();
-        pointsOverlay.addPoints(Helper.currentTrack().getNodes());
-        routesOverlay.addWays(Helper.currentTrack().getWays());
+        fillOverlays();
 
         registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.UPDTAE_GPS_POS));
+                WaypointLogService.UPDATE_GPS_POS));
         registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.UPDTAE_OBJECT));
+                WaypointLogService.UPDATE_OBJECT));
         registerReceiver(gpsReceiver, new IntentFilter(
                 DataNodeArrayItemizedOverlay.UPDATE_WAY));
         registerReceiver(gpsReceiver, new IntentFilter(
@@ -171,6 +186,8 @@ public class MapsForgeActivity extends MapActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        // when a node is edited, the user can move it by
+        // moving his finger on the display
         if (editNode != null) {
             GeoPoint projection = mapView.getProjection().fromPixels(
                     (int) ev.getX(), (int) ev.getY());
@@ -224,9 +241,9 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.activateMobileInternet_opt:
 
             if (useInternet) {
+                // TODO: use string ressource!
                 item.setTitle("Use online rendering");
-                changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(
-                        defaultMap));
+                changeMapViewToOfflineRendering();
             } else {
                 item.setTitle("Use offline rendering");
                 changeMapViewMode(onlineRenderer, null);
@@ -234,17 +251,21 @@ public class MapsForgeActivity extends MapActivity {
             useInternet = !useInternet;
 
             return true;
+
         case R.id.centerAtOwnPosition_opt:
             gpsReceiver.centerOnCurrentPosition();
             return true;
+
         case R.id.showToggleWayPoints_opt:
             routesOverlay.toggleGnubbel();
             return true;
+
         case R.id.export_opt:
             /*
-             * Do SOMETHING
+             * Do SOMETHING TODO
              */
             return true;
+
         case R.id.pause_opt:
 
             builder.setMessage(getResources().getString(R.string.pause_alert))
@@ -255,13 +276,17 @@ public class MapsForgeActivity extends MapActivity {
                                 public void onClick(DialogInterface dialog,
                                         int id) {
                                     try {
+                                        // TODO really stop track?
+                                        // stopping track does unload track from
+                                        // memory
+                                        // and serialise current track
                                         ServiceConnector.getLoggerService()
                                                 .stopTrack();
                                     } catch (RemoteException e) {
                                         e.printStackTrace();
                                     }
                                     /*
-                                     * DO SOMETHING
+                                     * DO SOMETHING TODO
                                      */
                                 }
                             })
@@ -353,7 +378,7 @@ public class MapsForgeActivity extends MapActivity {
         public void onReceive(Context ctx, Intent intend) {
 
             // Receive current location and do something with it
-            if (intend.getAction().equals(WaypointLogService.UPDTAE_GPS_POS)) {
+            if (intend.getAction().equals(WaypointLogService.UPDATE_GPS_POS)) {
                 final double lng = intend.getExtras().getDouble("long");
                 final double lat = intend.getExtras().getDouble("lat");
 
@@ -370,7 +395,7 @@ public class MapsForgeActivity extends MapActivity {
 
                 // Receive an update of a way and update the overlay accordingly
             } else if (intend.getAction().equals(
-                    WaypointLogService.UPDTAE_OBJECT)) {
+                    WaypointLogService.UPDATE_OBJECT)) {
                 if (Helper.currentTrack() == null) {
                     Log.e(LOG_TAG,
                             "Received UPDATE_OBJECT with no current track present.");
@@ -381,18 +406,16 @@ public class MapsForgeActivity extends MapActivity {
                 int pointId = intend.getExtras().getInt("point_id");
 
                 if (wayId > 0) {
-                    if (wayId != oldWayId) { // TODO
-                        routesOverlay.reDrawWay(oldWayId);
-                        oldWayId = wayId;
-                    }
-                    Log.d(LOG_TAG, "Received way update, id=" + wayId);
-                    routesOverlay.reDrawWay(wayId);
+                    updateWay(wayId);
 
                 } else if (pointId > 0) { // received an updated POI -
                     // when does this actually happen?
                     Log.d(LOG_TAG, "Received node update, id=" + pointId);
 
-                    DataNode point = Helper.currentTrack().getNodeById(pointId);
+                    DataNode point = null;
+                    if (Helper.currentTrack() != null) {
+                        point = Helper.currentTrack().getNodeById(pointId);
+                    }
                     if (point == null)
                         Log.e(LOG_TAG, "Node with ID " + pointId
                                 + " does not exist.");
@@ -413,9 +436,21 @@ public class MapsForgeActivity extends MapActivity {
             } else if (intend.getAction().equals(
                     DataNodeArrayItemizedOverlay.MOVE_POINT)) {
                 final int nodeId = intend.getExtras().getInt("point_id");
-                editNode = Helper.currentTrack().getNodeById(nodeId);
-                Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
+                if (Helper.currentTrack() != null) {
+                    editNode = Helper.currentTrack().getNodeById(nodeId);
+                    Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
+                }
             }
+        }
+
+        private void updateWay(int newWayId) {
+            // TODO comment here please
+            if (newWayId != oldWayId) { // TODO
+                routesOverlay.reDrawWay(oldWayId);
+                oldWayId = newWayId;
+            }
+            Log.d(LOG_TAG, "Received way update, id=" + newWayId);
+            routesOverlay.reDrawWay(newWayId);
         }
     }
 }
