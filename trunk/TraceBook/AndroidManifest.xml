@@ -27,5 +27,6 @@
 	<activity android:name="gui.AddPointMetaActivity"></activity>
 	<activity android:name="gui.AddMemoActivity" android:screenOrientation="portrait"></activity>
 	<activity android:name="gui.RecordVideoActivity" android:screenOrientation="landscape"></activity>
+	<activity android:name="gui.AboutActivity"></activity>
     </application>
 </manifest>
