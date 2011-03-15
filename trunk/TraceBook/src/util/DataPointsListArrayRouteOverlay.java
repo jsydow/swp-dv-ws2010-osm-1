@@ -160,7 +160,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         for (DataNode n : way.getNodes()) {
             if (n.getOverlayItem() == null)
                 n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
-                        R.drawable.marker_blue, context));
+                        R.drawable.dot_blue, context, true));
             pointsOverlay.addOverlay(n);
         }
     }
