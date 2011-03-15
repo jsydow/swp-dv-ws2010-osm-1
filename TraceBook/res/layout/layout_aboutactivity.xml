@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical">
+  	
+  	<TextView android:id="@+id/tv_aboutActivity_appName"
+  	android:text="@string/app_name"
+  	android:layout_height="wrap_content"
+  	android:layout_width="wrap_content"/>
+  
+ 	<TextView android:id="@+id/tv_aboutActivity_versionTitle"
+  	android:text="@string/tv_aboutActivity_versionTitle"
+  	android:layout_height="wrap_content"
+  	android:layout_width="wrap_content"/>
+  
+  	<TextView android:id="@+id/tv_aboutActivity_version"
+  	android:text="@string/tv_aboutActivity_version"
+  	android:layout_height="wrap_content"
+  	android:layout_width="wrap_content"/>  
+  
+  	<Button android:id="@+id/btn_aboutActivity_license"
+  	android:text="@string/btn_aboutActivity_license"
+  	android:layout_height="wrap_content"
+  	android:layout_width="wrap_content"/>
+  
+ 	<TextView android:id="@+id/tv_aboutActivity_creditsTitle"
+  	android:text="@string/tv_aboutActivity_creditsTitle"
+  	android:layout_height="wrap_content"
+  	android:layout_width="wrap_content"/>
+  	
+  	<TextView android:id="@+id/tv_aboutActivity_creditsTeam"
+  	android:text="@string/tv_aboutActivity_creditsTeam"
+  	android:layout_height="wrap_content"
+  	android:layout_width="wrap_content"/>
+   
+   
+</LinearLayout>

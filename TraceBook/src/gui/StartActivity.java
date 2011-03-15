@@ -104,6 +104,7 @@ public class StartActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        final Intent intent;
         switch (item.getItemId()) {
         case R.id.opt_startActivity_close:
 
@@ -115,8 +116,12 @@ public class StartActivity extends Activity {
             ServiceConnector.stopService();
             finish();
             return true;
+        case R.id.opt_startActivity_about:
+            intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
         case R.id.opt_startActivity_preferences:
-            final Intent intent = new Intent(this, PreferencesActivity.class);
+            intent = new Intent(this, PreferencesActivity.class);
             startActivity(intent);
             return true;
         default:

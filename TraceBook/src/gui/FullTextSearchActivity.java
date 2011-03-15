@@ -9,7 +9,7 @@ public class FullTextSearchActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_fulltextsearch);
+        setContentView(R.layout.layout_fulltextsearchactivity);
 
     }
 }

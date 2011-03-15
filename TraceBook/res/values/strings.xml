@@ -38,7 +38,23 @@
 	<string name="tv_trackInfoDialog_mediaText">MediaDaten:</string>
 	<string name="tv_addmemoActivity_stopRecord">Stoppe Sprachnotiz</string>
 	<string name="tv_addmemoActivity_record"> Ihre Sprachnotiz wird aufgezeichnet</string>
-
+	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
+	<string name="tv_aboutActivity_creditsTeam">\n
+	David Beyer - anubis@cstilch.de\n
+	Huj Dink - mail@hujdink.eu\n
+	Marc Sperling - greenTraxas@googlemail.com\n
+	Jan Sydow - js.schrifterz@googlemail.com\n
+	Benjamin Valentin - benpicco@googlemail.com\n
+	Şahin Vardar - sakirsoft@gmail.com 	
+	</string>
+	<string name="tv_aboutActivity_licenseTitle">Lizens:</string>
+	<string name="tv_aboutActivity_license">GPL3</string>
+	<string name="tv_aboutActivity_versionTitle">Version:</string>
+	<string name="tv_aboutActivity_version">0.90</string>
+	
+	<!--  Edit Text values-->
+	<string name="et_fulltextsearchActivity_search">Suchen...</string>
+	
 	<!--  AlertBox values -->
 	<string name="alert_global_cancel">Cancel</string>
 	<string name="alert_global_ok">Ok</string>
@@ -68,6 +84,7 @@
     <string name="opt_mapsforgeActivity_pause">Pause</string>
     <string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
     <string name="opt_mapsforgeActivity_showToggleWayPoints">Toggle Wegpunkte</string>
+    <string name="opt_startActivity_about">About</string>
     
     <!--  Contextmenu values -->
 	<string name="cm_addpointActivity_deleteTag">Tag löschen</string>
@@ -115,6 +132,8 @@
     <string name="btn_addMetaMedia_makeVideo">Video</string>
     <string name="btn_addMetaMedia_makeMemo">Sprachnotiz</string>
     <string name="btn_addMetaMedia_makeNotice">Notiz</string>
-    <string name="btn_trackInfoDialog">OK</string>
-    <string name="btn_trackInfoDialog_back">Zurück</string>
+	<string name="btn_trackInfoDialog">OK</string>
+	<string name="btn_trackInfoDialog_back">Zurück</string>
+	<string name="btn_aboutActivity_license">Lizens</string>
+	<string name="btn_addpointmetaActivity_search">Suchen</string>
 </resources>

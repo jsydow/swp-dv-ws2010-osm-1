@@ -145,6 +145,18 @@ public class AddPointMetaActivity extends Activity {
     }
 
     /**
+     * Start FullTextSearch Activity
+     * 
+     * @param view
+     *            not used
+     */
+    public void searchBtn(View view) {
+        /**
+         * TODO
+         */
+    }
+
+    /**
      * 
      * @param view
      *            not used
