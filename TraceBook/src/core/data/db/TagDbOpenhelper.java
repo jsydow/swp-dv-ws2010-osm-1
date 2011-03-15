@@ -41,7 +41,7 @@ public class TagDbOpenhelper extends SQLiteOpenHelper {
      * @return The selection String for the query-call of the SQLiteDatabase.
      */
     static String getSelection() {
-        return "name LIKE ? OR keywords LIKE ? OR description LIKE ?";
+        return " (name LIKE ? OR keywords LIKE ? OR description LIKE ?) AND language EQ ?";
     }
 
     /**
@@ -84,5 +84,4 @@ public class TagDbOpenhelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_DROP);
         onCreate(db);
     }
-
 }
