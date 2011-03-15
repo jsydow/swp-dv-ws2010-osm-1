@@ -16,8 +16,10 @@ import core.data.DataNode;
 import core.data.DataPointsList;
 
 /**
- * @author benpicco class wrapping the ·{@link ArrayRouteOverlay} to get some
- *         methods out of {@link MapsForgeActivity}
+ * Class wrapping the ·{@link ArrayRouteOverlay} to get some methods out of
+ * {@link MapsForgeActivity}.
+ * 
+ * @author benpicco
  */
 public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     private int colorID = 0;
