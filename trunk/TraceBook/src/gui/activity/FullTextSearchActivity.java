@@ -58,7 +58,6 @@ public class FullTextSearchActivity extends ListActivity {
             // TODO Auto-generated method stub
 
         }
-
     }
 
     @Override
