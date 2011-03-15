@@ -341,6 +341,7 @@ public class NewTrackActivity extends TabActivity {
      * returns to the main activity.
      * 
      * @param view
+     *            unused
      */
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -464,6 +465,7 @@ public class NewTrackActivity extends TabActivity {
 
     /**
      * @param view
+     *            unused
      */
     public void makeMemoBtn(View view) {
         final Intent intent = new Intent(this, AddMemoActivity.class);
@@ -474,6 +476,7 @@ public class NewTrackActivity extends TabActivity {
 
     /**
      * @param view
+     *            unused
      */
     public void makeNoticeBtn(View view) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
