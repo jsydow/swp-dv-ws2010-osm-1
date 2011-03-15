@@ -54,6 +54,7 @@ public class LoadTrackActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         updateAdapter();
+        setTitle(R.string.string_loadtrackActivity_title);
         registerForContextMenu(getListView());
     }
 

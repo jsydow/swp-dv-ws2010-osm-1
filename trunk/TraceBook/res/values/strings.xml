@@ -6,6 +6,17 @@
     <string name="string_global_way">Way</string>
     <string name="string_global_area">Area</string>
     <string name="string_trackInfoDialog_title">Trackinformationen</string>
+    <string name="string_licenseDialog_title">GPL3 Lizens</string>
+    <string name="string_aboutActivity_title">About</string>
+    <string name="string_addmemoActivity_title">Sprachnotiz</string>
+    <string name="string_addpointActivity_title">Punkt hinzufügen</string>
+    <string name="string_addpointmetaActivity_title">MetaDaten hinzufügen</string>
+    <string name="string_fulltextsearchActivity_title">Suchen</string>
+    <string name="string_loadtrackActivity_title">Track laden</string>
+    <string name="string_newtrackActivity_title">Neuer Track</string>
+    <string name="string_preferencesActivity_title">Einstellungen</string>
+    <string name="string_startActivity_title">Tracebook</string>
+    <string name="string_recordvideoActivity_title">Video aufnehmen</string>
     
     <!--  App values -->
     <string name="app_name">TraceBook</string>
@@ -48,7 +59,7 @@
 	Şahin Vardar - sakirsoft@gmail.com 	
 	</string>
 	<string name="tv_aboutActivity_licenseTitle">Lizens:</string>
-	<string name="tv_aboutActivity_license">GPL3</string>
+	<string name="tv_aboutActivity_license">Diese Software steht unter der  GNU - GPL3</string>
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90 Beta</string>
 	<string name="tv_listviewedit_idTitle">ID: </string>
@@ -86,6 +97,7 @@
     <string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
     <string name="opt_mapsforgeActivity_showToggleWayPoints">Toggle Wegpunkte</string>
     <string name="opt_startActivity_about">About</string>
+    <string name="opt_startActivity_help">Hilfe</string>
     
     <!--  Contextmenu values -->
 	<string name="cm_addpointActivity_deleteTag">Tag löschen</string>
@@ -136,6 +148,6 @@
     <string name="btn_addMetaMedia_makeNotice">Notiz</string>
 	<string name="btn_trackInfoDialog">OK</string>
 	<string name="btn_trackInfoDialog_back">Zurück</string>
-	<string name="btn_aboutActivity_license">Lizens</string>
+	<string name="btn_aboutActivity_license">Zeige Lizens</string>
 	<string name="btn_addpointmetaActivity_search">Suchen</string>
 </resources>

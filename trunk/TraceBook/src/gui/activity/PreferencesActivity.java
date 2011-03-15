@@ -15,6 +15,6 @@ public class PreferencesActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 
         this.addPreferencesFromResource(R.xml.tracebook_preference);
-
+        setTitle(R.string.string_preferencesActivity_title);
     }
 }

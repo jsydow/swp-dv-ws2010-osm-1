@@ -21,16 +21,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TabHost.OnTabChangeListener;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -47,7 +47,7 @@ import core.media.Recorder;
  * and areas. In the third one you can choose your collected, add new tags,
  * remove tags remove pois etc.
  * 
- *
+ * 
  * 
  * 
  */
@@ -57,7 +57,7 @@ public class NewTrackActivity extends TabActivity {
      * The purpose of this OnTabListener is to update the different tab views
      * when changing the tabs. So you see always an updated view of your data.
      * 
-     *
+     * 
      */
     static class MyListener implements OnTabChangeListener {
 
@@ -112,7 +112,7 @@ public class NewTrackActivity extends TabActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_newtrackactivity);
-
+        setTitle(R.string.string_newtrackActivity_title);
         // Init TabHost
         initTabHost();
 
@@ -195,12 +195,17 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Init ListView with the list of saved POI, streets and areas.
+     * Init ListView and Adapter with the list of saved POI, streets and areas.
+     * To show a customizable ListView the method use the GenericAdapter from
+     * gui.adapter. The Method implemnts also the OnItemClickListener to edit
+     * the selected item.
      */
     void initListView() {
         final Intent intent = new Intent(this, AddPointActivity.class);
         // Init ListView for EditTab
         ListView listView = (ListView) findViewById(R.id.tracks_lvw);
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setMaximumFractionDigits(2);
 
         GenericItemDescription desc = new GenericItemDescription();
         desc.addResourceId("NodeId", R.id.tv_listviewedit_id);
@@ -214,22 +219,20 @@ public class NewTrackActivity extends TabActivity {
         List<DataPointsList> wayList = DataStorage.getInstance()
                 .getCurrentTrack().getWays();
 
-        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+        List<GenericAdapterData> listData = new ArrayList<GenericAdapterData>();
 
         for (DataNode dn : nodeList) {
             GenericAdapterData item = new GenericAdapterData(desc);
 
             item.setText("NodeId", "" + dn.getId());
-            item.setText("NodeCoord", "Lat: " + dn.getLat() + " Long: "
-                    + dn.getLon());
+            item.setText("NodeCoord", "Lat: " + nf.format(dn.getLat())
+                    + " Long: " + nf.format(dn.getLon()));
+
             item.setImage("NodeImg", R.drawable.node_icon);
             item.setText("NodeStats", "Medien: " + dn.getMedia().size());
 
-            data.add(item);
-
+            listData.add(item);
         }
-        NumberFormat nf = NumberFormat.getInstance();
-        nf.setMaximumFractionDigits(2);
 
         for (DataPointsList dn : wayList) {
             GenericAdapterData item = new GenericAdapterData(desc);
@@ -243,21 +246,21 @@ public class NewTrackActivity extends TabActivity {
                         + nf.format(end.getLat()) + " Long: " + nf.format(end
                         .getLon()));
 
-                item.setText("NodeCoord", "Start Lat: "
-                        + nf.format(start.getLat()) + " Long: "
-                        + nf.format(start.getLon()) + endCoord);
+                item.setText("NodeCoord",
+                        "Start Lat: " + nf.format(start.getLat()) + " Long: "
+                                + nf.format(start.getLon()) + endCoord);
             }
 
             item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
                     : R.drawable.way_icon);
             item.setText("NodeStats", "Medien: " + dn.getMedia().size());
 
-            data.add(item);
+            listData.add(item);
 
         }
 
         final GenericAdapter adapter = new GenericAdapter(this,
-                R.layout.listview_edit, R.id.tracks_lvw, data, null);
+                R.layout.listview_edit, R.id.tracks_lvw, listData, null);
 
         listView.setAdapter(adapter);
 
@@ -284,15 +287,24 @@ public class NewTrackActivity extends TabActivity {
         TabHost tabHost = getTabHost();
 
         // Init TabHost
-        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(
-                getResources().getString(R.string.tab_newtrackActivity_map))
+        tabHost.addTab(tabHost
+                .newTabSpec("map_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_map))
                 .setContent(new Intent(this, MapsForgeActivity.class)));
         // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost.newTabSpec("new_tab").setIndicator(
-                getResources().getString(R.string.tab_newtrackActivity_new))
+        tabHost.addTab(tabHost
+                .newTabSpec("new_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_new))
                 .setContent(R.id.tab_newtrackActivity_new));
-        tabHost.addTab(tabHost.newTabSpec("edit_tab").setIndicator(
-                getResources().getString(R.string.tab_newtrackActivity_edit))
+        tabHost.addTab(tabHost
+                .newTabSpec("edit_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_edit))
                 .setContent(R.id.tab_newtrackactivity_edit));
 
         // set the default tap to our MapTab
@@ -346,7 +358,7 @@ public class NewTrackActivity extends TabActivity {
             streetToggle.setClickable(false);
             setButtonList(true, 2);
             try {
-                ServiceConnector.getLoggerService().beginWayA(false, true);
+                ServiceConnector.getLoggerService().beginWay(false);
 
             } catch (RemoteException e) {
 
@@ -396,10 +408,9 @@ public class NewTrackActivity extends TabActivity {
      */
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder
-                .setMessage(
-                        getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false).setPositiveButton(
+        builder.setMessage(getResources().getString(R.string.alert_global_exit))
+                .setCancelable(false)
+                .setPositiveButton(
                         getResources().getString(R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -407,7 +418,8 @@ public class NewTrackActivity extends TabActivity {
                                 setTrackName();
 
                             }
-                        }).setNegativeButton(
+                        })
+                .setNegativeButton(
                         getResources().getString(R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
 
@@ -430,8 +442,8 @@ public class NewTrackActivity extends TabActivity {
         alert.setTitle(getResources().getString(
                 R.string.alert_newtrackActivity_setTrackName));
         input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
-        alert.setPositiveButton(getResources().getString(
-                R.string.alert_global_ok),
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString().trim();
@@ -440,21 +452,20 @@ public class NewTrackActivity extends TabActivity {
                                     .setName(value);
                         }
 
-                        Toast
-                                .makeText(
-                                        getApplicationContext(),
-                                        getResources()
-                                                .getString(
-                                                        R.string.alert_newtrackActivity_trackName)
-                                                + " " + value,
-                                        Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                getApplicationContext(),
+                                getResources()
+                                        .getString(
+                                                R.string.alert_newtrackActivity_trackName)
+                                        + " " + value, Toast.LENGTH_SHORT)
+                                .show();
 
                         finish();
                     }
                 });
 
-        alert.setNegativeButton(getResources().getString(
-                R.string.alert_global_cancel),
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
@@ -475,8 +486,8 @@ public class NewTrackActivity extends TabActivity {
         alert.setView(input);
         alert.setTitle(getResources().getString(
                 R.string.alert_newtrackActivity_addTrackNotice));
-        alert.setPositiveButton(getResources().getString(
-                R.string.alert_global_ok),
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString().trim();
@@ -486,8 +497,8 @@ public class NewTrackActivity extends TabActivity {
                     }
                 });
 
-        alert.setNegativeButton(getResources().getString(
-                R.string.alert_global_cancel),
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
@@ -536,17 +547,20 @@ public class NewTrackActivity extends TabActivity {
         alert.setView(input);
         alert.setTitle(getResources()
                 .getString(R.string.alert_global_addNotice));
-        alert.setPositiveButton(getResources().getString(
-                R.string.alert_global_ok),
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString().trim();
 
-                        DataStorage.getInstance().getCurrentTrack()
-                                .getCurrentWay().addMedia(
+                        DataStorage
+                                .getInstance()
+                                .getCurrentTrack()
+                                .getCurrentWay()
+                                .addMedia(
                                         DataStorage.getInstance()
-                                                .getCurrentTrack().saveText(
-                                                        value));
+                                                .getCurrentTrack()
+                                                .saveText(value));
                         Toast.makeText(
                                 getApplicationContext(),
                                 getResources().getString(
@@ -556,8 +570,8 @@ public class NewTrackActivity extends TabActivity {
                     }
                 });
 
-        alert.setNegativeButton(getResources().getString(
-                R.string.alert_global_cancel),
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();

@@ -13,23 +13,20 @@
 			android:layout_height="wrap_content"/>
 
 		<TextView android:id="@+id/tv_listviewedit_id"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" 
-			 android:paddingLeft="40dp"/>
+			android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
 		<TextView android:id="@+id/tv_listviewedit_coordinates"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" 
-			 android:paddingLeft="40dp"/>
+			android:layout_width="275dp" android:layout_height="wrap_content" 
+			 android:paddingLeft="10dp"/>
 
 
 		<ImageView android:id="@+id/iv_listviewedit_image"
-			android:layout_width="wrap_content" android:layout_height="wrap_content" 
-			 android:paddingLeft="40dp"/>
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 	</LinearLayout>
 
 	<TextView android:id="@+id/tv_listviewedit_stats"
-		android:layout_width="wrap_content" android:layout_height="wrap_content" 
-		android:paddingLeft="80dp"/>
+		android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 
 </LinearLayout>

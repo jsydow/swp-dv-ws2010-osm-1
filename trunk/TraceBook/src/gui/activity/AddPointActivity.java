@@ -82,6 +82,7 @@ public class AddPointActivity extends ListActivity {
         }
 
         setContentView(R.layout.layout_addpointactivity);
+        setTitle(R.string.string_addpointActivity_title);
 
         LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.ly_addpointaAtivity_metaMediaBtnPoint);

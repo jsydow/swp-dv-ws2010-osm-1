@@ -31,6 +31,7 @@ public class StartActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_startactivity);
+        setTitle(R.string.string_startActivity_title);
 
         // Init ServiceConnector
         ServiceConnector.startService(this);
