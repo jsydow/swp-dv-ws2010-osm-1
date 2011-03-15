@@ -195,6 +195,7 @@ public class DataPointsList extends DataMapObject {
      * Sets the OverlayRoute, an object used by MapsForge for visualisation.
      * 
      * @param overlayRoute
+     *            The new OverlayRoute
      */
     public void setOverlayRoute(OverlayRoute overlayRoute) {
         this.overlayRoute = overlayRoute;
