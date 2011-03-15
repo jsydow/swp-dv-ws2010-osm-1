@@ -36,7 +36,7 @@ public class AddMemoActivity extends Activity {
                     .getDataMapObjectById(nodeId);
         }
 
-        setContentView(R.layout.addmemoactivity);
+        setContentView(R.layout.layout_addmemoactivity);
 
         startMemo();
     }

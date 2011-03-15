@@ -65,7 +65,7 @@ public class LoadTrackActivity extends ListActivity {
             ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.loadtrack_contextmenu, menu);
+        inflater.inflate(R.menu.contextmenu_loadtrackactivity, menu);
     }
 
     /**
@@ -82,7 +82,7 @@ public class LoadTrackActivity extends ListActivity {
         final String trackname = data.getText("TrackName");
 
         switch (item.getItemId()) {
-        case R.id.loadTrack_load_cm:
+        case R.id.cm_loadtrackActivity_load:
             DataTrack track = DataStorage.getInstance().deserialiseTrack(
                     trackname);
             if (track != null) {
@@ -100,12 +100,13 @@ public class LoadTrackActivity extends ListActivity {
 
             return true;
 
-        case R.id.loadTrack_rename_cm:
+        case R.id.cm_loadtrackActivity_rename:
 
             final AlertDialog.Builder alert = new AlertDialog.Builder(this);
             final EditText input = new EditText(this);
             alert.setView(input);
-            alert.setTitle(getResources().getString(R.string.rename_alert));
+            alert.setTitle(getResources().getString(
+                    R.string.alert_loadtrackActivity_rename));
             alert.setPositiveButton("Ok",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
@@ -140,48 +141,48 @@ public class LoadTrackActivity extends ListActivity {
 
             return true;
 
-        case R.id.loadTrack_info_cm:
+        case R.id.cm_loadtrackActivity_info:
             DataTrackInfo trackinfo = DataTrackInfo.deserialise(trackname);
 
             final Dialog infoDialog = new Dialog(this);
             // dialog.getWindow().setGravity(Gravity.FILL);
-            infoDialog.setContentView(R.layout.trackinfo_dialog);
-            infoDialog.setTitle(R.string.trackInfoDialog_title);
+            infoDialog.setContentView(R.layout.dialog_trackinfo);
+            infoDialog.setTitle(R.string.string_trackInfoDialog_title);
             infoDialog.setCancelable(true);
 
             // set up name
             TextView textname = (TextView) infoDialog
-                    .findViewById(R.id.trackInfoDialog_name);
+                    .findViewById(R.id.tv_trackInfoDialog_name);
             textname.setText(trackinfo.getName());
 
             // set up comment
             TextView textcomment = (TextView) infoDialog
-                    .findViewById(R.id.trackInfoDialog_comment);
+                    .findViewById(R.id.tv_trackInfoDialog_comment);
             textcomment.setText(trackinfo.getComment());
 
             // set up time
             TextView texttime = (TextView) infoDialog
-                    .findViewById(R.id.trackInfoDialog_timestamp);
+                    .findViewById(R.id.tv_trackInfoDialog_timestamp);
             texttime.setText(trackinfo.getTimestamp());
 
             // set up pois
             TextView textpois = (TextView) infoDialog
-                    .findViewById(R.id.trackInfoDialog_pois);
+                    .findViewById(R.id.tv_trackInfoDialog_pois);
             textpois.setText(Integer.toString(trackinfo.getNumberOfPOIs()));
 
             // set up ways
             TextView textways = (TextView) infoDialog
-                    .findViewById(R.id.trackInfoDialog_ways);
+                    .findViewById(R.id.tv_trackInfoDialog_ways);
             textways.setText(Integer.toString(trackinfo.getNumberOfWays()));
 
             // set up media
             TextView textmedia = (TextView) infoDialog
-                    .findViewById(R.id.trackInfoDialog_media);
+                    .findViewById(R.id.tv_trackInfoDialog_media);
             textmedia.setText(Integer.toString(trackinfo.getNumberOfMedia()));
 
             // set up button
             Button button = (Button) infoDialog
-                    .findViewById(R.id.trackInfoDialog_backbtn);
+                    .findViewById(R.id.btn_trackInfoDialog_back);
             button.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     infoDialog.cancel();
@@ -191,14 +192,14 @@ public class LoadTrackActivity extends ListActivity {
             infoDialog.show();
 
             return true;
-        case R.id.loadTrack_delete_cm:
+        case R.id.cm_loadtrackActivity_delete:
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(
-                    getResources()
-                            .getString(R.string.alert_really_delete_track))
+                    getResources().getString(
+                            R.string.alert_loadtrackActivity_deleteTrack))
                     .setCancelable(false)
                     .setPositiveButton(
-                            getResources().getString(R.string.yes_alert),
+                            getResources().getString(R.string.alert_global_yes),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface d, int id) {
 
@@ -209,7 +210,7 @@ public class LoadTrackActivity extends ListActivity {
                                 }
                             })
                     .setNegativeButton(
-                            getResources().getString(R.string.no_alert),
+                            getResources().getString(R.string.alert_global_no),
                             new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface d, int which) {
@@ -244,10 +245,11 @@ public class LoadTrackActivity extends ListActivity {
     private void deleteTrack(final String trname) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(
-                getResources().getString(R.string.alert_really_delete_track))
+                getResources().getString(
+                        R.string.alert_loadtrackActivity_deleteTrack))
                 .setCancelable(false)
                 .setPositiveButton(
-                        getResources().getString(R.string.yes_alert),
+                        getResources().getString(R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 DataTrack.delete(trname);
@@ -255,7 +257,8 @@ public class LoadTrackActivity extends ListActivity {
                                 // updateAdapter();
                             }
                         })
-                .setNegativeButton(getResources().getString(R.string.no_alert),
+                .setNegativeButton(
+                        getResources().getString(R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
@@ -287,7 +290,7 @@ public class LoadTrackActivity extends ListActivity {
 
         }
 
-        adapter = new GenericAdapter(this, R.layout.loadtrack_listitem,
+        adapter = new GenericAdapter(this, R.layout.listview_loadtrack,
                 R.id.list, data, layoutInflater);
 
         setListAdapter(adapter);

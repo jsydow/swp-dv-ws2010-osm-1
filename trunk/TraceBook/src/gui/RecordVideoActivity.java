@@ -40,9 +40,9 @@ public class RecordVideoActivity extends Activity implements
                     .getDataMapObjectById(nodeId);
         }
 
-        setContentView(R.layout.recordvideoactivity);
+        setContentView(R.layout.layout_recordvideoactivity);
 
-        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.surface_camera);
+        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.sfv_recordvideoActivity_camera);
 
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);

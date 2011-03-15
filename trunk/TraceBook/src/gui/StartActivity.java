@@ -30,7 +30,7 @@ public class StartActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.layout_startactivity);
 
         // Init ServiceConnector
         ServiceConnector.startService(this);
@@ -90,7 +90,7 @@ public class StartActivity extends Activity {
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_optionsmenu, menu);
+        inflater.inflate(R.menu.optionsmenu_startactivity, menu);
         return true;
     }
 
@@ -105,7 +105,7 @@ public class StartActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-        case R.id.close_opt:
+        case R.id.opt_startActivity_close:
 
             try {
                 ServiceConnector.getLoggerService().stopTrack();
@@ -115,7 +115,7 @@ public class StartActivity extends Activity {
             ServiceConnector.stopService();
             finish();
             return true;
-        case R.id.preferences_opt:
+        case R.id.opt_startActivity_preferences:
             final Intent intent = new Intent(this, PreferencesActivity.class);
             startActivity(intent);
             return true;

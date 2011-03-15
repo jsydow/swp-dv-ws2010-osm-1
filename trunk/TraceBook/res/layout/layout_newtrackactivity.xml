@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!--  @author greenTraxas -->
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@android:id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
@@ -10,53 +10,53 @@
 			android:layout_width="fill_parent" android:layout_height="wrap_content" />
 		<FrameLayout android:id="@android:id/tabcontent"
 			android:layout_height="fill_parent" android:layout_width="fill_parent">
-			<LinearLayout android:id="@+id/map_tab"
+			<LinearLayout android:id="@+id/tab_newtrackactivity_map"
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="fill_parent">
 
 			</LinearLayout>
-			<LinearLayout android:id="@+id/new_tab"
+			<LinearLayout android:id="@+id/tab_newtrackActivity_new"
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
-				<ToggleButton android:id="@+id/startWay_Tbtn"
+				<ToggleButton android:id="@+id/tbtn_newtrackActivity_startWay"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/streetOff_btn" android:textOff="@string/streetOn_btn"
+					android:textOn="@string/tbtn_newtrackActivity_streetOff" android:textOff="@string/tbtn_newtrackActivity_streetOn"
 					android:drawableLeft="@drawable/way_icon" android:onClick="startWayTbtn" />
 
-				<ToggleButton android:id="@+id/startArea_Tbtn"
+				<ToggleButton android:id="@+id/tbtn_newtrackActivity_startArea"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/areaOff_btn" android:textOff="@string/areaOn_btn"
+					android:textOn="@string/tbtn_newtrackActivity_areaOff" android:textOff="@string/tbtn_newtrackActivity_areaOn"
 					android:drawableLeft="@drawable/area_icon" android:onClick="startAreaTbtn" />
 
-				<Button android:id="@+id/addPoint_btn" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/addPoint_btn"
+				<Button android:id="@+id/btn_newtrackActivity_addPoint" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:text="@string/btn_newtrackActivity_addPoint"
 					android:onClick="addPointBtn" android:drawableLeft="@drawable/node_icon" />
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
 					
-				<Button android:id="@+id/editComment_btn" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/editComment_btn"
+				<Button android:id="@+id/btn_newtrackActivity_editComment" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:text="@string/btn_newtrackActivity_editComment"
 					android:onClick="editCommentBtn" />
 					
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
 
-				<Button android:id="@+id/stopTrack_btn" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/stopTrack_btn"
+				<Button android:id="@+id/btn_newtrackActivity_stopTrack" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:text="@string/btn_newtrackActivity_stopTrack"
 					android:onClick="stopTrackBtn" android:drawableLeft="@drawable/stop_icon" />
 
-				<TextView android:id="@+id/setButtonList_tv"
+				<TextView android:id="@+id/tv_newtrackActivity_setButtonList"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textSize="15sp" />
 
-				<LinearLayout android:id="@+id/metaMediaBtnNew_ly"
+				<LinearLayout android:id="@+id/ly_newtrackActivity_metaMediaBtnNew"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:orientation="horizontal" android:gravity="center_horizontal">
 
@@ -64,7 +64,7 @@
 				</LinearLayout>
 
 			</LinearLayout>
-			<LinearLayout android:id="@+id/edit_tab"
+			<LinearLayout android:id="@+id/tab_newtrackactivity_edit"
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
 

@@ -211,12 +211,11 @@ public class MapsForgeActivity extends MapActivity {
     /**
      * This method inflate the options menu for this activity.
      * 
-     * @author greentraxas
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.mapsforgeactivity_optionsmenu, menu);
+        inflater.inflate(R.menu.optionsmenu_mapsforgeactivity, menu);
         return true;
     }
 
@@ -230,15 +229,13 @@ public class MapsForgeActivity extends MapActivity {
      * @param item
      *            the item
      * @return true, if successful
-     * 
-     * @author greentraxas
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Handle item selection
         switch (item.getItemId()) {
-        case R.id.activateMobileInternet_opt:
+        case R.id.opt_mapsforgeActivity_activateMobileInternet:
 
             if (useInternet) {
                 // TODO: use string ressource!
@@ -252,26 +249,28 @@ public class MapsForgeActivity extends MapActivity {
 
             return true;
 
-        case R.id.centerAtOwnPosition_opt:
+        case R.id.opt_mapsforgeActivity_centerAtOwnPosition:
+
             gpsReceiver.centerOnCurrentPosition();
             return true;
+        case R.id.opt_mapsforgeActivity_showToggleWayPoints:
 
-        case R.id.showToggleWayPoints_opt:
             routesOverlay.toggleGnubbel();
             return true;
-
-        case R.id.export_opt:
+        case R.id.opt_mapsforgeActivity_export:
             /*
              * Do SOMETHING TODO
              */
             return true;
 
-        case R.id.pause_opt:
+        case R.id.opt_mapsforgeActivity_pause:
 
-            builder.setMessage(getResources().getString(R.string.pause_alert))
+            builder.setMessage(
+                    getResources().getString(
+                            R.string.alert_mapsforgeActivity_pause))
                     .setCancelable(false)
                     .setPositiveButton(
-                            getResources().getString(R.string.yes_alert),
+                            getResources().getString(R.string.alert_global_yes),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
                                         int id) {
@@ -291,7 +290,7 @@ public class MapsForgeActivity extends MapActivity {
                                 }
                             })
                     .setNegativeButton(
-                            getResources().getString(R.string.no_alert),
+                            getResources().getString(R.string.alert_global_no),
                             new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog,
@@ -301,11 +300,12 @@ public class MapsForgeActivity extends MapActivity {
                             });
             builder.show();
             return true;
-        case R.id.stopTrack_opt:
-            builder.setMessage(getResources().getString(R.string.exit_alert))
+        case R.id.opt_mapsforgeActivity_stopTrack:
+            builder.setMessage(
+                    getResources().getString(R.string.alert_global_exit))
                     .setCancelable(false)
                     .setPositiveButton(
-                            getResources().getString(R.string.yes_alert),
+                            getResources().getString(R.string.alert_global_yes),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,
                                         int id) {
@@ -320,7 +320,7 @@ public class MapsForgeActivity extends MapActivity {
                                 }
                             })
                     .setNegativeButton(
-                            getResources().getString(R.string.no_alert),
+                            getResources().getString(R.string.alert_global_no),
                             new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog,

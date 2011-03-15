@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--  @author greenTraxas -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -15,7 +16,7 @@
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:gravity="center_horizontal" 
-	    android:text="@string/welcome"
+	    android:text="@string/tv_startActivity_welcome"
 	    android:textSize="20sp"
 	    android:textStyle="bold"
 	    android:textColor="#FFFFFF"
@@ -28,17 +29,17 @@
 		android:layout_weight="0.5"
         />    
     
-	<Button android:id="@+id/newTrack_btn"
+	<Button android:id="@+id/btn_startActivity_newTrack"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/newTrack"
+		android:text="@string/btn_startActivity_newTrack"
 		android:onClick="newTrackBtn"
 	 />
  
-	<Button android:id="@+id/loadTrack_btn"
+	<Button android:id="@+id/btn_startActivity_loadTrack"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/loadTrack"
+		android:text="@string/btn_startActivity_loadTrack"
 		android:onClick="loadTrackBtn"
 	 />
 	 
@@ -54,8 +55,5 @@
 	 	android:layout_height="wrap_content"
 	 	android:src="@drawable/logo"
 	 	/>
-
- 
-
 
 </LinearLayout>

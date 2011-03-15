@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/editmapobjects_edit_cm" android:title="@string/editmapobjects_edit_cm"></item>
-<item android:id="@+id/editmapobjects_delete_cm" android:title="@string/editmapobjects_delete_cm"></item>
-</menu>
