@@ -59,7 +59,9 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
             LayoutInflater layInf) {
         super(context, resource, textViewResourceId, objects);
         layoutId = resource;
-        layoutInflater = layInf;
+        layoutInflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         dataList = objects;
     }
 
