@@ -1,48 +1,53 @@
 #summary Map features in an XML file.
+#labels Phase-Design
 
 A tarball containing XML files for several languages (now with more data) is available at http://userpage.fu-berlin.de/hdinh/xml.tar.bz2
 
-= This just in =
-
-Descriptions!
-
-= Snip! =
-
-No DTD (yet?), but a snippet of the resulting XML file.
+= XML schema =
 
 {{{
-<map_features>
-  <key v="aerialway">
-    <value v="cable_car">
-      <useful v="name" />
-      <useful v="ref" />
-    </value>
-    <value v="chair_lift">
-      <useful v="name" />
-      <useful v="ref" />
-    </value>
-    <value v="drag_lift">
-      <useful v="name" />
-      <useful v="ref" />
-    </value>
-    <value v="gondola">
-    </value>
-    <value v="goods">
-    </value>
-    <value v="mixed_lift">
-    </value>
-    <value v="pylon">
-    </value>
-    <value v="station">
-    </value>
-  </key>
-  <!-- ... -->
-  <key v="area">
-    <value v="yes">
-    </value>
-  </key>
-  <!-- ... -->
-</map_features>
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags">
+	<!--  Element: key -->
+	<xs:element name="key">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="value" maxOccurs="unbounded"/>			
+			</xs:sequence>
+			<xs:attribute name="v" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+				
+	<!--  Element: value -->
+	<xs:element name="value">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0" />
+				<xs:element name="uri" type="xs:string" minOccurs="0" />
+				<xs:element name="useful" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="v" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="isArea" type="xs:boolean" default="false" />
+			<xs:attribute name="isNode" type="xs:boolean" default="false" />
+			<xs:attribute name="isWay" type="xs:boolean" default="false" />
+			<xs:attribute name="type" type="xs:string" use="required" />
+			<xs:attribute name="v" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Root element -->
+	<xs:element name="map_features">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="key" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="lang" type="xs:string" default="en" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
 }}}
 
 = Code =
