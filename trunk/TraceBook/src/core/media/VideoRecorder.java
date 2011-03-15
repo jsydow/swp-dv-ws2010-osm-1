@@ -31,6 +31,7 @@ public class VideoRecorder extends Recorder {
      *            The surface object we are going to display our video preview
      *            in.
      * @throws IOException
+     *             not used
      */
     public void prepare(final Camera camera, final Surface surface)
             throws IOException {

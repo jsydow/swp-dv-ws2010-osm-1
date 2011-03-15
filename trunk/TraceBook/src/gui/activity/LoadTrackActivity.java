@@ -227,6 +227,7 @@ public class LoadTrackActivity extends ListActivity {
 
     /**
      * @param v
+     *            used to get the text of the view. Could be dangerous.
      * 
      */
     public void deleteTrackBtn(View v) {

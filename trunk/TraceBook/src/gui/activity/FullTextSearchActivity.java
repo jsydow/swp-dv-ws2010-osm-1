@@ -23,7 +23,7 @@ public class FullTextSearchActivity extends ListActivity {
      * @author sahin
      * 
      */
-    class MyTextWatcher implements TextWatcher {
+    static class MyTextWatcher implements TextWatcher {
 
         /**
          * reference to the FullTextSearchActivity to update the list view.

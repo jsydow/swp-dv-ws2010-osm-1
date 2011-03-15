@@ -1,5 +1,10 @@
 package gui.activity;
 
+import gui.adapter.GenericAdapter;
+import gui.adapter.GenericAdapterData;
+import gui.adapter.GenericItemDescription;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import Trace.Book.R;
@@ -16,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -70,7 +74,9 @@ public class NewTrackActivity extends TabActivity {
          * our TabHost which is associated to it.
          * 
          * @param act
+         *            reference to the NewTrackActivity
          * @param tab
+         *            reference to the TabHost if the NewTrackActivty
          */
         public MyListener(NewTrackActivity act, TabHost tab) {
             this.act = act;
@@ -193,23 +199,65 @@ public class NewTrackActivity extends TabActivity {
         final Intent intent = new Intent(this, AddPointActivity.class);
         // Init ListView for EditTab
         ListView listView = (ListView) findViewById(R.id.tracks_lvw);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getPOIList());
+
+        GenericItemDescription desc = new GenericItemDescription();
+        desc.addResourceId("NodeId", R.id.tv_listviewedit_id);
+        desc.addResourceId("NodeCoord", R.id.tv_listviewedit_coordinates);
+        desc.addResourceId("NodeImg", R.id.iv_listviewedit_image);
+        desc.addResourceId("NodeStats", R.id.tv_listviewedit_stats);
+
+        List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack()
+                .getNodes();
+
+        List<DataPointsList> wayList = DataStorage.getInstance()
+                .getCurrentTrack().getWays();
+
+        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+
+        for (DataNode dn : nodeList) {
+            GenericAdapterData item = new GenericAdapterData(desc);
+            item.setText("NodeId", "" + dn.getId());
+            item.setText("NodeCoord",
+                    "Lat: " + dn.getLat() + " Long: " + dn.getLon());
+            item.setImage("NodeImg", R.drawable.node_icon);
+            item.setText("NodeStats", "Medien: " + dn.getMedia().size());
+
+            data.add(item);
+
+        }
+
+        for (DataPointsList dn : wayList) {
+            GenericAdapterData item = new GenericAdapterData(desc);
+            item.setText("NodeId", "" + dn.getId());
+
+            if (dn.getNodes().size() > 0) {
+                DataNode start = dn.getNodes().get(0);
+                DataNode end = dn.getNodes().get(dn.getNodes().size() - 1);
+
+                String endCoord = dn.isArea() ? "" : (" End Lat: "
+                        + end.getLat() + " Long: " + end.getLon());
+
+                item.setText("NodeCoord", "Start Lat: " + start.getLat()
+                        + " Long: " + start.getLon() + endCoord);
+            }
+
+            item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
+                    : R.drawable.way_icon);
+            item.setText("NodeStats", "Medien: " + dn.getMedia().size());
+
+            data.add(item);
+
+        }
+
+        GenericAdapter adapter = new GenericAdapter(this,
+                R.layout.listview_edit, R.id.tracks_lvw, data, null);
+
         listView.setAdapter(adapter);
-        listView.setTextFilterEnabled(true);
 
         // Get selected item and send toast
         listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                String itemText = adapter.getItem(position);
-                String[] cut = itemText.split(": ");
-
-                intent.putExtra("DataNodeId", Integer.parseInt(cut[0]));
-
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(),
-                        ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -341,7 +389,7 @@ public class NewTrackActivity extends TabActivity {
      * returns to the main activity.
      * 
      * @param view
-     *            unused
+     *            not used
      */
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -521,39 +569,6 @@ public class NewTrackActivity extends TabActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    /**
-     * Generate String Array for ListView to list all POI's Way's and Area's
-     * which available at the actual track.
-     * 
-     * @return String Array of all POI's, Area's and Way's at the actual track
-     */
-    public String[] getPOIList() {
-
-        List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack()
-                .getNodes();
-        List<DataPointsList> wayList = DataStorage.getInstance()
-                .getCurrentTrack().getWays();
-        String[] poiList = new String[nodeList.size() + wayList.size()];
-        int i = 0;
-        for (DataNode dn : nodeList) {
-            poiList[i] = dn.getId() + ": "
-                    + getResources().getString(R.string.string_global_poi);
-            i++;
-        }
-
-        for (DataPointsList wl : wayList) {
-            if (wl.isArea())
-                poiList[i] = wl.getId() + ": "
-                        + getResources().getString(R.string.string_global_area);
-            else
-                poiList[i] = wl.getId() + ": "
-                        + getResources().getString(R.string.string_global_way);
-            i++;
-        }
-
-        return poiList;
     }
 
     @Override
