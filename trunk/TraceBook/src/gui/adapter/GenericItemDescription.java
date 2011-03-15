@@ -21,7 +21,9 @@ public class GenericItemDescription {
 
     /**
      * @param tag
+     *            tag to associate the resource id
      * @param id
+     *            the resource id
      */
     public void addResourceId(String tag, int id) {
         resourceIds.put(tag, Integer.valueOf(id));
@@ -29,6 +31,7 @@ public class GenericItemDescription {
 
     /**
      * @param tag
+     *            tag which is associated with a given resources id.
      * @return return the id of a resource which is associated with a given tag
      */
     public int getResourceId(String tag) {

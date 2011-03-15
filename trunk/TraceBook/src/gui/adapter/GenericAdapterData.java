@@ -70,6 +70,7 @@ public class GenericAdapterData {
 
         /**
          * @param text
+         *            String to set the text
          */
         public TextItem(String text) {
             this.text = text;
@@ -105,6 +106,7 @@ public class GenericAdapterData {
 
         /**
          * @param imageId
+         *            resource id of an image to set
          */
         public ImageItem(int imageId) {
             this.imageId = imageId;
@@ -134,6 +136,8 @@ public class GenericAdapterData {
 
         /**
          * @param onClickListener
+         *            reference to a onClickListener which will be called then a
+         *            onClick event occurs
          */
         public ButtonItem(View.OnClickListener onClickListener) {
             this.onClickListener = onClickListener;
@@ -168,6 +172,7 @@ public class GenericAdapterData {
 
     /**
      * @param view
+     *            not used
      */
     public void fillView(View view) {
         Iterator<Entry<String, GenericItem>> iterator = items.entrySet()
