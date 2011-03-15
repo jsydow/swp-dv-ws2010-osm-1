@@ -146,13 +146,13 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
             if (overlayItems.get(i).second.intValue() == id) {
                 OverlayItem oi = Helper.getOverlayItem(pos,
                         overlayItems.get(i).first.getMarker());
-                overlayItems.set(i, new Pair<OverlayItem, Integer>(oi,
-                        overlayItems.get(i).second));
+                overlayItems.get(i).first = oi; // update the OverlayItem (not
+                                                // necessarily has a DataNode)
 
                 if (id > 0) { // redraw way when point was moved
                     DataNode node = Helper.currentTrack().getNodeById(id);
                     if (node != null) {
-                        node.setLocation(pos);
+                        node.setLocation(pos); // update the actual DataNode
                         node.setOverlayItem(oi);
 
                         if (node.getDataPointsList() != null)
@@ -175,11 +175,15 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      *            {@link DataNode}s to be added to overlay
      */
     public void addPoints(List<DataNode> nodes) {
-        for (DataNode n : nodes) {
-            if (n.getOverlayItem() == null)
-                n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-            addOverlay(n);
+        synchronized (this.overlayItems) {
+            for (DataNode n : nodes) {
+                if (n.getOverlayItem() == null)
+                    n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
+                this.overlayItems.add(new Pair<OverlayItem, Integer>(n
+                        .getOverlayItem(), Integer.valueOf(n.getId())));
+            }
         }
+        populate();
     }
 
     /**
