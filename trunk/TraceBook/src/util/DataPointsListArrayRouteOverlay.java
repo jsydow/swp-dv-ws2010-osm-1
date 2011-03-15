@@ -12,7 +12,6 @@ import Trace.Book.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Pair;
 import core.data.DataNode;
 import core.data.DataPointsList;
 
