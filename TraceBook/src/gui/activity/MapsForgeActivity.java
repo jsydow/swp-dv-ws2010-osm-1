@@ -38,7 +38,7 @@ import core.logger.WaypointLogService;
  * overlays on it. In the future it will also be possible to modify said nodes
  * and ways.
  * 
- * @author benpicco
+ *
  * 
  */
 public class MapsForgeActivity extends MapActivity {
@@ -344,7 +344,7 @@ public class MapsForgeActivity extends MapActivity {
      * order to update the current location and overlays if position or overlay
      * data has changed.
      * 
-     * @author benpicco
+     *
      * 
      */
     private class GPSReceiver extends BroadcastReceiver {

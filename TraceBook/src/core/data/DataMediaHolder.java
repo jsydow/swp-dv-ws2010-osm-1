@@ -15,7 +15,7 @@ import org.xmlpull.v1.XmlSerializer;
  * Any object that can have media attached. Media can be added and retrieved.
  * This class is abstract.
  * 
- * @author js
+ *
  * 
  */
 public abstract class DataMediaHolder {

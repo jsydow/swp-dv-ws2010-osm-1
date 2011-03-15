@@ -10,7 +10,7 @@ import android.media.MediaRecorder;
  * This class provides required methods for interacting with the MediaRecorder
  * in order to acquire an audio file.
  * 
- * @author Huy Dinh
+ *
  * 
  */
 public class AudioRecorder extends Recorder {

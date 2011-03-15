@@ -20,7 +20,7 @@ import android.widget.TextView;
  * 
  * This class provides you easy acces to fill your views with the right data.
  * 
- * @author SakirSoft
+ *
  * 
  * 
  * 
@@ -30,7 +30,7 @@ public class GenericAdapterData {
     /**
      * An enum to define the three different types of views in a item.
      * 
-     * @author SakirSoft
+     *
      */
     enum ItemTypes {
         /**
@@ -55,7 +55,7 @@ public class GenericAdapterData {
     /**
      * The class representation to handle TextView data.
      * 
-     * @author SakirSoft
+     *
      */
     static class TextItem implements GenericItem {
 
@@ -95,7 +95,7 @@ public class GenericAdapterData {
     /**
      * The class representation to handle ImageView data.
      * 
-     * @author SakirSoft
+     *
      */
     static class ImageItem implements GenericItem {
 
@@ -123,7 +123,7 @@ public class GenericAdapterData {
     /**
      * The class representation to handle Button data.
      * 
-     * @author SakirSoft
+     *
      * 
      */
     static class ButtonItem implements GenericItem {

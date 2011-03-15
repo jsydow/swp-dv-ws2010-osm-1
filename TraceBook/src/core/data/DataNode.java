@@ -17,7 +17,7 @@ import android.util.Log;
  * A node. A node can be a POI or an element of a list of waypoints that belong
  * to a Way or Area.
  * 
- * @author js
+ *
  * 
  */
 public class DataNode extends DataMapObject {

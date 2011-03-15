@@ -47,7 +47,7 @@ import core.media.Recorder;
  * and areas. In the third one you can choose your collected, add new tags,
  * remove tags remove pois etc.
  * 
- * @author greentraxas
+ *
  * 
  * 
  */
@@ -57,7 +57,7 @@ public class NewTrackActivity extends TabActivity {
      * The purpose of this OnTabListener is to update the different tab views
      * when changing the tabs. So you see always an updated view of your data.
      * 
-     * @author greentraxas
+     *
      */
     static class MyListener implements OnTabChangeListener {
 

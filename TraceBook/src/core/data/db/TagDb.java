@@ -15,7 +15,7 @@ import android.util.Log;
 import android.util.Xml;
 
 /**
- * @author js
+ *
  * 
  */
 public class TagDb {

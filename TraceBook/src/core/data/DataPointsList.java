@@ -19,7 +19,7 @@ import android.util.Log;
  * WayPointList objects are any objects that consist of a series of nodes like
  * Areas and Ways.
  * 
- * @author js
+ *
  * 
  */
 public class DataPointsList extends DataMapObject {

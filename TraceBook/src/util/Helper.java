@@ -22,7 +22,7 @@ import core.data.DataTrack;
 /**
  * general helper class to feature some useful functions.
  * 
- * @author benpicco
+ *
  * 
  */
 public final class Helper {

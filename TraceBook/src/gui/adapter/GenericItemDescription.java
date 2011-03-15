@@ -9,7 +9,7 @@ import java.util.Map;
  * GenericAdapterData. So each item in a ListView can associate its view
  * elements.
  * 
- * @author SakirSoft
+ *
  * 
  */
 public class GenericItemDescription {

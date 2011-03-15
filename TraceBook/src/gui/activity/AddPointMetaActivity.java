@@ -25,7 +25,7 @@ import core.data.DataStorage;
  * depended by their key values. For example when you choose "highway" only
  * highway related values will be given as a list for autocomplete.
  * 
- * @author greentraxas
+ *
  */
 public class AddPointMetaActivity extends Activity {
 

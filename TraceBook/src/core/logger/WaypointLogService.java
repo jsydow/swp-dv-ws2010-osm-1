@@ -18,7 +18,7 @@ import core.data.DataStorage;
  * This background service logs GPS data and stores it in the
  * {@link DataStorage} object.
  * 
- * @author benpicco
+ *
  * 
  */
 public class WaypointLogService extends Service implements LocationListener {

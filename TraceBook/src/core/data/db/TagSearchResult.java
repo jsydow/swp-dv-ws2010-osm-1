@@ -1,7 +1,7 @@
 package core.data.db;
 
 /**
- * @author js
+ *
  * 
  */
 public class TagSearchResult {

@@ -10,7 +10,7 @@ import core.data.DataStorage;
 import core.media.AudioRecorder;
 
 /**
- * @author greentraxas
+ *
  * 
  */
 public class AddMemoActivity extends Activity {

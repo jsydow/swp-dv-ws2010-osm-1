@@ -10,7 +10,7 @@ import core.data.DataStorage;
  * Mother of all TraceBook media files. This class is the common ancestor of all
  * implementations for acquiring media files in TraceBook.
  * 
- * @author Huy Dinh
+ *
  */
 public abstract class Recorder {
     /**

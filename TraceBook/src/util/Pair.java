@@ -3,7 +3,7 @@ package util;
 /**
  * a generic Tuple element to store two values.
  * 
- * @author benpicco
+ *
  * 
  * @param <A>
  *            first element type
