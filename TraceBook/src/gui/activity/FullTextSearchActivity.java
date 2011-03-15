@@ -25,6 +25,21 @@ public class FullTextSearchActivity extends ListActivity {
      */
     class MyTextWatcher implements TextWatcher {
 
+        /**
+         * reference to the FullTextSearchActivity to update the list view.
+         */
+        FullTextSearchActivity act;
+
+        /**
+         * 
+         * @param act
+         *            reference to the FullTextSearchActivity to update the list
+         *            view.
+         */
+        public MyTextWatcher(FullTextSearchActivity act) {
+            this.act = act;
+        }
+
         public void afterTextChanged(Editable arg0) {
             // TODO Auto-generated method stub
 
@@ -52,7 +67,7 @@ public class FullTextSearchActivity extends ListActivity {
         setContentView(R.layout.layout_fulltextsearchactivity);
 
         EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
-        editBox.addTextChangedListener(new MyTextWatcher());
+        editBox.addTextChangedListener(new MyTextWatcher(this));
 
     }
 }

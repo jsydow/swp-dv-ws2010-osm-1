@@ -119,6 +119,7 @@ public class AddPointMetaActivity extends Activity {
      * Generate the appendant values for the category tag.
      * 
      * @param category
+     *            categroy to get the values from
      * @return return a string array with values for the given category
      */
     public String[] getValues(String category) {
@@ -171,7 +172,9 @@ public class AddPointMetaActivity extends Activity {
      * This method parses all the tags in the XML-MetaTag files.
      * 
      * @param tagType
+     *            tag type in which we are interested in
      * @param parentName
+     *            parent name means the tag value for which we are searching
      * @return a String array with all tags
      */
     private String[] parseTags(Tags tagType, String parentName) {
