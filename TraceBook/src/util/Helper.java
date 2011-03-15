@@ -35,15 +35,36 @@ public final class Helper {
      *            id of the Graphics object to use
      * @param act
      *            context of the application
+     * @param center
+     *            the center of the icon is at the given pos
+     * @return the new OverlayItem
+     */
+    public static OverlayItem getOverlayItem(GeoPoint pos, int marker,
+            Activity act, boolean center) {
+        final OverlayItem oi = new OverlayItem(pos, null, null);
+        Drawable icon = act.getResources().getDrawable(marker);
+        if (center)
+            oi.setMarker(ItemizedOverlay.boundCenter(icon));
+        else
+            oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
+
+        return oi;
+    }
+
+    /**
+     * Creates a new OverlayItem.
+     * 
+     * @param pos
+     *            position of the marker
+     * @param marker
+     *            id of the Graphics object to use
+     * @param act
+     *            context of the application
      * @return the new OverlayItem
      */
     public static OverlayItem getOverlayItem(GeoPoint pos, int marker,
             Activity act) {
-        final OverlayItem oi = new OverlayItem(pos, null, null);
-        Drawable icon = act.getResources().getDrawable(marker);
-        oi.setMarker(ItemizedOverlay.boundCenterBottom(icon));
-
-        return oi;
+        return getOverlayItem(pos, marker, act, false);
     }
 
     /**
