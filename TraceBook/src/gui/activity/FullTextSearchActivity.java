@@ -64,6 +64,7 @@ public class FullTextSearchActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_fulltextsearchactivity);
+        setTitle(R.string.string_fulltextsearchActivity_title);
 
         EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
         editBox.addTextChangedListener(new MyTextWatcher(this));

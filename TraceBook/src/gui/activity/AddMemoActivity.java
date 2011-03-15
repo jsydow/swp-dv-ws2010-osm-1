@@ -37,7 +37,7 @@ public class AddMemoActivity extends Activity {
         }
 
         setContentView(R.layout.layout_addmemoactivity);
-
+        setTitle(R.string.string_addmemoActivity_title);
         startMemo();
     }
 

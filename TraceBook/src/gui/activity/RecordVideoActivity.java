@@ -41,6 +41,7 @@ public class RecordVideoActivity extends Activity implements
         }
 
         setContentView(R.layout.layout_recordvideoactivity);
+        setTitle(R.string.string_startActivity_title);
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.sfv_recordvideoActivity_camera);
 
