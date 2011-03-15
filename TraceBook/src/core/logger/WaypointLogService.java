@@ -214,8 +214,10 @@ public class WaypointLogService extends Service implements LocationListener {
                 if (tmp.getNodes().size() == 0)
                     storage.getCurrentTrack().deleteWay(tmp.getId());
                 else {
-                    if (!one_shot)
+                    if (!one_shot) {
                         Helper.smoothenPoints(tmp.getNodes(), 3, 3);
+                        Helper.filterPoints(tmp.getNodes());
+                    }
                     end_way.putExtra("way_id", tmp.getId());
                     sendBroadcast(end_way);
                     return tmp.getId();

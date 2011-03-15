@@ -48,6 +48,7 @@ interface ILoggerService {
 	* Tells the service to begin a new way and to add way points to it.
 	*/	
 	int beginWayA(boolean oneShotMode, boolean isArea);
+	
 	/**
 	 * starts a new way 
 	 */

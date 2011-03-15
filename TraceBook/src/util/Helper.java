@@ -1,5 +1,6 @@
 package util;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -187,13 +188,74 @@ public final class Helper {
         }
     }
 
-    // public static List<DataNode> filterPoints(DataPointsList dpl) {
-    // List<DataNode> newNodes = new LinkedList<DataNode>();
-    // List<DataNode> oldNodes = dpl.getNodes();
-    //
-    // newNodes.add(oldNodes.get(0));
-    //
-    // return newNodes;
-    //
-    // }
+    /**
+     * calculates the area spanned by the parallelogram defined by the points a,
+     * b and c.
+     * 
+     * @param a
+     *            first point
+     * @param b
+     *            second point
+     * @param c
+     *            third point
+     * @return the area of the parallelogram (twice the area of the triangle)
+     *         defined by those 3 points.
+     */
+    static double calculateArea(GeoPoint a, GeoPoint b, GeoPoint c) {
+        return Math.abs((a.getLongitude() - c.getLongitude())
+                * (b.getLatitude() - a.getLatitude())
+                - (a.getLongitude() - b.getLongitude())
+                * (c.getLatitude() - a.getLatitude()));
+    }
+
+    /**
+     * removes all insignificant points from the way, a threshold is calculated
+     * automatically by the average derivation of the points.
+     * 
+     * @param nodes
+     *            List of {@link DataNode}s representing the way or area
+     */
+    public static void filterPoints(List<DataNode> nodes) {
+        boolean calibrate = true;
+        double threshold = 0;
+
+        // we first iterate once to get the threshold, in the second run we
+        // actually remove the points
+        while (calibrate) {
+            if (threshold != 0)
+                calibrate = false;
+
+            DataNode firstNode = null;
+            DataNode pending = null;
+            Iterator<DataNode> iter = nodes.iterator();
+
+            while (iter.hasNext()) {
+                DataNode n = iter.next();
+                if (n == null || !n.isValid()) {
+                    iter.remove();
+                    continue;
+                }
+
+                if (firstNode == null) {
+                    firstNode = n;
+                    continue;
+                }
+
+                if (pending != null) {
+                    if (calibrate) {
+                        threshold += calculateArea(firstNode.toGeoPoint(),
+                                pending.toGeoPoint(), n.toGeoPoint());
+                        // TODO: don't remove tagged points
+                    } else if (calculateArea(firstNode.toGeoPoint(),
+                            pending.toGeoPoint(), n.toGeoPoint()) < threshold)
+                        iter.remove();
+                    firstNode = pending;
+                }
+
+                pending = n;
+            }
+            threshold /= nodes.size();
+            Log.d("Helper", "Average: " + threshold);
+        }
+    }
 }
