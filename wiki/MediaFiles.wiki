@@ -36,19 +36,19 @@ that does exactly that, whereas said !DataMediaHolder object is passed to this m
 
 Since each track has its own folder (in /sdcard/!TraceBook/), we can just put new media files into the folder of the track. The filenames contain the media type (audio|image|video), and a human readable timestamp (yyyy-MM-dd_HH-mm-ss). The suffixes are chosen according to their file types (.jpg, .m4a, or .mp4).
 
-== Pictures ==
+= Pictures =
 
 Taking pictures is the easiest of the three media types, because this can be done reliably on all devices using intents, usually sent to the default camera application on the device.
 
 Upon successfully taking a picture, `appendFileToObject` has to be invoked manually during the `onActivityResult` callback of the activity that had sent the intent.
 
-== Videos ==
+= Videos =
 
 Recording a video can be done using intents, as well, in theory. With intents, however, we faced a multitude of problems on several different devices running different releases of Android. The camcorder application did not work at all (and caused a full system crash), created empty video files, or worked fine, except for saving videos to the wrong location. Each type of behaviour seems to be typical for each manufacturer, respectively, and the only thing that works constantly using intents is that it is not working the way we want it to. ;-/
 
 As such, we record videos using the [http://developer.android.com/reference/android/media/MediaRecorder.html !MediaRecorder] class, which we have to create a "video recording" activity for. This activity provides the surface GUI item necessary for the !MediaRecorder class to show the camera preview in, as well as start/stop buttons to control recording.
 
-== Audio files ==
+= Audio files =
 
 Unfortunately, Android does not provide a standard action for recording audio files using intents. Therefore, we use !MediaRecorder for this task. It does not require any certain GUI elements, except for a button to actually stop recording.
 
