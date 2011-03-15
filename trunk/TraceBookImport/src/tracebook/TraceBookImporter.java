@@ -183,14 +183,30 @@ public class TraceBookImporter extends FileImporter {
                             if (uri.endsWith(".png") || uri.endsWith(".jpg")
                                     || uri.endsWith(".jpeg")
                                     || uri.endsWith(".gif")) {
+                                Main.debug("Trying to parse imagemarker");
                                 Marker mr = ImageMarker.create(latlon, uri, ml,
                                         1.0, 1.0);
                                 if (mr == null)
                                     Main.debug("THIS F-ING MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
                             } else if (uri.endsWith(".wav")) {
+                                Main.debug("Trying to parse audiomarker");
                                 Marker mr = AudioMarker.create(latlon,
                                         "Audio comment", uri, ml, 1.0, 1.0);
+                                if (mr == null)
+                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
+                                ml.data.add(mr);
+                            } else if (uri.endsWith(".3gp")) {
+                                Main.debug("Trying to parse videomarker");
+                                Marker mr = VideoMarker.create(latlon,
+                                        "Video comment", uri, ml, 1.0, 1.0);
+                                if (mr == null)
+                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
+                                ml.data.add(mr);
+                            } else if (uri.endsWith(".txt")) {
+                                Main.debug("Trying to parse textmarker");
+                                Marker mr = TextMarker.create(latlon,
+                                        "Text comment", uri, ml, 1.0, 1.0);
                                 if (mr == null)
                                     Main.debug("THIS F-ING MARKER IS EMPTY!!!");
                                 ml.data.add(mr);

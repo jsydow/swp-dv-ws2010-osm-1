@@ -100,7 +100,7 @@
     -->
 			<manifest>
 				<attribute name="Author" value="David Beyer" />
-				<attribute name="Plugin-Class" value="TraceBook.TraceBookPlugin" />
+				<attribute name="Plugin-Class" value="tracebook.TraceBookPlugin" />
 				<attribute name="Plugin-Date" value="${version.entry.commit.date}" />
 				<attribute name="Plugin-Description" value="Reads GPS Data and Tags from TraceBookTrack files" />
 				<attribute name="Plugin-Icon" value="..." />
