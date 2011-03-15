@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author js
  * 
  */
-public class TagDbOpenhelper extends SQLiteOpenHelper {
+public class TagDbOpenHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "db_tracebook_tags";
@@ -70,7 +70,7 @@ public class TagDbOpenhelper extends SQLiteOpenHelper {
      *            A Context, probably the Activity that starts the SQL
      *            connection
      */
-    TagDbOpenhelper(Context context) {
+    TagDbOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

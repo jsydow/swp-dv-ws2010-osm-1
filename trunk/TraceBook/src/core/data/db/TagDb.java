@@ -23,7 +23,7 @@ public class TagDb {
     /**
      * 
      */
-    TagDbOpenhelper helper;
+    TagDbOpenHelper helper;
     private Context context;
     private SQLiteDatabase db;
 
@@ -31,14 +31,14 @@ public class TagDb {
      * @param context
      *            A context, probably the activity that uses the db.
      */
-    TagDb(Context context) {
+    public TagDb(Context context) {
         super();
         this.context = context;
         openDb();
     }
 
     private void openDb() {
-        helper = new TagDbOpenhelper(context);
+        helper = new TagDbOpenHelper(context);
         db = helper.getReadableDatabase();
     }
 
@@ -69,15 +69,15 @@ public class TagDb {
     private void fillTagListWithSearchResults(String searchText,
             String language, List<TagSearchResult> tags) {
 
-        Cursor result = db.query(TagDbOpenhelper.getTableName(),
-                TagDbOpenhelper.getColumns(), TagDbOpenhelper.getSelection(),
+        Cursor result = db.query(TagDbOpenHelper.getTableName(),
+                TagDbOpenHelper.getColumns(), TagDbOpenHelper.getSelection(),
                 new String[] { searchText, searchText, searchText, language },
                 null, null, null);
 
         result.moveToFirst();
         while (result.isAfterLast()) {
             // insert row to tags list
-            tags.add(TagDbOpenhelper.getResultFromCursor(result));
+            tags.add(TagDbOpenHelper.getResultFromCursor(result));
 
             result.moveToNext();
         }
@@ -152,7 +152,7 @@ public class TagDb {
                         row.put("description", description);
                         row.put("value_type", type);
                         row.put("name", key);
-                        writeDb.insert(TagDbOpenhelper.getTableName(), "", row);
+                        writeDb.insert(TagDbOpenHelper.getTableName(), "", row);
 
                     } else if (lname.equals("description")) {
                         descriptionTagOpened = false;
@@ -190,7 +190,7 @@ public class TagDb {
                 }
             });
         } catch (SAXException e) {
-            // nothing happens
+            Log.e("XMLFileParsing", "This will never happen.");
         }
     }
 }
