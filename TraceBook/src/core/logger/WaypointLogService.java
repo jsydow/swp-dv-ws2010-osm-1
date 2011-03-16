@@ -1,5 +1,6 @@
 package core.logger;
 
+import util.GpsMessage;
 import util.Helper;
 import android.app.Service;
 import android.content.Context;
@@ -17,29 +18,9 @@ import core.data.DataStorage;
 /**
  * This background service logs GPS data and stores it in the
  * {@link DataStorage} object.
- * 
- * 
- * 
  */
 public class WaypointLogService extends Service implements LocationListener {
     private static final String LOG_TAG = "LOGSERVICE";
-    private static final String BASETAG = "de.fu-berlin.inf.tracebook";
-
-    /**
-     * Tag of the Intent that signals a change of the current position.
-     */
-    public static final String UPDATE_GPS_POS = BASETAG + ".UPDATE_GPS_POS";
-
-    /**
-     * Tag of the Intent that signals an update to an object in
-     * {@link DataStorage}.
-     */
-    public static final String UPDATE_OBJECT = BASETAG + ".UPDATE_OBJECT";
-
-    /**
-     * Tag of the Intent that signals a way was closed.
-     */
-    public static final String END_WAY = BASETAG + ".END_WAY";
 
     /**
      * Reference to the {@link DataStorage} singleton.
@@ -59,16 +40,9 @@ public class WaypointLogService extends Service implements LocationListener {
     protected int deltaDistance = 0;
 
     /**
-     * 
+     * Time between two GPS fixes.
      */
     protected int deltaTime = 0;
-
-    private final Intent gps_intent = new Intent(UPDATE_GPS_POS);
-    private final Intent update_intent = new Intent(UPDATE_OBJECT);
-    /**
-     * intent used to signal the end of a way.
-     */
-    final Intent end_way = new Intent(END_WAY);
 
     private boolean gps_on = false;
 
@@ -89,6 +63,17 @@ public class WaypointLogService extends Service implements LocationListener {
 
     private LocationListener ll = this;
 
+    private GpsMessage sender = null;
+
+    /**
+     * Returns the Intent sender helper.
+     * 
+     * @return a reference to the {@link GpsMessage} helper class
+     */
+    GpsMessage getSender() {
+        return sender;
+    }
+
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
@@ -105,6 +90,7 @@ public class WaypointLogService extends Service implements LocationListener {
     public void onCreate() {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
+        sender = new GpsMessage(this);
     }
 
     @Override
@@ -231,8 +217,7 @@ public class WaypointLogService extends Service implements LocationListener {
                         Helper.smoothenPoints(tmp.getNodes(), 3, 3);
                         Helper.filterPoints(tmp.getNodes(), 2);
                     }
-                    end_way.putExtra("way_id", tmp.getId());
-                    sendBroadcast(end_way);
+                    getSender().sendEndWay(tmp.getId());
                     return tmp.getId();
                 }
             return -1;
@@ -273,32 +258,21 @@ public class WaypointLogService extends Service implements LocationListener {
     /** GPS related Methods. **/
 
     public synchronized void onLocationChanged(Location loc) {
-        Log.d(LOG_TAG, "GPS location changed");
-
-        gps_intent.putExtra("long", loc.getLongitude());
-        gps_intent.putExtra("lat", loc.getLatitude());
-        sendBroadcast(gps_intent);
+        sender.sendCurrentPosition(loc);
 
         if (current_node != null) { // one_shot or POI mode
             current_node.setLocation(loc); // update node with proper gps fix
 
-            if (currentWay() == null) { // not one_shot mode
+            if (currentWay() == null) // not one_shot mode
                 // inform the MapActivity about the new POI
-                update_intent.putExtra("point_id", current_node.getId());
-                update_intent.putExtra("way_id", -1);
-                sendBroadcast(update_intent);
-            }
+                sender.sendPOIUpdate(current_node.getId());
 
             current_node = null; // no node waiting for gps pos any more
-        } else if (currentWay() != null && !one_shot) { // Continuous mode
+        } else if (currentWay() != null && !one_shot) // Continuous mode
             currentWay().newNode(loc); // poi in track was already added before
-        }
 
-        if (currentWay() != null) { // call for an update of the way
-            update_intent.putExtra("way_id", currentWay().getId());
-            update_intent.putExtra("point_id", -1);
-            sendBroadcast(update_intent);
-        }
+        if (currentWay() != null) // call for an update of the way
+            sender.sendWayUpdate(currentWay().getId());
     }
 
     public void onProviderDisabled(String arg0) {
