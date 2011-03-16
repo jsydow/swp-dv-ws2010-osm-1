@@ -83,7 +83,7 @@
     <string name="alert_loadtrackActivity_deleteTrack">Delete track?</string>
     
   	<!--  Optionmenu values -->
-    <string name="opt_startActivity_preferences">Prefernces</string>
+    <string name="opt_startActivity_preferences">Preferences</string>
     <string name="opt_startActivity_close">Close</string>
     <string name="opt_mapsforgeActivity_centerAtOwnPosition">My location</string>
     <string name="opt_mapsforgeActivity_activateMobileInternet">Online map</string>
