@@ -48,6 +48,13 @@ public class TagDb {
     }
 
     /**
+     * @return the {@link TagDbOpenHelper} variable
+     */
+    TagDbOpenHelper getHelper() {
+        return helper;
+    }
+
+    /**
      * Closes the database. Dot not forget to call this method!
      */
     public void closeDb() {
@@ -154,7 +161,7 @@ public class TagDb {
                          */
                         @Override
                         public void startDocument() throws SAXException {
-                            writeDb = helper.getWritableDatabase();
+                            writeDb = getHelper().getWritableDatabase();
                             writeDb.beginTransaction();
                             super.startDocument();
                         }
