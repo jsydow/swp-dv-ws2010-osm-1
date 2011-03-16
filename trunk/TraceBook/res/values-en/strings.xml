@@ -62,9 +62,13 @@
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90 beta</string>
 	<string name="tv_listviewedit_idTitle">Id: </string>
+	<string name="btn_startActivity_reseumeTrack">Resume track</string>
 	
 	<!--  Edit Text values-->
 	<string name="et_fulltextsearchActivity_search">Searching...</string>
+	
+	<!--  Toast values -->
+	<string name="toast_noTrackFound">Track could not be found.</string>
 	
 	<!--  AlertBox values -->
 	<string name="alert_global_cancel">Cancel</string>
