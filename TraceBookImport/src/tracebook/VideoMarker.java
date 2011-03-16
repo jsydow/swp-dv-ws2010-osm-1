@@ -72,7 +72,7 @@ public class VideoMarker extends ButtonMarker {
      */
     public VideoMarker(LatLon ll, String text, URL videourl,
             MarkerLayer parentlayer, double time, double offset) {
-        super(ll, text, "video.png", parentlayer, time, offset);
+        super(ll, text, "tracebook_video.png", parentlayer, time, offset);
         this.videourl = videourl;
         // TODO Auto-generated constructor stub
     }
