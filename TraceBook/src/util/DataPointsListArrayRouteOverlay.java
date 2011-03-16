@@ -185,7 +185,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     }
 
     /**
-     * creates a new OverlayItem for n if it has none yet
+     * Creates a new OverlayItem for n if it has none yet.
      * 
      * @param n
      *            DataNode that should get a gnubbel
