@@ -83,9 +83,6 @@ public class FullTextSearchActivity extends ListActivity {
      * The text watcher tracks changes in the search edit box. As soon as some
      * text matches with the description text, the result will be displayed in
      * the list view.
-     * 
-     * 
-     * 
      */
     static class MyTextWatcher implements TextWatcher {
 
@@ -95,7 +92,7 @@ public class FullTextSearchActivity extends ListActivity {
         FullTextSearchActivity act;
 
         /**
-         * indicates wheather the XML file containing tag names etc. has to be
+         * indicates whether the XML file containing tag names etc. has to be
          * read to update the database
          */
         boolean firstTime = true;
