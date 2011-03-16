@@ -246,7 +246,7 @@ public final class Helper {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
                     } else if (calculateArea(firstNode.toGeoPoint(),
-                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
+                            pending.toGeoPoint(), n.toGeoPoint()) < threshold * 10
                             && !n.hasAdditionalInfo())
                         iter.remove();
                     firstNode = pending;
