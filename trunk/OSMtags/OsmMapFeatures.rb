@@ -6,7 +6,7 @@ module OsmMapFeatures
     @tags = Hash.new
     @descriptions = Hash.new
     @flags = Hash.new
-    @parse_usefuls = true
+    @parse_useful_tags = true
 
     @number_regexps = [
         /^Nombre$/i,
@@ -17,7 +17,7 @@ module OsmMapFeatures
         /^[0-9]+-[0-9]+$/,
     ]
 
-    @anytext_regexps = [
+    @any_text_regexps = [
         /\s+/,
     ]
 
@@ -57,11 +57,11 @@ module OsmMapFeatures
         xml.map_features(:lang  => lang.downcase.sub(':', ''),
                          :xmlns => "http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags") do
             @tags.keys.sort.each do |key|
-                next if is_blacklisted?(key, @blacklists[:keys]);
+                next if is_blacklisted?(key, @blacklists[:keys])
 
                 xml.key(:v => key.gsub(/%/, '').gsub(/&.+?/, '').strip) do
                     @tags[key].keys.sort.each do |value|
-                        empty_value_has_been_printed_before = false; 
+                        empty_value_has_been_printed_before = false
 
                         (value == '' ? 'User defined' : value).split(/[\/,]/).sort.each do |v|
                             next if v.match(/\.\.\./)
@@ -87,7 +87,7 @@ module OsmMapFeatures
                                     href = @tags[key][value].scan(/href="(.*?)"/).to_s.strip
                                     xml.uri("http://wiki.openstreetmap.org#{(lang == '' ? href : href.gsub(/Tag:/, "#{lang}Tag:"))}") if href != ''
 
-                                    if (@parse_usefuls and href != '')
+                                    if (@parse_useful_tags and href != '')
                                         useful_tags = get_useful_tags("http://wiki.openstreetmap.org#{href.to_s.strip}")
                                         
                                         useful_tags.sort.each do |useful_tag|
@@ -108,7 +108,7 @@ module OsmMapFeatures
     	false
     end
     
-    def is_any_text?(s, anytext_regexps = @anytext_regexps)
+    def is_any_text?(s, anytext_regexps = @any_text_regexps)
 		anytext_regexps.each { |regexp| return true if s.match(regexp) }        
         false    	
     end
