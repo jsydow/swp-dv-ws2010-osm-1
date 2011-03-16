@@ -48,6 +48,13 @@ public class TagDb {
     }
 
     /**
+     * 
+     */
+    public void closeDb() {
+        db.close();
+    }
+
+    /**
      * @param searchText
      *            The text to search for.
      * @param language
@@ -55,11 +62,11 @@ public class TagDb {
      * @return The
      */
     public List<TagSearchResult> getTag(String searchText, String language) {
-        if (db == null) {
+        if (db == null || !db.isOpen()) {
             openDb();
         }
 
-        if (db != null) {
+        if (db != null && db.isOpen()) {
             List<TagSearchResult> tags = new Vector<TagSearchResult>();
 
             fillTagListWithSearchResults(searchText, language, tags);
@@ -73,24 +80,25 @@ public class TagDb {
 
     private void fillTagListWithSearchResults(String searchText,
             String language, List<TagSearchResult> tags) {
-        Cursor result = db.query(TagDbOpenHelper.getTableName(),
-                new String[] { "name" }, null, null, null, null, null);
-        // Cursor result = db.query(TagDbOpenHelper.getTableName(),
-        // TagDbOpenHelper.getColumns(), "(name LIKE '%" + searchText
-        // + "%' OR keywords LIKE '%" + searchText
-        // + "%' OR description LIKE '%" + searchText
-        // + "%') AND language LIKE '" + language + "'", null,
-        // null, null, null);
 
-        if (result.moveToFirst()) {
-            while (result.isAfterLast()) {
-                // insert row to tags list
-                tags.add(TagDbOpenHelper.getResultFromCursor(result));
+        if (searchText.length() >= 2) {
+            Cursor result = db.query(TagDbOpenHelper.getTableName(),
+                    TagDbOpenHelper.getColumns(), "(name LIKE '%" + searchText
+                            + "%' OR keywords LIKE '%" + searchText
+                            + "%' OR description LIKE '%" + searchText
+                            + "%') AND language LIKE '" + language + "'", null,
+                    null, null, null);
 
-                result.moveToNext();
+            if (result.moveToFirst()) {
+                while (!result.isAfterLast()) {
+                    // insert row to tags list
+                    tags.add(TagDbOpenHelper.getResultFromCursor(result));
+
+                    result.moveToNext();
+                }
             }
+            result.close();
         }
-        result.close();
     }
 
     /**
@@ -103,7 +111,6 @@ public class TagDb {
 
             Xml.parse(new InputStreamReader(new FileInputStream(file)),
                     new DefaultHandler() {
-
                         SQLiteDatabase writeDb;
 
                         /*
@@ -113,6 +120,7 @@ public class TagDb {
                          */
                         @Override
                         public void endDocument() throws SAXException {
+                            writeDb.endTransaction();
                             writeDb.close();
                             super.endDocument();
                         }
@@ -125,8 +133,9 @@ public class TagDb {
                          */
                         @Override
                         public void startDocument() throws SAXException {
-                            super.startDocument();
                             writeDb = helper.getWritableDatabase();
+                            writeDb.beginTransaction();
+                            super.startDocument();
                         }
 
                         String language = null;

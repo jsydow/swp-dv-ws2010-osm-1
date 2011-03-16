@@ -60,21 +60,33 @@ public class FullTextSearchActivity extends ListActivity {
 
         public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                 int arg3) {
+            final String text = arg0.toString();
 
             Log.d(ACTIVITY_SERVICE, arg0.toString());
             (new Thread() {
                 @Override
                 public void run() {
+                    Log.d("DBTHREAD", "start");
+                    long startt = System.currentTimeMillis();
                     TagDb db = new TagDb(act);
                     if (firstTime) {
-                        db.initDbWithFile(DataStorage.getTraceBookDirPath()
-                                + File.separator + "tags.DE.xml");
                         firstTime = false;
+                        if (db.getTag(text, "de").size() == 0) {
+                            Log.d("DBTHREAD", "init db");
+                            db.initDbWithFile(DataStorage.getTraceBookDirPath()
+                                    + File.separator + "tags.DE.xml");
+                        }
+                        Log.d("DBTHREAD", "init finish");
                     }
-                    List<TagSearchResult> tags = db.getTag("", "de");
+                    List<TagSearchResult> tags = db.getTag(text, "de");
                     for (TagSearchResult tsr : tags) {
                         Log.d("DB_TEST", tsr.getKey() + "=" + tsr.getValue());
                     }
+                    db.closeDb();
+                    Log.d("DBTHREAD", "stop tagslistsize=" + tags.size());
+                    Log.d("DBTHREAD",
+                            "time consumed: "
+                                    + (System.currentTimeMillis() - startt));
                 }
             }).start();
             // TagDb db = new TagDb(act);
