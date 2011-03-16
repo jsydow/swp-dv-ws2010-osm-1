@@ -213,8 +213,8 @@ public class WaypointLogService extends Service implements LocationListener {
             storage.getCurrentTrack().setCurrentWay(null);
 
             if (tmp != null)
-                /* do not store empty ways */
-                if (tmp.getNodes().size() == 0)
+                /* do not store non-ways */
+                if (tmp.getNodes().size() < 2)
                     storage.getCurrentTrack().deleteWay(tmp.getId());
                 else {
                     if (!one_shot) {

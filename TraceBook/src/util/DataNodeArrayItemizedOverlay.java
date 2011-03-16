@@ -173,6 +173,29 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     /**
+     * When a {@link DataNode} has been changed, update it's visualization on
+     * the DataNodeArrayItemizedOverlay.
+     * 
+     * @param node
+     *            the node whichs position or OverlayItem has changed
+     */
+    public void updateItem(DataNode node) {
+        boolean found = false;
+        synchronized (this.overlayItems) {
+            for (Pair<OverlayItem, Integer> item : overlayItems)
+                if (item.second.intValue() == node.getId()) {
+                    item.first = node.getOverlayItem();
+                    found = true;
+                    break;
+                }
+        }
+        if (!found)
+            addOverlay(node); // addOverlay populates the Overlay on its own
+        else
+            populate();
+    }
+
+    /**
      * Add a list of POIs to the overlay.
      * 
      * @param nodes

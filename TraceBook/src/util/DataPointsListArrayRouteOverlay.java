@@ -137,6 +137,12 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
                 color.first, color.second));
         addRoute(way.getOverlayRoute());
+
+        if (showGnubbel)
+            for (DataNode n : way.getNodes()) {
+                putGnubbel(n);
+                pointsOverlay.updateItem(n);
+            }
     }
 
     /**
@@ -155,9 +161,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
 
     private void addGnubbel(DataPointsList way) {
         for (DataNode n : way.getNodes()) {
-            if (n.getOverlayItem() == null)
-                n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
-                        R.drawable.dot_blue, context, true));
+            putGnubbel(n);
             pointsOverlay.addOverlay(n);
         }
     }
@@ -178,6 +182,18 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
                 addGnubbel(dpl);
             else
                 removeGnubbel(dpl);
+    }
+
+    /**
+     * creates a new OverlayItem for n if it has none yet
+     * 
+     * @param n
+     *            DataNode that should get a gnubbel
+     */
+    private void putGnubbel(DataNode n) {
+        if (n.getOverlayItem() == null)
+            n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
+                    R.drawable.dot_blue, context, true));
     }
 
 }
