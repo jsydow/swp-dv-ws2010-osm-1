@@ -15,7 +15,7 @@ import android.util.Log;
  * Basic class for any object that is stored in OSM. All objects have an id and
  * some tags. Additionally all objects can have media attached.
  * 
- *
+ * 
  * 
  */
 public abstract class DataMapObject extends DataMediaHolder implements
@@ -84,6 +84,16 @@ public abstract class DataMapObject extends DataMediaHolder implements
         if (id > arg0.intValue())
             return 1;
         return 0;
+    }
+
+    /**
+     * Checks whether additional information like Tags or Media data are
+     * available for this {@link DataMapObject}.
+     * 
+     * @return true if tags or media exists
+     */
+    public boolean hasAdditionalInfo() {
+        return getTags().size() > 0 || getMedia().size() > 0;
     }
 
     /**

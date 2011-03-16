@@ -22,7 +22,7 @@ import core.data.DataTrack;
 /**
  * general helper class to feature some useful functions.
  * 
- *
+ * 
  * 
  */
 public final class Helper {
@@ -245,9 +245,9 @@ public final class Helper {
                     if (calibrate) {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
-                        // TODO: don't remove tagged points
                     } else if (calculateArea(firstNode.toGeoPoint(),
-                            pending.toGeoPoint(), n.toGeoPoint()) < threshold)
+                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
+                            && !n.hasAdditionalInfo())
                         iter.remove();
                     firstNode = pending;
                 }
