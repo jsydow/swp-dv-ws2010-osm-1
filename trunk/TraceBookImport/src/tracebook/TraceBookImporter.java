@@ -24,7 +24,6 @@ import org.openstreetmap.josm.data.osm.DataSet;
 import org.openstreetmap.josm.data.osm.WayData;
 import org.openstreetmap.josm.gui.layer.GpxLayer;
 import org.openstreetmap.josm.gui.layer.OsmDataLayer;
-import org.openstreetmap.josm.gui.layer.markerlayer.AudioMarker;
 import org.openstreetmap.josm.gui.layer.markerlayer.ImageMarker;
 import org.openstreetmap.josm.gui.layer.markerlayer.Marker;
 import org.openstreetmap.josm.gui.layer.markerlayer.MarkerLayer;
@@ -189,14 +188,17 @@ public class TraceBookImporter extends FileImporter {
                                 if (mr == null)
                                     Main.debug("THIS F-ING MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
-                            } else if (uri.endsWith(".wav")) {
+                            } else if (uri.endsWith(".wav")
+                                    || uri.endsWith(".m4a")) {
                                 Main.debug("Trying to parse audiomarker");
-                                Marker mr = AudioMarker.create(latlon,
-                                        "Audio comment", uri, ml, 1.0, 1.0);
+                                Marker mr = tracebook.AudioMarker.create(
+                                        latlon, "Audio comment", uri, ml, 1.0,
+                                        1.0);
                                 if (mr == null)
                                     Main.debug("THIS F-ING MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
-                            } else if (uri.endsWith(".3gp")) {
+                            } else if (uri.endsWith(".3gp")
+                                    || uri.endsWith(".mp4")) {
                                 Main.debug("Trying to parse videomarker");
                                 Marker mr = VideoMarker.create(latlon,
                                         "Video comment", uri, ml, 1.0, 1.0);

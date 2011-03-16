@@ -15,13 +15,13 @@ import org.openstreetmap.josm.gui.layer.markerlayer.MarkerLayer;
 
 /**
  * 
- * A class for displaying embedded text data from TraceBookTrack(*.tbt) files
+ * A class for displaying embedded audio data from TraceBookTrack(*.tbt) files
  * recorded with android.
  * 
  * @author anubis
  */
-public class TextMarker extends ButtonMarker {
-    private URL texturl;
+public class AudioMarker extends ButtonMarker {
+    private URL audiourl;
 
     /**
      * Verifies the parameter whether a new AudioMarker can be created and
@@ -33,20 +33,20 @@ public class TextMarker extends ButtonMarker {
      * @param text
      *            Text to display for the Marker
      * @param url
-     *            URL to the text file
+     *            URL to the audio file
      * @param parentLayer
-     *            The layer to create the TextMarker on
+     *            The layer to create the AudioMarker on
      * @param time
      *            undocumented parameter for the super constructor
      * @param offset
      *            undocumented parameter for the super constructor
-     * @return A new TextMarker or null on fail
+     * @return A new AudioMarker or null on fail
      */
-    public static TextMarker create(LatLon ll, String text, String url,
+    public static AudioMarker create(LatLon ll, String text, String url,
             MarkerLayer parentLayer, double time, double offset) {
 
         try {
-            return new TextMarker(ll, text, new URL(url), parentLayer, time,
+            return new AudioMarker(ll, text, new URL(url), parentLayer, time,
                     offset);
         } catch (MalformedURLException e) {
             return null;
@@ -55,25 +55,25 @@ public class TextMarker extends ButtonMarker {
     }
 
     /**
-     * Creates a new TextMarker with the given ParentLayer.
+     * Creates a new AudioMarker with the given ParentLayer.
      * 
      * @param ll
      *            LatLon value for the location
      * @param text
      *            Text to display for the Marker
-     * @param texturl
-     *            URL to the text file
+     * @param audiourl
+     *            URL to the audio file
      * @param parentlayer
-     *            The layer to create the TextMarker on
+     *            The layer to create the AudioMarker on
      * @param time
      *            undocumented parameter for the super constructor
      * @param offset
      *            undocumented parameter for the super constructor
      */
-    public TextMarker(LatLon ll, String text, URL texturl,
+    public AudioMarker(LatLon ll, String text, URL audiourl,
             MarkerLayer parentlayer, double time, double offset) {
-        super(ll, text, "tracebook_text.png", parentlayer, time, offset);
-        this.texturl = texturl;
+        super(ll, text, "tracebook_audio.png", parentlayer, time, offset);
+        this.audiourl = audiourl;
         // TODO Auto-generated constructor stub
     }
 
@@ -85,6 +85,9 @@ public class TextMarker extends ButtonMarker {
      */
     @Override
     public void actionPerformed(ActionEvent ev) {
+        // play();
+        Main.debug("The audio marker for file " + audiourl.getFile());
+
         Desktop desktop = null;
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
@@ -95,14 +98,14 @@ public class TextMarker extends ButtonMarker {
         }
 
         try {
-            desktop.open(new File(texturl.toURI()));
+            desktop.open(new File(audiourl.toURI()));
         } catch (IOException e) {
-            Main.debug("IOException while trying to open textlink: "
-                    + texturl.toString());
+            Main.debug("IOException while trying to open audiolink: "
+                    + audiourl.toString());
             e.printStackTrace();
         } catch (URISyntaxException e) {
-            Main.debug("URISyntaxException while trying to open textlink: "
-                    + texturl.toString());
+            Main.debug("URISyntaxException while trying to open audiolink: "
+                    + audiourl.toString());
             e.printStackTrace();
         }
 
