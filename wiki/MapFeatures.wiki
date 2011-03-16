@@ -5,6 +5,8 @@ A tarball containing XML files for several languages (now with more data) is ava
 
 = XML schema =
 
+Can be downloaded [http://swp-dv-ws2010-osm-1.googlecode.com/svn/trunk/OSMtags/OSM_tags.xsd from SVN].
+
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema targetNamespace="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags">
