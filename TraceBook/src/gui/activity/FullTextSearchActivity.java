@@ -31,10 +31,10 @@ public class FullTextSearchActivity extends ListActivity {
      * @author sahin
      * 
      */
-    static class searchThread extends Thread {
+    static class SearchThread extends Thread {
 
         /**
-         * Reference to the FullSearchActivity
+         * Reference to the FullSearchActivity.
          */
         FullTextSearchActivity act;
 
@@ -61,7 +61,7 @@ public class FullTextSearchActivity extends ListActivity {
          * @param searchText
          *            search text to search for
          */
-        public searchThread(FullTextSearchActivity act, int resIndex,
+        public SearchThread(FullTextSearchActivity act, int resIndex,
                 String searchText) {
             this.act = act;
             this.resIndex = resIndex;
@@ -121,7 +121,7 @@ public class FullTextSearchActivity extends ListActivity {
         public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                 int arg3) {
             final String searchText = arg0.toString();
-            new searchThread(act, act.increaseIndex(), searchText).start();
+            new SearchThread(act, act.increaseIndex(), searchText).start();
         }
     }
 
