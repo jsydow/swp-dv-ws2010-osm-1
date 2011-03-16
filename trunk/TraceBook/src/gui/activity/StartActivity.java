@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import core.data.DataStorage;
 import core.data.DataTrack;
+import core.data.db.TagDb;
 import core.logger.ServiceConnector;
 
 /**
@@ -37,6 +38,18 @@ public class StartActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_startactivity);
         setTitle(R.string.string_startActivity_title);
+        final TagDb db = new TagDb(this);
+
+        (new Thread() {
+            @Override
+            public void run() {
+
+                if (db.getRowCountForLanguage("de") < 1)
+                    db.initDbWithFile(Environment.getExternalStorageDirectory()
+                            + File.separator + "tags.DE.xml");
+
+            }
+        }).start();
 
         // Init ServiceConnector
         ServiceConnector.startService(this);

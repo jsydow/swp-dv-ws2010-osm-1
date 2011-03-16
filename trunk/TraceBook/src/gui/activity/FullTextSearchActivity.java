@@ -4,7 +4,6 @@ import gui.adapter.GenericAdapter;
 import gui.adapter.GenericAdapterData;
 import gui.adapter.GenericItemDescription;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +12,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
-import core.data.DataStorage;
 import core.data.db.TagDb;
 import core.data.db.TagSearchResult;
 
@@ -27,6 +24,60 @@ import core.data.db.TagSearchResult;
 public class FullTextSearchActivity extends ListActivity {
 
     private int currResIndex;
+
+    /**
+     * A simple thread class which deals with search jobs in our database.
+     * 
+     * @author sahin
+     * 
+     */
+    static class searchThread extends Thread {
+
+        /**
+         * Reference to the FullSearchActivity
+         */
+        FullTextSearchActivity act;
+
+        /**
+         * Current resolution index of this thread to prevent old thread from
+         * overriding result form new threads.
+         */
+        int resIndex;
+
+        /**
+         * Reference to a search string.
+         */
+        String searchText;
+
+        /**
+         * 
+         * The constructor takes different references to perform the search task
+         * and to tell the gui to update its content.
+         * 
+         * @param act
+         *            Reference to the FullTextSearchActivity
+         * @param resIndex
+         *            current result index
+         * @param searchText
+         *            search text to search for
+         */
+        public searchThread(FullTextSearchActivity act, int resIndex,
+                String searchText) {
+            this.act = act;
+            this.resIndex = resIndex;
+            this.searchText = searchText;
+        }
+
+        @Override
+        public void run() {
+            TagDb db = new TagDb(act);
+
+            List<TagSearchResult> result = db.getTag(searchText, "de");
+            db.closeDb();
+            act.fillResultsToList(result, resIndex);
+
+        }
+    }
 
     /**
      * The text watcher tracks changes in the search edit box. As soon as some
@@ -72,46 +123,8 @@ public class FullTextSearchActivity extends ListActivity {
 
         public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                 int arg3) {
-            final String text = arg0.toString();
-
-            Log.d(ACTIVITY_SERVICE, arg0.toString());
-            (new Thread() {
-                @Override
-                public void run() {
-                    Log.d("DBTHREAD", "start ");
-                    long startt = System.currentTimeMillis();
-                    TagDb db = new TagDb(act);
-                    if (firstTime) {
-                        firstTime = false;
-                        if (db.getRowCountForLanguage("de") < 1) {
-                            Log.d("DBTHREAD", "init db");
-                            db.initDbWithFile(DataStorage.getTraceBookDirPath()
-                                    + File.separator + "tags.DE.xml");
-                        }
-                        Log.d("DBTHREAD", "init finish");
-                    }
-                    List<TagSearchResult> tags = db.getTag(text, "de");
-                    for (TagSearchResult tsr : tags) {
-                        Log.d("DB_TEST", tsr.getKey() + "=" + tsr.getValue());
-                    }
-                    db.closeDb();
-                    Log.d("DBTHREAD", "stop tagslistsize=" + tags.size());
-                    Log.d("DBTHREAD",
-                            "time consumed: "
-                                    + (System.currentTimeMillis() - startt));
-                }
-            }).start();
-            // TagDb db = new TagDb(act);
-            // if (firstTime) {
-            // db.initDbWithFile(DataStorage.getTraceBookDirPath()
-            // + File.separator + "tags.DE.xml");
-            // firstTime = false;
-            // }
-            // List<TagSearchResult> tags = db.getTag(arg0.toString(), "de");
-            // for (TagSearchResult tsr : tags) {
-            // Log.d("DB_TEST", tsr.getKey() + "=" + tsr.getValue());
-            // }
-
+            final String searchText = arg0.toString();
+            new searchThread(act, act.increaseIndex(), searchText).start();
         }
     }
 
@@ -123,7 +136,6 @@ public class FullTextSearchActivity extends ListActivity {
 
         EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
         editBox.addTextChangedListener(new MyTextWatcher(this));
-
     }
 
     /**
@@ -145,28 +157,45 @@ public class FullTextSearchActivity extends ListActivity {
             return;
 
         GenericItemDescription desc = new GenericItemDescription();
-        desc.addResourceId("SearchValue", R.id.tv_listviewedit_id);
+        desc.addResourceId("Comment", R.id.tv_fulltextsearch_comment);
+        desc.addResourceId("Category", R.id.tv_fulltextsearch_category);
+        desc.addResourceId("Value", R.id.tv_fulltextsearch_value);
 
         List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
 
         for (TagSearchResult res : tags) {
             GenericAdapterData item = new GenericAdapterData(desc);
-            item.setText("SearchValue", res.getDescription());
+
+            item.setText("Comment", res.getDescription());
+            item.setText("Category", res.getKey());
+            item.setText("Value", res.getValue());
             data.add(item);
         }
 
-        GenericAdapter adapter = new GenericAdapter(this,
+        final GenericAdapter adapter = new GenericAdapter(this,
                 R.layout.listview_fulltextsearch, R.id.list, data, null);
 
-        setListAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                setListAdapter(adapter);
+                adapter.notifyDataSetChanged();
 
+            }
+
+        });
     }
 
+    /**
+     * @return return the current result index
+     */
     public synchronized int getResIndex() {
         return currResIndex;
     }
 
+    /**
+     * 
+     * @return returns the next result index
+     */
     public synchronized int increaseIndex() {
         return ++currResIndex;
 
