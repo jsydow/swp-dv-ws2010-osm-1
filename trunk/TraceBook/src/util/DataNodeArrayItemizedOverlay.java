@@ -238,17 +238,32 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
     /**
      * This function removes all OverlayItems, which are not associated with any
-     * {@link DataNode}. Warning: This function effectively has a runtime of n³!
+     * {@link DataNode}. It also updates all OverlayItems associated with a
+     * DataNode to the DataNodes position.
+     * <p>
+     * Warning: This function effectively has a runtime of n³!
+     * </p>
      */
     public void removeOrphans() {
         synchronized (this.overlayItems) {
             Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
             while (iter.hasNext()) {
-                int id = iter.next().second.intValue();
-                if (id > 0 && Helper.currentTrack().getNodeById(id) == null)
-                    iter.remove();
+                Pair<OverlayItem, Integer> item = iter.next();
+                int id = item.second.intValue();
+                if (id > 0) {
+                    DataNode node = Helper.currentTrack().getNodeById(id);
+                    if (node == null) // remove orphan
+                        iter.remove();
+                    else {
+                        // update OverlayItem
+                        item.first = Helper.getOverlayItem(node.toGeoPoint(),
+                                item.first.getMarker());
+                        node.setOverlayItem(item.first);
+                    }
+                }
             }
         }
+        populate();
     }
 
     @Override
