@@ -1,32 +1,50 @@
 #!/bin/sh
 
-if [ $# -eq 0 ]
+LANGUAGES="de en fr gr pl tr"
+
+PROJECTDIR="$HOME/eclipse/TraceBook"
+BASEFILE="res/values/strings.xml"
+
+if [ "x$USER" != "xdd" ]
 then
-    echo "USAGE: ldiff.sh LANG"
-    echo "  LANG is the 2-letter language code representation."
+    PROJECTDIR="."
+fi
+
+if [ ! -r "$PROJECTDIR/$BASEFILE" ]
+then
+    echo "$PROJECTDIR/$BASEFILE" does not exist.
     exit 1
 fi
 
-OLDFILE="res/values/strings.xml"
-NEWFILE="res/values-$1/strings.xml"
+mksort() {
+    BASEFILE=$1
+    TMPFILE=$2
 
-if [ ! -r $OLDFILE ]
-then
-    echo $OLDFILE does not exist.
-    exit 2
-fi
+    if [ -r "$BASEFILE" ]
+    then
+        grep 'string name="' "$BASEFILE" | sed -e 's/>.*//g' -e 's/.*name=//g' -e 's/"//g' | sort -f | uniq > $TMPFILE
+    fi
+}
 
-if [ ! -r $NEWFILE ]
-then
-    echo $NEWFILE does not exist.
-    exit 3
-fi
+BASETMP=`mktemp`
 
-OLDTMP=`mktemp`
-NEWTMP=`mktemp`
+mksort "$PROJECTDIR/$BASEFILE" "$BASETMP"
+for LANG in $LANGUAGES
+do
+    NEWFILE="$PROJECTDIR/res/values-$LANG/strings.xml"
 
-grep 'string name="' "$OLDFILE" | sed -e 's/>.*//g' -e 's/.*name=//g' -e 's/"//g' | sort -u > $OLDTMP
-grep 'string name="' "$NEWFILE" | sed -e 's/>.*//g' -e 's/.*name=//g' -e 's/"//g' | sort -u > $NEWTMP
+    if [ -r $NEWFILE ]
+    then
+        NEWTMP=`mktemp`
 
-diff -w -U 0 $OLDTMP $NEWTMP | grep ^\[+-\]
-rm -f $OLDTMP $NEWTMP
+        mksort "$NEWFILE" "$NEWTMP"
+
+        echo "For $NEWFILE:"
+        diff -w -U 0 $BASETMP $NEWTMP | grep -v '\-\-\-' | grep -v '+++' | grep ^\[+-\]
+        echo
+
+        rm -f $NEWTMP
+    fi
+done
+
+rm -f $BASETMP
