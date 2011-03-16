@@ -19,7 +19,7 @@ import core.media.VideoRecorder;
  * button each. This activity is closed automatically once recording the video
  * has been stopped.
  * 
- *
+ * 
  */
 public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {
@@ -72,7 +72,7 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordBtn(View view) {
-        // camera.unlock();
+        camera.unlock();
 
         try {
             recorder.prepare(camera, surfaceHolder.getSurface());
@@ -111,7 +111,7 @@ public class RecordVideoActivity extends Activity implements
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // camera.lock();
+        camera.lock();
         camera.stopPreview();
         camera.release();
     }
