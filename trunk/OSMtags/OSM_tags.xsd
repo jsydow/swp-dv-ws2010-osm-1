@@ -16,11 +16,14 @@
 			<xs:sequence>
 				<xs:element ref="description" minOccurs="0" />
 				<xs:element ref="uri" minOccurs="0" />
+				<xs:element ref="img" minOccurs="0" />
+				<xs:element ref="keywords" minOccurs="0" />
 				<xs:element ref="useful" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="isArea" type="xs:boolean" default="false" />
 			<xs:attribute name="isNode" type="xs:boolean" default="false" />
 			<xs:attribute name="isWay" type="xs:boolean" default="false" />
+			<xs:attribute name="name" type="xs:string" />
 			<xs:attribute name="type" type="xs:string" use="required" />
 			<xs:attribute name="v" type="xs:string" use="required" />
 		</xs:complexType>
@@ -38,7 +41,13 @@
 			<xs:attribute name="v" type="xs:string" use="required" />
 		</xs:complexType>
 	</xs:element>
-	
+
+	<!-- Element: keywords -->
+	<xs:element name="keywords" type="xs:string" />
+
+	<!-- Element: img -->
+	<xs:element name="img" type="xs:anyURI" />
+
 	<!-- Root element -->
 	<xs:element name="map_features">
 		<xs:complexType>
