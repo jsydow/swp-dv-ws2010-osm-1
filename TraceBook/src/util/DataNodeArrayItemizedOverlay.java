@@ -236,6 +236,21 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         }
     }
 
+    /**
+     * This function removes all OverlayItems, which are not associated with any
+     * {@link DataNode}. Warning: This function effectively has a runtime of n³!
+     */
+    public void removeOrphans() {
+        synchronized (this.overlayItems) {
+            Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
+            while (iter.hasNext()) {
+                int id = iter.next().second.intValue();
+                if (id > 0 && Helper.currentTrack().getNodeById(id) == null)
+                    iter.remove();
+            }
+        }
+    }
+
     @Override
     public int size() {
         synchronized (this.overlayItems) {
@@ -246,7 +261,10 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     @Override
     protected OverlayItem createItem(int i) {
         synchronized (this.overlayItems) {
-            return this.overlayItems.get(i).first;
+            if (i < overlayItems.size())
+                return this.overlayItems.get(i).first;
+            else
+                return null;
         }
     }
 
