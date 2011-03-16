@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags">
+	<!--  Element: key -->
+	<xs:element name="key">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="value" maxOccurs="unbounded"/>			
+			</xs:sequence>
+			<xs:attribute name="v" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+				
+	<!--  Element: value -->
+	<xs:element name="value">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="description" minOccurs="0" />
+				<xs:element ref="uri" minOccurs="0" />
+				<xs:element ref="useful" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="isArea" type="xs:boolean" default="false" />
+			<xs:attribute name="isNode" type="xs:boolean" default="false" />
+			<xs:attribute name="isWay" type="xs:boolean" default="false" />
+			<xs:attribute name="type" type="xs:string" use="required" />
+			<xs:attribute name="v" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Element: description -->
+	<xs:element name="description" type="xs:string" />
+	
+	<!-- Element: uri -->
+	<xs:element name="uri" type="xs:anyURI" />
+	
+	<!-- Element: useful -->
+	<xs:element name="useful">
+		<xs:complexType>
+			<xs:attribute name="v" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- Root element -->
+	<xs:element name="map_features">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="key" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="lang" type="xs:string" default="en" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
