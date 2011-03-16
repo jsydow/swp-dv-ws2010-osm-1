@@ -21,11 +21,6 @@ module OsmMapFeatures
         /\s+/,
     ]
 
-    @blacklists = Hash.new
-    @blacklists[:keys] = [
-        "Hilfe für Kartennutzer"
-    ]
-
     def parse_keys_and_values(lang = '')
         f = get_page("http://wiki.openstreetmap.org/wiki/#{lang}Map_Features")
         tags = f.scan(/<tr.*?>\s+<td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td>/m)
@@ -101,11 +96,6 @@ module OsmMapFeatures
                 end
             end
         end
-    end
-    
-    def is_blacklisted?(s, blacklist)
-    	blacklist.each { |blacklisted_item| return true if s.match(blacklisted_item) }
-    	false
     end
     
     def is_any_text?(s, any_text_regexps = @any_text_regexps)
