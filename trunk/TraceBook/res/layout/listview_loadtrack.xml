@@ -7,10 +7,12 @@
 	<ListView android:id="@+id/list" android:layout_width="1px"
 		android:layout_height="1px" android:layout_weight="1">
 	</ListView>
-	<TextView android:text="Track" android:id="@+id/load_track_item_text"
+	<TextView android:text="Track" android:id="@+id/tv_listviewloadtrack_track"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:includeFontPadding="true" android:textSize="22sp"
-		android:paddingLeft="7dp" android:paddingTop="7dp"
-		android:paddingBottom="7dp">
-	</TextView>
+		android:includeFontPadding="true" android:textSize="18sp"
+		android:paddingLeft="7dp" android:paddingTop="7dp" />
+
+	<TextView android:id="@+id/tv_listviewloadtrack_comment"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:paddingLeft="7dp" android:textSize="11dp"/>
 </LinearLayout>

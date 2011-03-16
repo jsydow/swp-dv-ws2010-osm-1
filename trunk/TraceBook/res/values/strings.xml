@@ -82,6 +82,8 @@
     <string name="alert_newtrackActivity_addTrackNotice">Tracknotiz hinzufügen</string>
     <string name="alert_loadtrackActivity_rename">Track umbenennen</string>
     <string name="alert_loadtrackActivity_deleteTrack">Track löschen?</string>
+    <string name="alert_aboutActivity_pleaseWait">Bitt warten....</string>
+    <string name="alert_aboutActivity_loadingLicense">Lizens wird geladen.</string>
     
   	<!--  Optionmenu values -->
     <string name="opt_startActivity_preferences">Einstellungen</string>
