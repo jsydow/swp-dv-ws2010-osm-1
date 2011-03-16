@@ -24,9 +24,9 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
     private static final String TABLE_DROP = "DROP TABLE IF EXISTS "
             + TABLE_NAME;
 
-    // + DATABASE_NAME + "." + TABLE_NAME;
-
     /**
+     * Returns the name of the table.
+     * 
      * @return the tableName
      */
     static String getTableName() {
@@ -34,6 +34,8 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Returns a list of all columns.
+     * 
      * @return all columns
      */
     static String[] getColumns() {
@@ -42,16 +44,11 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * @return The selection String for the query-call of the SQLiteDatabase.
-     */
-    static String getSelection() {
-        return "(name LIKE ? OR keywords LIKE ? OR description LIKE ?) AND language EQ ?";
-    }
-
-    /**
+     * Creates a TagSearchResult object out of a cursor position.
+     * 
      * @param result
      *            The initialised cursor.
-     * @return The result object of the row
+     * @return The result object of the row.
      */
     static TagSearchResult getResultFromCursor(Cursor result) {
         String name = result.getString(result.getColumnIndex("name"));
@@ -70,6 +67,8 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Default constructor.
+     * 
      * @param context
      *            A Context, probably the Activity that starts the SQL
      *            connection

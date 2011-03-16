@@ -20,21 +20,21 @@ import android.util.Log;
 import android.util.Xml;
 
 /**
- *
+ * Provides access to the database containing all the tags with their
+ * description.
  * 
  */
 public class TagDb {
 
-    /**
-     * 
-     */
-    TagDbOpenHelper helper;
+    private TagDbOpenHelper helper;
     private Context context;
     private SQLiteDatabase db;
 
     /**
+     * Constructor, opens the database.
+     * 
      * @param context
-     *            A context, probably the activity that uses the db.
+     *            A context, probably the activity that uses the database.
      */
     public TagDb(Context context) {
         super();
@@ -48,18 +48,20 @@ public class TagDb {
     }
 
     /**
-     * 
+     * Closes the database. Dot not forget to call this method!
      */
     public void closeDb() {
         db.close();
     }
 
     /**
+     * Searches the database for a text in its description, keywords and name.
+     * 
      * @param searchText
      *            The text to search for.
      * @param language
-     *            s
-     * @return The
+     *            The language abbreviation as string like "de" or "en".
+     * @return The list of search results.
      */
     public List<TagSearchResult> getTag(String searchText, String language) {
         if (db == null || !db.isOpen()) {
@@ -102,6 +104,8 @@ public class TagDb {
     }
 
     /**
+     * Loads an XML file into the database.
+     * 
      * @param xmlFile
      *            The XML file to parse.
      */
