@@ -28,6 +28,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
@@ -38,7 +39,7 @@ import core.media.Recorder;
  * The purpose of this activity is to add and edit tags to an DataMapObject
  * where an DataMapObject can be anything from poi to area.
  * 
- *
+ * 
  * 
  */
 public class AddPointActivity extends ListActivity {
@@ -77,9 +78,14 @@ public class AddPointActivity extends ListActivity {
                 int nodeId = extras.getInt("DataNodeId");
                 node = DataStorage.getInstance().getCurrentTrack()
                         .getDataMapObjectById(nodeId);
+                if (node == null) {
+                    Toast.makeText(this, "Node does not exist!",
+                            Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
-
-        }
+        } else
+            finish();
 
         setContentView(R.layout.layout_addpointactivity);
         setTitle(R.string.string_addpointActivity_title);

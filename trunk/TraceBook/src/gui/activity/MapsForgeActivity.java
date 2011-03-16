@@ -38,7 +38,7 @@ import core.logger.WaypointLogService;
  * overlays on it. In the future it will also be possible to modify said nodes
  * and ways.
  * 
- *
+ * 
  * 
  */
 public class MapsForgeActivity extends MapActivity {
@@ -241,7 +241,7 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.opt_mapsforgeActivity_activateMobileInternet:
 
             if (useInternet) {
-                // TODO: use string ressource!
+                // TODO: use string resource!
                 item.setTitle("Use online rendering");
                 changeMapViewToOfflineRendering();
             } else {
@@ -344,7 +344,7 @@ public class MapsForgeActivity extends MapActivity {
      * order to update the current location and overlays if position or overlay
      * data has changed.
      * 
-     *
+     * 
      * 
      */
     private class GPSReceiver extends BroadcastReceiver {
@@ -426,7 +426,7 @@ public class MapsForgeActivity extends MapActivity {
                 }
             } else if (intend.getAction().equals(WaypointLogService.END_WAY)) {
                 routesOverlay.reDrawWay(intend.getExtras().getInt("way_id"));
-
+                pointsOverlay.removeOrphans();
             }
         }
 
