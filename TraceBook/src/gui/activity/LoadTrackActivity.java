@@ -36,7 +36,7 @@ import core.data.DataTrackInfo;
 /**
  * The Class LoadTrackActivity.
  * 
- *
+ * 
  */
 public class LoadTrackActivity extends ListActivity {
 
@@ -280,13 +280,23 @@ public class LoadTrackActivity extends ListActivity {
 
         GenericItemDescription desc = new GenericItemDescription();
 
-        desc.addResourceId("TrackName", R.id.load_track_item_text);
-
+        desc.addResourceId("TrackName", R.id.tv_listviewloadtrack_track);
+        desc.addResourceId("TrackComment", R.id.tv_listviewloadtrack_comment);
+        String comment = null;
         List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
 
         for (String name : DataStorage.getInstance().getAllTracks()) {
             GenericAdapterData dataItem = new GenericAdapterData(desc);
             dataItem.setText("TrackName", name);
+            DataTrackInfo trackinfo = DataTrackInfo.deserialise(name);
+            if (trackinfo.getComment().length() > 80) {
+                comment = "Kommentar: "
+                        + trackinfo.getComment().trim().substring(0, 77)
+                        + "...";
+            } else {
+                comment = "Kein Kommentar vorhanden";
+            }
+            dataItem.setText("TrackComment", comment);
 
             data.add(dataItem);
 

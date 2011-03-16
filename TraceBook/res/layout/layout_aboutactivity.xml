@@ -23,7 +23,7 @@
   	android:text="@string/tv_aboutActivity_version"
   	android:layout_height="wrap_content"
   	android:layout_width="wrap_content"
-  	android:textSize="10sp"/>  
+  	android:textSize="11sp"/>  
   
   	<TextView android:id="@+id/tv_aboutActivity_licenseTitle"
   	android:text="@string/tv_aboutActivity_licenseTitle"
@@ -35,7 +35,7 @@
   	android:text="@string/tv_aboutActivity_license"
   	android:layout_height="wrap_content"
   	android:layout_width="wrap_content"
-  	android:textSize="10sp"/>
+  	android:textSize="11sp"/>
   
   	<Button android:id="@+id/btn_aboutActivity_license"
   	android:text="@string/btn_aboutActivity_license"
@@ -43,7 +43,7 @@
   	android:layout_width="wrap_content"
   	android:background="@android:color/transparent"
   	android:textColor="#FF0000"
-  	android:textSize="10sp"
+  	android:textSize="11sp"
   	android:onClick="licenseBtn"/>
   
  	<TextView android:id="@+id/tv_aboutActivity_creditsTitle"

@@ -19,8 +19,13 @@
 	<PreferenceCategory android:title="MetaDaten hinzufügen" >
 		
 		<ListPreference android:key="lst_addMetaDataScreen"
-			android:title="Anzeigeoption" android:defaultValue="Normal"
+			android:title="Suchoption" android:defaultValue="Normal"
 			android:entries="@array/addMetaDataScreen" android:entryValues="@array/addMetaDataScreen_values"
-			android:summary="\'Normal\': Liste und BildButtons \n \'Professional\': Liste und AutoCompl" />
+			android:summary="\'Normal\': keine Livesuche \n \'Professional\': Livesuche" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="">
+	
+	
 	</PreferenceCategory>
 </PreferenceScreen>
