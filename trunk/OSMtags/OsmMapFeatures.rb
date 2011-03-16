@@ -53,6 +53,7 @@ module OsmMapFeatures
 
     def p_xml(lang = '')
         xml = Builder::XmlMarkup.new(:target => STDOUT, :indent => 2)
+        puts '<?xml version="1.0" encoding="utf-8" ?>'
         xml.map_features(:lang  => lang.downcase.sub(':', ''),
                          :xmlns => "http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags") do
             @tags.keys.sort.each do |key|
