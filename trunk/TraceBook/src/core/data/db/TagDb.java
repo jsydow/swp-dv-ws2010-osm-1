@@ -120,6 +120,7 @@ public class TagDb {
                          */
                         @Override
                         public void endDocument() throws SAXException {
+                            writeDb.setTransactionSuccessful();
                             writeDb.endTransaction();
                             writeDb.close();
                             super.endDocument();
