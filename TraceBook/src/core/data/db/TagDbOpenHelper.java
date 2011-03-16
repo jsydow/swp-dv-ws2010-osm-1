@@ -19,8 +19,6 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
             + " TEXT, " + "description" + " TEXT, " + "wikilink" + " TEXT, "
             + "image" + " TEXT, " + "language" + " TEXT, " + "keywords"
             + " TEXT, " + "value_type" + " TEXT" + ");";
-    private static final String INDEX_CREATE = "CREATE INDEX IF NOT EXISTS "
-            + "key_idx ON " + TABLE_NAME + " (name, description, keywords)";
     private static final String TABLE_DROP = "DROP TABLE IF EXISTS "
             + TABLE_NAME;
 
@@ -81,12 +79,31 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_DROP);
         db.execSQL(TABLE_CREATE);
-        db.execSQL(INDEX_CREATE);
+
+        createIndex(db, "language_idx", TABLE_NAME, "language");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(TABLE_DROP);
         onCreate(db);
+    }
+
+    /**
+     * Creates an index on the given table, if it does not exist yet.
+     * 
+     * @param db
+     *            SQLite database object.
+     * @param idx
+     *            Name of the index to be created.
+     * @param table
+     *            Table to create the index on.
+     * @param columns
+     *            Columns to be included in the index. Order matters.
+     */
+    private void createIndex(SQLiteDatabase db, String idx, String table,
+            String columns) {
+        db.execSQL(String.format("CREATE INDEX IF NOT EXISTS %s ON %s (%s);",
+                idx, table, columns));
     }
 }
