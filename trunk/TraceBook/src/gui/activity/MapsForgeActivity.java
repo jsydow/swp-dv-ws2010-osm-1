@@ -12,6 +12,7 @@ import org.mapsforge.android.maps.OverlayItem;
 
 import util.DataNodeArrayItemizedOverlay;
 import util.DataPointsListArrayRouteOverlay;
+import util.GpsMessage;
 import util.Helper;
 import Trace.Book.R;
 import android.app.AlertDialog;
@@ -31,7 +32,6 @@ import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.logger.ServiceConnector;
-import core.logger.WaypointLogService;
 
 /**
  * This class implements a MapsForge Map activity and draws ways and nodes as
@@ -160,18 +160,7 @@ public class MapsForgeActivity extends MapActivity {
         pointsOverlay.clear();
         fillOverlays();
 
-        // TODO: rather use one intend and switch over the action
-        registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.UPDATE_GPS_POS));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.UPDATE_OBJECT));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                WaypointLogService.END_WAY));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                DataNodeArrayItemizedOverlay.UPDATE_WAY));
-        registerReceiver(gpsReceiver, new IntentFilter(
-                DataNodeArrayItemizedOverlay.MOVE_POINT));
-
+        registerReceiver(gpsReceiver, new IntentFilter(GpsMessage.TAG));
     }
 
     @Override
@@ -357,9 +346,13 @@ public class MapsForgeActivity extends MapActivity {
 
         @Override
         public void onReceive(Context ctx, Intent intend) {
+            final int wayId = intend.getExtras().getInt("way_id");
+            final int pointId = intend.getExtras().getInt("point_id");
 
             // Receive current location and do something with it
-            if (intend.getAction().equals(WaypointLogService.UPDATE_GPS_POS)) {
+            switch (intend.getIntExtra("type", -1)) {
+
+            case GpsMessage.UPDATE_GPS_POS:
                 final double lng = intend.getExtras().getDouble("long");
                 final double lat = intend.getExtras().getDouble("lat");
 
@@ -375,39 +368,34 @@ public class MapsForgeActivity extends MapActivity {
                 if (centerMap)
                     centerOnCurrentPosition();
 
-                // Receive an update of a way and update the overlay accordingly
-            } else if (intend.getAction().equals(
-                    WaypointLogService.UPDATE_OBJECT)) {
+                break;
+            // Receive an update of a way and update the overlay accordingly
+            case GpsMessage.UPDATE_OBJECT:
                 if (Helper.currentTrack() == null) {
                     Log.e(LOG_TAG,
                             "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 
-                int wayId = intend.getExtras().getInt("way_id");
-                int pointId = intend.getExtras().getInt("point_id");
-
                 if (wayId > 0)
                     routesOverlay.reDrawWay(wayId);
                 else if (pointId > 0)
                     updatePoint(pointId);
 
-            } else if (intend.getAction().equals(
-                    DataNodeArrayItemizedOverlay.UPDATE_WAY)) {
-                int wayId = intend.getExtras().getInt("way_id");
-                Log.d(LOG_TAG, "Nodes of way " + wayId + " have changed.");
-
-                routesOverlay.reDrawWay(wayId);
-            } else if (intend.getAction().equals(
-                    DataNodeArrayItemizedOverlay.MOVE_POINT)) {
-                final int nodeId = intend.getExtras().getInt("point_id");
+                break;
+            case GpsMessage.MOVE_POINT:
                 if (Helper.currentTrack() != null) {
-                    editNode = Helper.currentTrack().getNodeById(nodeId);
-                    Log.d(LOG_TAG, "Enter edit mode for Point " + nodeId);
+                    editNode = Helper.currentTrack().getNodeById(pointId);
+                    Log.d(LOG_TAG, "Enter edit mode for Point " + pointId);
                 }
-            } else if (intend.getAction().equals(WaypointLogService.END_WAY)) {
+
+                break;
+            case GpsMessage.END_WAY:
                 routesOverlay.reDrawWay(intend.getExtras().getInt("way_id"));
                 pointsOverlay.removeOrphans();
+
+                break;
+            default:
             }
         }
 

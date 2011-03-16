@@ -37,17 +37,6 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
     private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
     private static final String LOG_TAG = "DNAIO";
-    private static final String BASETAG = "de.fu-berlin.inf.tracebook";
-
-    /**
-     * Tag of the Intent that signals an update of a way.
-     */
-    public static final String UPDATE_WAY = BASETAG + ".UPDATE_WAY";
-
-    /**
-     * Tag of the Intent that signals the start of editing a points location.
-     */
-    public static final String MOVE_POINT = BASETAG + ".MODE_POINT";
 
     /**
      * Context of the MapActivity.
@@ -58,16 +47,6 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Reference to the current DataTrack.
      */
     DataTrack currentTrack;
-
-    /**
-     * Intent to send updated ways to the MapsForgeView.
-     */
-    final Intent way_intent = new Intent(UPDATE_WAY);
-
-    /**
-     * Intent to move a point.
-     */
-    final Intent move_intent = new Intent(MOVE_POINT);
 
     private DataPointsListArrayRouteOverlay routesOverlay;
 
@@ -338,6 +317,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     private class DefaultListener implements DialogInterface.OnClickListener {
+        private GpsMessage sender;
+
         private final CharSequence[] items = {
                 context.getResources().getString(
                         R.string.cm_DataNodeArrayItemizedOverlay_tag),
@@ -347,7 +328,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                         R.string.cm_DataNodeArrayItemizedOverlay_delete) };
 
         public DefaultListener() {
-            // do nothing
+            sender = new GpsMessage(context);
         }
 
         public CharSequence[] getItems() {
@@ -370,8 +351,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 context.startActivity(intent);
                 break;
             case 1: // move this
-                move_intent.putExtra("point_id", nodeId);
-                context.sendBroadcast(move_intent);
+                sender.sendPOIUpdate(nodeId);
                 break;
             case 2: // delete this
                 final DataNode node = currentTrack.getNodeById(nodeId);
@@ -380,10 +360,8 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     way = node.getDataPointsList();
                 if (currentTrack.deleteNode(nodeId)) {
                     remove(nodeId);
-                    if (way != null) { // we have to redraw the way
-                        way_intent.putExtra("way_id", way.getId());
-                        context.sendBroadcast(way_intent);
-                    }
+                    if (way != null) // we have to redraw the way
+                        sender.sendWayUpdate(way.getId());
                 } else
                     Toast.makeText(context, "Can not delete Node id=" + nodeId,
                             Toast.LENGTH_SHORT).show();
