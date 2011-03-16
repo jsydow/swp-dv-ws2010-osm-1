@@ -1,6 +1,8 @@
 #!/bin/sh
 
-for L in EN DE FR Tr Pl Vi; do
+LANGS="EN DE FR TR Pl"
+
+for L in $LANGS ; do
     ./get.rb $L > xml/tags.$L.xml
     echo Done parsing $L.
 done
