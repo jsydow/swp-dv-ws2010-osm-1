@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LANG="EN DE FR TR Pl"
+LANG="EN DE FR Tr Pl"
 
 for L in $LANG ; do
     ./get.rb $L > xml/tags.$L.xml
