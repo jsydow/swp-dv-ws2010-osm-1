@@ -134,6 +134,9 @@ public class NewTrackActivity extends TabActivity {
 
     }
 
+    /**
+     * 
+     */
     private void setGpsStatus() {
         LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GpsStatus gps = loc.getGpsStatus(null);
