@@ -70,4 +70,20 @@ interface ILoggerService {
 	*/
 	boolean isAreaLogging();
 	
+	/**
+	 * stops GPS logging.
+	 */
+	void pauseLogging();
+	
+	/**
+	 * resumes GPS logging.
+	 */
+	void resumeLogging();
+	
+	/**
+	 * returns the state of the GPS logging.
+	 * @return true if gps logging is running
+	 */
+	boolean isLogging();
+	
 }
