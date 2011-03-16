@@ -57,7 +57,7 @@ module OsmMapFeatures
         xml.map_features(:lang  => lang.downcase.sub(':', ''),
                          :xmlns => "http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags") do
             @tags.keys.sort.each do |key|
-                next if is_blacklisted?(key, @blacklists[:keys])
+                next if key.match(/\s+/)
 
                 xml.key(:v => key.gsub(/%/, '').gsub(/&.+?/, '').strip) do
                     @tags[key].keys.sort.each do |value|
