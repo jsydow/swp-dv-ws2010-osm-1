@@ -26,7 +26,7 @@ import core.data.db.TagSearchResult;
  */
 public class FullTextSearchActivity extends ListActivity {
 
-    int currResIndex;
+    private int currResIndex;
 
     /**
      * The text watcher tracks changes in the search edit box. As soon as some
@@ -42,6 +42,11 @@ public class FullTextSearchActivity extends ListActivity {
          * Reference to the FullTextSearchActivity to update the list view.
          */
         FullTextSearchActivity act;
+
+        /**
+         * indicates wheather the XML file containing tag names etc. has to be
+         * read to update the database
+         */
         boolean firstTime = true;
 
         /**
