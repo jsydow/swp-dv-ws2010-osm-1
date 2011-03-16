@@ -214,8 +214,11 @@ public final class Helper {
      * 
      * @param nodes
      *            List of {@link DataNode}s representing the way or area
+     * @param weight
+     *            weight with which the average derivation of points is
+     *            multiplied to form the threshold
      */
-    public static void filterPoints(List<DataNode> nodes) {
+    public static void filterPoints(List<DataNode> nodes, double weight) {
         boolean calibrate = true;
         double threshold = 0;
 
@@ -246,7 +249,8 @@ public final class Helper {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
                     } else if (calculateArea(firstNode.toGeoPoint(),
-                            pending.toGeoPoint(), n.toGeoPoint()) < threshold * 10
+                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
+                            * weight
                             && !n.hasAdditionalInfo())
                         iter.remove();
                     firstNode = pending;
