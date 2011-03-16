@@ -89,8 +89,7 @@ public class TextMarker extends ButtonMarker {
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
         } else {
-            Main
-                    .debug("Failed to get a Desktop to determine the file handler!");
+            Main.debug("Failed to get a Desktop to determine the file handler!");
             return;
         }
 
@@ -102,6 +101,10 @@ public class TextMarker extends ButtonMarker {
             e.printStackTrace();
         } catch (URISyntaxException e) {
             Main.debug("URISyntaxException while trying to open textlink: "
+                    + texturl.toString());
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            Main.debug("IllegalArgumentException while trying to open textlink: "
                     + texturl.toString());
             e.printStackTrace();
         }
