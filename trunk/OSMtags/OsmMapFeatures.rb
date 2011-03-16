@@ -63,12 +63,7 @@ module OsmMapFeatures
                             v = v.gsub(/[%°]/, '').gsub(/&.+?/, '').strip
                             
                             value_type = (is_number?(v) ? 'number' : 'text')
-
-                            if (value_type == 'number')
-                            	v = '' 
-                            else
-                            	v = (is_any_text?(v) ? '' : v)
-                            end
+                            v = '' if ((value_type == 'number') or is_any_text?(v))
 
                             if (v == '')
                                 next if empty_value_has_been_printed_before
@@ -78,7 +73,7 @@ module OsmMapFeatures
                             xml.value(@flags[key][value].merge({:type => value_type, :v => v})) do
                                 xml.description(@descriptions[key][value].gsub(/\s+/, ' ').gsub('&', '&amp;'))
 
-                                if (not @tags[key][value].match(/class="new"/))
+                                unless (@tags[key][value].match(/class="new"/))
                                     href = @tags[key][value].scan(/href="(.*?)"/).to_s.strip
                                     xml.uri("http://wiki.openstreetmap.org#{(lang == '' ? href : href.gsub(/Tag:/, "#{lang}Tag:"))}") if href != ''
 
