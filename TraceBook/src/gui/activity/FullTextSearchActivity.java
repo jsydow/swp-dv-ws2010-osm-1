@@ -27,9 +27,6 @@ public class FullTextSearchActivity extends ListActivity {
 
     /**
      * A simple thread class which deals with search jobs in our database.
-     * 
-     * @author sahin
-     * 
      */
     static class SearchThread extends Thread {
 
