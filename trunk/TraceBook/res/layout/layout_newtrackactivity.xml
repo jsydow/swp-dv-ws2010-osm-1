@@ -22,6 +22,9 @@
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
+				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:id="@+id/tv_newtrackActivity_gpsStatus"/>	
+					
 				<ToggleButton android:id="@+id/tbtn_newtrackActivity_startWay"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textOn="@string/tbtn_newtrackActivity_streetOff" android:textOff="@string/tbtn_newtrackActivity_streetOn"

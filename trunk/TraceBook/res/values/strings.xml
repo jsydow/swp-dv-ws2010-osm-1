@@ -6,7 +6,7 @@
     <string name="string_global_way">Way</string>
     <string name="string_global_area">Area</string>
     <string name="string_trackInfoDialog_title">Trackinformationen</string>
-    <string name="string_licenseDialog_title">GPL3 Lizens</string>
+    <string name="string_licenseDialog_title">GPL3 Lizenz</string>
     <string name="string_aboutActivity_title">About</string>
     <string name="string_addmemoActivity_title">Sprachnotiz</string>
     <string name="string_addpointActivity_title">Punkt hinzufügen</string>
@@ -63,9 +63,13 @@
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90 Beta</string>
 	<string name="tv_listviewedit_idTitle">ID: </string>
+	<string name="btn_startActivity_reseumeTrack">Track fortsetzen</string>
 	
 	<!--  Edit Text values-->
 	<string name="et_fulltextsearchActivity_search">Suchen...</string>
+	
+	<!--  Toast values -->
+	 <string name="toast_noTrackFound">Der zu ladende Track wurde nicht gefunden.</string>
 	
 	<!--  AlertBox values -->
 	<string name="alert_global_cancel">Cancel</string>
@@ -83,8 +87,8 @@
     <string name="alert_loadtrackActivity_rename">Track umbenennen</string>
     <string name="alert_loadtrackActivity_deleteTrack">Track löschen?</string>
     <string name="alert_aboutActivity_pleaseWait">Bitt warten....</string>
-    <string name="alert_aboutActivity_loadingLicense">Lizens wird geladen.</string>
-    
+    <string name="alert_aboutActivity_loadingLicense">Lizenz wird geladen.</string>
+       
   	<!--  Optionmenu values -->
     <string name="opt_startActivity_preferences">Einstellungen</string>
     <string name="opt_startActivity_close">Beenden</string>

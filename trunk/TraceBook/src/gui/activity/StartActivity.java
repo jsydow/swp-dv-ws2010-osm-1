@@ -1,6 +1,7 @@
 package gui.activity;
 
 import java.io.File;
+import java.util.List;
 
 import Trace.Book.R;
 import android.app.Activity;
@@ -13,12 +14,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import core.data.DataStorage;
+import core.data.DataTrack;
 import core.logger.ServiceConnector;
 
 /**
  * Start activity of the application.
  * 
- *
+ * 
  */
 public class StartActivity extends Activity {
 
@@ -69,8 +74,7 @@ public class StartActivity extends Activity {
     }
 
     /**
-     * Called if the loadTrack Button pressed. Start the LoadTrackActivity. TODO
-     * to be done
+     * Called if the loadTrack Button pressed. Start the LoadTrackActivity.
      * 
      * @param view
      *            the view
@@ -80,6 +84,27 @@ public class StartActivity extends Activity {
         startActivity(intent);
     }
 
+    /**
+     * 
+     * @param view
+     *            not used
+     */
+    public void resumeTrackBtn(View view) {
+        List<String> trackList = DataStorage.getInstance().getAllTracks();
+        String trackname = trackList.get(trackList.size() - 1);
+        DataTrack track = DataStorage.getInstance().deserialiseTrack(trackname);
+        if (track != null) {
+            DataStorage.getInstance().setCurrentTrack(track);
+            final Intent intent = new Intent(this, NewTrackActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this,
+                    getResources().getString(R.string.toast_noTrackFound),
+                    Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -87,7 +112,7 @@ public class StartActivity extends Activity {
      */
     @Override
     /**
-     * Init optionsmenu for the MainActivity
+     * Initialization of the option menu for the MainActivity
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -139,5 +164,12 @@ public class StartActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         // ServiceConnector.releaseService();
+    }
+
+    @Override
+    protected void onResume() {
+        Button resume = (Button) findViewById(R.id.btn_startActivity_resumeTrack);
+        resume.setVisibility(1);
+        super.onResume();
     }
 }
