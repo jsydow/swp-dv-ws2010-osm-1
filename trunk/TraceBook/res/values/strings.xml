@@ -63,7 +63,8 @@
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90 Beta</string>
 	<string name="tv_listviewedit_idTitle">ID: </string>
-	<string name="btn_startActivity_reseumeTrack">Track fortsetzen</string>
+	<string name="tv_aboutActivity_usedResourcesTitle">Verwendete Resourcen: </string>
+	<string name="tv_aboutActivity_usedResources"></string>
 	
 	<!--  Edit Text values-->
 	<string name="et_fulltextsearchActivity_search">Suchen...</string>
@@ -157,4 +158,5 @@
 	<string name="btn_trackInfoDialog_back">Zurück</string>
 	<string name="btn_aboutActivity_license">Zeige Lizenz</string>
 	<string name="btn_addpointmetaActivity_search">Suchen</string>
+	<string name="btn_startActivity_reseumeTrack">Track fortsetzen</string>
 </resources>
