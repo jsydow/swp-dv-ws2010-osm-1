@@ -241,11 +241,13 @@ public class MapsForgeActivity extends MapActivity {
         case R.id.opt_mapsforgeActivity_activateMobileInternet:
 
             if (useInternet) {
-                // TODO: use string resource!
-                item.setTitle("Use online rendering");
+                item.setTitle(getResources().getString(
+                        R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item.setTitle("Use offline rendering");
+                item.setTitle(getResources()
+                        .getString(
+                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(onlineRenderer, null);
             }
             useInternet = !useInternet;
