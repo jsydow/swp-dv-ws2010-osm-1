@@ -246,6 +246,18 @@ public class WaypointLogService extends Service implements LocationListener {
             return false;
         }
 
+        public void pauseLogging() {
+            stopGPS();
+        }
+
+        public void resumeLogging() {
+            startGPS();
+        }
+
+        public boolean isLogging() {
+            return gps_on;
+        }
+
     };
 
     /** GPS related Methods. **/

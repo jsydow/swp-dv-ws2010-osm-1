@@ -269,41 +269,19 @@ public class MapsForgeActivity extends MapActivity {
             return true;
 
         case R.id.opt_mapsforgeActivity_pause:
-
-            builder.setMessage(
-                    getResources().getString(
-                            R.string.alert_mapsforgeActivity_pause))
-                    .setCancelable(false)
-                    .setPositiveButton(
-                            getResources().getString(R.string.alert_global_yes),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                        int id) {
-                                    try {
-                                        // TODO really stop track?
-                                        // stopping track does unload track from
-                                        // memory
-                                        // and serialise current track
-                                        ServiceConnector.getLoggerService()
-                                                .stopTrack();
-                                    } catch (RemoteException e) {
-                                        e.printStackTrace();
-                                    }
-                                    /*
-                                     * DO SOMETHING TODO
-                                     */
-                                }
-                            })
-                    .setNegativeButton(
-                            getResources().getString(R.string.alert_global_no),
-                            new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    dialog.cancel();
-                                }
-                            });
-            builder.show();
+            try {
+                if (ServiceConnector.getLoggerService().isLogging()) {
+                    item.setTitle(getResources().getString(
+                            R.string.opt_mapsforgeActivity_resume));
+                    ServiceConnector.getLoggerService().pauseLogging();
+                } else {
+                    item.setTitle(getResources().getString(
+                            R.string.opt_mapsforgeActivity_pause));
+                    ServiceConnector.getLoggerService().resumeLogging();
+                }
+            } catch (RemoteException ex) {
+                Helper.handleNastyException(this, ex, LOG_TAG);
+            }
             return true;
         case R.id.opt_mapsforgeActivity_stopTrack:
             builder.setMessage(
@@ -391,6 +369,7 @@ public class MapsForgeActivity extends MapActivity {
                         "Location update received "
                                 + currentGeoPoint.toString());
 
+                // TODO: draw way in on_shot mode
                 pointsOverlay.setCurrentPosition(currentGeoPoint);
 
                 if (centerMap)
