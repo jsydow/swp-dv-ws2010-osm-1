@@ -78,7 +78,7 @@ public class WaypointLogService extends Service implements LocationListener {
     }
 
     @Override
-    public void onCreate() {
+    public synchronized void onCreate() {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
         sender = new GpsMessage(this);
