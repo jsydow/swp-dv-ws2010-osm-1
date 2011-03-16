@@ -431,8 +431,6 @@ public class MapsForgeActivity extends MapActivity {
         }
 
         private void updatePoint(int pointId) {
-            // received an updated POI -
-            // when does this actually happen?
             Log.d(LOG_TAG, "Received node update, id=" + pointId);
 
             DataNode point = null;
@@ -446,6 +444,8 @@ public class MapsForgeActivity extends MapActivity {
                     point.setOverlayItem(new OverlayItem(point.toGeoPoint(),
                             point.getId() + "", ""));
                 pointsOverlay.addOverlay(point);
+                if (point.getDataPointsList() != null)
+                    routesOverlay.reDrawWay(point.getDataPointsList(), false);
             }
         }
     }

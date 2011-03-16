@@ -18,7 +18,7 @@ import core.data.DataStorage;
  * This background service logs GPS data and stores it in the
  * {@link DataStorage} object.
  * 
- *
+ * 
  * 
  */
 public class WaypointLogService extends Service implements LocationListener {
@@ -205,6 +205,9 @@ public class WaypointLogService extends Service implements LocationListener {
         }
 
         public synchronized int endWay() {
+            if (one_shot) // add the last point if in one_shot mode
+                beginWay(one_shot);
+
             DataPointsList tmp = currentWay();
 
             storage.getCurrentTrack().setCurrentWay(null);

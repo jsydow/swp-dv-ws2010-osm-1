@@ -19,7 +19,7 @@ import core.data.DataPointsList;
  * Class wrapping the ·{@link ArrayRouteOverlay} to get some methods out of
  * {@link MapsForgeActivity}.
  * 
- *
+ * 
  */
 public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     private int colorID = 0;
@@ -128,7 +128,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      * @param editing
      *            is the way the currently edited way?
      */
-    private void reDrawWay(DataPointsList way, boolean editing) {
+    public void reDrawWay(DataPointsList way, boolean editing) {
         if (way == null)
             return;
 
@@ -137,10 +137,6 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
                 color.first, color.second));
         addRoute(way.getOverlayRoute());
-        if (showGnubbel) {
-            removeGnubbel(way); // XXX
-            addGnubbel(way);
-        }
     }
 
     /**
@@ -155,7 +151,6 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         DataPointsList currentWay = Helper.currentTrack().getCurrentWay();
         reDrawWay(Helper.currentTrack().getPointsListById(id),
                 currentWay != null && currentWay.getId() == id);
-
     }
 
     private void addGnubbel(DataPointsList way) {
