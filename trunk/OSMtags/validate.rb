@@ -10,7 +10,7 @@ schema_file = 'OSM_tags.xsd'
 document = LibXML::XML::Document.file(ARGV[0])
 schema = LibXML::XML::Schema.new(schema_file)
 
-document.validate_schema(schema) do |message, flag|
+document.validate_schema(schema) do |message|
 	puts message
 	exit 2
 end
