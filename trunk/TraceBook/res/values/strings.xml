@@ -58,7 +58,7 @@
 	Benjamin Valentin - benpicco@googlemail.com\n
 	Şahin Vardar - sakirsoft@gmail.com 	
 	</string>
-	<string name="tv_aboutActivity_licenseTitle">Lizens:</string>
+	<string name="tv_aboutActivity_licenseTitle">Lizenz:</string>
 	<string name="tv_aboutActivity_license">Diese Software steht unter der  GNU - GPL3</string>
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90 Beta</string>
@@ -155,6 +155,6 @@
     <string name="btn_addMetaMedia_makeNotice">Notiz</string>
 	<string name="btn_trackInfoDialog">OK</string>
 	<string name="btn_trackInfoDialog_back">Zurück</string>
-	<string name="btn_aboutActivity_license">Zeige Lizens</string>
+	<string name="btn_aboutActivity_license">Zeige Lizenz</string>
 	<string name="btn_addpointmetaActivity_search">Suchen</string>
 </resources>
