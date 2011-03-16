@@ -28,7 +28,7 @@ module OsmMapFeatures
 
     def parse_keys_and_values(lang = '')
         f = get_page("http://wiki.openstreetmap.org/wiki/#{lang}Map_Features")
-        tags = f.scan(/<tr>\s+<td>(.*?)<\/td><td>(.*?)<\/td><td>(.*?)<\/td><td>(.*?)<\/td>/m)
+        tags = f.scan(/<tr.*?>\s+<td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td>/m)
 
         tags.each do |tag|
             key = tag[0].gsub(/<.*?>/, '').strip
