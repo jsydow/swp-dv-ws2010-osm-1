@@ -206,3 +206,7 @@ include OsmMapFeatures
 OsmMapFeatures.parse_keys_and_values 'DE'
 OsmMapFeatures.p_xml 'DE'
 }}}
+
+= JOSM Mapfeatures =
+The JOSM map features are located in the defaultpresets.xml
+http://josm.openstreetmap.de/browser/josm/trunk/data/defaultpresets.xml
