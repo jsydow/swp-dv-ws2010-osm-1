@@ -87,7 +87,7 @@ public class TagDb {
                             + "%' OR keywords LIKE '%" + searchText
                             + "%' OR description LIKE '%" + searchText
                             + "%') AND language LIKE '" + language + "'", null,
-                    null, null, null);
+                    null, null, null, "20");
 
             if (result.moveToFirst()) {
                 while (!result.isAfterLast()) {
