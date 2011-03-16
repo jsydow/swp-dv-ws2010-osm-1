@@ -37,7 +37,7 @@ import core.media.Recorder;
 
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
- * where an DataMapObject can be anything from poi to area.
+ * where an DataMapObject can be anything from POI to area.
  * 
  * 
  * 
@@ -107,9 +107,9 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
-     * Init our CustomAdapter and fill the RowData with the MetaInformation out
-     * of the two Stringarrays category and value. Set this Adapter for our
-     * ListView.
+     * Initialization of our CustomAdapter and fill the RowData with the
+     * MetaInformation out of the two StringArrays category and value. Set this
+     * Adapter for our ListView.
      */
     private void initAdapter() {
         GenericItemDescription desc = new GenericItemDescription();
@@ -214,7 +214,7 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
-     * The Method for the AddPointMeta Button, to save metadata for this node.
+     * The Method for the AddPointMeta Button, to save MetaData for this node.
      * 
      * @param view
      *            not used
@@ -228,7 +228,7 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
-     * The Method for the cancel Button to finish the Activty.
+     * The Method for the cancel Button to finish the Activity.
      * 
      * @param view
      *            not used

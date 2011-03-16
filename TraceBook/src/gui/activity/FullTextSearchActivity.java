@@ -31,7 +31,7 @@ public class FullTextSearchActivity extends ListActivity {
     /**
      * The text watcher tracks changes in the search edit box. As soon as some
      * text matches with the description text, the result will be displayed in
-     * the listview.
+     * the list view.
      * 
      * 
      * 
@@ -39,7 +39,7 @@ public class FullTextSearchActivity extends ListActivity {
     static class MyTextWatcher implements TextWatcher {
 
         /**
-         * reference to the FullTextSearchActivity to update the list view.
+         * Reference to the FullTextSearchActivity to update the list view.
          */
         FullTextSearchActivity act;
         boolean firstTime = true;

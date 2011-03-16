@@ -6,6 +6,7 @@ import gui.adapter.GenericItemDescription;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import Trace.Book.R;
@@ -15,6 +16,9 @@ import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -45,7 +49,7 @@ import core.media.Recorder;
  * is the map view where you can see your collected way points in a convenient
  * way. The second one is the main tab where you can set the your POI's, ways
  * and areas. In the third one you can choose your collected, add new tags,
- * remove tags remove pois etc.
+ * remove tags remove POIs etc.
  * 
  * 
  * 
@@ -67,13 +71,13 @@ public class NewTrackActivity extends TabActivity {
         NewTrackActivity act;
 
         /**
-         * Here we save a reference to our tab object in our NewTracActivity.
+         * Here we save a reference to our tab object in our NewTrackActivity.
          */
         TabHost tab;
 
         /**
-         * We use a dirty trick to have a reference to our NewTracActivty and to
-         * our TabHost which is associated to it.
+         * We use a dirty trick to have a reference to our NewTrackActivty and
+         * to our TabHost which is associated to it.
          * 
          * @param act
          *            reference to the NewTrackActivity
@@ -130,10 +134,28 @@ public class NewTrackActivity extends TabActivity {
 
     }
 
+    private void setGpsStatus() {
+        LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GpsStatus gps = loc.getGpsStatus(null);
+        Iterator<GpsSatellite> it = gps.getSatellites().iterator();
+        int i = 0;
+        float sum = 0;
+        while (it.hasNext()) {
+            GpsSatellite sat = it.next();
+            i++;
+            sum += sat.getSnr();
+        }
+
+        TextView tv = (TextView) findViewById(R.id.tv_newtrackActivity_gpsStatus);
+        tv.setText("Signalstärke: " + sum + "Anzahl: " + i + " "
+                + it.toString());
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         initListView();
+        /* setGpsStatus(); */
     }
 
     @Override
@@ -152,16 +174,16 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * This method set the visibilty of the MediaButtons at the bottom of the
-     * activity for street and area mapping. In top of the Buttons, the textview
-     * mediaData signals the user for for what typ of mapping the mediaData will
-     * be saved.
+     * This method set the visibility of the media buttons at the bottom of the
+     * activity for street and area mapping. In top of the Buttons, the TextView
+     * mediaData signals the user for for what type of mapping the mediaData
+     * will be saved.
      * 
      * @param active
-     *            turn the visibilty of the buttonlist and textview on/off
+     *            turn the visibility of the ButtonList and TextView on/off
      * @param button
      *            signals the method which button was selected. 1 for street
-     *            togglebutton 2 for area toggle button and else 0
+     *            ToggleButton 2 for area toggle button and else 0
      */
     private void setButtonList(boolean active, int button) {
         int visible = 8;
@@ -197,7 +219,7 @@ public class NewTrackActivity extends TabActivity {
     /**
      * Init ListView and Adapter with the list of saved POI, streets and areas.
      * To show a customizable ListView the method use the GenericAdapter from
-     * gui.adapter. The Method implemnts also the OnItemClickListener to edit
+     * gui.adapter. The Method implements also the OnItemClickListener to edit
      * the selected item.
      */
     void initListView() {
@@ -212,6 +234,7 @@ public class NewTrackActivity extends TabActivity {
         desc.addResourceId("NodeCoord", R.id.tv_listviewedit_coordinates);
         desc.addResourceId("NodeImg", R.id.iv_listviewedit_image);
         desc.addResourceId("NodeStats", R.id.tv_listviewedit_stats);
+        desc.addResourceId("WayPOIs", R.id.tv_listviewedit_poiCount);
 
         List<DataNode> nodeList = DataStorage.getInstance().getCurrentTrack()
                 .getNodes();
@@ -254,7 +277,7 @@ public class NewTrackActivity extends TabActivity {
             item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
                     : R.drawable.way_icon);
             item.setText("NodeStats", "Medien: " + dn.getMedia().size());
-
+            item.setText("WayPOIs", "Punkte im Weg: " + dn.getNodes().size());
             listData.add(item);
 
         }
@@ -279,8 +302,8 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Init Tabhost with all three tabs: 1. mapView (mapsforge) 2. NewTab 3.
-     * EditTab
+     * Initialization the TabHost with all three tabs: 1. mapView (MapsForge) 2.
+     * NewTab 3. EditTab
      */
     private void initTabHost() {
         // Init TabHost
@@ -313,7 +336,7 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Method is called if startWay-Togglebutton pressed. Start and stop way
+     * Method is called if startWay-ToggleButton pressed. Start and stop way
      * tracking.
      * 
      * @param view
@@ -344,7 +367,7 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Method is called if startArea-Togglebutton pressed. Start and stop area
+     * Method is called if startArea-ToggleButton pressed. Start and stop area
      * tracking.
      * 
      * @param view
@@ -433,9 +456,9 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
-     * Set Trackname for the currentTrack. Finish NewTrackActivity.
+     * Set TrackName for the currentTrack. Finish NewTrackActivity.
      */
-    void setTrackName() {
+    public void setTrackName() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText input = new EditText(this);
         alert.setView(input);

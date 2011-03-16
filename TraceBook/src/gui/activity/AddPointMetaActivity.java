@@ -20,12 +20,12 @@ import core.data.DataMapObject;
 import core.data.DataStorage;
 
 /**
- * In this Activty you can choose your Tags via an autocomplete feature. Tags
- * and values are grouped together. So the autocomplete feature for values are
+ * In this Activty you can choose your Tags via an AutoComplete feature. Tags
+ * and values are grouped together. So the AutoComplete feature for values are
  * depended by their key values. For example when you choose "highway" only
- * highway related values will be given as a list for autocomplete.
+ * highway related values will be given as a list for AutoComplete.
  * 
- *
+ * 
  */
 public class AddPointMetaActivity extends Activity {
 
@@ -117,10 +117,10 @@ public class AddPointMetaActivity extends Activity {
     }
 
     /**
-     * Generate the appendant values for the category tag.
+     * Generate the all linked values for the category tag.
      * 
      * @param category
-     *            categroy to get the values from
+     *            Category to get the values from
      * @return return a string array with values for the given category
      */
     public String[] getValues(String category) {

@@ -317,7 +317,7 @@ public class LoadTrackActivity extends ListActivity {
     }
 
     /**
-     * If a listitem selected, the method will load the track.
+     * If a ListItem selected, the method will load the track.
      */
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
