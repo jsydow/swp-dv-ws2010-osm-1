@@ -108,8 +108,8 @@ module OsmMapFeatures
     	false
     end
     
-    def is_any_text?(s, anytext_regexps = @any_text_regexps)
-		anytext_regexps.each { |regexp| return true if s.match(regexp) }        
+    def is_any_text?(s, any_text_regexps = @any_text_regexps)
+		any_text_regexps.each { |regexp| return true if s.match(regexp) }
         false    	
     end
     
