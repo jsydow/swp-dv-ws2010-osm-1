@@ -47,15 +47,6 @@ public class WaypointLogService extends Service implements LocationListener {
     private boolean gps_on = false;
 
     /**
-     * The status of the GPS logging.
-     * 
-     * @return true if gps is on.
-     */
-    public boolean isLogging() {
-        return gps_on;
-    }
-
-    /**
      * One shot mode - no continuous tracking, points are only added to the way
      * on request.
      */
@@ -128,6 +119,15 @@ public class WaypointLogService extends Service implements LocationListener {
     void restartGPS() {
         stopGPS();
         startGPS();
+    }
+
+    /**
+     * The status of the GPS logging.
+     * 
+     * @return true if gps is on.
+     */
+    public boolean gpsEnabled() {
+        return gps_on;
     }
 
     /**
@@ -250,9 +250,8 @@ public class WaypointLogService extends Service implements LocationListener {
         }
 
         public boolean isLogging() {
-            return isLogging();
+            return gpsEnabled();
         }
-
     };
 
     /** GPS related Methods. **/
