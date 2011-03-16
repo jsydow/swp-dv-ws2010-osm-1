@@ -43,7 +43,7 @@
 	<string name="tv_trackInfoDialog_timestampText">Timestamp:</string>
 	<string name="tv_trackInfoDialog_poisText">Number of saved POIs:</string>
 	<string name="tv_trackInfoDialog_waysText">Number of saved ways:</string>
-	<string name="tv_trackInfoDialog_commentText">Note:</string>
+	<string name="tv_trackInfoDialog_commentText">Notes:</string>
 	<string name="tv_trackInfoDialog_nameText">Name:</string>
 	<string name="tv_trackInfoDialog_mediaText">Media files:</string>
 	<string name="tv_addmemoActivity_stopRecord">Stop voice recording</string>
