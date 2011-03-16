@@ -95,6 +95,7 @@
     <string name="opt_mapsforgeActivity_help">Help</string>
     <string name="opt_mapsforgeActivity_export">Export</string>
     <string name="opt_mapsforgeActivity_pause">Pause</string>
+    <string name="opt_mapsforgeActivity_resume">Resume</string>
     <string name="opt_mapsforgeActivity_setMapLocation">Map file</string>
     <string name="opt_mapsforgeActivity_showToggleWayPoints">Toggle markers</string>
     <string name="opt_startActivity_about">About</string>
