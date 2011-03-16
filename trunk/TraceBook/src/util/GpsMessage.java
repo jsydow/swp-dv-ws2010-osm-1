@@ -11,9 +11,6 @@ import core.data.DataStorage;
  * To send messages to the {@link MapsForgeActivity} this class offers some
  * helpful methods which fill the intent according to the action that is
  * performed.
- * 
- * @author benpicco
- * 
  */
 public class GpsMessage {
 
