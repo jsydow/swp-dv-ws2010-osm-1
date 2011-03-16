@@ -46,6 +46,8 @@ public class TagSearchResult {
     }
 
     /**
+     * Getter method.
+     * 
      * @return the key
      */
     public String getKey() {
@@ -53,6 +55,8 @@ public class TagSearchResult {
     }
 
     /**
+     * Getter method.
+     * 
      * @return the value
      */
     public String getValue() {
@@ -60,6 +64,8 @@ public class TagSearchResult {
     }
 
     /**
+     * Getter method.
+     * 
      * @return the name
      */
     public String getName() {
@@ -67,6 +73,8 @@ public class TagSearchResult {
     }
 
     /**
+     * Getter method.
+     * 
      * @return the description
      */
     public String getDescription() {
@@ -74,6 +82,8 @@ public class TagSearchResult {
     }
 
     /**
+     * Getter method.
+     * 
      * @return the link
      */
     public String getLink() {
@@ -81,6 +91,8 @@ public class TagSearchResult {
     }
 
     /**
+     * Getter method.
+     * 
      * @return the image
      */
     public String getImage() {
@@ -88,13 +100,17 @@ public class TagSearchResult {
     }
 
     /**
-     * @return the value_type
+     * Getter method.
+     * 
+     * @return the valueType
      */
     public String getValueType() {
         return valueType;
     }
 
     /**
+     * Getter method.
+     * 
      * @return the language
      */
     public String getLanguage() {
