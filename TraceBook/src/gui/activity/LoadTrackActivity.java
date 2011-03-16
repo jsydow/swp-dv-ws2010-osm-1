@@ -289,13 +289,17 @@ public class LoadTrackActivity extends ListActivity {
             GenericAdapterData dataItem = new GenericAdapterData(desc);
             dataItem.setText("TrackName", name);
             DataTrackInfo trackinfo = DataTrackInfo.deserialise(name);
+
             if (trackinfo.getComment().length() > 80) {
                 comment = "Kommentar: "
                         + trackinfo.getComment().trim().substring(0, 77)
                         + "...";
+            } else if (trackinfo.getComment().length() > 0) {
+                comment = "Kommentar: " + trackinfo.getComment() + "...";
             } else {
                 comment = "Kein Kommentar vorhanden";
             }
+
             dataItem.setText("TrackComment", comment);
 
             data.add(dataItem);

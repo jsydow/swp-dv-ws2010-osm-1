@@ -23,17 +23,28 @@ public class AboutActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_aboutactivity);
         setTitle(R.string.string_aboutActivity_title);
+        setTextViews();
+    }
+
+    void setTextViews() {
+        TextView resources = (TextView) findViewById(R.id.tv_aboutActivity_usedResources);
+        try {
+            resources.setText(readTxt("used_resources.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
      * This method parse the textFile with the gplLicense.
      * 
      * @return The OutputStream of the LicenseTxtFile as a String
+     * @throws IOException
      */
-    String readTxt() {
+    String readTxt(String dataname) throws IOException {
 
-        InputStream inputStream = getResources().openRawResource(
-                R.raw.gpl3_license);
+        InputStream inputStream = getAssets().open(dataname);
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -69,7 +80,11 @@ public class AboutActivity extends Activity {
         final TextView license = (TextView) licenseDialog
                 .findViewById(R.id.tv_dialogLicense_license);
 
-        license.setText(readTxt());
+        try {
+            license.setText(readTxt("gpl3_license.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         licenseDialog.show();
 
     }

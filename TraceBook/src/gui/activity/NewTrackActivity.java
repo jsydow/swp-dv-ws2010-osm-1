@@ -154,7 +154,6 @@ public class NewTrackActivity extends TabActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initListView();
         /* setGpsStatus(); */
     }
 
