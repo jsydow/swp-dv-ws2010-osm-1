@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class TagDbOpenHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "db_tracebook_tags";
     private static final String TABLE_NAME = "dictionary";
     private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME
@@ -19,8 +19,12 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
             + " TEXT, " + "description" + " TEXT, " + "wikilink" + " TEXT, "
             + "image" + " TEXT, " + "language" + " TEXT, " + "keywords"
             + " TEXT, " + "value_type" + " TEXT" + ");";
+    private static final String INDEX_CREATE = "CREATE INDEX IF NOT EXISTS "
+            + "key_idx ON " + TABLE_NAME + " (name, description, keywords)";
     private static final String TABLE_DROP = "DROP TABLE IF EXISTS "
-            + DATABASE_NAME + "." + TABLE_NAME;
+            + TABLE_NAME;
+
+    // + DATABASE_NAME + "." + TABLE_NAME;
 
     /**
      * @return the tableName
@@ -41,7 +45,7 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * @return The selection String for the query-call of the SQLiteDatabase.
      */
     static String getSelection() {
-        return " (name LIKE ? OR keywords LIKE ? OR description LIKE ?) AND language EQ ?";
+        return "(name LIKE ? OR keywords LIKE ? OR description LIKE ?) AND language EQ ?";
     }
 
     /**
@@ -76,7 +80,9 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(TABLE_DROP);
         db.execSQL(TABLE_CREATE);
+        db.execSQL(INDEX_CREATE);
     }
 
     @Override

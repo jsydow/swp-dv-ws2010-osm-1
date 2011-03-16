@@ -1,5 +1,8 @@
 package gui.activity;
 
+import java.io.File;
+import java.util.List;
+
 import Trace.Book.R;
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -7,6 +10,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import core.data.DataStorage;
+import core.data.db.TagDb;
+import core.data.db.TagSearchResult;
 
 /**
  * 
@@ -20,7 +26,7 @@ public class FullTextSearchActivity extends ListActivity {
      * text matches with the description text, the result will be displayed in
      * the listview.
      * 
-     *
+     * 
      * 
      */
     static class MyTextWatcher implements TextWatcher {
@@ -29,6 +35,7 @@ public class FullTextSearchActivity extends ListActivity {
          * reference to the FullTextSearchActivity to update the list view.
          */
         FullTextSearchActivity act;
+        boolean firstTime = true;
 
         /**
          * 
@@ -55,7 +62,31 @@ public class FullTextSearchActivity extends ListActivity {
                 int arg3) {
 
             Log.d(ACTIVITY_SERVICE, arg0.toString());
-            // TODO Auto-generated method stub
+            (new Thread() {
+                @Override
+                public void run() {
+                    TagDb db = new TagDb(act);
+                    if (firstTime) {
+                        db.initDbWithFile(DataStorage.getTraceBookDirPath()
+                                + File.separator + "tags.DE.xml");
+                        firstTime = false;
+                    }
+                    List<TagSearchResult> tags = db.getTag("", "de");
+                    for (TagSearchResult tsr : tags) {
+                        Log.d("DB_TEST", tsr.getKey() + "=" + tsr.getValue());
+                    }
+                }
+            }).start();
+            // TagDb db = new TagDb(act);
+            // if (firstTime) {
+            // db.initDbWithFile(DataStorage.getTraceBookDirPath()
+            // + File.separator + "tags.DE.xml");
+            // firstTime = false;
+            // }
+            // List<TagSearchResult> tags = db.getTag(arg0.toString(), "de");
+            // for (TagSearchResult tsr : tags) {
+            // Log.d("DB_TEST", tsr.getKey() + "=" + tsr.getValue());
+            // }
 
         }
     }
