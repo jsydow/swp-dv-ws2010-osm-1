@@ -73,12 +73,12 @@ public class FullTextSearchActivity extends ListActivity {
             (new Thread() {
                 @Override
                 public void run() {
-                    Log.d("DBTHREAD", "start");
+                    Log.d("DBTHREAD", "start ");
                     long startt = System.currentTimeMillis();
                     TagDb db = new TagDb(act);
                     if (firstTime) {
                         firstTime = false;
-                        if (db.getTag(text, "de").size() == 0) {
+                        if (db.getRowCountForLanguage("de") < 1) {
                             Log.d("DBTHREAD", "init db");
                             db.initDbWithFile(DataStorage.getTraceBookDirPath()
                                     + File.separator + "tags.DE.xml");

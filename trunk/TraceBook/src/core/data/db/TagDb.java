@@ -104,6 +104,22 @@ public class TagDb {
     }
 
     /**
+     * @param language
+     * @return
+     */
+    public int getRowCountForLanguage(String language) {
+        int rowCount = -1;
+        Cursor crs = db.query("dictionary", new String[] { "COUNT(*)" },
+                "language LIKE ?", new String[] { language }, null, null, null);
+        if (crs.getCount() > 0) {
+            crs.moveToFirst();
+            rowCount = crs.getInt(0);
+        }
+        crs.close();
+        return rowCount;
+    }
+
+    /**
      * Loads an XML file into the database.
      * 
      * @param xmlFile
@@ -228,5 +244,16 @@ public class TagDb {
             Log.e("XMLFileParsing", "Error while reading XML file");
             e.printStackTrace();
         }
+
+        openDb();
+        Cursor crs = db.query("dictionary", new String[] { "COUNT(*)" }, null,
+                null, null, null, null);
+        if (crs.getCount() > 0) {
+            crs.moveToFirst();
+            Log.d("ROWCOUNTQUERY", "query rows: " + crs.getCount());
+            Log.d("ROWCOUNTQUERY", crs.getString(0));
+        }
+        crs.close();
+        closeDb();
     }
 }
