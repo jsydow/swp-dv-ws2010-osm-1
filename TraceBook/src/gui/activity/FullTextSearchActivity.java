@@ -1,6 +1,11 @@
 package gui.activity;
 
+import gui.adapter.GenericAdapter;
+import gui.adapter.GenericAdapterData;
+import gui.adapter.GenericItemDescription;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import Trace.Book.R;
@@ -20,6 +25,8 @@ import core.data.db.TagSearchResult;
  * 
  */
 public class FullTextSearchActivity extends ListActivity {
+
+    int currResIndex;
 
     /**
      * The text watcher tracks changes in the search edit box. As soon as some
@@ -111,6 +118,52 @@ public class FullTextSearchActivity extends ListActivity {
 
         EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
         editBox.addTextChangedListener(new MyTextWatcher(this));
+
+    }
+
+    /**
+     * Fill the ListView with the tag results. Since we are using threads to do
+     * our search it can happen the we have multiple thread which are trying to
+     * update the list view. To prevent this we generate result indexes to
+     * prevent older thread from overwriting data from new tracks.
+     * 
+     * @param tags
+     *            List of the TagSearchResult
+     * @param resIndex
+     *            current result index of the thread
+     */
+    public synchronized void fillResultsToList(List<TagSearchResult> tags,
+            int resIndex) {
+
+        // an old thread is trying to give us a result so we prevent it.
+        if (getResIndex() < resIndex)
+            return;
+
+        GenericItemDescription desc = new GenericItemDescription();
+        desc.addResourceId("SearchValue", R.id.tv_listviewedit_id);
+
+        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+
+        for (TagSearchResult res : tags) {
+            GenericAdapterData item = new GenericAdapterData(desc);
+            item.setText("SearchValue", res.getDescription());
+            data.add(item);
+        }
+
+        GenericAdapter adapter = new GenericAdapter(this,
+                R.layout.listview_fulltextsearch, R.id.list, data, null);
+
+        setListAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    public synchronized int getResIndex() {
+        return currResIndex;
+    }
+
+    public synchronized int increaseIndex() {
+        return ++currResIndex;
 
     }
 }
