@@ -146,6 +146,9 @@ public class AddPointActivity extends ListActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.contextmenu_addpointactivity, menu);
+        menu.setHeaderIcon(android.R.drawable.ic_menu_edit);
+        menu.setHeaderTitle(getResources().getString(
+                R.string.cm_addpointActivity_title));
     }
 
     /**

@@ -32,8 +32,9 @@ public class FullTextSearchActivity extends ListActivity {
 
     private int currResIndex;
     private List<TagSearchResult> currTagSearchResult;
+
     /**
-     * 
+     * We use this to get Tag Information about the press Item in our ListView.
      */
     TagSearchResult ts;
 
@@ -202,6 +203,11 @@ public class FullTextSearchActivity extends ListActivity {
         return ++currResIndex;
     }
 
+    /**
+     * Show dialog for the selected Item with all tag informations. 1. Category
+     * 2. Value 3. Description 4. Image 5. Wikipedia link
+     * 
+     */
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
@@ -238,7 +244,7 @@ public class FullTextSearchActivity extends ListActivity {
         Button button = (Button) infoDialog
                 .findViewById(R.id.btn_searchInfoDialog_save);
         button.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v1) {
                 final Intent intent = new Intent();
                 intent.putExtra("DataNodeKey", ts.getKey());
                 intent.putExtra("DataNodeValue", ts.getValue());
