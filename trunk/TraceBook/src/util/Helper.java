@@ -292,6 +292,9 @@ public final class Helper {
         boolean calibrate = true;
         double threshold = 0;
 
+        if (nodes.size() < 3)
+            return;
+
         // we first iterate once to get the threshold, in the second run we
         // actually remove the points
         while (calibrate) {
@@ -321,7 +324,7 @@ public final class Helper {
                     } else if (calculateArea(firstNode.toGeoPoint(),
                             pending.toGeoPoint(), n.toGeoPoint()) < threshold
                             * weight
-                            && !n.hasAdditionalInfo())
+                            && !n.hasAdditionalInfo() && iter.hasNext())
                         iter.remove();
                     firstNode = pending;
                 }
