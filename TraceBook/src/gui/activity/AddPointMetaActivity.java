@@ -1,13 +1,18 @@
 package gui.activity;
 
+import gui.adapter.GenericAdapter;
+import gui.adapter.GenericAdapterData;
+import gui.adapter.GenericItemDescription;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import Trace.Book.R;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
@@ -16,8 +21,11 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import core.data.DataMapObject;
 import core.data.DataStorage;
+import core.data.db.HistoryDb;
+import core.data.db.TagSearchResult;
 
 /**
  * In this Activty you can choose your Tags via an AutoComplete feature. Tags
@@ -27,7 +35,7 @@ import core.data.DataStorage;
  * 
  * 
  */
-public class AddPointMetaActivity extends Activity {
+public class AddPointMetaActivity extends ListActivity {
 
     /**
      * A simple enum class for tags.
@@ -51,6 +59,8 @@ public class AddPointMetaActivity extends Activity {
      * Reference to the current DataMapObject in use.
      */
     DataMapObject node;
+
+    private GenericAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +113,35 @@ public class AddPointMetaActivity extends Activity {
                 }
             });
         }
+
+        fillListView();
+    }
+
+    private void fillListView() {
+        HistoryDb db = new HistoryDb(this);
+        // TODO user can change most used vs recently used
+        List<TagSearchResult> result = db.getHistory(false, 10);
+
+        GenericItemDescription desc = new GenericItemDescription();
+        desc.addResourceId("Key", R.id.tv_history_key);
+        desc.addResourceId("Value", R.id.tv_history_value);
+
+        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+
+        for (TagSearchResult res : result) {
+            GenericAdapterData item = new GenericAdapterData(desc);
+
+            item.setText("Key", res.getKey());
+            item.setText("Value", res.getValue());
+            data.add(item);
+        }
+
+        adapter = new GenericAdapter(this, R.layout.listview_taghistory,
+                R.id.list, data, null);
+
+        setListAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
     }
 
     /**
@@ -144,6 +183,9 @@ public class AddPointMetaActivity extends Activity {
             node.getTags().put(autoComplCat.getText().toString(),
                     autoComplVal.getText().toString());
         }
+        HistoryDb db = new HistoryDb(this);
+        db.updateTag(autoComplCat.getText().toString(), autoComplVal.getText()
+                .toString());
         finish();
     }
 
@@ -243,6 +285,20 @@ public class AddPointMetaActivity extends Activity {
         }
         String[] tagStringsArray = new String[tagStrings.size()];
         return tagStrings.toArray(tagStringsArray);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_value);
+        final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_categorie);
+
+        GenericAdapterData data = adapter.getItem(position);
+        autoComplVal.setText(data.getText("Value"));
+        autoComplCat.setText(data.getText("Key"));
+        // TODO fill key + value edit
+
+        super.onListItemClick(l, v, position, id);
     }
 
 }
