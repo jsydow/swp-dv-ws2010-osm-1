@@ -152,6 +152,23 @@ public final class Helper {
      */
     public static void smoothenPoints(List<DataNode> nodes, int weight,
             int bufferSize) {
+        smoothenPointsMiddle(nodes, weight, bufferSize);
+    }
+
+    /**
+     * smoothen the {@link DataNode}s by calculating the mean of 3 consecutive
+     * points.
+     * 
+     * @param nodes
+     *            The list of DataNodes representing the way
+     * @param weight
+     *            the factor by which the original point is higher weighted then
+     *            it's bufferSize-1 successors
+     * @param bufferSize
+     *            the amount of points to use for the calculation
+     */
+    public static void smoothenPointsFirst(List<DataNode> nodes, int weight,
+            int bufferSize) {
         if (nodes == null)
             return;
 
@@ -184,6 +201,55 @@ public final class Helper {
                     new GeoPoint(
                             latsum / ((double) ringbuffer.size() + weight),
                             lonsum / ((double) ringbuffer.size() + weight)));
+
+        }
+    }
+
+    /**
+     * smoothen the {@link DataNode}s by calculating the mean of multiple
+     * consecutive points.
+     * 
+     * @param nodes
+     *            The list of DataNodes representing the way
+     * @param weight
+     *            the factor by which the original point is higher weighted then
+     *            it's bufferSize-1 successors
+     * @param bufferSize
+     *            the amount of points to use for the calculation
+     */
+    public static void smoothenPointsMiddle(List<DataNode> nodes, int weight,
+            int bufferSize) {
+        if (nodes == null)
+            return;
+
+        LinkedList<DataNode> ringbuffer = new LinkedList<DataNode>();
+
+        for (DataNode n : nodes) {
+            if (!n.isValid())
+                continue;
+
+            ringbuffer.add(n);
+
+            if (ringbuffer.size() < bufferSize)
+                continue;
+
+            double latsum = 0;
+            double lonsum = 0;
+            for (int i = 0; i < ringbuffer.size(); i++)
+                if (i == ringbuffer.size() / 2) {
+                    latsum += ringbuffer.get(i).getLat() * weight;
+                    lonsum += ringbuffer.get(i).getLon() * weight;
+                } else {
+                    latsum += ringbuffer.get(i).getLat();
+                    lonsum += ringbuffer.get(i).getLon();
+                }
+
+            // the ringbuffer is an element smaller now
+            ringbuffer.get(ringbuffer.size() / 2).setLocation(
+                    new GeoPoint(
+                            latsum / ((double) ringbuffer.size() + weight),
+                            lonsum / ((double) ringbuffer.size() + weight)));
+            ringbuffer.poll();
 
         }
     }
