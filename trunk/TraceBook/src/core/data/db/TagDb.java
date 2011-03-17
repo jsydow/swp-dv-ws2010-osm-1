@@ -27,7 +27,6 @@ import android.util.Xml;
 public class TagDb {
 
     private TagDbOpenHelper helper;
-    private Context context;
     private SQLiteDatabase db;
 
     /**
@@ -38,12 +37,14 @@ public class TagDb {
      */
     public TagDb(Context context) {
         super();
-        this.context = context;
-        openDb();
+        helper = new TagDbOpenHelper(context);
     }
 
     private void openDb() {
-        helper = new TagDbOpenHelper(context);
+        if (db.isOpen()) {
+            db.close();
+        }
+
         db = helper.getReadableDatabase();
     }
 
@@ -57,7 +58,7 @@ public class TagDb {
     /**
      * Closes the database. Dot not forget to call this method!
      */
-    public void closeDb() {
+    private void closeDb() {
         db.close();
     }
 
@@ -71,15 +72,14 @@ public class TagDb {
      * @return The list of search results.
      */
     public List<TagSearchResult> getTag(String searchText, String language) {
-        if (db == null || !db.isOpen()) {
-            openDb();
-        }
+        openDb();
 
         if (db != null && db.isOpen()) {
             List<TagSearchResult> tags = new Vector<TagSearchResult>();
 
             fillTagListWithSearchResults(searchText, language, tags);
 
+            closeDb();
             return tags;
         } else {
             Log.e("TagDataBase", "Could not open Database.");
@@ -95,6 +95,8 @@ public class TagDb {
                     TagDbOpenHelper.getColumns(), "(name LIKE '%" + searchText
                             + "%' OR keywords LIKE '%" + searchText
                             + "%' OR description LIKE '%" + searchText
+                            + "%' OR value LIKE '%" + searchText
+                            + "%' OR key LIKE '%" + searchText
                             + "%') AND language LIKE '" + language + "'", null,
                     null, null, null, "20");
 
@@ -111,18 +113,27 @@ public class TagDb {
     }
 
     /**
+     * Returns the number of rows that are in the database for a given language.
+     * 
      * @param language
-     * @return
+     *            The language shortcut as String like "de".
+     * @return The number of rows.
      */
     public int getRowCountForLanguage(String language) {
         int rowCount = -1;
-        Cursor crs = db.query("dictionary", new String[] { "COUNT(*)" },
-                "language LIKE ?", new String[] { language }, null, null, null);
-        if (crs.getCount() > 0) {
-            crs.moveToFirst();
-            rowCount = crs.getInt(0);
+
+        openDb();
+        if (db != null && db.isOpen()) {
+            Cursor crs = db.query("dictionary", new String[] { "COUNT(*)" },
+                    "language LIKE ?", new String[] { language }, null, null,
+                    null);
+            if (crs.getCount() > 0) {
+                crs.moveToFirst();
+                rowCount = crs.getInt(0);
+            }
+            crs.close();
+            db.close();
         }
-        crs.close();
         return rowCount;
     }
 
@@ -172,19 +183,28 @@ public class TagDb {
                         String link = null;
                         String description = null;
                         String type = null;
+                        String name = null;
+                        String imgUrl = null;
+                        String keywords = null;
                         int depth = 0;
                         boolean descriptionTagOpened = false;
                         boolean uriTagOpened = false;
+                        boolean keywordsOpened = false;
+                        boolean imgOpened = false;
 
                         @Override
                         public void characters(char[] ch, int start, int length) {
                             String tmp = new String(ch);
 
                             if (descriptionTagOpened) {
-                                description += tmp;
+                                description = tmp;
 
                             } else if (uriTagOpened) {
                                 link += tmp;
+                            } else if (keywordsOpened) {
+                                keywords += tmp;
+                            } else if (imgOpened) {
+                                imgUrl += tmp;
                             }
                         }
 
@@ -202,7 +222,9 @@ public class TagDb {
                                 row.put("wikilink", link);
                                 row.put("description", description);
                                 row.put("value_type", type);
-                                row.put("name", key);
+                                row.put("name", name);
+                                row.put("keywords", keywords);
+                                row.put("image", imgUrl);
                                 writeDb.insert(TagDbOpenHelper.getTableName(),
                                         "", row);
 
@@ -212,6 +234,10 @@ public class TagDb {
                             } else if (lname.equals("uri")) {
                                 uriTagOpened = false;
 
+                            } else if (lname.equals("keywords")) {
+                                keywordsOpened = false;
+                            } else if (lname.equals("img")) {
+                                imgOpened = false;
                             }
                             depth--;
                         }
@@ -229,6 +255,7 @@ public class TagDb {
                             } else if (lname.equals("value")) {
                                 value = attributes.getValue("v");
                                 type = attributes.getValue("type");
+                                name = attributes.getValue("name");
 
                             } else if (lname.equals("description")) {
                                 descriptionTagOpened = true;
@@ -237,6 +264,14 @@ public class TagDb {
                             } else if (lname.equals("uri")) {
                                 link = "";
                                 uriTagOpened = true;
+
+                            } else if (lname.equals("keywords")) {
+                                keywords = "";
+                                keywordsOpened = true;
+
+                            } else if (lname.equals("img")) {
+                                imgUrl = "";
+                                imgOpened = true;
                             }
                             depth++;
                         }

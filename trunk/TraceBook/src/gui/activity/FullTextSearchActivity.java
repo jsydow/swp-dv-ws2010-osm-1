@@ -70,7 +70,6 @@ public class FullTextSearchActivity extends ListActivity {
             TagDb db = new TagDb(act);
 
             List<TagSearchResult> result = db.getTag(searchText, "de");
-            db.closeDb();
             act.fillResultsToList(result, resIndex);
 
         }

@@ -44,9 +44,10 @@ public class StartActivity extends Activity {
             @Override
             public void run() {
 
-                if (db.getRowCountForLanguage("de") < 1)
-                    db.initDbWithFile(Environment.getExternalStorageDirectory()
+                if (db.getRowCountForLanguage("de") < 1) {
+                    db.initDbWithFile(DataStorage.getTraceBookDirPath()
                             + File.separator + "tags.DE.xml");
+                }
 
             }
         }).start();
