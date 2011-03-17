@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class TagDbOpenHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 23;
     private static final String DATABASE_NAME = "db_tracebook_tags";
     private static final String TABLE_NAME = "dictionary";
     private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME
