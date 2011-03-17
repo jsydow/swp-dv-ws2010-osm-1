@@ -13,7 +13,8 @@ module OsmMapFeatures
     ]
 
     @any_text_regexps = [
-        /\s+/
+        /\s+/,
+        /^\*$/
     ]
 
     @data = Hash.new
@@ -28,6 +29,7 @@ module OsmMapFeatures
     end
 
     def get_useful_tags(key, value)
+        return if (value == '')
     	useful_page = get_page("Tag:#{key}%3D#{value}")
     	useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
 
