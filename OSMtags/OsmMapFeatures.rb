@@ -19,6 +19,7 @@ module OsmMapFeatures
     @data = Hash.new
     @language = 'EN'
     @base_uri = 'http://wiki.openstreetmap.org'
+    @cache_dir = 'cache/'
 
     private
 
@@ -56,7 +57,25 @@ module OsmMapFeatures
     end
 
     def get_page(page)
-        Net::HTTP.get(URI.parse(get_uri(page)))
+        uri = URI.parse(get_uri(page))
+        cache_path = @cache_dir + uri.host + uri.path.gsub(/[%:]/, '_')
+
+        if (File.exists?(cache_path))
+            File.open(cache_path) { |fp| fp.readlines.join("\n") }
+        else
+            content = Net::HTTP.get(uri)
+            dir = File.dirname(cache_path)
+
+            d = []
+            dir.split('/').each do |x|
+                d << x
+                tmp_dir = d.join('/')
+                Dir.mkdir(tmp_dir) unless File.directory?(tmp_dir)
+            end
+            File.open(cache_path, 'w') { |fp| fp.puts(content) }
+
+            content
+        end
     end
 
     def get_page_name(a)
