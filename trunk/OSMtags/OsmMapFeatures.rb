@@ -64,7 +64,7 @@ module OsmMapFeatures
         uri = URI.parse(get_uri(page))
         cache_path = @cache_dir + uri.host + uri.path.gsub(/[%:]/, '_')
 
-        if (File.exists?(cache_path))
+        if (File.exists?(cache_path) and (Time.now.strftime('%s').to_i < File.mtime(cache_path).strftime('%s').to_i + 604800))
             File.open(cache_path) { |fp| fp.readlines.join("\n") }
         else
             content = Net::HTTP.get(uri)
