@@ -1,0 +1,1868 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<map_features xmlns="http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags" lang="tr">
+  <key v="abutters">
+    <value type="text" isArea="false" isNode="false" v="commercial" isWay="true">
+      <description>office buildings, business parks, etc.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="industrial" isWay="true">
+      <description>predominantly workshops, factories, warehouses</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="mixed" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="residential" isWay="true">
+      <description>predominantly houses and apartments</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="retail" isWay="true">
+      <description>predominantly shops</description>
+    </value>
+  </key>
+  <key v="access">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>General access permission. 'permissive' means there is no legally-enshrined right of access, but the landowner has allowed it at his/her discretion. 'private' means access is restricted to the landowner.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>General access permission. 'permissive' means there is no legally-enshrined right of access, but the landowner has allowed it at his/her discretion. 'private' means access is restricted to the landowner.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>General access permission. 'permissive' means there is no legally-enshrined right of access, but the landowner has allowed it at his/her discretion. 'private' means access is restricted to the landowner.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>General access permission. 'permissive' means there is no legally-enshrined right of access, but the landowner has allowed it at his/her discretion. 'private' means access is restricted to the landowner.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>General access permission. 'permissive' means there is no legally-enshrined right of access, but the landowner has allowed it at his/her discretion. 'private' means access is restricted to the landowner.</description>
+    </value>
+  </key>
+  <key v="aerialway">
+    <value type="text" isArea="false" isNode="true" v="" isWay="true">
+      <description>see Tagwatch site for some other common used values as well</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="cable_car" isWay="true">
+      <description>A cable car run. Cable_cars are aerial tramways that are just one pair of big cars that go in alternating directions to each other from A to B (Usually Valley to Hill or</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Dcable_car</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="chair_lift" isWay="true">
+      <description>An open chairlift run. These have a single seat to sit on and are open to the outside air. Beginners may struggle to get off them without making a fool of themselves!</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Dchair_lift</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="drag_lift" isWay="true">
+      <description>An overhead tow-line for skiers and riders, known as a T-bar lift, with a T shaped bit which two skiers share by resting their bottom on the bar or a button lift where the skier places a circular disk in between their legs. More difficult and uncomfortable for snowboarders. drag_lift would also cover more simple looped rope drag lifts, or loops of wire with handles to grab</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Ddrag_lift</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="gondola" isWay="true">
+      <description>A gondola. A Gondola is an aerialway where the cabins go around in a circle. The cabins are usually smaller than cabins of a cable car. Usual maximum occupancy is 4,6 or 8 persons per cabin</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Dgondola</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="goods" isWay="true">
+      <description>A lift for goods. Passenger transport is usually not allowed</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="mixed_lift" isWay="true">
+      <description>A mixed lift, containing both gondolas and chairs.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Dmixed_lift</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="pylon" isWay="false">
+      <description>A pylon supporting the aerialway cable.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Dpylon</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="station" isWay="false">
+      <description>A station, where passengers can enter and/or leave the aerialway</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aerialway%3Dstation</uri>
+    </value>
+  </key>
+  <key v="aeroway">
+    <value type="text" isArea="false" isNode="true" v="" isWay="true">
+      <description>see Tagwatch site for some other common used values as well</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="aerodrome" isWay="false">
+      <description>An Aerodrome (UK), Airport (US), see also military=airfield</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Daerodrome</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="apron" isWay="false">
+      <description>A place where planes are parked.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Dapron</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="gate" isWay="false">
+      <description>Used to mark the gate numbers at the airports.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Dgate</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="helipad" isWay="false">
+      <description>Helicopter start/landing pad</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Dhelipad</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="runway" isWay="true">
+      <description>A strip of land kept clear and set aside for aeroplanes to take off from and land on. (Other languages)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Drunway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="taxiway" isWay="true">
+      <description>Where airplanes manouevre between runways and parking areas.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Dtaxiway</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="terminal" isWay="false">
+      <description>Airport passenger building</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Dterminal</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="windsock" isWay="false">
+      <description>Used to mark the position of a windsock.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:aeroway%3Dwindsock</uri>
+    </value>
+  </key>
+  <key v="amenity">
+    <value type="text" isArea="false" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="arts_centre" isWay="false">
+      <description>Sanat Merkezi</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Arts_centre</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="atm" isWay="false">
+      <description>ATM / Otomatik Bankac&#305;l&#305;k Makinesi</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/ATM_or_Cash_Point</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="bank" isWay="false">
+      <description>Banka &#351;ubesi (e&#287;er ATM varsa atm=yes etiketini ekleyiniz)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Bank</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="bicycle_parking" isWay="false">
+      <description>Bisiklet park yeri</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="biergarten" isWay="false">
+      <description>Birahane http://en.wikipedia.org/wiki/Biergarten</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="bus_station" isWay="false">
+      <description>Otob&#252;s terminali ya da duraklar gurubu (otob&#252;s dura&#287;&#305; i&#231;in highway=bus_stop kullan&#305;n&#305;z)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Bus_Station</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="cafe" isWay="false">
+      <description>Kahvehane, kahve evi</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Cafe</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="car_service" isWay="false">
+      <description>Oto Servis</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="cinema" isWay="false">
+      <description>Sinema salonu</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Cinema</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="college" isWay="false">
+      <description>Kolej kamp&#252;s&#252; ya da binalar&#305;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/College_Campus_(further_education)</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="courthouse" isWay="false">
+      <description>Adliye / Mahkeme</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Courthouse</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="fast_food" isWay="false">
+      <description>H&#305;zl&#305; t&#252;ketilen g&#305;da (hamburger, sand&#246;vi&#231; v.b.)</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="fire_station" isWay="false">
+      <description>&#304;tfaiye</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="fuel" isWay="false">
+      <description>Akaryak&#305;t / LPG istasyonu ...</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Fuel_Station</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="grave_yard" isWay="false">
+      <description>K&#252;&#231;&#252;k mezarl&#305;k. B&#252;y&#252;k mezarl&#305;klar i&#231;in landuse=cemetery kullan&#305;labilir.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="hospital" isWay="false">
+      <description>Hastane, Poliklinik</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="library" isWay="false">
+      <description>K&#252;t&#252;phane</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="notary" isWay="false">
+      <description>Noter</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="parking" isWay="false">
+      <description>Otopark. Tek d&#252;&#287;&#252;m noktas&#305; park simgesi olacak, alan imlemeleri ise renkli olarak kodlanacakt&#305;r.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Parking</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="pharmacy" isWay="false">
+      <description>Eczane</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Pharmacy</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="place_of_worship" isWay="false">
+      <description>Camii, kilise ya da farkl&#305; tap&#305;naklar. Unutmay&#305;n&#305;z ki religion=&amp;amp;lt;din&amp;amp;gt;, denomination=&amp;amp;lt;mezhep&amp;amp;gt; de belirleyici olarak kullan&#305;lmas&#305; iyi olur. Ayr&#305;ca bkz. the article</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Place_of_Worship</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="police" isWay="false">
+      <description>Polis merkezi</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="post_box" isWay="false">
+      <description>Posta kutusu</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="post_office" isWay="false">
+      <description>Postane</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="prison" isWay="false">
+      <description>Hapishane / Islahevi</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Prison</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="pub" isWay="false">
+      <description>Alkoll&#252; i&#231;ki sunulan mekanlar: bar, pub, &#351;arap evi, v.b.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="public_building" isWay="false">
+      <description>Kamuya a&#231;&#305;k bina</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="recycling" isWay="false">
+      <description>Geri d&#246;n&#252;&#351;&#252;m noktalar&#305; (&#351;i&#351;e, ka&#287;&#305;t, naylon,...)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Recycling_facilities</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="restaurant" isWay="false">
+      <description>H&#305;zl&#305; t&#252;ketime y&#246;nelik olmayan lokanta</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="school" isWay="false">
+      <description>Okul ve okul b&#246;lgesi</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="taxi" isWay="false">
+      <description>Taksi dura&#287;&#305; ya da zili</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="telephone" isWay="false">
+      <description>Umumi telefon</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="theatre" isWay="false">
+      <description>Tiyatro ya da opera sahnesi</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Theatre</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="toilets" isWay="false">
+      <description>Umumi tuvalet. (&#220;cretli olabilir)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="townhall" isWay="false">
+      <description>Belediye binas&#305;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Townhall</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="university" isWay="false">
+      <description>&#220;niversite yerle&#351;kesi ya da binalar&#305;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/University_Campus_(tertiary_education)</uri>
+    </value>
+  </key>
+  <key v="area">
+    <value type="text" isArea="true" isNode="false" v="yes" isWay="false">
+      <description>Making a closed way render solid</description>
+    </value>
+  </key>
+  <key v="bicycle">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for bicycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for bicycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for bicycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for bicycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for bicycles. For values see above</description>
+    </value>
+  </key>
+  <key v="boat">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="boundary">
+    <value type="text" isArea="true" isNode="false" v="administrative" isWay="false">
+      <description>e.g. State, county, local council (unclear how these are specified. Clarify!). Use therefore bordertype=</description>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="civil" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="national_park" isWay="false">
+      <description>Area of outstanding natural beauty, set aside for conservation and for recreation (Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="political" isWay="false">
+      <description>Electoral boundaries</description>
+    </value>
+  </key>
+  <key v="bridge">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="building">
+    <value type="text" isArea="true" isNode="false" v="" isWay="false">
+      <description>see Tagwatch site for some other common used values as well</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="yes" isWay="false">
+      <description>General tag for buildings</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:building%3Dyes</uri>
+    </value>
+  </key>
+  <key v="cables">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Number of cables per power line. The power line on the photo (click on it to see more details) has 6 double cables (the cable on top does not carry power) and thus may be tagged as cables=6 and wires=double.</description>
+    </value>
+  </key>
+  <key v="construction">
+    <value type="text" isArea="false" isNode="false" v="*" isWay="true">
+      <description>Any linear highway object may be added; e.g., construction=motorway. Use with highway=construction</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Key:construction</uri>
+    </value>
+  </key>
+  <key v="created_by">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Defined by the editor used (JOSM, applet, osmeditor, etc), mainly to deal with Utf8 errors. Should not be changed manually.</description>
+    </value>
+  </key>
+  <key v="cutting">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="cycleway">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>see Tagwatch site for some other common used values as well</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="lane" isWay="true">
+      <description>A lane is a route that lies within the roadway</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="opposite" isWay="true">
+      <description>Used on ways with oneway=yes where it is permitted to cycle in both directions. Note - such streets are common in Belgium, the Netherlands and Denmark, for example, but are rare in the UK (although they do exist): often, instead, actually the street is two-way as normal for its whole length except for the very short section past the no-entry sign at the end, where cycles are excepted from the no-entry by means of a short lane separated by an island. This is called a "cycle plug". In some places this has been represented as very short oneway Way at the end with an adjacent cycleway, forming a little triangle with the road they join to, or sometimes with a short oneway Way with cycleway=opposite_lane or opposite_track.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="opposite_lane" isWay="true">
+      <description>Used on ways with oneway=yes that have a cycling lane going the opposite direction of normal traffic flow (a "contraflow" lane)</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="opposite_track" isWay="true">
+      <description>Used on ways with oneway=yes that have a cycling track going the opposite direction of normal traffic flow</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="track" isWay="true">
+      <description>A track is a route that is separate from the road.+oneway=yes if needed.</description>
+    </value>
+  </key>
+  <key v="date_off">
+    <value type="text" isArea="false" isNode="false" v="Date" isWay="true">
+      <description>Date restriction stops</description>
+    </value>
+  </key>
+  <key v="date_on">
+    <value type="text" isArea="false" isNode="false" v="Date" isWay="true">
+      <description>Date restriction starts</description>
+    </value>
+  </key>
+  <key v="day_off">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>Day restriction stops</description>
+    </value>
+  </key>
+  <key v="day_on">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>Day restriction starts</description>
+    </value>
+  </key>
+  <key v="depth">
+    <value type="number" isArea="true" isNode="false" v="" isWay="true">
+      <description>Depth in metres</description>
+    </value>
+  </key>
+  <key v="description">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Bir tarama sistemi ya da pop-up destekleyen haritalarda g&#246;r&#252;nt&#252;lenebilir bilgi..</description>
+    </value>
+  </key>
+  <key v="ele">
+    <value type="number" isArea="false" isNode="true" v="" isWay="false">
+      <description>Altitude (meter over sea level)</description>
+    </value>
+  </key>
+  <key v="electrified">
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>contact_line: a power line over the train head rail: a third rail near the track supplying the train with power yes: electrified track, but no details available no: track with no power supply</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="rail" isWay="true">
+      <description>contact_line: a power line over the train head rail: a third rail near the track supplying the train with power yes: electrified track, but no details available no: track with no power supply</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>contact_line: a power line over the train head rail: a third rail near the track supplying the train with power yes: electrified track, but no details available no: track with no power supply</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="contact_line" isWay="true">
+      <description>contact_line: a power line over the train head rail: a third rail near the track supplying the train with power yes: electrified track, but no details available no: track with no power supply</description>
+    </value>
+  </key>
+  <key v="embankment">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="end_date">
+    <value type="text" isArea="false" isNode="false" v="Date" isWay="true">
+      <description>Date feature was removed</description>
+    </value>
+  </key>
+  <key v="est_depth">
+    <value type="number" isArea="true" isNode="false" v="" isWay="true">
+      <description>A rough guess of the Depth in metres</description>
+    </value>
+  </key>
+  <key v="est_width">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>A rough guess of the width of way/segment in metres</description>
+    </value>
+  </key>
+  <key v="fenced">
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="foot">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for pedestrians. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for pedestrians. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for pedestrians. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for pedestrians. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for pedestrians. For values see above</description>
+    </value>
+  </key>
+  <key v="frequency">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>The frequency with which a line is electrified. Use 0 for DC. Also see the voltage tag.</description>
+    </value>
+  </key>
+  <key v="goods">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Vans and trucks?? See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Vans and trucks?? See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Vans and trucks?? See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Vans and trucks?? See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Vans and trucks?? See above</description>
+    </value>
+  </key>
+  <key v="hgv">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for Heavy Goods Vehicles (UK), e.g. trucks. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for Heavy Goods Vehicles (UK), e.g. trucks. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for Heavy Goods Vehicles (UK), e.g. trucks. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for Heavy Goods Vehicles (UK), e.g. trucks. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for Heavy Goods Vehicles (UK), e.g. trucks. See above</description>
+    </value>
+  </key>
+  <key v="highway">
+    <value type="text" isArea="false" isNode="true" v="" isWay="true">
+      <description>See Tagwatch for more used values.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="bridleway" isWay="true">
+      <description>For horses, (in the UK, these are rights of way for pedestrians, horse-riders and cyclists). Equivalent to highway=path + horse=designated.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dbridleway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="bus_guideway" isWay="true">
+      <description>A busway where the vehicle guided by the way (though not a railway) and is not suitable for other traffic. Please note: this is not a normal bus lane, use access=no, psv=yes instead!</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dbus_guideway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="bus_stop" isWay="false">
+      <description>A small bus stop. Larger stations should be tagged as amenity=bus_station instead.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dbus_stop</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="construction" isWay="true">
+      <description>For roads under construction, use with construction=*</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dconstruction</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="crossing" isWay="false">
+      <description>Pedestrians can cross a street here; e.g., zebra crossing</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dcrossing</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="cycleway" isWay="true">
+      <description>For designated cycleways; i.e., mainly/exclusively for bicycles. Add foot=* only if default-access-restrictions do not apply.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dcycleway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="emergency_access_point" isWay="false">
+      <description>Sign number which can be used to define you current position in case of an emergency. Use with ref=NUMBER_ON_THE_SIGN</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Demergency_access_point</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="footway" isWay="true">
+      <description>For designated footpaths; i.e., mainly/exclusively for pedestrians. This includes walking tracks and gravel paths. If bicycles are allowed as well, you can indicate this by adding a bicycle=yes tag. Should not be used for paths where the primary or intended usage is unknown.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dfootway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="ford" isWay="true">
+      <description>The road crosses through stream or river, vehicles must enter any water. See also ford=*.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dford</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="give_way" isWay="false">
+      <description>A give way sign</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dgive_way</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="living_street" isWay="true">
+      <description>A street where pedestrians have priority over cars, children can play on the street, maximum speed is low. In the UK this is called "Home Zone".</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dliving_street</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="mini_roundabout" isWay="false">
+      <description>Very small roundabouts only, larger ones should be junction=roundabout. Rendered as anti-clockwise by default. To render clockwise add the tag direction=clockwise.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dmini_roundabout</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="motorway_junction" isWay="false">
+      <description>Indicates a junction (UK) or exit (US). ref=* should be set to the exit number or junction identifier. (Some roads - e.g., the A14 - also carry junction numbers, so the tag may be encountered elsewhere despite its name)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dmotorway_junction</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="motorway_link" isWay="true">
+      <description>The link roads (sliproads/ramps) leading to/from a motorway from/to a motorway or lower class highway. Normally with the same motorway restrictions.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dmotorway_link</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="passing_place" isWay="false">
+      <description>The location of a passing space</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dpassing_place</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="path" isWay="true">
+      <description>A non-specific or shared-use path</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dpath</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="pedestrian" isWay="true">
+      <description>For roads used mainly/exclusively for pedestrians/shopping areas. Also for tagging squares and plazas (in which case, add area=yes.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dpedestrian</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="platform" isWay="true">
+      <description>The passenger platform of a bus stop or station.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dplatform</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="primary" isWay="true">
+      <description>Administrative classification in the UK, generally linking larger towns.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dprimary</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="primary_link" isWay="true">
+      <description>The link roads (sliproads/ramps) leading to/from a primary road from/to a primary road or lower class highway.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dprimary_link</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="proposed" isWay="true">
+      <description>For planned roads, use with proposed=*</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dproposed</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="raceway" isWay="true">
+      <description>A course or track for (motor) racing</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Draceway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="residential" isWay="true">
+      <description>Roads accessing or around residential areas but which are not a classified or unclassified highway.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dresidential</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="road" isWay="true">
+      <description>A road of unknown classification. This is intended as a temporary tag to mark a road until it has been properly surveyed. Once it has been surveyed, the classification should be updated to the appropriate value.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Droad</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="secondary" isWay="true">
+      <description>Administrative classification in the UK, generally linking smaller towns and villages</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dsecondary</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="secondary_link" isWay="true">
+      <description>The link roads (sliproads/ramps) leading to/from a secondary road from/to a secondary road or lower class highway.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dsecondary_link</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="service" isWay="true">
+      <description>Generally for access to a building, motorway service station, beach, campsite, industrial estate, business park, etc.. This is also commonly used for access to parking and trash collection. Sometimes called an alley, particularly in the US.Use with service=*, e.g. service=parking_aisle to mark a service way inside a amenity=parking</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dservice</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="services" isWay="false">
+      <description>A service station to get food and eat something, often found at motorways</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dservices</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="speed_camera" isWay="false">
+      <description>A fixed road-side or overhead speed camera.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dspeed_camera</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="steps" isWay="true">
+      <description>For flights of steps (stairs) on footways. Use with step_count=* to indicate the number of steps</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dsteps</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="stop" isWay="false">
+      <description>A stop sign</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dstop</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="street_lamp" isWay="false">
+      <description>A street light, lamppost, street lamp, light standard, or lamp standard is a raised source of light on the edge of a road, which is turned on or lit at a certain time every night</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dstreet_lamp</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="tertiary" isWay="true">
+      <description>A "C" road in the UK. Generally for use on roads wider than 4 metres (13') in width, and for faster/wider minor roads that aren't A or B roads. In the UK, they tend to have dashed lines down the middle, whereas unclassified roads don't.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dtertiary</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="track" isWay="true">
+      <description>Roads for agricultural use, gravel roads in the forest etc.; usually unpaved/unsealed but may occasionally apply to paved tracks as well, see tracktype=* for more guidance.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dtrack</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="traffic_signals" isWay="false">
+      <description>Lights that control the traffic</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dtraffic_signals</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="trunk" isWay="true">
+      <description>Important roads that aren't motorways. Typically maintained by central, not local government. Need not necessarily be a divided highway. In the UK, all green signed A roads are, in OSM, classed as 'trunk'.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dtrunk</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="trunk_link" isWay="true">
+      <description>The link roads (sliproads/ramps) leading to/from a trunk road from/to a trunk road or lower class highway.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dtrunk_link</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="turning_circle" isWay="false">
+      <description>A turning circle is a rounded, widened area usually, but not necessarily, at the end of a road to facilitate easier turning of a vehicle.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dturning_circle</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unclassified" isWay="true">
+      <description>No administrative classification. Unclassified roads typically form the lowest form of the interconnecting grid network. Note: This is not a marker for roads where we still need to choose a highway tag (see highway=road for roads that require classification).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:highway%3Dunclassified</uri>
+    </value>
+  </key>
+  <key v="historic">
+    <value type="text" isArea="false" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="archaeological_site" isWay="false">
+      <description>Arkeolojik kaz&#305; b&#246;lgesi</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="castle" isWay="false">
+      <description>Kale, &#351;ato</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="house_of_person" isWay="false">
+      <description>&#214;nemli bir ki&#351;inin ya&#351;am&#305;&#351; oldu&#287;u ev</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="icon" isWay="false">
+      <description>&#304;kon, ikona</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="memorial" isWay="false">
+      <description>Heykelsiz k&#252;&#231;&#252;k an&#305;t</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/memorial</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="monument" isWay="false">
+      <description>An&#305;t, Heykel</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="museum" isWay="false">
+      <description>M&#252;ze</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Museum</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="ruins" isWay="false">
+      <description>Tarihi kal&#305;nt&#305;</description>
+    </value>
+  </key>
+  <key v="horse">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for horse riders. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for horse riders. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for horse riders. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for horse riders. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for horse riders. For values see above</description>
+    </value>
+  </key>
+  <key v="hour_off">
+    <value type="text" isArea="false" isNode="false" v="Time" isWay="true">
+      <description>Time restriction stops</description>
+    </value>
+  </key>
+  <key v="hour_on">
+    <value type="text" isArea="false" isNode="false" v="Time" isWay="true">
+      <description>Time restriction starts</description>
+    </value>
+  </key>
+  <key v="iata">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>IATA International airport codes</description>
+    </value>
+  </key>
+  <key v="icao">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>ICAO International airport codes</description>
+    </value>
+  </key>
+  <key v="ice_road">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>A highway is laid upon frozen water basin, definitely doesn't exist in summer.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:ice_road%3Dyes</uri>
+    </value>
+  </key>
+  <key v="image">
+    <value type="text" isArea="true" isNode="true" v="URI" isWay="true">
+      <description>Bir g&#246;r&#252;nt&#252; dosyas&#305;na at&#305;f (E&#287;er g&#246;r&#252;nt&#252; bir kayna&#287;&#305; belirtiyorsa a&#351;a&#287;&#305;daki "source_ref" anahtar&#305;n&#305; kullan&#305;n&#305;z.)</description>
+    </value>
+  </key>
+  <key v="int_name">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Uluslararas&#305; ad</description>
+    </value>
+  </key>
+  <key v="int_ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>International reference (eg E30)</description>
+    </value>
+  </key>
+  <key v="is_in">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Kategori i&#231;in kullan&#305;l&#305;r, &#246;rn. place=suburb; name=Adalar; is_in=Marmara,Istanbul,Turkey</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+  </key>
+  <key v="junction">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>See Key:junction or Tagwatch for more used values.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Key:junction</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="roundabout" isWay="true">
+      <description>This automatically implies oneway=yes, the oneway direction is defined by the sequential ordering of nodes within the Way. This applies on a way, tagged with highway=* already.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:junction%3Droundabout</uri>
+    </value>
+  </key>
+  <key v="landuse">
+    <value type="text" isArea="true" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="allotments" isWay="false">
+      <description>A piece of land given over to local residents for growing vegetables and flowers (UK)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="basin" isWay="false">
+      <description>Other languages</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="brownfield" isWay="false">
+      <description>Describes land scheduled for new development where old buildings have been demolished and cleared</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="cemetery" isWay="false">
+      <description>Place for burials. Smaller places (e.g. with a church nearby) may use amenity=grave_yard instead.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="commercial" isWay="false">
+      <description>Predominantly offices</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="farm" isWay="false">
+      <description>Animals, vegetables, flowers, fruit growing (Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="forest" isWay="false">
+      <description>Managed forest or woodland plantation (Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="greenfield" isWay="false">
+      <description>Describes land scheduled for new development where there have been no buildings before</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="industrial" isWay="false">
+      <description>Predominantly workshops, factories or warehouses</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="landfill" isWay="false">
+      <description>Place where waste is dumped upon. Other languages</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="quarry" isWay="false">
+      <description>Surface mineral extraction (Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="railway" isWay="false">
+      <description>Ground used around railways and railway-stations</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:landuse%3Drailway</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="recreation_ground" isWay="false">
+      <description>An open green space for general recreation, which may include pitches, nets and so on, usually municipal but possibly also private to colleges or companies</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Recreation_ground</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="reservoir" isWay="false">
+      <description>Stores water, may covered or uncovered ((3196) Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="residential" isWay="false">
+      <description>Predominantly houses or apartment buildings</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="retail" isWay="false">
+      <description>Predominantly shops</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="village_green" isWay="false">
+      <description>An area of common land, usually grass, in the centre of a village (quintessentially English - defined separately from 'common land' under the Commons Registration ACt 1965 and the Commons Act 2006)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Village_green</uri>
+    </value>
+  </key>
+  <key v="lanes">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Number of travel lanes in each (or only permitted) direction</description>
+    </value>
+  </key>
+  <key v="layer">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>This numerical tag used to be `elevation', however it got renamed due to confusion with the ele and altitude tags used by tracklog imports.</description>
+    </value>
+  </key>
+  <key v="lcn_ref">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>The number of the local cycle network</description>
+    </value>
+  </key>
+  <key v="leisure">
+    <value type="text" isArea="true" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="common" isWay="false">
+      <description>Kamuya a&#231;&#305;k genel alan</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="fishing" isWay="false">
+      <description>Bal&#305;k av&#305;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="garden" isWay="false">
+      <description>Bah&#231;e</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="golf_course" isWay="false">
+      <description>Golf sahas&#305;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="marina" isWay="false">
+      <description>Liman / marina</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="nature_reserve" isWay="false">
+      <description>Korunmu&#351; do&#287;a alan&#305;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="park" isWay="false">
+      <description>Park</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="playground" isWay="false">
+      <description>Oyun alan&#305;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Playground</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="slipway" isWay="false">
+      <description>Kay&#305;khane</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:leisure%3Dplayground</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="sports_centre" isWay="false">
+      <description>Spor Merkezi</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="stadium" isWay="false">
+      <description>Stadyum</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="track" isWay="false">
+      <description>ko&#351;u, bisiklet v.b. parkur</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="water_park" isWay="false">
+      <description>Su park&#305;</description>
+    </value>
+  </key>
+  <key v="lit">
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Street lighting</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Street lighting</description>
+    </value>
+  </key>
+  <key v="loc_name">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Yerel ad</description>
+    </value>
+  </key>
+  <key v="loc_ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Local reference</description>
+    </value>
+  </key>
+  <key v="lock">
+    <value type="text" isArea="false" isNode="true" v="yes" isWay="true">
+      <description>A lock is used for moving boats between waterways at two different levels. Can tag either the section of the way between the gates (detailed) or just a single node in the waterway (less detailed).</description>
+    </value>
+  </key>
+  <key v="man_made">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>see Tagwatch site for some other common used values as well</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="adit" isWay="false">
+      <description>From Wikipedia: An adit is a type of entrance to an underground mine which is horizontal or nearly horizontal</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dadit</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="beacon" isWay="false">
+      <description>Help guide navigators to their destinations. You need to add or use instead seamark=beacon or airmark=beacon to identify clearly for which type of navigation it's usefull/needed.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dbeacon</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="crane" isWay="false">
+      <description>A stationary, permanent crane, such as those at docks</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dcrane</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="cutline" isWay="true">
+      <description>Used to mark cut lines in forests.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dcutline</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="flagpole" isWay="false">
+      <description>A long pole built to hold a flag</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dflagpole</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="groyne" isWay="true">
+      <description>A rigid hydraulic structure perpendicular to a coastline or a riverbank intended to interrupt longshore sediment transport. See also: man_made=breakwater</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dgroyne</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="lighthouse" isWay="false">
+      <description>Sends out a light beam to guide ships</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dlighthouse</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="mineshaft" isWay="false">
+      <description>A vertical tunnel</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dmineshaft</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="monitoring_station" isWay="false">
+      <description>A station that monitor something</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dmonitoring_station</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="petroleum_well" isWay="false">
+      <description>A boring through the earth's surface that is designed to find and produce petroleum oil</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dpetroleum_well</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="pier" isWay="true">
+      <description>A "bridge into the ocean", usually for recreation</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dpier</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="pipeline" isWay="true">
+      <description>A pipe for carrying various fluids, such as water, gas, sewage</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dpipeline</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="reservoir_covered" isWay="false">
+      <description>A covered water reservoir</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dreservoir_covered</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="surveillance" isWay="false">
+      <description>To mark places and buildings monitored by public or private camera</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dsurveillance</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="survey_point" isWay="false">
+      <description>Triangulation pillars, geodetic vertices, and fixed equipment used by topographers (e.g. DGPS radio stations)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dsurvey_point</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="tower" isWay="false">
+      <description>A tall and often lean building or structure e.g. telecoms. Also see historic=* below.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dtower</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="wastewater_plant" isWay="false">
+      <description>Facilities used to treat wastewater (known as sewage in some countries)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dwastewater_plant</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="water_tower" isWay="false">
+      <description>A tower to store water in, usually found on hills beside or in a town</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dwater_tower</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="water_well" isWay="false">
+      <description>A water well is an excavation or structure created in the ground by digging, driving, boring or drilling to access groundwater in underground aquifers.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dwater_well</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="water_works" isWay="false">
+      <description>A place where drinking water is found and applied to the local waterpipes network.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dwater_works</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="watermill" isWay="false">
+      <description>Watermill, mostly ancient and out of order</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dwatermill</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="windmill" isWay="false">
+      <description>Windmill, mostly ancient and out of order, see power=generator in combination with power_source=wind for modern wind turbines</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dwindmill</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="works" isWay="false">
+      <description>Industrial building to produce something</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:man_made%3Dworks</uri>
+    </value>
+  </key>
+  <key v="maxheight">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>height limit in metres</description>
+    </value>
+  </key>
+  <key v="maxlength">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>length limit in metres</description>
+    </value>
+  </key>
+  <key v="maxspeed">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Maximum speed in km/hr</description>
+    </value>
+  </key>
+  <key v="maxweight">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Weight limit in tonnes</description>
+    </value>
+  </key>
+  <key v="maxwidth">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>width limit in metres</description>
+    </value>
+  </key>
+  <key v="military">
+    <value type="text" isArea="true" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="airfield" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="barracks" isWay="false">
+      <description>Buildings where soldiers live and work.</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="bunker" isWay="false">
+      <description>Buildings, often build from concrete, to stand even heavier fire.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="danger_area" isWay="false">
+      <description>Usually a large marked area around something like a firing range, bombing range, etc which is an exclusion zone.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="range" isWay="false">
+      <description>Where soldiers have practice with their weapons (firing, bombing, artillery, ...).</description>
+    </value>
+  </key>
+  <key v="minspeed">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Minimum speed in km/hr</description>
+    </value>
+  </key>
+  <key v="mooring">
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>A length of bank where boats are explicitly permitted to moor. maxstay=* should be used for timing information.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>A length of bank where boats are explicitly permitted to moor. maxstay=* should be used for timing information.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>A length of bank where boats are explicitly permitted to moor. maxstay=* should be used for timing information.</description>
+    </value>
+  </key>
+  <key v="motorboat">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="motorcar">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for (motor) cars. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for (motor) cars. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for (motor) cars. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for (motor) cars. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for (motor) cars. For values see above</description>
+    </value>
+  </key>
+  <key v="motorcycle">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for motorcycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for motorcycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for motorcycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for motorcycles. For values see above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for motorcycles. For values see above</description>
+    </value>
+  </key>
+  <key v="name">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Ortak varsay&#305;lan ad</description>
+    </value>
+  </key>
+  <key v="name:lg">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Farkl&#305; dilde ad. &#246;rn. name:en=Ararat. bkz.: Bilingual_street_names</description>
+    </value>
+  </key>
+  <key v="nat_name">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Ulusal ad</description>
+    </value>
+  </key>
+  <key v="nat_ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>National reference</description>
+    </value>
+  </key>
+  <key v="natural">
+    <value type="text" isArea="true" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="bay" isWay="false">
+      <description>Bay (Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="beach" isWay="false">
+      <description>Beach: sand, gravel or pebble (Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="cliff" isWay="false">
+      <description>Rock face</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="coastline" isWay="true">
+      <description>The coastline should run anti-clockwise, i.e. land on the left side and water on the right side of the segment, for it to show correctly.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features/Coastline</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="fell" isWay="false">
+      <description>Bare upper lying uncultivated land principally covered with grass and often grazed.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="heath" isWay="false">
+      <description>Bare lower lying uncultivated land with bushes but little or no tree cover.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="land" isWay="false">
+      <description>Land that exists within another area, such as a lake. (i.e an island). Keep water on the right and land on the left side in relation to segment direction. Layering may also be required</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="marsh" isWay="false">
+      <description>waterlogged area</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="mud" isWay="false">
+      <description>(Other languages)</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="peak" isWay="false">
+      <description>top of a hill or mountain</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Natural_peak</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="scree" isWay="false">
+      <description>Loose rock</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="scrub" isWay="false">
+      <description>Uncultivated land covered with bushes or stunted trees</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="spring" isWay="false">
+      <description>A place where ground water flows naturally from the ground ((hydrology, land) (3596) Other languages)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="water" isWay="false">
+      <description>Lakes, etc. Always keep water on the right side of the segment and land on the left side, in relation to segment direction.</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="wood" isWay="false">
+      <description>Natural woodland (trees)</description>
+    </value>
+  </key>
+  <key v="ncn_ref">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>The number reference (eg 54) of a National Cycle Network route. In the UK, national routes have single-or double-digit numbers with a red background on the signs.</description>
+    </value>
+  </key>
+  <key v="noexit">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>A dead end road/cul de sac with only one access road</description>
+    </value>
+  </key>
+  <key v="note">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Kendiniz ve di&#287;er haritac&#305;lar i&#231;in not. adresinde notlar&#305;n g&#246;r&#252;nd&#252;&#287;&#252; bir harita var.</description>
+    </value>
+  </key>
+  <key v="old_name">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Tarihi ad</description>
+    </value>
+  </key>
+  <key v="old_ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Historical reference</description>
+    </value>
+  </key>
+  <key v="oneway">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>The permitted direction for a segment, is indicated by segment direction (enable arrows!). -1 for oneway direction opposed to segment direction.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="1)" isWay="true">
+      <description>The permitted direction for a segment, is indicated by segment direction (enable arrows!). -1 for oneway direction opposed to segment direction.</description>
+    </value>
+  </key>
+  <key v="overtaking">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>Specifying sections of roads where overtaking is legally forbidden.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Key:overtaking</uri>
+    </value>
+  </key>
+  <key v="passing_places">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>A way which has frequent passing places</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:passing_places%3Dyes</uri>
+    </value>
+  </key>
+  <key v="place">
+    <value type="text" isArea="true" isNode="true" v="city" isWay="false">
+      <description>b&#252;y&#252;k&#351;ehir ya da &#351;ehir (resmi adland&#305;rma, genellikle n&#252;fus &amp;amp;gt; 100.000)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dcity</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="continent" isWay="false">
+      <description>k&#305;ta (Asya, Afrika, Kuzey Amerika, G&#252;ney Amerika, Antartika, Avrupa, Avustralya)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dcontinent</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="country" isWay="false">
+      <description>&#252;lke</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dcountry</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="county" isWay="false">
+      <description>T&#252;rk idari sisteminde 'il&#231;e'. (OSM etiketlerinde kar&#351;&#305;l&#305;&#287;&#305; bulunmad&#305;&#287;&#305; i&#231;in 'il' anlam&#305;nda da kullan&#305;labilir?)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dcounty</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="hamlet" isWay="false">
+      <description>mezra (k&#246;yden k&#252;&#231;&#252;k, birka&#231; evlik yerle&#351;im)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dhamlet</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="island" isWay="false">
+      <description>ada</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Disland</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="isolated_dwelling" isWay="false">
+      <description>Smallest rural settlement, smaller than a hamlet, usually just one house</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Disolated_dwelling</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="locality" isWay="false">
+      <description>&#252;zerinde yerle&#351;im bulunmayan ancak adland&#305;r&#305;lm&#305;&#351; yer, y&#246;re</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dlocality</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="region" isWay="false">
+      <description>b&#246;lge</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dregion</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="state" isWay="false">
+      <description>eyalet</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dstate</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="suburb" isWay="false">
+      <description>semt, &#351;ehrin adland&#305;r&#305;lm&#305;&#351; b&#246;lge ya da il&#231;esi. (k&#305;rsal alandaki 'il&#231;e' i&#231;in kullanmay&#305;n&#305;z.)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dsuburb</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="town" isWay="false">
+      <description>kasaba (resmi adland&#305;rma, genellikle n&#252;fus &amp;amp;gt; 10.000)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dtown</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="village" isWay="false">
+      <description>k&#246;y (resmi adland&#305;rma, genellikle n&#252;fus &amp;amp;lt; 10.000)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:place%3Dvillage</uri>
+    </value>
+  </key>
+  <key v="place_name">
+    <value type="text" isArea="true" isNode="false" v="" isWay="false">
+      <description>Yaln&#305;zca b&#246;lgeler i&#231;indir; d&#252;&#287;&#252;m noktalar&#305; i&#231;in 'name' kullan&#305;l&#305;r. (bkz. Notes).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+  </key>
+  <key v="place_numbers">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>kap&#305; numaras&#305;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+  </key>
+  <key v="population">
+    <value type="number" isArea="true" isNode="true" v="" isWay="false">
+      <description>n&#252;fus</description>
+    </value>
+  </key>
+  <key v="postal_code">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>posta kodu</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+  </key>
+  <key v="power">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>see Tagwatch or OSMdoc site for some other common used values as well</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="cable_distribution_cabinet" isWay="false">
+      <description>In these cabinets, the 400-V circuits to the house connections, connection and transfer points of the regional utilities are branched. Other uses include distributions of the municipal street lighting.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dcable_distribution_cabinet</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="generator" isWay="false">
+      <description>A place where power is generated. Use in combination with generator:source=*, generator:method=* and generator:output=*.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dgenerator</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="line" isWay="true">
+      <description>A way following the path of power cables. For minor power lines with poles and not towers, you may want to use power=minor_line.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dline</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="minor_line" isWay="true">
+      <description>A way following the path of minor power cables, supported by poles and not towers/pylons. (This isn't quite so simple, as sometimes larger towers are replaced by smaller poles made with a stronger material; a better distinction might be based on voltage.)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dminor_line</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="pole" isWay="false">
+      <description>For single (often wooden or concrete) poles carrying high/medium voltage electricity cables.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dpole</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="station" isWay="false">
+      <description>A tag for electricity stations. Wires from power lines come in or go out here.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dstation</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="sub_station" isWay="false">
+      <description>A tag for electricity sub-stations. Smaller than a station. Could be a box near street.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dsub_station</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="tower" isWay="false">
+      <description>For towers or pylons carrying high voltage electricity cables. Normally constructed from steel latticework. Should not be used for electricity or telephone cables carried on single wooden poles, which might be tagged power=pole.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:power%3Dtower</uri>
+    </value>
+  </key>
+  <key v="proposed">
+    <value type="text" isArea="false" isNode="false" v="*" isWay="true">
+      <description>Any linear highway object may be added; e.g., proposed=motorway. Use with highway=proposed</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Key:proposed</uri>
+    </value>
+  </key>
+  <key v="psv">
+    <value type="text" isArea="false" isNode="false" v="permissive" isWay="true">
+      <description>Access permission for Public Service Vehicles (UK), e.g. buses and coaches. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unknown" isWay="true">
+      <description>Access permission for Public Service Vehicles (UK), e.g. buses and coaches. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="no" isWay="true">
+      <description>Access permission for Public Service Vehicles (UK), e.g. buses and coaches. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="private" isWay="true">
+      <description>Access permission for Public Service Vehicles (UK), e.g. buses and coaches. See above</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>Access permission for Public Service Vehicles (UK), e.g. buses and coaches. See above</description>
+    </value>
+  </key>
+  <key v="railway">
+    <value type="text" isArea="false" isNode="true" v="" isWay="true">
+      <description></description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="abandoned" isWay="true">
+      <description>The course of a former railway which has been abandoned and the track and infrastucture removed. The course may be still recognized through embankments, cuttings, bridges, tunnel and rolling or straight ways.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dabandoned</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="buffer_stop" isWay="false">
+      <description>stops the train at the end of a track. see Buffer_stop</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dbuffer_stop</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="construction" isWay="true">
+      <description>A railway under construction. See construction=* and the construction=yes proposal Proposed_features/Construction</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dconstruction</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="crossing" isWay="false">
+      <description>A point where pedestrians may cross.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dcrossing</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="disused" isWay="true">
+      <description>A section of railway which is no longer used but where the track and infrastructure remains in place. See disused=yes for alternative tagging.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Ddisused</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="funicular" isWay="true">
+      <description>Cable driven inclined railways. In many cases they serve touristic interest, giving easy access to spectacular mountain views.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dfunicular</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="halt" isWay="false">
+      <description>A small station, may not have a platform, trains may only stop on request.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dhalt</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="level_crossing" isWay="false">
+      <description>A point where rails and roads cross.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dlevel_crossing</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="light_rail" isWay="true">
+      <description>A higher-standard tram system, normally in its own right-of-way. Often it connects towns and thus reaches a considerable length (tens of kilometer).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dlight_rail</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="monorail" isWay="true">
+      <description>A railway with only a single rail. A monorail can run above the rail like in Las Vegas and Disneyland or can suspend below the rail like the Wuppertal Schwebebahn (Germany)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dmonorail</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="narrow_gauge" isWay="true">
+      <description>Narrow-gauge passenger or freight trains. Narrow gauge railways can have mainline railway service like the Rhaetian Railway in Switzerland or can be a small light industrial railway. Use gauge=* to specify the actual width of rails.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dnarrow_gauge</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="platform" isWay="true">
+      <description>This is parallel to the rail line for showing where the actual platforms are. It is also to know where you can change platform and enter the station, so use footpaths to connect them. This is really useful for routing too.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dplatform</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="preserved" isWay="true">
+      <description>A railway running historic trains, usually a tourist attraction (changed to preserved from preserved_rail as "rail" is redundant).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dpreserved</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="rail" isWay="true">
+      <description>Full sized passenger or freight trains in the standard gauge for the country or state</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Drail</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="station" isWay="false">
+      <description>Railway station (Other languages).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dstation</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="subway" isWay="true">
+      <description>A city passenger rail service running mostly grade separated (see Wikipedia:rapid transit).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dsubway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="subway_entrance" isWay="false">
+      <description>The entrance to a subway station, usually going from surface to underground.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dsubway_entrance</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="tram" isWay="true">
+      <description>One or two carriage rail vehicles, usually sharing motor road (Other languages)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dtram</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="tram_stop" isWay="false">
+      <description>A tram stop is a place where a passenger can embark / disembark a tram.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dtram_stop</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="turntable" isWay="false">
+      <description>These are used for changing the direction that part of a train is pointing in.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:railway%3Dturntable</uri>
+    </value>
+  </key>
+  <key v="rcn_ref">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>The number of the regional cycle network. In the UK the regional routes have double-digit numbers with a blue background on the signs.</description>
+    </value>
+  </key>
+  <key v="ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>The common default reference (eg M25)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+  </key>
+  <key v="reg_name">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>B&#246;lgesel ad</description>
+    </value>
+  </key>
+  <key v="reg_ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>Regional reference</description>
+    </value>
+  </key>
+  <key v="route">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="bus" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="ferry" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:ferry</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="flight" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="ncn" isWay="true">
+      <description>ncn = National Cycle Network (in the UK)</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Cycle_routes</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="pub_crawl" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="ski" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="subsea" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="tour" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="service">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>See Key:service or Tagwatch for more used values.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Key:service</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="alley" isWay="true">
+      <description>An alley is a service road usually located between properties for access to utilities. Use with highway=service</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:service%3Dalley</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="driveway" isWay="true">
+      <description>A driveway is a service road leading to a residence or business, usually with private access. Use with highway=service</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:service%3Ddriveway</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="parking_aisle" isWay="true">
+      <description>A parking aisle is an area in a parking lot in between parking space that vehicles can drive into and out of the parking spaces. Use with highway=service</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:service%3Dparking_aisle</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="siding" isWay="true">
+      <description>Relatively short lengths of track, running parallel to (and connected to) a main route</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:service%3Dsiding</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="spur" isWay="true">
+      <description>Relatively short lengths of track, built to give one company or entity access to a main or branch line.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:service%3Dspur</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yard" isWay="true">
+      <description>Tracks within railway company operated marshaling or maintenance yards</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:service%3Dyard</uri>
+    </value>
+  </key>
+  <key v="shop">
+    <value type="text" isArea="false" isNode="true" v="" isWay="false">
+      <description>&#214;nerilmi&#351; olan etiketleri g&#246;rmek ya da eklemek i&#231;in.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="bakery" isWay="false">
+      <description>Ekmek ve unlu mam&#252;ller</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="butcher" isWay="false">
+      <description>Kasap / &#350;ark&#252;teri</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="chandler" isWay="false">
+      <description>Mum ve sabun</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="supermarket" isWay="false">
+      <description>Supermarket</description>
+    </value>
+  </key>
+  <key v="source">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="extrapolation" isWay="true">
+      <description>Extension of information from a known source</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="historical" isWay="true">
+      <description>from out-of-copyright mapping or other historical document</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="image" isWay="true">
+      <description>photograph or video</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="knowledge" isWay="true">
+      <description>Local or common knowledge</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="survey" isWay="true">
+      <description>gpx track or other physical survey</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="voice" isWay="true">
+      <description>Voice recordings, eg dictaphone</description>
+    </value>
+  </key>
+  <key v="source_ref">
+    <value type="text" isArea="true" isNode="true" v="" isWay="true">
+      <description>To record the URI, source reference (eg Landsat) or other link to physical sources.</description>
+    </value>
+  </key>
+  <key v="sport">
+    <value type="text" isArea="true" isNode="true" v="10pin" isWay="false">
+      <description>Bovling</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="athletics" isWay="false">
+      <description>Atletizm</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="basketball" isWay="false">
+      <description>Basketbol</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="climbing" isWay="false">
+      <description>Kaya t&#305;rmanma (ve kaya duvar&#305;)</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="cycling" isWay="false">
+      <description>Bisiklet</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="golf" isWay="false">
+      <description>Golf</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="gymnastics" isWay="false">
+      <description>Jimnastik</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="hockey" isWay="false">
+      <description>Buz hokeyi</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="horse_racing" isWay="false">
+      <description>Hipodrom</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="motor" isWay="false">
+      <description>Motorlu ara&#231; yar&#305;&#351;&#305;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="multi" isWay="false">
+      <description>&#199;oklu</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="racquet" isWay="false">
+      <description>Squash</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="skateboard" isWay="false">
+      <description>Kay-kay</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="skating" isWay="false">
+      <description>Buz pateni</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="skiing" isWay="false">
+      <description>Kayak</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="soccer" isWay="false">
+      <description>Futbol</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="swimming" isWay="false">
+      <description>Y&#252;zme</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="table_tennis" isWay="false">
+      <description>Masa Tenisi / Pin-pon</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="tennis" isWay="false">
+      <description>Tenis kortu</description>
+    </value>
+  </key>
+  <key v="start_date">
+    <value type="text" isArea="false" isNode="false" v="Date" isWay="true">
+      <description>Date feature was created</description>
+    </value>
+  </key>
+  <key v="surface">
+    <value type="text" isArea="false" isNode="false" v="paved" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="unpaved" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="toll">
+    <value type="text" isArea="true" isNode="true" v="yes" isWay="true">
+      <description>Toll or fee must be paid to access way, see also highway=toll_booth</description>
+    </value>
+  </key>
+  <key v="tourism">
+    <value type="text" isArea="true" isNode="true" v="" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="attraction" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="camp_site" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="caravan_site" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="guest_house" isWay="false">
+      <description>Wikipedia:Guest House</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="hostel" isWay="false">
+      <description>Wikipedia:Hostel</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="hotel" isWay="false">
+      <description>Wikipedia:Hotel</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="information" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="motel" isWay="false">
+      <description>Wikipedia:Motel</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="picnic_site" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="theme_park" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="viewpoint" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="zoo" isWay="false">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="tracktype">
+    <value type="text" isArea="false" isNode="false" v="grade1" isWay="true">
+      <description>Paved track or heavily compacted hardcore.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="grade2" isWay="true">
+      <description>Unpaved track; surface of gravel or densely packed dirt/sand.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="grade3" isWay="true">
+      <description>Unpaved track; an even mixture of hard and soft materials.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="grade4" isWay="true">
+      <description>Unpaved track; prominently dirt/sand/grass, but with some hard materials, or compressed materials mixed in.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="grade5" isWay="true">
+      <description>Unpaved track; lack of hardcore, and uncompacted, subtle on the landscape, made from only grass, sand and/or soil.</description>
+    </value>
+  </key>
+  <key v="traffic_calming">
+    <value type="text" isArea="false" isNode="true" v="" isWay="true">
+      <description>See Key:traffic_calming or Tagwatch for more used values.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Key:traffic_calming</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="bump" isWay="true">
+      <description>Short bump, usually less than 30&amp;amp;nbsp;cm in length. See Speed bump definition at wikipedia.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dbump</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="chicane" isWay="true">
+      <description>See Chicane definition at wikipedia.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dchicane</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="choker" isWay="true">
+      <description>Intentionally narrowed part of a road.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dchoker</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="cushion" isWay="true">
+      <description>Several humps with spaces between them. See Speed Cushion definition at wikipedia.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dcushion</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="hump" isWay="true">
+      <description>Longer bump, but in general not long enough for whole vehicle. See Speed hump definition at wikipedia.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dhump</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="rumble_strip" isWay="true">
+      <description>Several humps with spaces between them. See Rumble Strips definition at wikipedia.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Drumble_strip</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="table" isWay="true">
+      <description>Very long flat bump. See Speed table definition at wikipedia.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dtable</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="yes" isWay="true">
+      <description>To tag road features that are designed to slow down traffic in residential areas.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:traffic_calming%3Dyes</uri>
+    </value>
+  </key>
+  <key v="tunnel">
+    <value type="text" isArea="false" isNode="true" v="culvert" isWay="true">
+      <description>For a stream passing under a road use tunnel=culvert on the section of stream passing under the road (don't use this tag for open-top culverts or roads using the culvert structure as a bridge (bridge=culvert)).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:tunnel%3Dculvert</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>&amp;amp;nbsp;</description>
+    </value>
+  </key>
+  <key v="usage">
+    <value type="text" isArea="false" isNode="false" v="branch" isWay="true">
+      <description>main line: heavy traffic branch line: connecting places with a mainline industrial: servicing large plants (iron, chemical etc.), surface mining, ... military: servicing military area tourism: most mountain rails (rack-rails, funicular) and preserved railways.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="industrial" isWay="true">
+      <description>main line: heavy traffic branch line: connecting places with a mainline industrial: servicing large plants (iron, chemical etc.), surface mining, ... military: servicing military area tourism: most mountain rails (rack-rails, funicular) and preserved railways.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="military" isWay="true">
+      <description>main line: heavy traffic branch line: connecting places with a mainline industrial: servicing large plants (iron, chemical etc.), surface mining, ... military: servicing military area tourism: most mountain rails (rack-rails, funicular) and preserved railways.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="tourism" isWay="true">
+      <description>main line: heavy traffic branch line: connecting places with a mainline industrial: servicing large plants (iron, chemical etc.), surface mining, ... military: servicing military area tourism: most mountain rails (rack-rails, funicular) and preserved railways.</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="main" isWay="true">
+      <description>main line: heavy traffic branch line: connecting places with a mainline industrial: servicing large plants (iron, chemical etc.), surface mining, ... military: servicing military area tourism: most mountain rails (rack-rails, funicular) and preserved railways.</description>
+    </value>
+  </key>
+  <key v="voltage">
+    <value type="text" isArea="false" isNode="false" v="" isWay="true">
+      <description>The voltage with which a line is electrified. Also see the frequency tag.</description>
+    </value>
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Voltage of the power line.</description>
+    </value>
+  </key>
+  <key v="waterway">
+    <value type="text" isArea="false" isNode="true" v="" isWay="true">
+      <description></description>
+      <uri>http://wiki.openstreetmap.org/wiki/Proposed_features</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="boatyard" isWay="false">
+      <description>Boat yard - a place for constructing, repairing and storing vessels out of the water.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dboatyard</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="canal" isWay="true">
+      <description>An artificial open waterway used for transportation, waterpower, or irrigation.(Other languages).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dcanal</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="dam" isWay="true">
+      <description>A wall built across a river or stream to impound the water. A dam normally does not have water flowing over the top of it.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Ddam</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="ditch" isWay="true">
+      <description>A small to moderate depression created to channel water.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dditch</uri>
+    </value>
+    <value type="text" isArea="true" isNode="true" v="dock" isWay="false">
+      <description>An 'enclosed' area of water used for building or repairing ships.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Ddock</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="drain" isWay="true">
+      <description>An artificial waterway for carrying storm water or industrial discharge.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Ddrain</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="lock_gate" isWay="false">
+      <description>In normal circumstances, use lock=yes. But for very large locks, it may be more appropriate to tag the gates at each end using this tag.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dlock_gate</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="river" isWay="true">
+      <description>For narrow rivers which will be rendered as a line. For larger rivers (defined as more than 12m across) see waterway=riverbank (Other languages).</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Driver</uri>
+    </value>
+    <value type="text" isArea="true" isNode="false" v="riverbank" isWay="false">
+      <description>Used for larger rivers, to define an area between the opposite riverbanks.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Driverbank</uri>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="stream" isWay="true">
+      <description>A naturally-formed waterway that is too thin to be classed as a river. An active, able-bodied person should be able to jump over it if trees along it aren't too thick.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dstream</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="turning_point" isWay="false">
+      <description>A place to turn the driving direction for vessels, where the boats are longer than the river/canal is wide. Use maxlength=* to denote the maximum length of the vessel.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dturning_point</uri>
+    </value>
+    <value type="text" isArea="false" isNode="true" v="weir" isWay="true">
+      <description>A barrier built across a river, sometimes to divert water for industrial purposes. Water can still flow over the top.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:waterway%3Dweir</uri>
+    </value>
+  </key>
+  <key v="width">
+    <value type="number" isArea="false" isNode="false" v="" isWay="true">
+      <description>Width of way in metres</description>
+    </value>
+  </key>
+  <key v="winter_road">
+    <value type="text" isArea="false" isNode="false" v="yes" isWay="true">
+      <description>A highway functions during winter, probably can't be driven in summer.</description>
+      <uri>http://wiki.openstreetmap.org/wiki/Tr:Tag:winter_road%3Dyes</uri>
+    </value>
+  </key>
+  <key v="wires">
+    <value type="text" isArea="false" isNode="false" v="double" isWay="true">
+      <description>Number of wires per power cable. "single" (1), "double" (2), "triple" (3) or "quad" (4). The photo shows an example of "double".</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="quad" isWay="true">
+      <description>Number of wires per power cable. "single" (1), "double" (2), "triple" (3) or "quad" (4). The photo shows an example of "double".</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="triple" isWay="true">
+      <description>Number of wires per power cable. "single" (1), "double" (2), "triple" (3) or "quad" (4). The photo shows an example of "double".</description>
+    </value>
+    <value type="text" isArea="false" isNode="false" v="single" isWay="true">
+      <description>Number of wires per power cable. "single" (1), "double" (2), "triple" (3) or "quad" (4). The photo shows an example of "double".</description>
+    </value>
+  </key>
+</map_features>
