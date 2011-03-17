@@ -80,5 +80,6 @@ end
 @gps = GpsFak0r.new
 
 while (true) do
-    @gps.go(rand(360), 1, :step => rand(5) + 5, :delay => 1)
+    @gps.go(90, 50, :step => rand(5) + 5, :delay => 1)
+    @gps.go(180, 50, :step => rand(5) + 5, :delay => 1)
 end
