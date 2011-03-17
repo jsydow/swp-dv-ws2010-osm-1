@@ -41,7 +41,7 @@ public class TagDb {
     }
 
     private void openDb() {
-        if (db.isOpen()) {
+        if (db != null && db.isOpen()) {
             db.close();
         }
 
