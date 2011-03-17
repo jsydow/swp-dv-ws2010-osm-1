@@ -19,7 +19,7 @@ import android.util.Log;
  * WayPointList objects are any objects that consist of a series of nodes like
  * Areas and Ways.
  * 
- *
+ * 
  * 
  */
 public class DataPointsList extends DataMapObject {
@@ -96,19 +96,37 @@ public class DataPointsList extends DataMapObject {
      * @return the array of GeoPoints
      */
     public GeoPoint[] toGeoPointArray() {
-        GeoPoint[] tmp = new GeoPoint[nodes.size() + (isArea ? 1 : 0)];
+        return toGeoPointArray(null);
+    }
+
+    /**
+     * Returns an array of GeoPoints representing the current way for being
+     * displayed in a RouteOverlay. If isArea() is true, the first point will be
+     * added as last point, this is a requirement of the RouteOverlay.
+     * 
+     * @param additional
+     *            additional GeoPoint to be added to the way, may be null
+     * 
+     * @return the array of GeoPoints
+     */
+    public GeoPoint[] toGeoPointArray(GeoPoint additional) {
+        GeoPoint[] tmp = new GeoPoint[nodes.size() + (isArea ? 1 : 0)
+                + (additional != null ? 1 : 0)];
         GeoPoint first = null;
 
         int i = 0;
         for (DataNode n : nodes) {
-            tmp[i] = new GeoPoint(n.getLat(), n.getLon());
+            tmp[i] = n.toGeoPoint();
             if (first == null)
                 first = tmp[i];
             ++i;
         }
 
+        if (additional != null)
+            tmp[i++] = additional;
+
         if (isArea)
-            tmp[tmp.length - 1] = first;
+            tmp[i++] = first;
 
         return tmp;
     }
