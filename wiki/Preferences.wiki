@@ -1,0 +1,7 @@
+#summary Preferences we want to be able to set.
+
+= GPS =
+  * requestLocationUpdates parameters (minimum distance/time until next location)
+
+= Map view =
+  * Colors for several item groups (ways, areas, POIs)
