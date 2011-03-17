@@ -134,9 +134,6 @@ public class NewTrackActivity extends TabActivity {
 
     }
 
-    /**
-     * 
-     */
     private void setGpsStatus() {
         LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GpsStatus gps = loc.getGpsStatus(null);
@@ -383,10 +380,8 @@ public class NewTrackActivity extends TabActivity {
             streetToggle.setClickable(false);
             setButtonList(true, 2);
             try {
-                ServiceConnector.getLoggerService().beginWay(false);
-
+                ServiceConnector.getLoggerService().beginWayA(false, true);
             } catch (RemoteException e) {
-
                 e.printStackTrace();
             }
         } else {
