@@ -10,12 +10,16 @@ import java.util.List;
 import Trace.Book.R;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import core.data.db.TagDb;
 import core.data.db.TagSearchResult;
 
@@ -28,6 +32,10 @@ public class FullTextSearchActivity extends ListActivity {
 
     private int currResIndex;
     private List<TagSearchResult> currTagSearchResult;
+    /**
+     * 
+     */
+    TagSearchResult ts;
 
     /**
      * A simple thread class which deals with search jobs in our database.
@@ -150,9 +158,10 @@ public class FullTextSearchActivity extends ListActivity {
         currTagSearchResult = tags;
 
         GenericItemDescription desc = new GenericItemDescription();
-        desc.addResourceId("Comment", R.id.tv_fulltextsearch_comment);
-        desc.addResourceId("Category", R.id.tv_fulltextsearch_category);
-        desc.addResourceId("Value", R.id.tv_fulltextsearch_value);
+        desc.addResourceId("Comment",
+                R.id.tv_listviewfulltextsearch_description);
+        desc.addResourceId("Category", R.id.tv_listviewfulltextsearch_category);
+        desc.addResourceId("Value", R.id.tv_listviewfulltextsearch_value);
 
         List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
 
@@ -196,11 +205,86 @@ public class FullTextSearchActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
+        super.onListItemClick(l, v, position, id);
+
+        if (currTagSearchResult == null)
+            return;
+
+        ts = currTagSearchResult.get(position);
+
         final Dialog infoDialog = new Dialog(this);
         infoDialog.setContentView(R.layout.dialog_searchinfo);
         infoDialog.setTitle(R.string.string_searchInfoDialog_title);
         infoDialog.setCancelable(true);
+
+        TextView cat = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_category);
+        cat.setText(ts.getKey());
+
+        TextView val = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_value);
+        val.setText(ts.getValue());
+
+        TextView desc = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_description);
+        desc.setText(ts.getDescription());
+
+        TextView wiki = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_url);
+        wiki.setText(ts.getLink());
+
+        // final Uri imageUri = Uri
+        // .parse("http://www.universalhandel24.de/images/Deutschland%20mit%20Adler.jpeg");
+        //
+        // (new Thread() {
+        //
+        // @Override
+        // public void run() {
+        //
+        // try {
+        //
+        // InputStream is = (InputStream) new URL(
+        // "http://www.universalhandel24.de/images/Deutschland%20mit%20Adler.jpeg")
+        // .getContent();
+        //
+        // Drawable d = Drawable.createFromStream(is, null);
+        // image.setImageDrawable(d);
+        // image.invalidate();
+        // } catch (FileNotFoundException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // } catch (MalformedURLException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+        //
+        // }
+        //
+        // }).start();
+
+        // set up button
+
+        final FullTextSearchActivity act = this;
+
+        Button button = (Button) infoDialog
+                .findViewById(R.id.btn_searchInfoDialog_save);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                final Intent intent = new Intent();
+                intent.putExtra("DataNodeKey", ts.getKey());
+                intent.putExtra("DataNodeValue", ts.getValue());
+                act.setResult(RESULT_OK, intent);
+                infoDialog.cancel();
+                act.finish();
+
+            }
+        });
+
         infoDialog.show();
-        super.onListItemClick(l, v, position, id);
+
     }
+
 }
