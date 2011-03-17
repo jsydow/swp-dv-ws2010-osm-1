@@ -1,1 +1,4 @@
-﻿MapsForge - https://code.google.com/p/mapsforge/
+﻿MapsForge
+https://code.google.com/p/mapsforge/
+Street, Point, Areaicon
+http://wiki.openstreetmap.org/wiki/Map_Features

@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Trace.Book.R;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import core.data.db.TagDb;
 import core.data.db.TagSearchResult;
 
@@ -191,6 +194,16 @@ public class FullTextSearchActivity extends ListActivity {
      */
     public synchronized int increaseIndex() {
         return ++currResIndex;
+    }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        final Dialog infoDialog = new Dialog(this);
+        infoDialog.setContentView(R.layout.dialog_searchinfo);
+        infoDialog.setTitle(R.string.string_searchInfoDialog_title);
+        infoDialog.setCancelable(true);
+        infoDialog.show();
+        super.onListItemClick(l, v, position, id);
     }
 }
