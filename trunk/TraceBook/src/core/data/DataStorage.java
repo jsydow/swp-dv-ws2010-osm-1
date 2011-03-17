@@ -28,7 +28,7 @@ import android.util.Log;
  * 
  * 
  */
-public class DataStorage {
+public final class DataStorage {
 
     /**
      * Singleton instance.
@@ -136,15 +136,15 @@ public class DataStorage {
             for (File f : files) {
                 if (f.isFile()) {
                     if (!f.delete()) {
-                        Log.e("DeleteDirectory",
-                                "Could not delete file " + f.getName()
-                                        + " in directory " + dir.getPath());
+                        Log.e("DeleteDirectory", "Could not delete file "
+                                + f.getName() + " in directory "
+                                + dir.getPath());
                     }
                 }
             }
             if (!dir.delete()) {
-                Log.e("DeleteDirectory",
-                        "Could not delete directory " + dir.getName());
+                Log.e("DeleteDirectory", "Could not delete directory "
+                        + dir.getName());
 
             }
         }
@@ -271,8 +271,9 @@ public class DataStorage {
             }
 
         } else {
-            Log.w("TraceBookDirectory",
-                    "The TraceBook directory path doesn't point to a directory! wtf?");
+            Log
+                    .w("TraceBookDirectory",
+                            "The TraceBook directory path doesn't point to a directory! wtf?");
         }
     }
 
