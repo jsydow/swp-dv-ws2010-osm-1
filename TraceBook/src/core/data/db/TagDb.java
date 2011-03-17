@@ -90,11 +90,11 @@ public class TagDb {
             String language, List<TagSearchResult> tags) {
 
         if (searchText.length() >= 2) {
-            Cursor result = db.query(TagDbOpenHelper.getTableName(),
-                    TagDbOpenHelper.getColumns(), "(name LIKE '%" + searchText
-                            + "%' OR keywords LIKE '%" + searchText
-                            + "%' OR description LIKE '%" + searchText
-                            + "%' OR value LIKE '%" + searchText
+            Cursor result = db.query(TagDbOpenHelper.getDictTableName(),
+                    TagDbOpenHelper.getDictColumns(), "(name LIKE '%"
+                            + searchText + "%' OR keywords LIKE '%"
+                            + searchText + "%' OR description LIKE '%"
+                            + searchText + "%' OR value LIKE '%" + searchText
                             + "%' OR key LIKE '%" + searchText
                             + "%') AND language LIKE '" + language + "'", null,
                     null, null, null, "20");
@@ -222,8 +222,9 @@ public class TagDb {
                                 row.put("name", name);
                                 row.put("keywords", keywords);
                                 row.put("image", imgUrl);
-                                writeDb.insert(TagDbOpenHelper.getTableName(),
-                                        "", row);
+                                writeDb.insert(
+                                        TagDbOpenHelper.getDictTableName(), "",
+                                        row);
 
                             } else if (lname.equals("description")) {
                                 descriptionTagOpened = false;
