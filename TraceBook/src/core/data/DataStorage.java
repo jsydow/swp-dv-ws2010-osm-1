@@ -25,7 +25,7 @@ import android.util.Log;
  * 
  * It is a Singleton!
  * 
- *
+ * 
  * 
  */
 public class DataStorage {
@@ -57,7 +57,7 @@ public class DataStorage {
     /**
      * Default private constructor for Singleton implementation.
      */
-    public DataStorage() {
+    private DataStorage() {
         tracks = new LinkedList<DataTrack>();
         names = new LinkedList<String>();
         retrieveTrackNames();
