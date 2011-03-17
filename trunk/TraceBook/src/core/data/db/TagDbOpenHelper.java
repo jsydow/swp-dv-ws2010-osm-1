@@ -13,22 +13,35 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 23;
     private static final String DATABASE_NAME = "db_tracebook_tags";
-    private static final String TABLE_NAME = "dictionary";
-    private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME
-            + " (" + "key" + " TEXT, " + "value" + " TEXT, " + "name"
-            + " TEXT, " + "description" + " TEXT, " + "wikilink" + " TEXT, "
-            + "image" + " TEXT, " + "language" + " TEXT, " + "keywords"
-            + " TEXT, " + "value_type" + " TEXT" + ");";
-    private static final String TABLE_DROP = "DROP TABLE IF EXISTS "
-            + TABLE_NAME;
+    private static final String DICT_TABLE_NAME = "dictionary";
+    private static final String HISTORY_TABLE_NAME = "history";
+    private static final String DICT_TABLE_CREATE = "CREATE TABLE "
+            + DICT_TABLE_NAME
+            + " (key TEXT, value TEXT, name TEXT, description TEXT, wikilink TEXT, image TEXT, language TEXT, keywords TEXT, value_type TEXT);";
+    private static final String HISTORY_TABLE_CREATE = "CREATE TABLE "
+            + HISTORY_TABLE_NAME
+            + " (key TEXT, value TEXT, use_count INT, last_use INT);";
+    private static final String DICT_TABLE_DROP = "DROP TABLE IF EXISTS "
+            + DICT_TABLE_NAME;
+    private static final String HISTORY_TABLE_DROP = "DROP TABLE IF EXISTS "
+            + HISTORY_TABLE_NAME;
 
     /**
      * Returns the name of the table.
      * 
      * @return the tableName
      */
-    static String getTableName() {
-        return TABLE_NAME;
+    static String getDictTableName() {
+        return DICT_TABLE_NAME;
+    }
+
+    /**
+     * Returns the name of the table.
+     * 
+     * @return the tableName
+     */
+    static String getHistoryTableName() {
+        return HISTORY_TABLE_NAME;
     }
 
     /**
@@ -36,9 +49,18 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * 
      * @return all columns
      */
-    static String[] getColumns() {
+    static String[] getDictColumns() {
         return new String[] { "key", "value", "name", "description",
                 "wikilink", "image", "language", "value_type" };
+    }
+
+    /**
+     * Returns a list of key and value columns.
+     * 
+     * @return key and value
+     */
+    static String[] getTagColumns() {
+        return new String[] { "key", "value" };
     }
 
     /**
@@ -77,15 +99,18 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TABLE_DROP);
-        db.execSQL(TABLE_CREATE);
+        db.execSQL(DICT_TABLE_DROP);
+        db.execSQL(HISTORY_TABLE_DROP);
+        db.execSQL(DICT_TABLE_CREATE);
+        db.execSQL(HISTORY_TABLE_CREATE);
 
-        createIndex(db, "language_idx", TABLE_NAME, "language");
+        createIndex(db, "language_idx", DICT_TABLE_NAME, "language");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(TABLE_DROP);
+        db.execSQL(DICT_TABLE_DROP);
+        db.execSQL(HISTORY_TABLE_DROP);
         onCreate(db);
     }
 
