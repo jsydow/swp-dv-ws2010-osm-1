@@ -92,6 +92,10 @@ module OsmMapFeatures
             end
         end
     end
+
+    def testing=(v)
+        @parse_useful_tags = !v;
+    end
     
     def is_any_text?(s, any_text_regexps = @any_text_regexps)
 		any_text_regexps.each { |regexp| return true if s.match(regexp) }
