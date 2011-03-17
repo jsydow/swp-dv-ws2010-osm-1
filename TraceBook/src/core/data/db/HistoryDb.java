@@ -10,8 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * @author js
- * 
+ * For when you read this: No more @author, prz. kthx.
  */
 public class HistoryDb {
     private TagDbOpenHelper helper;
@@ -153,7 +152,9 @@ public class HistoryDb {
                         + " AND value=" + value);
             } else {
                 ContentValues values = new ContentValues();
-                values.put("last_use", Long.valueOf(System.currentTimeMillis()));
+                values
+                        .put("last_use", Long.valueOf(System
+                                .currentTimeMillis()));
                 values.put("key", key);
                 values.put("value", value);
                 values.put("use_count", Integer.valueOf(1));
