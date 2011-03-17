@@ -17,6 +17,8 @@ module OsmMapFeatures
         /^\*$/
     ]
 
+    @flags = %{ Node Way Area }
+
     @data = Hash.new
     @language = 'EN'
     @base_uri = 'http://wiki.openstreetmap.org'
@@ -171,7 +173,7 @@ module OsmMapFeatures
                 @data[key][v] ||= Hash.new
                 @data[key][v]['attributes'] ||= { :v => v }
                 @data[key][v]['attributes']['type'] ||= get_value_type(v)
-                %w{ Node Way Area }.each do |item|
+                @flags.each do |item|
                     @data[key][v]['attributes']["is#{item}"] = (flags.match(/title="#{item}"/) ? 'true' : 'false')
                 end
 
