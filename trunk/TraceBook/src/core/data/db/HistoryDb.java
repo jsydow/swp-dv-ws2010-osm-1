@@ -120,8 +120,9 @@ public class HistoryDb {
 
         if (db != null && db.isOpen()) {
             Cursor crs = db.query(TagDbOpenHelper.getHistoryTableName(),
-                    new String[] { "COUNT(*)" }, "key=" + key + " AND value="
-                            + value, null, null, null, null);
+                    new String[] { "COUNT(*)" }, "key='" + key
+                            + "' AND value='" + value + "'", null, null, null,
+                    null);
 
             if (crs.moveToFirst()) {
                 rowCount = crs.getInt(0);
@@ -142,15 +143,21 @@ public class HistoryDb {
      *            The value of the tag.
      */
     public void updateTag(String key, String value) {
-        openDb();
 
-        if (db != null && db.isOpen()) {
-            if (rowsCountWithTag(key, value) > 0) {
-                db.execSQL("UPDATE " + TagDbOpenHelper.getHistoryTableName()
+        if (rowsCountWithTag(key, value) > 0) {
+            SQLiteDatabase wdb = helper.getWritableDatabase();
+            if (wdb != null && wdb.isOpen()) {
+                wdb.execSQL("UPDATE " + TagDbOpenHelper.getHistoryTableName()
                         + " SET use_count=use_count+1, last_use="
-                        + System.currentTimeMillis() + " WHERE key=" + key
-                        + " AND value=" + value);
+                        + System.currentTimeMillis() + " WHERE key='" + key
+                        + "' AND value='" + value + "'");
+                wdb.close();
             } else {
+                Log.e("HistoryDb", "Could not open database to write.");
+            }
+        } else {
+            SQLiteDatabase wdb = helper.getWritableDatabase();
+            if (wdb != null && wdb.isOpen()) {
                 ContentValues values = new ContentValues();
                 values
                         .put("last_use", Long.valueOf(System
@@ -158,12 +165,11 @@ public class HistoryDb {
                 values.put("key", key);
                 values.put("value", value);
                 values.put("use_count", Integer.valueOf(1));
-                db.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
+                wdb.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
+                wdb.close();
+            } else {
+                Log.e("HistoryDb", "Could not open database to write.");
             }
-
-            closeDb();
-        } else {
-            Log.e("TagDataBase", "Could not open Database.");
         }
         return;
     }
