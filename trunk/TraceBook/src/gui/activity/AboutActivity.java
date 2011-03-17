@@ -27,8 +27,8 @@ public class AboutActivity extends Activity {
     }
 
     /**
-     * This method set the text of the TextView resources with the resource.txt
-     * from the assets directory
+     * This method sets the text of the TextView resources with the resource.txt
+     * from the assets directory.
      */
     void setTextViews() {
         TextView resources = (TextView) findViewById(R.id.tv_aboutActivity_usedResources);
