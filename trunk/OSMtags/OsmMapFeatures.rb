@@ -20,6 +20,73 @@ module OsmMapFeatures
     @language = 'EN'
     @base_uri = 'http://wiki.openstreetmap.org'
 
+    private
+
+    def remove_html_tags(s)
+        s.gsub(/<.*?>/, '')
+    end
+
+    def get_useful_tags(key, value)
+    	useful_page = get_page("Tag:#{key}%3D#{value}")
+    	useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
+
+    	useful_tags.map { |x| x.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip }
+    end
+
+    def get_real_value(value)
+        value = (value ? value.gsub(/[%°]/, '').gsub(/&.+?/, '').strip : '')
+        value = '' if (is_any_text?(value) or is_number?(value) or value.match(/\.\.\./))
+
+        value
+    end
+
+    def get_image_uri(a)
+        uri = ''
+
+        if (a and a.match(/<img.*?src=".*?".*?\/>/))
+            uri = a.scan(/<img.*?src="(.*?)".*?\/>/).to_s.strip
+            uri = @base_uri + uri unless (uri.match(/^http/))
+        end
+
+        uri
+    end
+
+    def get_value_type(value)
+        is_number?(get_real_value(value)) ? 'number' : 'text'
+    end
+
+    def get_page(page)
+        Net::HTTP.get(URI.parse(get_uri(page)))
+    end
+
+    def get_page_name(a)
+        page = ''
+
+        if (not(a.match(/class="new"/)) and a.match(/href="\/wiki\//))
+            page = a.scan(/href="\/wiki\/.*?:?(.*?)"/).to_s.strip
+        end
+
+        page
+    end
+
+    def get_uri(page)
+        base_uri  = "#{@base_uri}/wiki/"
+        base_uri += "#{@language}:" unless (@language == 'EN')
+        base_uri + page
+    end
+
+    def is_any_text?(s)
+		@any_text_regexps.each { |regexp| return true if (s and s.match(regexp)) }
+        false
+    end
+
+    def is_number?(s)
+    	@number_regexps.each { |regexp| return true if (s and s.match(regexp)) }
+        false
+    end
+
+    public
+
     def settings=(opts = {})
         opts.keys.each do |key|
             instance_variable_set("@#{key.to_s}".to_sym, opts[key])
@@ -92,70 +159,5 @@ module OsmMapFeatures
                 @data[key][v]['img'] = img unless (img == '')
             end
         end
-    end
-
-    private
-
-    def remove_html_tags(s)
-        s.gsub(/<.*?>/, '')
-    end
-
-    def get_useful_tags(key, value)
-    	useful_page = get_page("Tag:#{key}%3D#{value}")
-    	useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
-
-    	useful_tags.map { |x| x.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip }
-    end
-
-    def get_real_value(value)
-        value = (value ? value.gsub(/[%°]/, '').gsub(/&.+?/, '').strip : '')
-        value = '' if (is_any_text?(value) or is_number?(value) or value.match(/\.\.\./))
-
-        value
-    end
-
-    def get_image_uri(a)
-        uri = ''
-
-        if (a and a.match(/<img.*?src=".*?".*?\/>/))
-            uri = a.scan(/<img.*?src="(.*?)".*?\/>/).to_s.strip
-            uri = @base_uri + uri unless (uri.match(/^http/))
-        end
-
-        uri
-    end
-
-    def get_value_type(value)
-        is_number?(get_real_value(value)) ? 'number' : 'text'
-    end
-
-    def get_page(page)
-        Net::HTTP.get(URI.parse(get_uri(page)))
-    end
-
-    def get_page_name(a)
-        page = ''
-
-        if (not(a.match(/class="new"/)) and a.match(/href="\/wiki\//))
-            page = a.scan(/href="\/wiki\/.*?:?(.*?)"/).to_s.strip
-        end
-
-        page
-    end
-
-    def get_uri(page)
-        base_uri  = "#{@base_uri}/wiki/"
-        base_uri += "#{@language}:" unless (@language == 'EN')
-        base_uri += page
-    end
-
-    def is_any_text?(s)
-		@any_text_regexps.each { |regexp| return true if (s and s.match(regexp)) }
-        false
-    end
-
-    def is_number?(s)
-    	@number_regexps.each { |regexp| return true if (s and s.match(regexp)) }
-        false
     end
 end
