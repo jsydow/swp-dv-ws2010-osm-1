@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  @author greenTraxas -->
+<resources>
+    <!-- String values -->
+    <string name="string_global_poi">POI</string>
+    <string name="string_global_way">Yol</string>
+    <string name="string_global_area">Alan</string>
+    <string name="string_trackInfoDialog_title">Track bilgileri</string>
+    <string name="string_licenseDialog_title">GPL3 Lisans</string>
+    <string name="string_aboutActivity_title">Hakkında</string>
+    <string name="string_addmemoActivity_title">Ses bildirim</string>
+    <string name="string_addpointActivity_title">Nokta ekleme</string>
+    <string name="string_addpointmetaActivity_title">Meta bilgi ekleme</string>
+    <string name="string_fulltextsearchActivity_title">Ara</string>
+    <string name="string_loadtrackActivity_title">Track yükle</string>
+    <string name="string_newtrackActivity_title">Yeni Track</string>
+    <string name="string_preferencesActivity_title">Ayarlar</string>
+    <string name="string_startActivity_title">Iz Kitabi</string>
+    <string name="string_recordvideoActivity_title">Video aufnehmen</string>
+    <string name="string_searchInfoDialog_title">Secilen MetaBilgi icin bilgiler</string>
+    
+    <!--  App values -->
+    <string name="app_name">Iz Kitabi</string>
+
+	<!--  TextViews values -->
+	<string name="tv_startActivity_welcome">Iz Kitaba höşgeldiniz</string>
+	<string name="tv_addpointActivity_nodeId">Düğüm-ID:</string>
+	<string name="tv_addpointmetaActivity_insertTag">Tag ekle</string>
+    <string name="tv_addpointmetaActivity_insertValue">Değer ekle</string>
+    <string name="tv_addpointActivity_editMeta">MetaBilgi değiştir</string>
+    <string name="tv_addpointActivity_noMetaData">MetaBilgiler yok</string>
+    <string name="tv_addpointActivity_MetaData">Der Knoten besitzt folgende MetaDaten</string>
+    <string name="tv_newtrackActivity_setButtonList1">Su anda ki yolu MetBilgiler len ekle</string>
+    <string name="tv_newtrackActivity_setButtonList2">Su anda ki alani MetaBilgilerle ekle</string>
+    <string name="tv_addpointActivity_titleListViewCat">Schlüssel</string>
+    <string name="tv_addpointActivity_titleListViewVal">değer</string>
+    <string name="tv_trackInfoDialog_name">Trackname:</string>
+	<string name="tv_trackInfoDialog_comment">Kommentar:</string>
+	<string name="tv_trackInfoDialog_timestamp">Zeitstempel:</string>
+	<string name="tv_trackInfoDialog_pois">Anzahl Points of Interest:</string>
+	<string name="tv_trackInfoDialog_ways">Anzahl Wege:</string>
+	<string name="tv_trackInfoDialog_media">Anzahl Medien:</string>
+	<string name="tv_trackInfoDialog_noInformation">keine Information vorhanden</string>
+	<string name="tv_trackInfoDialog_trackName">Trackname</string>
+	<string name="tv_trackInfoDialog_timestampText">TimeStamp:</string>
+	<string name="tv_trackInfoDialog_poisText">Anzahl der gespeicherten POIs:</string>
+	<string name="tv_trackInfoDialog_waysText">Anzahl der gespeicherten Wege:</string>
+	<string name="tv_trackInfoDialog_commentText">Kommentar:</string>
+	<string name="tv_trackInfoDialog_nameText">Name:</string>
+	<string name="tv_trackInfoDialog_mediaText">MediaDaten:</string>
+	<string name="tv_addmemoActivity_stopRecord">Stoppe Sprachnotiz</string>
+	<string name="tv_addmemoActivity_record"> Ihre Sprachnotiz wird aufgezeichnet...</string>
+	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
+	<string name="tv_aboutActivity_creditsTeam">\n
+	David Beyer - anubis@cstilch.de\n
+	Huy Dinh - mail@huydinh.eu\n
+	Marc Sperling - greenTraxas@googlemail.com\n
+	Jan Sydow - js.schrifterz@googlemail.com\n
+	Benjamin Valentin - benpicco@googlemail.com\n
+	Şahin Vardar - sakirsoft@gmail.com 	
+	</string>
+	<string name="tv_aboutActivity_licenseTitle">Lizenz:</string>
+	<string name="tv_aboutActivity_license">Diese Software steht unter der  GNU - GPL3</string>
+	<string name="tv_aboutActivity_versionTitle">Version:</string>
+	<string name="tv_aboutActivity_version">0.90 Beta</string>
+	<string name="tv_listviewedit_idTitle">ID: </string>
+	<string name="tv_aboutActivity_usedResourcesTitle">Verwendete Resourcen: </string>
+	<string name="tv_aboutActivity_usedResources"></string>
+	<string name="tv_aboutActivity_projectPage">https://code.google.com/p/swp-dv-ws2010-osm-1/</string>
+	<string name="tv_searchInfoDialog_categorieTitle">Kategorie:</string>
+	<string name="tv_searchInfoDialog_noInformation">keine Informationen vorhanden...</string>
+	<string name="tv_searchInfoDialog_valueTitle">Wert:</string>
+	<string name="tv_searchInfoDialog_descriptionTitle">Beschreibung:</string>
+	<string name="tv_searchInfoDialog_urlTitle">Wikipedia Link:</string>
+	
+	<!--  Edit Text values-->
+	<string name="et_fulltextsearchActivity_search">Suchen...</string>
+	
+	<!--  Toast values -->
+	 <string name="toast_noTrackFound">Der zu ladende Track wurde nicht gefunden.</string>
+	
+	<!--  AlertBox values -->
+	<string name="alert_global_cancel">Cancel</string>
+	<string name="alert_global_ok">Ok</string>
+	<string name="alert_global_yes">Ja</string>
+    <string name="alert_global_no">Nein</string>
+    <string name="alert_global_addNotice">Notiz hinzufügen</string>
+    <string name="alert_global_addedNotice">Notiz hünzugefügt:</string>
+    <string name="alert_global_exit">Möchten Sie die aktuelle Session stoppen und speichern?</string>
+    <string name="alert_mapsforgeActivity_pause">Möchten Sie die aktuelle Session pausieren?</string>
+    <string name="alert_newtrackActivity_rename">Node umbenennen</string>
+    <string name="alert_newtrackActivity_setTrackName">Bitte Tracknamen vergeben</string>
+    <string name="alert_newtrackActivity_trackName">Ihr Track heißt:</string>
+    <string name="alert_newtrackActivity_addTrackNotice">Tracknotiz hinzufügen</string>
+    <string name="alert_loadtrackActivity_rename">Track umbenennen</string>
+    <string name="alert_loadtrackActivity_deleteTrack">Track löschen?</string>
+    <string name="alert_aboutActivity_pleaseWait">Bitt warten....</string>
+    <string name="alert_aboutActivity_loadingLicense">Lizenz wird geladen.</string>
+       
+  	<!--  Optionmenu values -->
+    <string name="opt_startActivity_preferences">Einstellungen</string>
+    <string name="opt_startActivity_close">Beenden</string>
+    <string name="opt_mapsforgeActivity_centerAtOwnPosition">Ausrichten</string>
+    <string name="opt_mapsforgeActivity_activateMobileInternet">Online Karte</string>
+    <string name="opt_mapsforgeActivity_deactivateMobileInternet">Offline Karte</string>
+    <string name="opt_mapsforgeActivity_stopTrack">Aufnahme stoppen</string>
+    <string name="opt_mapsforgeActivity_resumeTrack">Aufnahme fortsetzen</string>
+    <string name="opt_mapsforgeActivity_help">Hilfe</string>
+    <string name="opt_mapsforgeActivity_export">Exportieren</string>
+    <string name="opt_mapsforgeActivity_pause">Pause</string>
+    <string name="opt_mapsforgeActivity_resume">Resume</string>
+    <string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
+    <string name="opt_mapsforgeActivity_showToggleWayPoints">Toggle Wegpunkte</string>
+    <string name="opt_startActivity_about">About</string>
+    <string name="opt_startActivity_help">Hilfe</string>
+    
+    <!--  Contextmenu values -->
+	<string name="cm_addpointActivity_deleteTag">Tag löschen</string>
+	<string name="cm_addpointActivity_renameTag">Tag ändern</string>
+	<string name="cm_mapsforgeActivity_deletePoint">Punkt löschen</string>
+	<string name="cm_mapsforgeActivity_editPoint">Punkt editieren</string>
+	<string name="cm_mapsforgeActivity_movePoint">Punkt verschieben</string>
+	<string name="cm_loadtrackActivity_load">Track laden</string>
+	<string name="cm_loadtrackActivity_rename">Track umbenennen</string>
+	<string name="cm_loadtrackActivity_delete">Track löschen</string>
+	<string name="cm_loadtrackActivity_info">Infos anzeigen</string>
+	<string name="cm_editmapobjects_edit">Bearbeiten</string>
+	<string name="cm_editmapobjects_delete">Löschen</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_tag">Tag this</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_delete">Delete this</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_way_add">Add waypoint</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_my_pos">Current Location</string>
+   
+   <!-- Tab values -->
+    <string name="tab_newtrackActivity_map">Karte</string>
+    <string name="tab_newtrackActivity_new">Neu</string>
+    <string name="tab_newtrackActivity_edit">Ändern</string>
+   
+   <!--  Button values -->
+    <string name="tbtn_newtrackActivity_streetOn">Straßenanfang</string>
+    <string name="tbtn_newtrackActivity_streetOff">Straßenende</string>
+    <string name="tbtn_newtrackActivity_areaOn">Flächenanfang</string>
+    <string name="tbtn_newtrackActivity_areaOff">Flächenende</string>
+    <string name="btn_startActivity_newTrack">Neuer Track</string>
+    <string name="btn_startActivity_loadTrack">Lade Track</string>
+    <string name="btn_recordvideoActivity_startRec">Start</string>
+    <string name="btn_recordvideoActivity_stopRec">Stopp</string>
+    <string name="btn_newtrackActivity_addPoint">Point Of Interest hinzufügen</string>
+    <string name="btn_newtrackActivity_stopTrack">Speichern und beenden</string>
+    <string name="btn_newtrackActivity_editComment">Track Kommentar bearbeiten</string>
+    <string name="btn_addpointmetaActivity_poi">Point of intrest</string>
+    <string name="btn_addpointmetaActivity_save">Speichern</string>
+    <string name="btn_addpointmetaActivity_cancel">Abbrechen</string>
+    <string name="btn_addpointActivity_addMeta">Hinzufügen</string>
+    <string name="btn_addpointActivity_back">Speichern</string>
+    <string name="btn_addMetaMedia_makePicture">Foto</string>
+    <string name="btn_addMetaMedia_makeVideo">Video</string>
+    <string name="btn_addMetaMedia_makeMemo">Sprachnotiz</string>
+    <string name="btn_addMetaMedia_makeNotice">Notiz</string>
+	<string name="btn_trackInfoDialog">OK</string>
+	<string name="btn_trackInfoDialog_back">Zurück</string>
+	<string name="btn_aboutActivity_license">Zeige Lizenz</string>
+	<string name="btn_addpointmetaActivity_search">Suchen</string>
+	<string name="btn_startActivity_reseumeTrack">Track fortsetzen</string>
+</resources>

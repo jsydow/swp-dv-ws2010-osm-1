@@ -27,6 +27,7 @@ import core.data.db.TagSearchResult;
 public class FullTextSearchActivity extends ListActivity {
 
     private int currResIndex;
+    private List<TagSearchResult> currTagSearchResult;
 
     /**
      * A simple thread class which deals with search jobs in our database.
@@ -91,12 +92,6 @@ public class FullTextSearchActivity extends ListActivity {
         FullTextSearchActivity act;
 
         /**
-         * indicates whether the XML file containing tag names etc. has to be
-         * read to update the database
-         */
-        boolean firstTime = true;
-
-        /**
          * 
          * @param act
          *            reference to the FullTextSearchActivity to update the list
@@ -151,6 +146,8 @@ public class FullTextSearchActivity extends ListActivity {
         // an old thread is trying to give us a result so we prevent it.
         if (getResIndex() < resIndex)
             return;
+
+        currTagSearchResult = tags;
 
         GenericItemDescription desc = new GenericItemDescription();
         desc.addResourceId("Comment", R.id.tv_fulltextsearch_comment);

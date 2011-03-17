@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TraceBookJavaDoc" default="javadoc" basedir="."> 
+	<target name="javadoc">
+	    <javadoc
+	        excludepackagenames=""
+	          access="public"
+	           destdir="doc"
+	           author="true"
+	           version="true"
+	           use="true"
+	           windowtitle="TraceBook"
+	       >
+
+	        <fileset dir="src" defaultexcludes="yes">
+	            <include name="**/*.java"/>
+	            
+	        </fileset>
+	    </javadoc>
+	</target>
+</project>
