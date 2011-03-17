@@ -62,14 +62,14 @@ public class GpsMessage {
      * 
      * @param loc
      *            current gps position
-     * @param one_shot
+     * @param oneShot
      *            true if currently a way is recorded in one_shot mode
      */
-    public void sendCurrentPosition(Location loc, boolean one_shot) {
+    public void sendCurrentPosition(Location loc, boolean oneShot) {
         intent.putExtra("type", UPDATE_GPS_POS);
         intent.putExtra("long", loc.getLongitude());
         intent.putExtra("lat", loc.getLatitude());
-        intent.putExtra("one_shot", one_shot);
+        intent.putExtra("one_shot", oneShot);
         ctx.sendBroadcast(intent);
     }
 
