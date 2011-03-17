@@ -5,3 +5,6 @@
 
 = Map view =
   * Colors for several item groups (ways, areas, POIs)
+
+= MetaTags =
+  * The max. history size.
