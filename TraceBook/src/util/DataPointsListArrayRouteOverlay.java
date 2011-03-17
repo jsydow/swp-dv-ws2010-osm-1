@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mapsforge.android.maps.ArrayRouteOverlay;
+import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.OverlayRoute;
 
 import Trace.Book.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
 
@@ -127,14 +129,18 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      *            way to be redrawn
      * @param editing
      *            is the way the currently edited way?
+     * @param additional
+     *            additional Point to be added to the way, may be null
      */
-    public void reDrawWay(DataPointsList way, boolean editing) {
+    public void reDrawWay(DataPointsList way, boolean editing,
+            GeoPoint additional) {
+        Log.d("DPÖARO", "reDrawWay called");
         if (way == null)
             return;
 
         removeOverlay(way.getOverlayRoute());
         final Pair<Paint, Paint> color = editing ? colors.get(0) : getColor();
-        way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(),
+        way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(additional),
                 color.first, color.second));
         addRoute(way.getOverlayRoute());
 
@@ -156,7 +162,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
             return;
         DataPointsList currentWay = Helper.currentTrack().getCurrentWay();
         reDrawWay(Helper.currentTrack().getPointsListById(id),
-                currentWay != null && currentWay.getId() == id);
+                currentWay != null && currentWay.getId() == id, null);
     }
 
     private void addGnubbel(DataPointsList way) {

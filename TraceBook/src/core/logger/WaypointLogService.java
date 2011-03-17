@@ -257,7 +257,7 @@ public class WaypointLogService extends Service implements LocationListener {
     /** GPS related Methods. **/
 
     public synchronized void onLocationChanged(Location loc) {
-        sender.sendCurrentPosition(loc);
+        sender.sendCurrentPosition(loc, one_shot);
 
         if (current_node != null) { // one_shot or POI mode
             current_node.setLocation(loc); // update node with proper gps fix
@@ -265,13 +265,15 @@ public class WaypointLogService extends Service implements LocationListener {
             if (currentWay() == null) // not one_shot mode
                 // inform the MapActivity about the new POI
                 sender.sendPOIUpdate(current_node.getId());
+            else
+                sender.sendWayUpdate(currentWay().getId()); // one_shot update
 
             current_node = null; // no node waiting for gps pos any more
-        } else if (currentWay() != null && !one_shot) // Continuous mode
+        } else if (currentWay() != null && !one_shot) { // Continuous mode
             currentWay().newNode(loc); // poi in track was already added before
-
-        if (currentWay() != null) // call for an update of the way
-            sender.sendWayUpdate(currentWay().getId());
+            sender.sendWayUpdate(currentWay().getId()); // call for an update of
+                                                        // the way
+        }
     }
 
     public void onProviderDisabled(String arg0) {

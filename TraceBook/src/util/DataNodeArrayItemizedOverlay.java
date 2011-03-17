@@ -347,7 +347,6 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 final Intent intent = new Intent(context,
                         AddPointActivity.class);
                 intent.putExtra("DataNodeId", nodeId);
-
                 context.startActivity(intent);
                 break;
             case 1: // move this

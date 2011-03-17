@@ -362,8 +362,20 @@ public class MapsForgeActivity extends MapActivity {
                         "Location update received "
                                 + currentGeoPoint.toString());
 
-                // TODO: draw way in on_shot mode
                 pointsOverlay.setCurrentPosition(currentGeoPoint);
+
+                /*
+                 * in one_shot mode, we add the current point to the
+                 * visualisation
+                 */
+                if (intend.getExtras().getBoolean("one_shot")) {
+                    DataPointsList currentWay = Helper.currentTrack()
+                            .getCurrentWay();
+                    if (currentWay != null
+                            && currentWay.getOverlayRoute() != null)
+                        routesOverlay.reDrawWay(currentWay, true,
+                                currentGeoPoint);
+                }
 
                 if (centerMap)
                     centerOnCurrentPosition();
@@ -376,6 +388,9 @@ public class MapsForgeActivity extends MapActivity {
                             "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
+
+                Log.d(LOG_TAG, "UPDATE_OBJECT received, way: " + wayId
+                        + " node: " + pointId);
 
                 if (wayId > 0)
                     routesOverlay.reDrawWay(wayId);
@@ -414,7 +429,8 @@ public class MapsForgeActivity extends MapActivity {
                             point.getId() + "", ""));
                 pointsOverlay.addOverlay(point);
                 if (point.getDataPointsList() != null)
-                    routesOverlay.reDrawWay(point.getDataPointsList(), false);
+                    routesOverlay.reDrawWay(point.getDataPointsList(), false,
+                            null);
             }
         }
     }
