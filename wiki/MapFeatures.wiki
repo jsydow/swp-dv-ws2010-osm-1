@@ -15,20 +15,22 @@ For reference.
 <!DOCTYPE map_features [
         <!ELEMENT map_features (key)*>
         <!ATTLIST map_features
-                xmlns CDATA #REQUIRED
-                lang CDATA #REQUIRED>
+                lang CDATA #REQUIRED
+                xmlns CDATA #REQUIRED>
         <!ELEMENT key (value)*>
         <!ATTLIST key
+                useful CDATA #REQUIRED
                 v CDATA #REQUIRED>
-        <!ELEMENT value (description|uri|useful)*>
+        <!ELEMENT value (uri|img|description|useful)*>
         <!ATTLIST value
                 isArea CDATA #REQUIRED
                 isNode CDATA #REQUIRED
                 isWay CDATA #REQUIRED
                 type CDATA #REQUIRED
                 v CDATA #REQUIRED>
-        <!ELEMENT description (#PCDATA)>
         <!ELEMENT uri (#PCDATA)>
+        <!ELEMENT img (#PCDATA)>
+        <!ELEMENT description (#PCDATA)>
         <!ELEMENT useful (#PCDATA)>
         <!ATTLIST useful
                 v CDATA #REQUIRED>
