@@ -245,10 +245,14 @@ public final class Helper {
                 }
 
             // the ringbuffer is an element smaller now
-            ringbuffer.get(ringbuffer.size() / 2).setLocation(
-                    new GeoPoint(
-                            latsum / ((double) ringbuffer.size() + weight),
-                            lonsum / ((double) ringbuffer.size() + weight)));
+            ringbuffer
+                    .get(ringbuffer.size() / 2)
+                    .setLocation(
+                            new GeoPoint(
+                                    latsum
+                                            / ((double) (ringbuffer.size() - 1) + weight),
+                                    lonsum
+                                            / ((double) (ringbuffer.size() - 1) + weight)));
             ringbuffer.poll();
 
         }

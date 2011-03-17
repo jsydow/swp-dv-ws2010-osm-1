@@ -351,7 +351,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 context.startActivity(intent);
                 break;
             case 1: // move this
-                sender.sendPOIUpdate(nodeId);
+                sender.sendMovePoint(nodeId);
                 break;
             case 2: // delete this
                 final DataNode node = currentTrack.getNodeById(nodeId);
