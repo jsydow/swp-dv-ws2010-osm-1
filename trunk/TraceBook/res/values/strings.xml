@@ -20,7 +20,7 @@
     <string name="string_preferencesActivity_title">Einstellungen</string>
     <string name="string_startActivity_title">Tracebook</string>
     <string name="string_recordvideoActivity_title">Video aufnehmen</string>
-    <string name="string_searchInfoDialog_title">Informationen zu dem gewählten\n MetaDaten.</string>
+    <string name="string_searchInfoDialog_title">MetaDaten Informationen</string>
     
     <!--  App values -->
     <string name="app_name">TraceBook</string>
@@ -117,6 +117,7 @@
     <!--  Contextmenu values -->
 	<string name="cm_addpointActivity_deleteTag">Tag löschen</string>
 	<string name="cm_addpointActivity_renameTag">Tag ändern</string>
+	<string name="cm_addpointActivity_title">MetaTag bearbeiten</string>
 	<string name="cm_mapsforgeActivity_deletePoint">Punkt löschen</string>
 	<string name="cm_mapsforgeActivity_editPoint">Punkt editieren</string>
 	<string name="cm_mapsforgeActivity_movePoint">Punkt verschieben</string>
@@ -124,6 +125,7 @@
 	<string name="cm_loadtrackActivity_rename">Track umbenennen</string>
 	<string name="cm_loadtrackActivity_delete">Track löschen</string>
 	<string name="cm_loadtrackActivity_info">Infos anzeigen</string>
+	<string name="cm_loadtrackActivity_title">Trackoptionen</string>
 	<string name="cm_editmapobjects_edit">Bearbeiten</string>
 	<string name="cm_editmapobjects_delete">Löschen</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_tag">Tag this</string>
@@ -133,6 +135,8 @@
 	<string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_add">Add waypoint</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_my_pos">Current Location</string>
+	<string name="cm_editmapobjects_title">Object bearbeiten</string>
+	
    
    <!-- Tab values -->
     <string name="tab_newtrackActivity_map">Karte</string>

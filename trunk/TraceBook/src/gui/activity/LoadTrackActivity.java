@@ -67,6 +67,9 @@ public class LoadTrackActivity extends ListActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.contextmenu_loadtrackactivity, menu);
+        menu.setHeaderIcon(android.R.drawable.ic_menu_compass);
+        menu.setHeaderTitle(getResources().getString(
+                R.string.cm_loadtrackActivity_title));
     }
 
     /**

@@ -22,9 +22,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -109,6 +114,11 @@ public class NewTrackActivity extends TabActivity {
     PictureRecorder pictureRecorder = new PictureRecorder();
 
     /**
+     * 
+     */
+    GenericAdapter adapter;
+
+    /**
      * Create activity.
      */
     @Override
@@ -134,6 +144,45 @@ public class NewTrackActivity extends TabActivity {
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contextmenu_editmapobjects, menu);
+        menu.setHeaderIcon(android.R.drawable.ic_menu_edit);
+        menu.setHeaderTitle(getResources().getString(
+                R.string.cm_editmapobjects_title));
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+
+        GenericAdapterData data = adapter.getItem((int) info.id);
+
+        int nodeId = Integer.parseInt(data.getText("NodeId"));
+
+        switch (item.getItemId()) {
+        case R.id.cm_editmapobjects_delete:
+            DataStorage.getInstance().getCurrentTrack().deleteNode(nodeId);
+            /**
+             * TODO delete from Waylist
+             */
+            initListView();
+            return true;
+        case R.id.cm_editmapobjects_edit:
+            final Intent intent = new Intent(this, AddPointActivity.class);
+            intent.putExtra("DataNodeId", nodeId);
+            startActivity(intent);
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+        }
+    }
+
     private void setGpsStatus() {
         LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         GpsStatus gps = loc.getGpsStatus(null);
@@ -149,28 +198,6 @@ public class NewTrackActivity extends TabActivity {
         TextView tv = (TextView) findViewById(R.id.tv_newtrackActivity_gpsStatus);
         tv.setText("Signalstärke: " + sum + "Anzahl: " + i + " "
                 + it.toString());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initListView();
-        /* setGpsStatus(); */
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DataTrack dt = DataStorage.getInstance().getCurrentTrack();
-
-        switch (requestCode) {
-        case Recorder.TAKE_PHOTO_CODE:
-            if (resultCode == Activity.RESULT_OK) {
-                pictureRecorder.appendFileToObject(dt.getCurrentWay());
-            }
-            break;
-        default:
-            break;
-        }
     }
 
     /**
@@ -226,6 +253,7 @@ public class NewTrackActivity extends TabActivity {
         final Intent intent = new Intent(this, AddPointActivity.class);
         // Init ListView for EditTab
         ListView listView = (ListView) findViewById(R.id.tracks_lvw);
+        registerForContextMenu(listView);
         NumberFormat nf = NumberFormat.getInstance();
         nf.setMaximumFractionDigits(2);
 
@@ -282,8 +310,8 @@ public class NewTrackActivity extends TabActivity {
 
         }
 
-        final GenericAdapter adapter = new GenericAdapter(this,
-                R.layout.listview_edit, R.id.tracks_lvw, listData, null);
+        adapter = new GenericAdapter(this, R.layout.listview_edit,
+                R.id.tracks_lvw, listData, null);
 
         listView.setAdapter(adapter);
 
@@ -612,5 +640,27 @@ public class NewTrackActivity extends TabActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initListView();
+        /* setGpsStatus(); */
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        DataTrack dt = DataStorage.getInstance().getCurrentTrack();
+
+        switch (requestCode) {
+        case Recorder.TAKE_PHOTO_CODE:
+            if (resultCode == Activity.RESULT_OK) {
+                pictureRecorder.appendFileToObject(dt.getCurrentWay());
+            }
+            break;
+        default:
+            break;
+        }
     }
 }
