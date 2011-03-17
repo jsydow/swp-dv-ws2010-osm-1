@@ -26,6 +26,10 @@ public class AboutActivity extends Activity {
         setTextViews();
     }
 
+    /**
+     * This method set the text of the TextView resources with the resource.txt
+     * from the assets directory
+     */
     void setTextViews() {
         TextView resources = (TextView) findViewById(R.id.tv_aboutActivity_usedResources);
         try {
@@ -39,8 +43,12 @@ public class AboutActivity extends Activity {
     /**
      * This method parse the textFile with the gplLicense.
      * 
+     * @param dataname
+     *            String - which file has to be parsed
+     * 
      * @return The OutputStream of the LicenseTxtFile as a String
      * @throws IOException
+     *             not used
      */
     String readTxt(String dataname) throws IOException {
 

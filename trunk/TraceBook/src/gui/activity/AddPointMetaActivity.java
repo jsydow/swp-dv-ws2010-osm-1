@@ -197,7 +197,7 @@ public class AddPointMetaActivity extends ListActivity {
      */
     public void searchBtn(View view) {
         final Intent intent = new Intent(this, FullTextSearchActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, RESULT_OK);
 
     }
 
