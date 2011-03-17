@@ -233,40 +233,6 @@ public class FullTextSearchActivity extends ListActivity {
                 .findViewById(R.id.tv_searchInfoDialog_url);
         wiki.setText(ts.getLink());
 
-        // final Uri imageUri = Uri
-        // .parse("http://www.universalhandel24.de/images/Deutschland%20mit%20Adler.jpeg");
-        //
-        // (new Thread() {
-        //
-        // @Override
-        // public void run() {
-        //
-        // try {
-        //
-        // InputStream is = (InputStream) new URL(
-        // "http://www.universalhandel24.de/images/Deutschland%20mit%20Adler.jpeg")
-        // .getContent();
-        //
-        // Drawable d = Drawable.createFromStream(is, null);
-        // image.setImageDrawable(d);
-        // image.invalidate();
-        // } catch (FileNotFoundException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // } catch (MalformedURLException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // } catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-        //
-        // }
-        //
-        // }).start();
-
-        // set up button
-
         final FullTextSearchActivity act = this;
 
         Button button = (Button) infoDialog
