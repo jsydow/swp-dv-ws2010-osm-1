@@ -480,6 +480,13 @@ public class NewTrackActivity extends TabActivity {
                                         + " " + value, Toast.LENGTH_SHORT)
                                 .show();
 
+                        try {
+                            ServiceConnector.getLoggerService().stopTrack();
+                        } catch (RemoteException e) {
+                            Log.w("StopTrack",
+                                    "Could not connect to LoggerService.");
+                        }
+
                         finish();
                     }
                 });
@@ -604,15 +611,5 @@ public class NewTrackActivity extends TabActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    public void finish() {
-        try {
-            ServiceConnector.getLoggerService().stopTrack();
-        } catch (RemoteException e) {
-            Log.w("StopTrack", "Could not connect to LoggerService.");
-        }
-        super.finish();
     }
 }

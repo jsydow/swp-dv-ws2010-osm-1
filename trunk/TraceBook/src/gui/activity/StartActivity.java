@@ -1,8 +1,8 @@
 package gui.activity;
 
 import java.io.File;
-import java.util.List;
 
+import util.Helper;
 import Trace.Book.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,9 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-import core.data.DataStorage;
-import core.data.DataTrack;
 import core.data.db.TagDb;
 import core.logger.ServiceConnector;
 
@@ -79,7 +76,6 @@ public class StartActivity extends Activity {
                         "Could not create TraceBook-directory");
             }
         }
-
     }
 
     /**
@@ -90,11 +86,12 @@ public class StartActivity extends Activity {
      */
     public void newTrackBtn(View view) {
 
-        try {
-            ServiceConnector.getLoggerService().addTrack();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        if (Helper.currentTrack() == null)
+            try {
+                ServiceConnector.getLoggerService().addTrack();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
         Intent intent = new Intent(this, NewTrackActivity.class);
         startActivity(intent);
@@ -110,27 +107,6 @@ public class StartActivity extends Activity {
     public void loadTrackBtn(View view) {
         Intent intent = new Intent(this, LoadTrackActivity.class);
         startActivity(intent);
-    }
-
-    /**
-     * 
-     * @param view
-     *            not used
-     */
-    public void resumeTrackBtn(View view) {
-        List<String> trackList = DataStorage.getInstance().getAllTracks();
-        String trackname = trackList.get(trackList.size() - 1);
-        DataTrack track = DataStorage.getInstance().deserialiseTrack(trackname);
-        if (track != null) {
-            DataStorage.getInstance().setCurrentTrack(track);
-            final Intent intent = new Intent(this, NewTrackActivity.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this,
-                    getResources().getString(R.string.toast_noTrackFound),
-                    Toast.LENGTH_SHORT).show();
-
-        }
     }
 
     /*
@@ -196,8 +172,14 @@ public class StartActivity extends Activity {
 
     @Override
     protected void onResume() {
-        Button resume = (Button) findViewById(R.id.btn_startActivity_resumeTrack);
-        resume.setVisibility(1);
         super.onResume();
+
+        Button startresumeBtn = (Button) findViewById(R.id.btn_startActivity_newTrack);
+        if (Helper.currentTrack() == null)
+            startresumeBtn.setText(getResources().getString(
+                    R.string.btn_startActivity_newTrack));
+        else
+            startresumeBtn.setText(getResources().getString(
+                    R.string.btn_startActivity_reseumeTrack));
     }
 }
