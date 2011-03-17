@@ -13,7 +13,6 @@ import Trace.Book.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import core.data.DataNode;
 import core.data.DataPointsList;
 
@@ -86,7 +85,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         Paint paintOutline = new Paint();
         paintOutline.setAntiAlias(true);
         paintOutline.setStyle(Paint.Style.STROKE);
-        paintOutline.setStrokeWidth(7);
+        paintOutline.setStrokeWidth(4);
         paintOutline.setStrokeCap(Paint.Cap.BUTT);
         paintOutline.setStrokeJoin(Paint.Join.ROUND);
         paintOutline.setColor(color);
@@ -134,7 +133,6 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      */
     public void reDrawWay(DataPointsList way, boolean editing,
             GeoPoint additional) {
-        Log.d("DPÖARO", "reDrawWay called");
         if (way == null)
             return;
 
