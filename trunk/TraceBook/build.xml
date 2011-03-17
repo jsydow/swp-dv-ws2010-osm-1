@@ -10,11 +10,11 @@
 	           use="true"
 	           windowtitle="TraceBook"
 	       >
-
+	    	<doctitle><![CDATA[<h1>TraceBook</h1>]]></doctitle>
 	        <fileset dir="src" defaultexcludes="yes">
-	            <include name="**/*.java"/>
-	            
+	        	<include name="*.java"/>	            
 	        </fileset>
+	    	<link href="http://download.oracle.com/javase/6/docs/api/"/>
 	    </javadoc>
 	</target>
 </project>
