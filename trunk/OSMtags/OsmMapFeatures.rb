@@ -3,11 +3,6 @@ module OsmMapFeatures
     require 'rubygems'
     require 'builder'
 
-    @tags = Hash.new
-    @descriptions = Hash.new
-    @flags = Hash.new
-    @parse_useful_tags = true
-
     @number_regexps = [
         /^Nombre$/i,
         /^Num$/i,
@@ -18,103 +13,149 @@ module OsmMapFeatures
     ]
 
     @any_text_regexps = [
-        /\s+/,
+        /\s+/
     ]
 
-    def parse_keys_and_values(lang = '')
-        f = get_page("http://wiki.openstreetmap.org/wiki/#{lang}Map_Features")
-        tags = f.scan(/<tr.*?>\s+<td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td>/m)
+    @data = Hash.new
+    @language = 'EN'
+    @base_uri = 'http://wiki.openstreetmap.org'
 
-        tags.each do |tag|
-            key = tag[0].gsub(/<.*?>/, '').strip
-            value = tag[1].gsub(/<.*?>/, '').strip
-            value_details = tag[1].strip
-            flags = tag[2].strip
-            description = tag[3].gsub(/<.*?>/, '').strip
+    def settings=(opts = {})
+        opts.keys.each do |key|
+            instance_variable_set("@#{key.to_s}".to_sym, opts[key])
+        end
+    end
 
-            @tags[key] ||= Hash.new
-            @flags[key] ||= Hash.new
-            @descriptions[key] ||= Hash.new
-
-            @tags[key][value] = value_details
-            @flags[key][value] = Hash.new
-            @descriptions[key][value] = description
-
-            %w{ Node Way Area }.each do |item|
-                @flags[key][value]["is#{item}"] = (flags.match(/title="#{item}"/) ? 'true' : 'false')
+    def parse_useful_tags
+        @data.keys.sort.each do |key|
+            @data[key].keys.sort.each do |value|
+                @data[key][value]['useful'] = get_useful_tags(key, value)
             end
         end
     end
 
-    def p_xml(lang = '')
-        xml = Builder::XmlMarkup.new(:target => STDOUT, :indent => 2)
-        puts '<?xml version="1.0" encoding="utf-8" ?>'
-        xml.map_features(:lang  => lang.downcase.sub(':', ''),
+    def to_xml
+        result = ''
+        xml = Builder::XmlMarkup.new(:target => result, :indent => 2)
+
+        xml.map_features(:lang  => @language.downcase,
                          :xmlns => "http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags") do
-            @tags.keys.sort.each do |key|
-                next if key.match(/\s+/)
+            @data.keys.sort.each do |key|
 
-                xml.key(:v => key.gsub(/%/, '').gsub(/&.+?/, '').strip) do
-                    @tags[key].keys.sort.each do |value|
-                        empty_value_has_been_printed_before = false
-
-                        (value == '' ? 'User defined' : value).split(/[\/,]/).sort.each do |v|
-                            next if v.match(/\.\.\./)
-                            v = v.gsub(/[%°]/, '').gsub(/&.+?/, '').strip
-                            
-                            value_type = (is_number?(v) ? 'number' : 'text')
-                            v = '' if ((value_type == 'number') or is_any_text?(v))
-
-                            if (v == '')
-                                next if empty_value_has_been_printed_before
-                                empty_value_has_been_printed_before = true
-                            end
-
-                            xml.value(@flags[key][value].merge({:type => value_type, :v => v})) do
-                                xml.description(@descriptions[key][value].gsub(/\s+/, ' ').gsub('&', '&amp;'))
-
-                                unless (@tags[key][value].match(/class="new"/))
-                                    href = @tags[key][value].scan(/href="(.*?)"/).to_s.strip
-                                    xml.uri("http://wiki.openstreetmap.org#{(lang == '' ? href : href.gsub(/Tag:/, "#{lang}Tag:"))}") if href != ''
-
-                                    if (@parse_useful_tags and href != '')
-                                        useful_tags = get_useful_tags("http://wiki.openstreetmap.org#{href.to_s.strip}")
-                                        
-                                        useful_tags.sort.each do |useful_tag|
-                                            xml.useful(:v => useful_tag) unless (useful_tag == '' or useful_tag.match(/ /))
-                                        end
-                                    end
-                                end
+                xml.key(@data[key]['attributes']) do
+                    @data[key].keys.sort.each do |value|
+                        next if (value == 'attributes')
+                        xml.value(@data[key][value]['attributes']) do
+                            xml.uri(@data[key][value]['uri'])
+                            xml.img(@data[key][value]['img'])
+                            xml.description(@data[key][value]['description'])
+                            if (@data[key][value]['useful'])
+                                @data[key][value]['useful'].each { |useful_tag| xml.useful(:v => useful_tag) }
                             end
                         end
                     end
                 end
             end
         end
+
+        result
     end
 
-    def testing=(v)
-        @parse_useful_tags = !v;
+    def parse
+        page = get_page('Map_Features')
+        entries = page.scan((/<tr.*?>\s+<td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>.*?<\/td><td.*?>(.*?)<\/td>/m))
+
+        entries.each do |entry|
+            key = remove_html_tags(entry[0]).strip
+            next if (key.match(/\s+/))
+            value = remove_html_tags(entry[1]).strip
+            value = 'User defined' if (value == '')
+            flags = entry[2].strip
+            description = remove_html_tags(entry[3]).gsub(/[ ]+/, ' ').strip
+            img = get_image_uri(entry[4])
+
+            @data[key] ||= Hash.new
+            @data[key]['attributes'] ||= { :v => key }
+
+            value.split(/[\/,]/).sort.each do |v|
+                v = get_real_value(v)
+
+                @data[key][v] ||= Hash.new
+                @data[key][v]['attributes'] ||= { :v => v }
+                @data[key][v]['attributes']['type'] ||= get_value_type(v)
+                %w{ Node Way Area }.each do |item|
+                    @data[key][v]['attributes']["is#{item}"] = (flags.match(/title="#{item}"/) ? 'true' : 'false')
+                end
+
+                @data[key][v]['description'] ||= description
+                @data[key][v]['uri'] = get_uri(get_page_name(entry[1])) unless (get_page_name(entry[1]) == '')
+                @data[key][v]['img'] = img unless (img == '')
+            end
+        end
     end
-    
-    def is_any_text?(s, any_text_regexps = @any_text_regexps)
-		any_text_regexps.each { |regexp| return true if s.match(regexp) }
-        false    	
+
+    private
+
+    def remove_html_tags(s)
+        s.gsub(/<.*?>/, '')
     end
-    
-    def is_number?(s, number_regexps = @number_regexps)    	
-    	number_regexps.each { |regexp| return true if s.match(regexp) }        
-        false
-    end
-    
-    def get_useful_tags(uri)
-    	useful_page = get_page(uri)
+
+    def get_useful_tags(key, value)
+    	useful_page = get_page("Tag:#{key}%3D#{value}")
     	useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
-    	
+
     	useful_tags.map { |x| x.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip }
     end
-    
-    def get_page(uri)
-        Net::HTTP.get(URI.parse(uri))
+
+    def get_real_value(value)
+        value = (value ? value.gsub(/[%°]/, '').gsub(/&.+?/, '').strip : '')
+        value = '' if (is_any_text?(value) or is_number?(value) or value.match(/\.\.\./))
+
+        value
+    end
+
+    def get_image_uri(a)
+        uri = ''
+
+        if (a and a.match(/<img.*?src=".*?".*?\/>/))
+            uri = a.scan(/<img.*?src="(.*?)".*?\/>/).to_s.strip
+            uri = @base_uri + uri unless (uri.match(/^http/))
+        end
+
+        uri
+    end
+
+    def get_value_type(value)
+        is_number?(get_real_value(value)) ? 'number' : 'text'
+    end
+
+    def get_page(page)
+        Net::HTTP.get(URI.parse(get_uri(page)))
+    end
+
+    def get_page_name(a)
+        page = ''
+
+        if (not(a.match(/class="new"/)) and a.match(/href="\/wiki\//))
+            page = a.scan(/href="\/wiki\/.*?:?(.*?)"/).to_s.strip
+        end
+
+        page
+    end
+
+    def get_uri(page)
+        base_uri  = "#{@base_uri}/wiki/"
+        base_uri += "#{@language}:" unless (@language == 'EN')
+        base_uri += page
+    end
+
+    def is_any_text?(s)
+		@any_text_regexps.each { |regexp| return true if (s and s.match(regexp)) }
+        false
+    end
+
+    def is_number?(s)
+    	@number_regexps.each { |regexp| return true if (s and s.match(regexp)) }
+        false
     end
 end
