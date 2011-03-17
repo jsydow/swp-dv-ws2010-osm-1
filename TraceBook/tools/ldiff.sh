@@ -2,7 +2,7 @@
 
 LANGUAGES="de en fr gr pl tr"
 
-PROJECTDIR="$HOME/eclipse/TraceBook"
+PROJECTDIR="$HOME/development/TraceBook"
 BASEFILE="res/values/strings.xml"
 
 if [ "x$USER" != "xdd" ]
