@@ -11,7 +11,7 @@
 	</SurfaceView>
 
     <LinearLayout android:id="@+id/ly_recordvideoActivity_layout1" android:layout_height="wrap_content" android:layout_width="wrap_content" android:orientation="horizontal">
-        <Button android:id="@+id/btn_recordvideoActivity_startRec" android:text="btn_recordvideoActivity_startRec" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="onRecordBtn"></Button>
-        <Button android:text="btn_recordvideoActivity_stopRec" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/btn_recordvideoActivity_stopRec" android:onClick="onRecordStop"></Button>
+        <Button android:id="@+id/btn_recordvideoActivity_startRec" android:text="@string/btn_recordvideoActivity_startRec" android:layout_width="wrap_content" android:layout_height="wrap_content" android:onClick="onRecordBtn"></Button>
+        <Button android:text="@string/btn_recordvideoActivity_stopRec" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/btn_recordvideoActivity_stopRec" android:onClick="onRecordStop"></Button>
     </LinearLayout>
 </LinearLayout>
