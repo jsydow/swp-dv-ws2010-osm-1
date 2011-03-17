@@ -61,7 +61,7 @@ public class TraceBookImporter extends FileImporter {
      */
     public TraceBookImporter() {
         this(new ExtensionFileFilter(TRACEBOOK_FILE_EXT, TRACEBOOK_FILE_EXT,
-                tr("TraceBook Track Files (*" + TRACEBOOK_FILE_EXT_DOT
+                tr("TraceBook Track files (*" + TRACEBOOK_FILE_EXT_DOT
                         + TRACEBOOK_FILE_EXT + ")")));
     }
 
