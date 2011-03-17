@@ -211,6 +211,31 @@ public class AddPointMetaActivity extends ListActivity {
         finish();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_value);
+        final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_categorie);
+
+        final Bundle extras = data.getExtras();
+
+        if (extras != null) {
+            int nodeId = extras.getInt("DataNodeId");
+            node = DataStorage.getInstance().getCurrentTrack()
+                    .getDataMapObjectById(nodeId);
+
+            if (extras.containsKey("DataNodeKey")) {
+                String key = extras.getString("DataNodeKey");
+                autoComplCat.setText(key);
+            }
+            if (extras.containsKey("DataNodeValue")) {
+                String value = extras.getString("DataNodeValue");
+                autoComplVal.setText(value);
+            }
+        }
+
+    }
+
     /**
      * This method parses all the tags in the XML-MetaTag files.
      * 
