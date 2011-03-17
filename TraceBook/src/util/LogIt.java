@@ -6,7 +6,7 @@ import android.util.Log;
  * @author js
  * 
  */
-public class LogIt {
+public final class LogIt {
     private LogIt instance;
     private int method;
     private int minLogLevel;
@@ -30,25 +30,25 @@ public class LogIt {
         return instance;
     }
 
-    private final static String LOG_PREFIX = "TraceBook";
+    private static final String LOG_PREFIX = "TraceBook";
 
     /**
      * Log using the Android logging method.
      */
-    public final static int LOGMETHOD_ANDROID = 1;
+    public static final int LOGMETHOD_ANDROID = 1;
     /**
      * Log to file.
      */
-    public final static int LOGMETHOD_FILE = 2;
+    public static final int LOGMETHOD_FILE = 2;
 
     /**
      * Minimum value for a logging level.
      */
-    public final static int MIN_LOG_LEVEL = 1;
+    public static final int MIN_LOG_LEVEL = 1;
     /**
      * Maximum value for a logging level.
      */
-    public final static int MAX_LOG_LEVEL = 5;
+    public static final int MAX_LOG_LEVEL = 5;
 
     /**
      * Sets the method of logging. Use the constants above.
@@ -122,6 +122,8 @@ public class LogIt {
                     break;
                 case 5:
                     Log.e(LOG_PREFIX, prefix + ":" + message);
+                    break;
+                default:
                     break;
                 }
                 break;
