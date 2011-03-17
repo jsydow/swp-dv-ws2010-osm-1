@@ -68,12 +68,12 @@ module OsmMapFeatures
             File.open(cache_path) { |fp| fp.readlines.join("\n") }
         else
             content = Net::HTTP.get(uri)
-            dir = File.dirname(cache_path)
+            cache_dir = File.dirname(cache_path)
 
-            d = []
-            dir.split('/').each do |x|
-                d << x
-                tmp_dir = d.join('/')
+            dir_parts = []
+            cache_dir.split('/').each do |dir_name|
+                dir_parts << dir_name
+                tmp_dir = dir_parts.join('/')
                 Dir.mkdir(tmp_dir) unless File.directory?(tmp_dir)
             end
             File.open(cache_path, 'w') { |fp| fp.puts(content) }
