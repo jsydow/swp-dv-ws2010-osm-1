@@ -17,6 +17,7 @@
     <string name="string_preferencesActivity_title">Einstellungen</string>
     <string name="string_startActivity_title">Tracebook</string>
     <string name="string_recordvideoActivity_title">Video aufnehmen</string>
+    <string name="string_searchInfoDialog_title">Informationen zu dem gewählten MetaDaten.</string>
     
     <!--  App values -->
     <string name="app_name">TraceBook</string>
@@ -65,6 +66,12 @@
 	<string name="tv_listviewedit_idTitle">ID: </string>
 	<string name="tv_aboutActivity_usedResourcesTitle">Verwendete Resourcen: </string>
 	<string name="tv_aboutActivity_usedResources"></string>
+	<string name="tv_aboutActivity_projectPage">https://code.google.com/p/swp-dv-ws2010-osm-1/</string>
+	<string name="tv_searchInfoDialog_categorieTitle">Kategorie:</string>
+	<string name="tv_searchInfoDialog_noInformation">keine Informationen vorhanden...</string>
+	<string name="tv_searchInfoDialog_valueTitle">Wert:</string>
+	<string name="tv_searchInfoDialog_descriptionTitle">Beschreibung:</string>
+	<string name="tv_searchInfoDialog_urlTitle">Wikipedia Link:</string>
 	
 	<!--  Edit Text values-->
 	<string name="et_fulltextsearchActivity_search">Suchen...</string>
@@ -119,7 +126,6 @@
 	<string name="cm_loadtrackActivity_info">Infos anzeigen</string>
 	<string name="cm_editmapobjects_edit">Bearbeiten</string>
 	<string name="cm_editmapobjects_delete">Löschen</string>
-
 	<string name="cm_DataNodeArrayItemizedOverlay_tag">Tag this</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_delete">Delete this</string>

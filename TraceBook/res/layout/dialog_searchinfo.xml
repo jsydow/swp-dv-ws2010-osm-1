@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<ImageView android:id="@+id/iv_searchInfoDialog_wikiImage" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
+	<TextView android:text="@string/tv_searchInfoDialog_categorieTitle"
+		android:id="@+id/tv_searchInfoDialog_categorieTitle"
+		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+
+	<TextView android:text="@string/tv_searchInfoDialog_noInformation"
+		android:id="@+id/tv_searchInfoDialog_categorie" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
+	<TextView android:text="@string/tv_searchInfoDialog_valueTitle"
+		android:id="@+id/tv_searchInfoDialog_valueTitle" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
+	<TextView android:text="@string/tv_searchInfoDialog_noInformation"
+		android:id="@+id/tv_searchInfoDialog_value" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
+	<TextView android:text="@string/tv_searchInfoDialog_descriptionTitle"
+		android:id="@+id/tv_searchInfoDialog_descriptionTitle"
+		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+	
+	<TextView android:text="@string/tv_searchInfoDialog_noInformation"
+		android:id="@+id/tv_searchInfoDialog_description"
+		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+	
+	<TextView android:text="@string/tv_searchInfoDialog_urlTitle"
+		android:id="@+id/tv_searchInfoDialog_urlTitle" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
+	<TextView android:text="@string/tv_searchInfoDialog_noInformation"
+		android:id="@+id/tv_searchInfoDialog_url" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:autoLink="web" />
+</LinearLayout>
