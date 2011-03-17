@@ -262,10 +262,12 @@ public class MapsForgeActivity extends MapActivity {
                 if (ServiceConnector.getLoggerService().isLogging()) {
                     item.setTitle(getResources().getString(
                             R.string.opt_mapsforgeActivity_resume));
+                    item.setIcon(android.R.drawable.ic_media_play);
                     ServiceConnector.getLoggerService().pauseLogging();
                 } else {
                     item.setTitle(getResources().getString(
                             R.string.opt_mapsforgeActivity_pause));
+                    item.setIcon(android.R.drawable.ic_media_pause);
                     ServiceConnector.getLoggerService().resumeLogging();
                 }
             } catch (RemoteException ex) {
