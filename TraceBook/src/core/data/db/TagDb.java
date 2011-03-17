@@ -1,10 +1,7 @@
 package core.data.db;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Vector;
 
@@ -28,6 +25,7 @@ public class TagDb {
 
     private TagDbOpenHelper helper;
     private SQLiteDatabase db;
+    private Context context;
 
     /**
      * Constructor, opens the database.
@@ -37,6 +35,7 @@ public class TagDb {
      */
     public TagDb(Context context) {
         super();
+        this.context = context;
         helper = new TagDbOpenHelper(context);
     }
 
@@ -140,15 +139,13 @@ public class TagDb {
     /**
      * Loads an XML file into the database.
      * 
-     * @param xmlFile
-     *            The XML file to parse.
+     * @param id
+     *            The id of the XML file to parse in /res/raw.
      */
-    public void initDbWithFile(String xmlFile) {
+    public void initDbWithFile(int id) {
         try {
-            File file = new File(xmlFile);
-
-            Xml.parse(new InputStreamReader(new FileInputStream(file)),
-                    new DefaultHandler() {
+            Xml.parse(context.getResources().openRawResource(id),
+                    Xml.Encoding.UTF_8, new DefaultHandler() {
                         SQLiteDatabase writeDb;
 
                         /*
@@ -194,10 +191,10 @@ public class TagDb {
 
                         @Override
                         public void characters(char[] ch, int start, int length) {
-                            String tmp = new String(ch);
+                            String tmp = new String(ch, start, length);
 
                             if (descriptionTagOpened) {
-                                description = tmp;
+                                description += tmp;
 
                             } else if (uriTagOpened) {
                                 link += tmp;
@@ -292,8 +289,7 @@ public class TagDb {
                 null, null, null, null);
         if (crs.getCount() > 0) {
             crs.moveToFirst();
-            Log.d("ROWCOUNTQUERY", "query rows: " + crs.getCount());
-            Log.d("ROWCOUNTQUERY", crs.getString(0));
+            Log.d("InitDbWithFile", "inserted " + crs.getString(0) + " rows.");
         }
         crs.close();
         closeDb();
