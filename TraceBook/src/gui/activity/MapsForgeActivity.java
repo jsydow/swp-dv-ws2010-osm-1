@@ -18,7 +18,6 @@ import Trace.Book.R;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -275,34 +274,7 @@ public class MapsForgeActivity extends MapActivity {
             }
             return true;
         case R.id.opt_mapsforgeActivity_stopTrack:
-            builder.setMessage(
-                    getResources().getString(R.string.alert_global_exit))
-                    .setCancelable(false)
-                    .setPositiveButton(
-                            getResources().getString(R.string.alert_global_yes),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                        int id) {
-                                    try {
-                                        ServiceConnector.getLoggerService()
-                                                .stopTrack();
-                                    } catch (RemoteException e) {
-                                        e.printStackTrace();
-                                    }
-                                    finish();
-
-                                }
-                            })
-                    .setNegativeButton(
-                            getResources().getString(R.string.alert_global_no),
-                            new DialogInterface.OnClickListener() {
-
-                                public void onClick(DialogInterface dialog,
-                                        int which) {
-                                    dialog.cancel();
-                                }
-                            });
-            builder.show();
+            Helper.alertStopTracking(this);
             return true;
 
         default:

@@ -9,15 +9,21 @@ import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.OverlayItem;
 
+import Trace.Book.R;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.os.RemoteException;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
 import core.data.DataTrack;
+import core.logger.ServiceConnector;
 
 /**
  * general helper class to feature some useful functions.
@@ -334,5 +340,71 @@ public final class Helper {
             threshold /= nodes.size();
             Log.d("Helper", "Average: " + threshold);
         }
+    }
+
+    /**
+     * @param activity
+     */
+    public static void alertStopTracking(final Activity activity) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final EditText input = new EditText(activity);
+        input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
+        builder.setView(input);
+        builder.setTitle(activity.getResources().getString(
+                R.string.alert_newtrackActivity_saveSetTrack));
+        builder.setMessage(
+                activity.getResources().getString(R.string.alert_global_exit))
+                .setCancelable(false)
+                .setPositiveButton(
+                        activity.getResources().getString(
+                                R.string.alert_global_yes),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                // set track name
+                                String value = input.getText().toString()
+                                        .trim();
+                                if (!value.equals("")) {
+                                    DataStorage.getInstance().getCurrentTrack()
+                                            .setName(value);
+                                }
+
+                                // send notification toast for user
+                                Toast.makeText(
+                                        activity.getApplicationContext(),
+                                        activity.getResources()
+                                                .getString(
+                                                        R.string.alert_global_trackName)
+                                                + " "
+                                                + DataStorage.getInstance()
+                                                        .getCurrentTrack()
+                                                        .getName(),
+                                        Toast.LENGTH_SHORT).show();
+
+                                // stop logging
+                                try {
+                                    ServiceConnector.getLoggerService()
+                                            .stopTrack();
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+
+                                activity.finish();
+
+                            }
+                        })
+                .setNegativeButton(
+                        activity.getResources().getString(
+                                R.string.alert_global_no),
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                dialog.cancel();
+                            }
+                        });
+        builder.show();
+
     }
 }
