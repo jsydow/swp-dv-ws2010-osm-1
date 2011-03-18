@@ -32,7 +32,7 @@ module OsmMapFeatures
 
     def get_useful_tags(key, value)
         return if (value == '')
-    	useful_page = get_page("Tag:#{key}%3D#{value}")
+    	useful_page = get_page("Tag:#{key}%3D#{value}", false)
     	useful_tags = useful_page.scan(/<dl><dt>Useful combination(.*?)<dl><dt>/m).to_s.scan(/<li>(.*?)<\/li>/m)
 
     	useful_tags.map { |x| x.to_s.gsub(/<.*?>/m, '').gsub(/=.*/, '').gsub(/Key:/i, '').strip }
@@ -60,8 +60,8 @@ module OsmMapFeatures
         is_number?(get_real_value(value)) ? 'number' : 'text'
     end
 
-    def get_page(page)
-        uri = URI.parse(get_uri(page))
+    def get_page(page, add_language_to_uri = true)
+        uri = URI.parse(get_uri(page, add_language_to_uri))
         cache_path = @cache_dir + uri.host + uri.path.gsub(/[%:]/, '_')
 
         if (File.exists?(cache_path) and (Time.now.strftime('%s').to_i < File.mtime(cache_path).strftime('%s').to_i + 604800))
@@ -92,9 +92,9 @@ module OsmMapFeatures
         page
     end
 
-    def get_uri(page)
+    def get_uri(page, add_language_to_uri = true)
         base_uri  = "#{@base_uri}/wiki/"
-        base_uri += "#{@language}:" unless (@language == 'EN')
+        base_uri += "#{@language}:" if (add_language_to_uri and (@language != 'EN'))
         base_uri += page
 
         URI.escape(base_uri).gsub('%25', '%')
