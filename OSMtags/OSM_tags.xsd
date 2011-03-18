@@ -14,9 +14,9 @@
 	<xs:element name="value">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="description" minOccurs="0" />
 				<xs:element ref="uri" minOccurs="0" />
 				<xs:element ref="img" minOccurs="0" />
+				<xs:element ref="description" minOccurs="0" />
 				<xs:element ref="keywords" minOccurs="0" />
 				<xs:element ref="useful" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
