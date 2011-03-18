@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import util.Helper;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -152,6 +153,7 @@ public class NewTrackActivity extends TabActivity {
         menu.setHeaderIcon(android.R.drawable.ic_menu_edit);
         menu.setHeaderTitle(getResources().getString(
                 R.string.cm_editmapobjects_title));
+        setGpsStatus();
     }
 
     @Override
@@ -453,61 +455,8 @@ public class NewTrackActivity extends TabActivity {
      *            not used
      */
     public void stopTrackBtn(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final EditText input = new EditText(this);
-        input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
-        builder.setView(input);
-        builder.setTitle(getResources().getString(
-                R.string.alert_newtrackActivity_saveSetTrack));
-        builder.setMessage(getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false)
-                .setPositiveButton(
-                        getResources().getString(R.string.alert_global_yes),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
 
-                                // set track name
-                                String value = input.getText().toString()
-                                        .trim();
-                                if (!value.equals("")) {
-                                    DataStorage.getInstance().getCurrentTrack()
-                                            .setName(value);
-                                }
-
-                                // send notification toast for user
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        getResources()
-                                                .getString(
-                                                        R.string.alert_global_trackName)
-                                                + " "
-                                                + DataStorage.getInstance()
-                                                        .getCurrentTrack()
-                                                        .getName(),
-                                        Toast.LENGTH_SHORT).show();
-
-                                // stop logging
-                                try {
-                                    ServiceConnector.getLoggerService()
-                                            .stopTrack();
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                }
-
-                                finish();
-
-                            }
-                        })
-                .setNegativeButton(
-                        getResources().getString(R.string.alert_global_no),
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog,
-                                    int which) {
-                                dialog.cancel();
-                            }
-                        });
-        builder.show();
+        Helper.alertStopTracking(this);
 
     }
 
@@ -627,6 +576,7 @@ public class NewTrackActivity extends TabActivity {
     protected void onResume() {
         super.onResume();
         initListView();
+        setGpsStatus();
         /* setGpsStatus(); */
     }
 
