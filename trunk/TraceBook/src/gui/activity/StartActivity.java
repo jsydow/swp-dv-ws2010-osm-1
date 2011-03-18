@@ -1,5 +1,7 @@
 package gui.activity;
 
+import gui.view.HelpWebView;
+
 import java.io.File;
 
 import util.Helper;
@@ -20,7 +22,6 @@ import core.logger.ServiceConnector;
 
 /**
  * Start activity of the application.
- * 
  * 
  */
 public class StartActivity extends Activity {
@@ -155,6 +156,9 @@ public class StartActivity extends Activity {
             intent = new Intent(this, PreferencesActivity.class);
             startActivity(intent);
             return true;
+        case R.id.opt_startActivity_help:
+            intent = new Intent(this, HelpWebView.class);
+            startActivity(intent);
         default:
             return super.onOptionsItemSelected(item);
         }
