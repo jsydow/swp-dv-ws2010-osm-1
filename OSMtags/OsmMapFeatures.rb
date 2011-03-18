@@ -95,7 +95,9 @@ module OsmMapFeatures
     def get_uri(page)
         base_uri  = "#{@base_uri}/wiki/"
         base_uri += "#{@language}:" unless (@language == 'EN')
-        base_uri + page
+        base_uri += page
+
+        URI.escape(base_uri).gsub('%25', '%')
     end
 
     def is_any_text?(s)
