@@ -17,7 +17,7 @@ module OsmMapFeatures
         /^\*$/
     ]
 
-    @flags = %{ Node Way Area }
+    @flags = %w{ Node Way Area }
 
     @data = Hash.new
     @language = 'EN'
@@ -133,8 +133,7 @@ module OsmMapFeatures
         xml.map_features(:lang  => @language.downcase,
                          :xmlns => "http://code.google.com/p/swp-dv-ws2010-osm-1/OSM_Tags") do
             @data.keys.sort.each do |key|
-
-                xml.key(@data[key]['attributes']) do
+                xml.key(:v => @data[key]['attributes'][:v]) do
                     @data[key].keys.sort.each do |value|
                         next if (value == 'attributes')
                         xml.value(@data[key][value]['attributes']) do
@@ -150,7 +149,7 @@ module OsmMapFeatures
             end
         end
 
-        result
+        '<?xml version="1.0" encoding="utf-8" ?>' + "\n" + result
     end
 
     def parse
