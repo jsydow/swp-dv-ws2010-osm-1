@@ -92,10 +92,10 @@
     <string name="alert_global_addNotice">Notiz hinzufügen</string>
     <string name="alert_global_addedNotice">Notiz hünzugefügt:</string>
     <string name="alert_global_exit">Möchten Sie die aktuelle Session stoppen und speichern?</string>
+    <string name="alert_global_trackName">Trackname:</string>
     <string name="alert_mapsforgeActivity_pause">Möchten Sie die aktuelle Session pausieren?</string>
     <string name="alert_newtrackActivity_rename">Node umbenennen</string>
-    <string name="alert_newtrackActivity_setTrackName">Bitte Tracknamen vergeben</string>
-    <string name="alert_newtrackActivity_trackName">Ihr Track heißt:</string>
+    <string name="alert_newtrackActivity_saveSetTrack">Sichern und Trackname</string>
     <string name="alert_newtrackActivity_addTrackNotice">Tracknotiz hinzufügen</string>
     <string name="alert_loadtrackActivity_rename">Track umbenennen</string>
     <string name="alert_loadtrackActivity_deleteTrack">Track löschen?</string>
