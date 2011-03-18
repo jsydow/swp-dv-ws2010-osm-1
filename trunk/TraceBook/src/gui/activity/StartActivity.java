@@ -79,7 +79,8 @@ public class StartActivity extends Activity {
     }
 
     /**
-     * Called if the newTrack Button pressed. Start the NewTrackActivity.
+     * Called if the newTrack Button pressed. Start the NewTrackActivity and the
+     * tracking notification for the user
      * 
      * @param view
      *            the view

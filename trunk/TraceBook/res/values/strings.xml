@@ -25,6 +25,11 @@
     <!--  App values -->
     <string name="app_name">TraceBook</string>
 
+	<!--  Notification values -->
+	<string name="not_startActivity_tickerText">tracking active</string>
+	<string name="not_startActivity_contentTitle">Tracebook Tracking</string>
+	<string name="not_startActivity_contentText">Ihr Tracking ist aktiv. Aktuelle Position: </string>
+
 	<!--  TextViews values -->
 	<string name="tv_startActivity_welcome">Willkommen bei TraceBook</string>
 	<string name="tv_addpointActivity_nodeId">Knoten-ID:</string>
