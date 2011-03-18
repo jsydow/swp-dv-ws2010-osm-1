@@ -5,6 +5,7 @@
 
 = Map view =
   * Colors for several item groups (ways, areas, POIs)
+  * Map file to be used (for !MapsForge)
 
-= MetaTags =
+= !MetaTags =
   * The max. history size.
