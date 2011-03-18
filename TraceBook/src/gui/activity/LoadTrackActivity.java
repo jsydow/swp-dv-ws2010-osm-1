@@ -34,8 +34,11 @@ import core.data.DataTrack;
 import core.data.DataTrackInfo;
 
 /**
- * The Class LoadTrackActivity.
+ * The Class LoadTrackActivity list all saved Track in a list view. With a
+ * context menu the user have following options:
  * 
+ * 1. delete a track 2. rename a track 3. show all track information 4. load a
+ * track
  * 
  */
 public class LoadTrackActivity extends ListActivity {

@@ -33,7 +33,6 @@ import core.data.db.TagSearchResult;
  * depended by their key values. For example when you choose "highway" only
  * highway related values will be given as a list for AutoComplete.
  * 
- * 
  */
 public class AddPointMetaActivity extends ListActivity {
 

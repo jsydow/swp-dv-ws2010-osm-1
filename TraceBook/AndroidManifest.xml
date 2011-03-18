@@ -29,5 +29,6 @@
 	<activity android:name="gui.activity.RecordVideoActivity" android:screenOrientation="landscape"></activity>
 	<activity android:name="gui.activity.AboutActivity"></activity>
 	<activity android:name="gui.activity.FullTextSearchActivity"></activity>
+	<activity android:name="gui.view.HelpWebView"></activity>
     </application>
 </manifest>

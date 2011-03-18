@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- *
+ * The Class AboutActivity shows the about layout with the version number,
+ * credits, all used resources and the license of TraceBook. This class called
+ * from the option menu of the StartActivity.
  * 
  */
 public class AboutActivity extends Activity {

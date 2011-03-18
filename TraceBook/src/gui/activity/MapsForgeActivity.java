@@ -37,8 +37,6 @@ import core.logger.ServiceConnector;
  * overlays on it. In the future it will also be possible to modify said nodes
  * and ways.
  * 
- * 
- * 
  */
 public class MapsForgeActivity extends MapActivity {
     private static final String LOG_TAG = "MapsForgeActivity";

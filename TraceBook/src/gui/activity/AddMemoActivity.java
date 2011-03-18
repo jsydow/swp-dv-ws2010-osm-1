@@ -10,7 +10,8 @@ import core.data.DataStorage;
 import core.media.AudioRecorder;
 
 /**
- *
+ * The Class AddMemoActivity, start the recording of the notice. The user can
+ * talk after a 2 seconds progressbar dialog.
  * 
  */
 public class AddMemoActivity extends Activity {
