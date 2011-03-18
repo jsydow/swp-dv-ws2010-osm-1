@@ -151,6 +151,7 @@ public class WaypointLogService extends Service implements LocationListener {
      * The IAdderService is defined through IDL.
      */
     private final ILoggerService.Stub binder = new ILoggerService.Stub() {
+        private static final int TRACKING_NOTIFY_ID = 1;
 
         public void addTrackWithGpsParams(int dTime, int dDistance) {
             deltaTime = dTime;
@@ -185,7 +186,6 @@ public class WaypointLogService extends Service implements LocationListener {
             notification.setLatestEventInfo(context, contentTitle, contentText,
                     contentIntent);
 
-            final int TRACKING_NOTIFY_ID = 1;
             mNotificationManager.notify(TRACKING_NOTIFY_ID, notification);
 
             storage.setCurrentTrack(storage.newTrack());
@@ -250,7 +250,7 @@ public class WaypointLogService extends Service implements LocationListener {
                     storage.getCurrentTrack().deleteWay(tmp.getId());
                 else {
                     if (!one_shot) { // TODO: user configurable and less
-                                     // arbitrary weight
+                        // arbitrary weight
                         Helper.smoothenPoints(tmp.getNodes(), 3, 3);
                         Helper.filterPoints(tmp.getNodes(), 2);
                     }
@@ -309,7 +309,7 @@ public class WaypointLogService extends Service implements LocationListener {
         } else if (currentWay() != null && !one_shot) { // Continuous mode
             currentWay().newNode(loc); // poi in track was already added before
             sender.sendWayUpdate(currentWay().getId()); // call for an update of
-                                                        // the way
+            // the way
         }
     }
 
