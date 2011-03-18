@@ -21,7 +21,6 @@ import android.location.GpsStatus;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -455,6 +454,11 @@ public class NewTrackActivity extends TabActivity {
      */
     public void stopTrackBtn(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
+        builder.setView(input);
+        builder.setTitle(getResources().getString(
+                R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(getResources().getString(R.string.alert_global_exit))
                 .setCancelable(false)
                 .setPositiveButton(
@@ -462,7 +466,35 @@ public class NewTrackActivity extends TabActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                                setTrackName();
+                                // set track name
+                                String value = input.getText().toString()
+                                        .trim();
+                                if (!value.equals("")) {
+                                    DataStorage.getInstance().getCurrentTrack()
+                                            .setName(value);
+                                }
+
+                                // send notification toast for user
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        getResources()
+                                                .getString(
+                                                        R.string.alert_global_trackName)
+                                                + " "
+                                                + DataStorage.getInstance()
+                                                        .getCurrentTrack()
+                                                        .getName(),
+                                        Toast.LENGTH_SHORT).show();
+
+                                // stop logging
+                                try {
+                                    ServiceConnector.getLoggerService()
+                                            .stopTrack();
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+
+                                finish();
 
                             }
                         })
@@ -477,55 +509,6 @@ public class NewTrackActivity extends TabActivity {
                         });
         builder.show();
 
-    }
-
-    /**
-     * Set TrackName for the currentTrack. Finish NewTrackActivity.
-     */
-    public void setTrackName() {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final EditText input = new EditText(this);
-        alert.setView(input);
-        alert.setTitle(getResources().getString(
-                R.string.alert_newtrackActivity_setTrackName));
-        input.setHint(DataStorage.getInstance().getCurrentTrack().getName());
-        alert.setPositiveButton(
-                getResources().getString(R.string.alert_global_ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String value = input.getText().toString().trim();
-                        if (!value.equals("")) {
-                            DataStorage.getInstance().getCurrentTrack()
-                                    .setName(value);
-                        }
-
-                        Toast.makeText(
-                                getApplicationContext(),
-                                getResources()
-                                        .getString(
-                                                R.string.alert_newtrackActivity_trackName)
-                                        + " " + value, Toast.LENGTH_SHORT)
-                                .show();
-
-                        try {
-                            ServiceConnector.getLoggerService().stopTrack();
-                        } catch (RemoteException e) {
-                            Log.w("StopTrack",
-                                    "Could not connect to LoggerService.");
-                        }
-
-                        finish();
-                    }
-                });
-
-        alert.setNegativeButton(
-                getResources().getString(R.string.alert_global_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();
-                    }
-                });
-        alert.show();
     }
 
     /**
