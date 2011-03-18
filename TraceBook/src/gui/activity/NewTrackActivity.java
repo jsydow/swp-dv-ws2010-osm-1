@@ -168,9 +168,7 @@ public class NewTrackActivity extends TabActivity {
         switch (item.getItemId()) {
         case R.id.cm_editmapobjects_delete:
             DataStorage.getInstance().getCurrentTrack().deleteNode(nodeId);
-            /**
-             * TODO delete from Waylist
-             */
+            DataStorage.getInstance().getCurrentTrack().deleteWay(nodeId);
             initListView();
             return true;
         case R.id.cm_editmapobjects_edit:

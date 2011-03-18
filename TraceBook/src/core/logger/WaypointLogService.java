@@ -1,7 +1,12 @@
 package core.logger;
 
+import gui.activity.NewTrackActivity;
 import util.GpsMessage;
 import util.Helper;
+import Trace.Book.R;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -156,10 +161,42 @@ public class WaypointLogService extends Service implements LocationListener {
         public void addTrack() {
             restartGPS();
 
+            // User notification
+            String ns = Context.NOTIFICATION_SERVICE;
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+            int icon = R.drawable.ic_notification;
+            CharSequence tickerText = getResources().getString(
+                    R.string.not_startActivity_tickerText);
+            long when = System.currentTimeMillis();
+
+            Notification notification = new Notification(icon, tickerText, when);
+
+            Context context = getApplicationContext();
+            CharSequence contentTitle = getResources().getString(
+                    R.string.not_startActivity_contentTitle);
+            CharSequence contentText = getResources().getString(
+                    R.string.not_startActivity_contentText);
+
+            Context con = getApplicationContext();
+            Intent notificationIntent = new Intent(con, NewTrackActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(con, 0,
+                    notificationIntent, 0);
+
+            notification.setLatestEventInfo(context, contentTitle, contentText,
+                    contentIntent);
+
+            final int TRACKING_NOTIFY_ID = 1;
+            mNotificationManager.notify(TRACKING_NOTIFY_ID, notification);
+
             storage.setCurrentTrack(storage.newTrack());
         }
 
         public int stopTrack() {
+
+            String ns = Context.NOTIFICATION_SERVICE;
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+            mNotificationManager.cancel(1);
+
             stopGPS();
 
             if (storage.getCurrentTrack() != null) {
