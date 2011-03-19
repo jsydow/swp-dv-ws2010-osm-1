@@ -1,9 +1,9 @@
 package core.data;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -58,8 +58,8 @@ public final class DataStorage {
      * Default private constructor for Singleton implementation.
      */
     private DataStorage() {
-        tracks = new LinkedList<DataTrack>();
-        names = new LinkedList<String>();
+        tracks = Collections.synchronizedList(new ArrayList<DataTrack>());
+        names = Collections.synchronizedList(new ArrayList<String>());
         retrieveTrackNames();
         lastID = 1;
     }
@@ -70,7 +70,7 @@ public final class DataStorage {
      * 
      * @return The instance of this class.
      */
-    public static DataStorage getInstance() {
+    public static synchronized DataStorage getInstance() {
         if (instance == null)
             instance = new DataStorage();
         return instance;
@@ -83,10 +83,12 @@ public final class DataStorage {
      *            the list of Strings
      */
     static void removeDuplicatesInStringList(List<String> l) {
-        Set<String> tmp = new HashSet<String>(l);
-        l.clear();
-        l.addAll(tmp);
-        Collections.sort(l);
+        synchronized (l) {
+            Set<String> tmp = new HashSet<String>(l);
+            l.clear();
+            l.addAll(tmp);
+            Collections.sort(l);
+        }
         return;
     }
 
@@ -106,7 +108,7 @@ public final class DataStorage {
      * 
      * @return A new unique id.
      */
-    public int getID() {
+    public synchronized int getID() {
         lastID++;
         return lastID;
     }
@@ -136,15 +138,15 @@ public final class DataStorage {
             for (File f : files) {
                 if (f.isFile()) {
                     if (!f.delete()) {
-                        Log.e("DeleteDirectory", "Could not delete file "
-                                + f.getName() + " in directory "
-                                + dir.getPath());
+                        Log.e("DeleteDirectory",
+                                "Could not delete file " + f.getName()
+                                        + " in directory " + dir.getPath());
                     }
                 }
             }
             if (!dir.delete()) {
-                Log.e("DeleteDirectory", "Could not delete directory "
-                        + dir.getName());
+                Log.e("DeleteDirectory",
+                        "Could not delete directory " + dir.getName());
 
             }
         }
@@ -271,9 +273,8 @@ public final class DataStorage {
             }
 
         } else {
-            Log
-                    .w("TraceBookDirectory",
-                            "The TraceBook directory path doesn't point to a directory! wtf?");
+            Log.w("TraceBookDirectory",
+                    "The TraceBook directory path doesn't point to a directory! wtf?");
         }
     }
 
@@ -283,8 +284,10 @@ public final class DataStorage {
      */
     public void updateNames() {
         retrieveTrackNames();
-        for (DataTrack dt : tracks) {
-            names.add(dt.getName());
+        synchronized (tracks) {
+            for (DataTrack dt : tracks) {
+                names.add(dt.getName());
+            }
         }
 
         removeDuplicatesInStringList(names);

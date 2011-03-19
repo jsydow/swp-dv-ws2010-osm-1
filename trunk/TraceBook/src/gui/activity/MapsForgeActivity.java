@@ -15,7 +15,6 @@ import util.DataPointsListArrayRouteOverlay;
 import util.GpsMessage;
 import util.Helper;
 import Trace.Book.R;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -221,7 +220,6 @@ public class MapsForgeActivity extends MapActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Handle item selection
         switch (item.getItemId()) {
         case R.id.opt_mapsforgeActivity_activateMobileInternet:

@@ -20,17 +20,36 @@ import android.widget.TextView;
  * 
  * This class provides you easy acces to fill your views with the right data.
  * 
- *
+ * 
  * 
  * 
  * 
  */
 public class GenericAdapterData {
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        if (description.getNameTag() != null) {
+            GenericItem item = items.get(description.getNameTag());
+            if (item != null) {
+                return item.toString();
+            } else {
+                return super.toString();
+            }
+        } else {
+            return super.toString();
+        }
+    }
+
     /**
      * An enum to define the three different types of views in a item.
      * 
-     *
+     * 
      */
     enum ItemTypes {
         /**
@@ -55,7 +74,7 @@ public class GenericAdapterData {
     /**
      * The class representation to handle TextView data.
      * 
-     *
+     * 
      */
     static class TextItem implements GenericItem {
 
@@ -90,12 +109,17 @@ public class GenericAdapterData {
             return textView.getText().toString();
         }
 
+        @Override
+        public String toString() {
+            return text;
+        }
+
     }
 
     /**
      * The class representation to handle ImageView data.
      * 
-     *
+     * 
      */
     static class ImageItem implements GenericItem {
 
@@ -118,12 +142,17 @@ public class GenericAdapterData {
             imageView.invalidate();
         }
 
+        @Override
+        public String toString() {
+            return "Image " + imageId;
+        }
+
     }
 
     /**
      * The class representation to handle Button data.
      * 
-     *
+     * 
      * 
      */
     static class ButtonItem implements GenericItem {
@@ -146,7 +175,11 @@ public class GenericAdapterData {
         public void fillItem(View view, int id) {
             Button button = (Button) view.findViewById(id);
             button.setOnClickListener(onClickListener);
+        }
 
+        @Override
+        public String toString() {
+            return "Button";
         }
 
     }

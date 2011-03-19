@@ -159,6 +159,7 @@ public class StartActivity extends Activity {
         case R.id.opt_startActivity_help:
             intent = new Intent(this, HelpWebView.class);
             startActivity(intent);
+            return true;
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -172,7 +173,7 @@ public class StartActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // ServiceConnector.releaseService();
+        ServiceConnector.releaseService();
     }
 
     @Override
