@@ -19,7 +19,9 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -77,7 +79,7 @@ public class LoadTrackActivity extends ListActivity {
         setContentView(R.layout.layout_loadtrackactivity);
         registerForContextMenu(getListView());
 
-        setTextChangedListenerToSearchBox();
+        setTextChangedListenerToSearchBox(checkEditText());
 
         // Set status bar
         Helper.setStatusBar(this,
@@ -87,8 +89,32 @@ public class LoadTrackActivity extends ListActivity {
 
     }
 
-    private void setTextChangedListenerToSearchBox() {
-        EditText etFilter = (EditText) findViewById(R.id.et_loadtrackactivity_filter);
+    /**
+     * 
+     * 
+     */
+    private EditText checkEditText() {
+
+        // Get the app's shared preferences
+        SharedPreferences app_preferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        // Get the value for the status bar check box - default false
+        if (app_preferences.getBoolean("statusleiste", false)) {
+            EditText loadTrackSearch = (EditText) findViewById(R.id.et_loadtrackactivity_search);
+            loadTrackSearch.setVisibility(8);
+            TextView loadTrackFilter = (TextView) findViewById(R.id.tv_loadtrackactivity_filter);
+            loadTrackFilter.setVisibility(8);
+            return (EditText) findViewById(R.id.et_statusbar_search);
+        } else
+            return (EditText) findViewById(R.id.et_loadtrackactivity_search);
+    }
+
+    private void setTextChangedListenerToSearchBox(EditText etFilter) {
+
+        if (etFilter == null)
+            return;
+
         etFilter.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -293,6 +319,38 @@ public class LoadTrackActivity extends ListActivity {
     }
 
     /**
+     * This method inflate the options menu for this activity.
+     * 
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu_loadtrackactivity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.opt_loadtrack_sort:
+            if (sortByName) {
+                item.setTitle(getResources().getString(
+                        R.string.opt_loadtrack_sortByName));
+                sortByName = false;
+            } else {
+                item.setTitle(getResources().getString(
+                        R.string.opt_loadtrack_sortByTimestamp));
+                sortByName = true;
+            }
+            updateAdapter();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
      * @param v
      *            used to get the text of the view. Could be dangerous.
      * 
@@ -464,38 +522,6 @@ public class LoadTrackActivity extends ListActivity {
         super.onResume();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-        case R.id.opt_loadtrack_sort:
-            if (sortByName) {
-                item.setTitle(getResources().getString(
-                        R.string.opt_loadtrack_sortByName));
-                sortByName = false;
-            } else {
-                item.setTitle(getResources().getString(
-                        R.string.opt_loadtrack_sortByTimestamp));
-                sortByName = true;
-            }
-            updateAdapter();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    /**
-     * This method inflate the options menu for this activity.
-     * 
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.optionsmenu_loadtrackactivity, menu);
-        return true;
-    }
-
     /**
      * This Method for the two (title and description) button from the status
      * bar. This method starts the dialog with all activity informations.
@@ -530,10 +556,10 @@ public class LoadTrackActivity extends ListActivity {
      */
     public void statusBarSearchBtn(View v) {
         EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
-        if (searchBox.getVisibility() == 8)
+        if (searchBox.getVisibility() == 8) {
             searchBox.setVisibility(1);
-        else
+            setTextChangedListenerToSearchBox(searchBox);
+        } else
             searchBox.setVisibility(8);
     }
-
 }

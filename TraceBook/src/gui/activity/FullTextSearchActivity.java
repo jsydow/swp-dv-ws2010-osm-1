@@ -12,7 +12,9 @@ import Trace.Book.R;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -135,9 +137,6 @@ public class FullTextSearchActivity extends ListActivity {
         setContentView(R.layout.layout_fulltextsearchactivity);
         setTitle(R.string.string_fulltextsearchActivity_title);
 
-        EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
-        editBox.addTextChangedListener(new MyTextWatcher(this));
-
         // Set status bar
         Helper.setStatusBar(
                 this,
@@ -147,6 +146,33 @@ public class FullTextSearchActivity extends ListActivity {
                         R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
+        EditText editBox = checkEditText();
+        if (editBox != null)
+            editBox.addTextChangedListener(new MyTextWatcher(this));
+
+    }
+
+    /**
+     * This method check the status bar "status". If status bar is available the
+     * edit text visibility of the fullTextSearchActivity change to invisible.
+     * 
+     * @return The correct and used edit text.
+     */
+    private EditText checkEditText() {
+
+        // Get the app's shared preferences
+        SharedPreferences app_preferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        // Get the value for the status bar check box - default false
+        if (app_preferences.getBoolean("statusleiste", false)) {
+            EditText loadTrackSearch = (EditText) findViewById(R.id.et_fulltextsearchActivity_search);
+            loadTrackSearch.setVisibility(8);
+            EditText statusBarSearch = (EditText) findViewById(R.id.et_statusbar_search);
+            statusBarSearch.setVisibility(1);
+            return statusBarSearch;
+        } else
+            return (EditText) findViewById(R.id.et_fulltextsearchActivity_search);
     }
 
     /**
