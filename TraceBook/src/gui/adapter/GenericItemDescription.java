@@ -9,7 +9,7 @@ import java.util.Map;
  * GenericAdapterData. So each item in a ListView can associate its view
  * elements.
  * 
- *
+ * 
  * 
  */
 public class GenericItemDescription {
@@ -18,6 +18,28 @@ public class GenericItemDescription {
      * 
      */
     Map<String, Integer> resourceIds = new HashMap<String, Integer>();
+
+    private String itemNameTag = null;
+
+    /**
+     * Sets the name of the tag that is used for the toString() method of the
+     * AdapterData.
+     * 
+     * @param tag
+     *            The name of the tag.
+     */
+    public void setNameTag(String tag) {
+        itemNameTag = tag;
+    }
+
+    /**
+     * Returns the item tag that is used for toString() in the AdapterData.
+     * 
+     * @return The name of the tag that names the data.
+     */
+    public String getNameTag() {
+        return itemNameTag;
+    }
 
     /**
      * @param tag

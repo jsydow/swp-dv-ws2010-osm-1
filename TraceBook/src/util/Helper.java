@@ -343,7 +343,10 @@ public final class Helper {
     }
 
     /**
+     * Shows a dialog box that saves the current track.
+     * 
      * @param activity
+     *            The activity that starts the dialog.
      */
     public static void alertStopTracking(final Activity activity) {
 

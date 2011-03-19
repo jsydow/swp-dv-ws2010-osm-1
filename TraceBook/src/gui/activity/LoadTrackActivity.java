@@ -5,9 +5,12 @@ import gui.adapter.GenericAdapterData;
 import gui.adapter.GenericItemDescription;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import Trace.Book.R;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -15,6 +18,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -48,6 +53,15 @@ public class LoadTrackActivity extends ListActivity {
      */
     GenericAdapter adapter;
 
+    /**
+     * 
+     */
+    boolean sortByName = true;
+    /**
+     * 
+     */
+    String searchText = "";
+
     /*
      * (non-Javadoc)
      * 
@@ -58,7 +72,32 @@ public class LoadTrackActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         updateAdapter();
         setTitle(R.string.string_loadtrackActivity_title);
+        setContentView(R.layout.layout_loadtrackactivity);
         registerForContextMenu(getListView());
+
+        EditText etFilter = (EditText) findViewById(R.id.et_loadtrackactivity_filter);
+        if (etFilter == null) {
+            Log.e("##", "etfilter is null");
+            return;
+        }
+        etFilter.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                // nothing done here
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                    int after) {
+                // nothing done here
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                    int count) {
+                searchText = s.toString();
+                adapter.getFilter().filter(searchText);
+            }
+
+        });
     }
 
     /**
@@ -300,50 +339,93 @@ public class LoadTrackActivity extends ListActivity {
      * 
      */
     void updateAdapter() {
+        final Activity thisActivity = this;
+        (new Thread() {
+            @Override
+            public void run() {
+                GenericItemDescription desc = new GenericItemDescription();
 
-        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                desc.addResourceId("TrackName", R.id.tv_listviewloadtrack_track);
+                desc.addResourceId("TrackComment",
+                        R.id.tv_listviewloadtrack_comment);
+                desc.setNameTag("TrackName");
+                String comment = null;
+                final List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+                DataStorage.getInstance().unloadAllTracks();
 
-        GenericItemDescription desc = new GenericItemDescription();
+                // get all TrackInfo-objects
+                List<DataTrackInfo> trackInfos = new ArrayList<DataTrackInfo>();
+                List<String> names = new ArrayList<String>(DataStorage
+                        .getInstance().getAllTracks());
+                for (String name : names) {
+                    DataTrackInfo trackinfo = DataTrackInfo.deserialise(name);
+                    if (trackinfo != null) {
+                        trackInfos.add(trackinfo);
+                    }
+                }
 
-        desc.addResourceId("TrackName", R.id.tv_listviewloadtrack_track);
-        desc.addResourceId("TrackComment", R.id.tv_listviewloadtrack_comment);
-        String comment = null;
-        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
-        DataStorage.getInstance().unloadAllTracks();
+                // sort
+                if (sortByName) {
+                    Collections.sort(trackInfos,
+                            new Comparator<DataTrackInfo>() {
+                                public int compare(DataTrackInfo arg0,
+                                        DataTrackInfo arg1) {
+                                    return arg0.getName().compareToIgnoreCase(
+                                            arg1.getName());
+                                }
+                            });
+                } else {
+                    Collections.sort(trackInfos,
+                            new Comparator<DataTrackInfo>() {
+                                public int compare(DataTrackInfo arg0,
+                                        DataTrackInfo arg1) {
+                                    return arg0.getTimestamp()
+                                            .compareToIgnoreCase(
+                                                    arg1.getTimestamp());
+                                }
+                            });
+                }
 
-        for (String name : DataStorage.getInstance().getAllTracks()) {
-            GenericAdapterData dataItem = new GenericAdapterData(desc);
-            dataItem.setText("TrackName", name);
-            DataTrackInfo trackinfo = DataTrackInfo.deserialise(name);
+                // fill adapter
+                for (DataTrackInfo trackinfo : trackInfos) {
+                    GenericAdapterData dataItem = new GenericAdapterData(desc);
+                    dataItem.setText("TrackName", trackinfo.getName());
 
-            if (trackinfo.getComment().length() > 80) {
-                comment = "Kommentar: "
-                        + trackinfo.getComment().trim().substring(0, 77)
-                        + "...";
-            } else if (trackinfo.getComment().length() > 0) {
-                comment = "Kommentar: " + trackinfo.getComment() + "...";
-            } else {
-                comment = "Kein Kommentar vorhanden";
+                    if (trackinfo.getComment().length() > 80) {
+                        comment = "Kommentar: "
+                                + trackinfo.getComment().trim()
+                                        .substring(0, 77) + "...";
+                    } else if (trackinfo.getComment().length() > 0) {
+                        comment = "Kommentar: " + trackinfo.getComment()
+                                + "...";
+                    } else {
+                        comment = "Kein Kommentar vorhanden";
+                    }
+
+                    dataItem.setText("TrackComment", comment);
+
+                    data.add(dataItem);
+
+                }
+
+                thisActivity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                        adapter = new GenericAdapter(thisActivity,
+                                R.layout.listview_loadtrack, R.id.list, data,
+                                layoutInflater);
+                        adapter.getFilter().filter(searchText);
+
+                        setListAdapter(adapter);
+
+                        getListView().setTextFilterEnabled(true);
+
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
-
-            dataItem.setText("TrackComment", comment);
-
-            data.add(dataItem);
-
-        }
-
-        adapter = new GenericAdapter(this, R.layout.listview_loadtrack,
-                R.id.list, data, layoutInflater);
-
-        setListAdapter(adapter);
-
-        getListView().setTextFilterEnabled(true);
-
-        /*
-         * for (String name : DataStorage.getInstance().getAllTracks()) {
-         * adapter.add(name); }
-         */
-        adapter.notifyDataSetChanged();
+        }).start();
     }
 
     /**

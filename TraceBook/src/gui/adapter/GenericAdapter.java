@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
  * It needs a layoutInflater and a reference to a list of GenericAdapterData.
  * Each element in the list describes one element in a list view.
  * 
- *
+ * 
  * 
  */
 public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
@@ -31,13 +31,6 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
      * 
      */
     LayoutInflater layoutInflater;
-
-    /**
-     * A reference to a list of GenericAdapterData which will be used to fill
-     * the list.
-     * 
-     */
-    List<GenericAdapterData> dataList;
 
     /**
      * The standard constructor for an ArrayAdapter plus a reference to a
@@ -61,18 +54,15 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
         layoutId = resource;
         layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        dataList = objects;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View genView = layoutInflater.inflate(layoutId, null);
-        GenericAdapterData data = dataList.get(position);
+        GenericAdapterData data = super.getItem(position);
         data.fillView(genView);
 
         return genView;
     }
-
 }
