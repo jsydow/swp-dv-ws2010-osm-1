@@ -328,6 +328,17 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * 
+     * @param v
+     *            note used
+     */
+    public void statusBarTitleBtn(View v) {
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_addpointTitle),
+                getResources().getString(R.string.tv_statusbar_addpointDesc));
+    }
+
+    /**
      * OnResume is called when the activity was adjournment and we come back to
      * this activity. This method update the ListInformation with the MetaTags
      * of the Node.

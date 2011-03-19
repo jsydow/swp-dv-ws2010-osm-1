@@ -118,4 +118,17 @@ public class AboutActivity extends Activity {
         final Intent intent = new Intent(this, PreferencesActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * This Method for the two (title and description) button from the status
+     * bar. This method starts the dialog with all activity informations.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarTitleBtn(View v) {
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_aboutTitle),
+                getResources().getString(R.string.tv_statusbar_aboutDesc));
+    }
 }

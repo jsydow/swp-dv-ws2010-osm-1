@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  @author greenTraxas -->
+<!-- @author greenTraxas -->
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@android:id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
@@ -22,37 +22,42 @@
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
-				<TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:id="@+id/tv_newtrackActivity_gpsStatus"/>	
-					
+				<TextView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:id="@+id/tv_newtrackActivity_gpsStatus" />
+
 				<ToggleButton android:id="@+id/tbtn_newtrackActivity_startWay"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/tbtn_newtrackActivity_streetOff" android:textOff="@string/tbtn_newtrackActivity_streetOn"
+					android:textOn="@string/tbtn_newtrackActivity_streetOff"
+					android:textOff="@string/tbtn_newtrackActivity_streetOn"
 					android:drawableLeft="@drawable/way_icon" android:onClick="startWayTbtn" />
 
 				<ToggleButton android:id="@+id/tbtn_newtrackActivity_startArea"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:textOn="@string/tbtn_newtrackActivity_areaOff" android:textOff="@string/tbtn_newtrackActivity_areaOn"
+					android:textOn="@string/tbtn_newtrackActivity_areaOff"
+					android:textOff="@string/tbtn_newtrackActivity_areaOn"
 					android:drawableLeft="@drawable/area_icon" android:onClick="startAreaTbtn" />
 
-				<Button android:id="@+id/btn_newtrackActivity_addPoint" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/btn_newtrackActivity_addPoint"
+				<Button android:id="@+id/btn_newtrackActivity_addPoint"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:text="@string/btn_newtrackActivity_addPoint"
 					android:onClick="addPointBtn" android:drawableLeft="@drawable/node_icon" />
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
-					
-				<Button android:id="@+id/btn_newtrackActivity_editComment" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/btn_newtrackActivity_editComment"
+
+				<Button android:id="@+id/btn_newtrackActivity_editComment"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:text="@string/btn_newtrackActivity_editComment"
 					android:onClick="editCommentBtn" />
-					
+
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
 					android:layout_weight="1" />
 
-				<Button android:id="@+id/btn_newtrackActivity_stopTrack" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:text="@string/btn_newtrackActivity_stopTrack"
+				<Button android:id="@+id/btn_newtrackActivity_stopTrack"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:text="@string/btn_newtrackActivity_stopTrack"
 					android:onClick="stopTrackBtn" android:drawableLeft="@drawable/stop_icon" />
 
 				<TextView android:id="@+id/tv_newtrackActivity_setButtonList"
