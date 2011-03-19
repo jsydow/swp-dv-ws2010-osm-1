@@ -8,8 +8,8 @@ Brain dump of what could be done in week 4 aside from the new product backlog.
 
 == Functional things (features) ==
 
-  * search in tracklist 
-  * sort by timestamp/name
+  * search in tracklist `[`partly done`]`
+  * sort by timestamp/name `[`partly done`]`
   * before renaming track check if there is such a track already `[`done`]`
   * improve waypoint filtering
   * Landscape should not crash/behave strangely (crashes while renaming track in loadtrack screen when going to landscape)
