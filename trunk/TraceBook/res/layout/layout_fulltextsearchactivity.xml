@@ -10,7 +10,7 @@
 	
 	<EditText android:layout_height="wrap_content"
 		android:hint="@string/et_fulltextsearchActivity_search"
-		android:layout_width="fill_parent" android:id="@+id/et_fulltextsearchfullActivity_search"></EditText>
+		android:layout_width="fill_parent" android:id="@+id/et_fulltextsearchActivity_search"/>
 
 	<ListView android:id="@+id/android:list" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:layout_weight="1"
