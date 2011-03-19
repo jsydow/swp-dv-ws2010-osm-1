@@ -18,9 +18,6 @@ import android.util.Log;
 /**
  * WayPointList objects are any objects that consist of a series of nodes like
  * Areas and Ways.
- * 
- * 
- * 
  */
 public class DataPointsList extends DataMapObject {
     /**
@@ -61,7 +58,7 @@ public class DataPointsList extends DataMapObject {
     /**
      * Getter-method.
      * 
-     * @return true if object resembles an Area.
+     * @return True if object resembles an Area.
      */
     public boolean isArea() {
         return isArea;
@@ -82,7 +79,7 @@ public class DataPointsList extends DataMapObject {
      * one stored in this object. Changing the returned List will therefore
      * change this list
      * 
-     * @return The list of all nodes stored in this object.
+     * @return The list of all nodes stored in this object. (not null)
      */
     public List<DataNode> getNodes() {
         return nodes;
@@ -93,7 +90,7 @@ public class DataPointsList extends DataMapObject {
      * displayed in a RouteOverlay. If isArea() is true, the first point will be
      * added as last point, this is a requirement of the RouteOverlay.
      * 
-     * @return the array of GeoPoints
+     * @return The array of GeoPoints. (not null)
      */
     public GeoPoint[] toGeoPointArray() {
         return toGeoPointArray(null);
@@ -107,7 +104,7 @@ public class DataPointsList extends DataMapObject {
      * @param additional
      *            additional GeoPoint to be added to the way, may be null
      * 
-     * @return the array of GeoPoints
+     * @return The array of GeoPoints. (not null)
      */
     public GeoPoint[] toGeoPointArray(GeoPoint additional) {
         GeoPoint[] tmp = new GeoPoint[nodes.size() + (isArea ? 1 : 0)
@@ -165,13 +162,13 @@ public class DataPointsList extends DataMapObject {
      * extend the Way or Area. Additionally the Location-constructor of the
      * DataNode is called.
      * 
-     * @param loc
+     * @param location
      *            The Location of this node. Node is initialised with this
      *            location.
-     * @return the newly created DataNode.
+     * @return The newly created DataNode.
      */
-    public DataNode newNode(Location loc) {
-        DataNode dn = new DataNode(loc, this);
+    public DataNode newNode(Location location) {
+        DataNode dn = new DataNode(location, this);
         nodes.add(dn);
         return dn;
     }
@@ -183,7 +180,7 @@ public class DataPointsList extends DataMapObject {
      * @param nodeId
      *            The id of the node to be deleted. If this node does not exist
      *            nothing is done.
-     * @return true if the node was found and deleted, false if no node with the
+     * @return True if the node was found and deleted, false if no node with the
      *         id could be found
      */
     public boolean deleteNode(int nodeId) {
@@ -203,7 +200,7 @@ public class DataPointsList extends DataMapObject {
     /**
      * Gets the route Object used by MapsForge to display this way.
      * 
-     * @return The OverlayRoute of this way
+     * @return The OverlayRoute of this way. (can be null)
      */
     public OverlayRoute getOverlayRoute() {
         return overlayRoute;
@@ -213,7 +210,7 @@ public class DataPointsList extends DataMapObject {
      * Sets the OverlayRoute, an object used by MapsForge for visualisation.
      * 
      * @param overlayRoute
-     *            The new OverlayRoute
+     *            The new OverlayRoute.
      */
     public void setOverlayRoute(OverlayRoute overlayRoute) {
         this.overlayRoute = overlayRoute;
@@ -294,7 +291,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * waynode is a XML-node labelled "way". This method restores a
+     * Waynode is a XML-node labelled "way". This method restores a
      * DataPointsList from such a XML-Node.
      * 
      * @param waynode
@@ -315,7 +312,6 @@ public class DataPointsList extends DataMapObject {
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
-        Log.d("#####DEBUG#####", "Way-id:" + ret.getId());
 
         // tags and media
         ret.deserialiseMedia(waynode);

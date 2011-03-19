@@ -32,11 +32,20 @@ public final class LogIt {
      * 
      * @return A LogIt instance.
      */
-    public LogIt getInstance() {
+    public synchronized LogIt getInstance() {
         if (instance == null) {
             instance = new LogIt();
         }
         return instance;
+    }
+
+    /**
+     * Gets an instance of this Singleton. Shortcut for getInstance().
+     * 
+     * @return A LogIt instance.
+     */
+    public synchronized LogIt get() {
+        return getInstance();
     }
 
     private static final String LOG_PREFIX = "TraceBook";
@@ -65,7 +74,7 @@ public final class LogIt {
      * @param newMethod
      *            the new logging method.
      */
-    public void setLogMethod(int newMethod) {
+    public synchronized void setLogMethod(int newMethod) {
         this.method = newMethod;
     }
 
@@ -76,7 +85,7 @@ public final class LogIt {
      * @param logLevel
      *            the new maximum logging level.
      */
-    public void setMaxLogLevel(int logLevel) {
+    public synchronized void setMaxLogLevel(int logLevel) {
         if (logLevel > MAX_LOG_LEVEL) {
             this.maxLogLevel = MAX_LOG_LEVEL;
         } else {
@@ -91,7 +100,7 @@ public final class LogIt {
      * @param logLevel
      *            The new minimum logging level.
      */
-    public void setMinLogLevel(int logLevel) {
+    public synchronized void setMinLogLevel(int logLevel) {
         if (logLevel < MIN_LOG_LEVEL) {
             this.minLogLevel = MIN_LOG_LEVEL;
         } else {
