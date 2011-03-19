@@ -17,7 +17,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.RemoteException;
-import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -362,8 +361,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     if (way != null) // we have to redraw the way
                         sender.sendWayUpdate(way.getId());
                 } else
-                    Toast.makeText(context, "Can not delete Node id=" + nodeId,
-                            Toast.LENGTH_SHORT).show();
+                    LogIt.popup(context, "Can not delete Node id=" + nodeId);
                 break;
             default:
                 break;

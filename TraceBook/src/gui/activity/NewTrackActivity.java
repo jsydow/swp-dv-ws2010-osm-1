@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import util.Helper;
+import util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,7 +39,6 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 import core.data.DataNode;
 import core.data.DataPointsList;
@@ -586,12 +586,8 @@ public class NewTrackActivity extends TabActivity {
                                         DataStorage.getInstance()
                                                 .getCurrentTrack()
                                                 .saveText(value));
-                        Toast.makeText(
-                                getApplicationContext(),
-                                getResources().getString(
-                                        R.string.alert_global_addedNotice)
-                                        + " " + value, Toast.LENGTH_SHORT)
-                                .show();
+                        LogIt.popup(getApplicationContext(), getResources()
+                                .getString(R.string.alert_global_addedNotice));
                     }
                 });
 

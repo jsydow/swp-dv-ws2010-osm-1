@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 import core.data.DataStorage;
@@ -107,7 +107,7 @@ public final class LogIt {
      * @param msg
      *            The message to display.
      */
-    public static void popup(Activity app, String msg) {
+    public static void popup(Context app, String msg) {
         Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_SHORT)
                 .show();
     }

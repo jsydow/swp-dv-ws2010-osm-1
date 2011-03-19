@@ -18,7 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -137,10 +136,8 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        Toast.makeText(
-                context,
-                "An error occured. Please restart the application and try again.",
-                Toast.LENGTH_LONG).show();
+        LogIt.popup(context,
+                "An error occured. Please restart the application and try again.");
         Log.e(logTag, ex.getMessage());
     }
 
@@ -374,16 +371,15 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                Toast.makeText(
-                                        activity.getApplicationContext(),
+                                LogIt.popup(
+                                        activity,
                                         activity.getResources()
                                                 .getString(
                                                         R.string.alert_global_trackName)
                                                 + " "
                                                 + DataStorage.getInstance()
                                                         .getCurrentTrack()
-                                                        .getName(),
-                                        Toast.LENGTH_SHORT).show();
+                                                        .getName());
 
                                 // stop logging
                                 try {
