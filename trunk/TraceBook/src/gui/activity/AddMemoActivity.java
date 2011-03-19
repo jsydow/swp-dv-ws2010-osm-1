@@ -49,7 +49,8 @@ public class AddMemoActivity extends Activity {
     public void startMemo() {
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        dialog.setMessage("Bitte warten...\nAufnahme startet gleich...");
+        dialog.setMessage(getResources().getString(
+                R.string.alert_addmemoactivity_progressdialog));
         dialog.setCancelable(false);
         dialog.show();
         (new Thread() {

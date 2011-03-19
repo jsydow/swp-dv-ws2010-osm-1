@@ -1,6 +1,13 @@
 package util;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
+import core.data.DataStorage;
 
 /**
  * 
@@ -93,6 +100,19 @@ public final class LogIt {
     }
 
     /**
+     * Shows a toast with a given message.
+     * 
+     * @param app
+     *            The activity that shows the toast.
+     * @param msg
+     *            The message to display.
+     */
+    public static void popup(Activity app, String msg) {
+        Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    /**
      * Log a message.
      * 
      * @param prefix
@@ -102,28 +122,36 @@ public final class LogIt {
      * @param logLevel
      *            The importance of the log message. 0-5
      */
-    public void log(String prefix, String message, int logLevel) {
+    public synchronized void log(String prefix, String message, int logLevel) {
         if ((logLevel <= maxLogLevel) || (logLevel <= minLogLevel)) {
             switch (method) {
             case LOGMETHOD_FILE:
-                // TODO
+                File logFile = new File(DataStorage.getTraceBookDirPath()
+                        + File.separator + "log.txt");
+                try {
+                    FileWriter fw = new FileWriter(logFile);
+                    fw.append(prefix + " : " + message);
+                    fw.close();
+                } catch (IOException e) {
+                    Log.e(LOG_PREFIX, "Logging error : Could not log to file!");
+                }
                 break;
             case LOGMETHOD_ANDROID:
                 switch (logLevel) {
                 case 1:
-                    Log.v(LOG_PREFIX, prefix + ":" + message);
+                    Log.v(LOG_PREFIX, prefix + " : " + message);
                     break;
                 case 2:
-                    Log.d(LOG_PREFIX, prefix + ":" + message);
+                    Log.d(LOG_PREFIX, prefix + " : " + message);
                     break;
                 case 3:
-                    Log.i(LOG_PREFIX, prefix + ":" + message);
+                    Log.i(LOG_PREFIX, prefix + " : " + message);
                     break;
                 case 4:
-                    Log.w(LOG_PREFIX, prefix + ":" + message);
+                    Log.w(LOG_PREFIX, prefix + " : " + message);
                     break;
                 case 5:
-                    Log.e(LOG_PREFIX, prefix + ":" + message);
+                    Log.e(LOG_PREFIX, prefix + " : " + message);
                     break;
                 default:
                     break;
@@ -134,5 +162,4 @@ public final class LogIt {
             }
         }
     }
-
 }

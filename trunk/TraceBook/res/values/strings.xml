@@ -178,4 +178,15 @@
 <string name="tv_loadtrackActivity_filter">Filter:</string>
 <string name="opt_loadtrack_sortByTimestamp">Nach Zeit sortieren</string>
 <string name="opt_loadtrack_sortByName">Nach Name sortieren</string>
+<string name="alert_addmemoactivity_progressdialog">Bitte warten...\nAufnahme startet gleich...</string>
+<string name="string_loadtrackactivity_comment">Kommentar: </string>
+<string name="string_loadtrackactivity_nocomment">Kein Kommentar vorhanden.</string>
+<string name="tv_newtrackactivity_signalstrength_strength">Signalstärke: </string>
+<string name="tv_newtrackactivity_signalstrength_count">Anzahl: </string>
+<string name="string_newtrackactivity_list_lat">Lat: </string>
+<string name="string_newtrackactivity_list_lon">Lon:</string>
+<string name="string_newtrackactivity_list_media">Medien: </string>
+<string name="string_newtrackactivity_list_pointcount">Anzahl Punkte:</string>
+<string name="string_newtrackactivity_list_start">Start </string>
+<string name="string_newtrackactivity_list_end">End </string>
 </resources>
