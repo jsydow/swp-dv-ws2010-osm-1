@@ -120,17 +120,36 @@ public class LoadTrackActivity extends ListActivity {
                                 int whichButton) {
                             String value = input.getText().toString().trim();
 
-                            DataTrack renametrack = DataTrack
-                                    .deserialise(trackname);
-                            if (renametrack != null) {
-                                renametrack.setName(value);
-                            } else {
+                            int res = DataTrack.rename(trackname, value);
+                            switch (res) {
+                            case 0:
+                                break;
+                            case -1:
                                 Log.e("RenameTrack",
                                         "Track to rename was not found or is corrupt.");
-                                Toast.makeText(getApplicationContext(),
-                                        "Track to rename could not be opened.",
-                                        Toast.LENGTH_SHORT).show();
+                                break;
+                            case -2:
+                                Log.e("RenameTrack",
+                                        "There is already a track with this name.");
+                                break;
+                            case -3:
+                                Log.e("RenameTrack",
+                                        "Track could not be renamed.");
+                                break;
+                            default:
+                                break;
                             }
+                            /*
+                             * DataTrack renametrack = DataTrack
+                             * .deserialise(trackname); if (renametrack != null)
+                             * { if(renametrack.setName(value) != 0) {
+                             * 
+                             * } } else { Log.e("RenameTrack",
+                             * "Track to rename was not found or is corrupt.");
+                             * Toast.makeText(getApplicationContext(),
+                             * "Track to rename could not be opened.",
+                             * Toast.LENGTH_SHORT).show(); }
+                             */
 
                             updateAdapter();
 
@@ -290,6 +309,7 @@ public class LoadTrackActivity extends ListActivity {
         desc.addResourceId("TrackComment", R.id.tv_listviewloadtrack_comment);
         String comment = null;
         List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+        DataStorage.getInstance().unloadAllTracks();
 
         for (String name : DataStorage.getInstance().getAllTracks()) {
             GenericAdapterData dataItem = new GenericAdapterData(desc);

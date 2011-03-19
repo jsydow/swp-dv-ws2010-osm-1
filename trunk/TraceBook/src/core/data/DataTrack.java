@@ -35,7 +35,7 @@ import android.util.Xml;
  * the program. All data he collects with this one usage in then grouped in a
  * Track. A Track is not like a simple Way from place A to B but can contain it.
  * 
- *
+ * 
  * 
  */
 public class DataTrack extends DataMediaHolder {
@@ -126,10 +126,16 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param newname
      *            The new name of the DataTrack
+     * @return returns 0 if renaming was successful, -1 if track could not be
+     *         found, -2 if there is a track with the new track name and -3 if
+     *         the renaming fails otherwise.
      */
-    public void setName(String newname) {
-        renameTrack(newname);
-        this.name = newname;
+    public int setName(String newname) {
+        int res = renameTrack(newname);
+        if (res == 0) {
+            this.name = newname;
+        }
+        return res;
     }
 
     /**
@@ -137,16 +143,28 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param newname
      *            The new name of the Track
+     * @return returns 0 if renaming was successful, -1 if track could not be
+     *         found, -2 if there is a track with the new track name and -3 if
+     *         the renaming fails otherwise.
      */
-    private void renameTrack(String newname) {
+    private int renameTrack(String newname) {
         File trackdir = new File(getTrackDirPath());
         if (trackdir.isDirectory()) {
-            if (!trackdir.renameTo(new File(getTrackDirPath(newname)))) {
-                Log.w("RenamingTrack", "Could not rename Track.");
+            File newtrackdir = new File(getTrackDirPath(newname));
+            if (!newtrackdir.isDirectory()) {
+                if (!trackdir.renameTo(newtrackdir)) {
+                    Log.w("RenamingTrack", "Could not rename Track.");
+                    return -3;
+                }
+            } else {
+                Log.w("RenamingTrack", "Track of new trackname already exists.");
+                return -2;
             }
         } else {
             Log.w("RenamingTrack", "Could not find Track " + getName());
+            return -1;
         }
+        return 0;
     }
 
     /**
@@ -156,11 +174,13 @@ public class DataTrack extends DataMediaHolder {
      *            Name of the track as it is on the devices memory.
      * @param newTrackName
      *            The new name of the track.
+     * @return returns 0 if renaming was successful, -1 if track could not be
+     *         found, -2 if there is a track with the new track name and -3 if
+     *         the renaming fails otherwise.
      */
-    public static void rename(String oldTrackName, String newTrackName) {
-        DataTrack oldTrack = new DataTrack();
-        oldTrack.renameTrack(newTrackName);
-        return;
+    public static int rename(String oldTrackName, String newTrackName) {
+        DataTrack oldTrack = new DataTrack(oldTrackName);
+        return oldTrack.renameTrack(newTrackName);
     }
 
     /**
