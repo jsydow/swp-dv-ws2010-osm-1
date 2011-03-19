@@ -6,23 +6,47 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- *
- * 
+ * The DB open helper automatically creates or recreates the database. Use it to
+ * get a SQLiteDataBase-object.
  */
 public class TagDbOpenHelper extends SQLiteOpenHelper {
 
+    /**
+     * By incrementing this number, the database is reseted. Never decrease!
+     */
     private static final int DATABASE_VERSION = 24;
+    /**
+     * The name of the database used by TraceBook.
+     */
     private static final String DATABASE_NAME = "db_tracebook_tags";
+    /**
+     * Table that contains all information for tags.
+     */
     private static final String DICT_TABLE_NAME = "dictionary";
+    /**
+     * Table that contains the history of used tags.
+     */
     private static final String HISTORY_TABLE_NAME = "history";
+    /**
+     * String to create table.
+     */
     private static final String DICT_TABLE_CREATE = "CREATE TABLE "
             + DICT_TABLE_NAME
             + " (key TEXT, value TEXT, name TEXT, description TEXT, wikilink TEXT, image TEXT, language TEXT, keywords TEXT, value_type TEXT);";
+    /**
+     * String to create table.
+     */
     private static final String HISTORY_TABLE_CREATE = "CREATE TABLE "
             + HISTORY_TABLE_NAME
             + " (key TEXT, value TEXT, use_count INT, last_use INT);";
+    /**
+     * String to drop table.
+     */
     private static final String DICT_TABLE_DROP = "DROP TABLE IF EXISTS "
             + DICT_TABLE_NAME;
+    /**
+     * String to drop table.
+     */
     private static final String HISTORY_TABLE_DROP = "DROP TABLE IF EXISTS "
             + HISTORY_TABLE_NAME;
 
@@ -45,7 +69,7 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns a list of all columns.
+     * Returns a list of all columns for the dictionary table.
      * 
      * @return all columns
      */
