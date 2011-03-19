@@ -15,6 +15,7 @@ Brain dump of what could be done in week 4 aside from the new product backlog.
   * Landscape should not crash/behave strangely `[`does not crash anymore`]`
   * show images of tags
   * unhardcode visible strings `[`hopefully done`]`
+  * tag history: user can choose between most used and most recently used.
 
 == Non-functional ==
 
