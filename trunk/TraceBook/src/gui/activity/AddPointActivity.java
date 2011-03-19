@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import util.Helper;
-import util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
