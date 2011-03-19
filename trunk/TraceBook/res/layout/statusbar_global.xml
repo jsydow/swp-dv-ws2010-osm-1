@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:background="#007700">
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+			<TextView android:id="@+id/tv_statusbar_activityTitle"
+				android:text="AddPointActivity" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:paddingTop="5dp"
+				android:paddingLeft="5dp" android:textSize="15sp" android:textStyle="bold"
+				android:textColor="#ffffff" />
+
+			<TextView android:id="@+id/tv_statusbar_activityDescription"
+				android:text="Beschreibung" android:layout_width="wrap_content"
+				android:paddingLeft="5dp" android:layout_height="wrap_content"
+				android:textSize="10sp" android:paddingBottom="5dp"
+				android:textColor="#ffffff" />
+
+
+
+		</LinearLayout>
+		<!-- New Layout -->
+		<LinearLayout android:orientation="horizontal"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="right">
+
+			<ImageButton android:id="@+id/ib_statusbar_searchBtn"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:src="@drawable/ic_search" android:paddingTop="5dp"
+				android:paddingBottom="5dp" android:background="@android:color/transparent"
+				android:visibility="visible" />
+
+			<ImageButton android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:src="@drawable/ic_pref"
+				android:paddingTop="5dp" android:paddingBottom="5dp"
+				android:onClick="statusBarPrefBtn" android:background="@android:color/transparent" />
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>

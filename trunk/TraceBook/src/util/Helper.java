@@ -14,10 +14,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -136,8 +143,10 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        LogIt.popup(context,
-                "An error occured. Please restart the application and try again.");
+        Toast.makeText(
+                context,
+                "An error occured. Please restart the application and try again.",
+                Toast.LENGTH_LONG).show();
         Log.e(logTag, ex.getMessage());
     }
 
@@ -340,10 +349,14 @@ public final class Helper {
     }
 
     /**
+     * This Method show a alert dialog to save the Track and give a name for the
+     * current track.
+     * 
      * Shows a dialog box that saves the current track.
      * 
      * @param activity
-     *            The activity that starts the dialog.
+     *            Activity in which the Dialog has to be display The activity
+     *            that starts the dialog.
      */
     public static void alertStopTracking(final Activity activity) {
 
@@ -371,15 +384,16 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt.popup(
-                                        activity,
+                                Toast.makeText(
+                                        activity.getApplicationContext(),
                                         activity.getResources()
                                                 .getString(
                                                         R.string.alert_global_trackName)
                                                 + " "
                                                 + DataStorage.getInstance()
                                                         .getCurrentTrack()
-                                                        .getName());
+                                                        .getName(),
+                                        Toast.LENGTH_SHORT).show();
 
                                 // stop logging
                                 try {
@@ -404,6 +418,66 @@ public final class Helper {
                             }
                         });
         builder.show();
+
+    }
+
+    /**
+     * This method check the global preferences. If the user checked the
+     * position "show status bar" the method will activate the status bar with
+     * much information for the given activity. If you want to show the status
+     * bar in your activity please notice that you have to implement following
+     * methods:
+     * 
+     * public void statusBarTitle (View v), public void statusBarDescription
+     * (View v), public void statusBarPrefBtn(View v), public void
+     * statusBarSearchBtn(View v) - if boolean searchBox = true
+     * statusBarSearchfunc() - if boolean searchBox = true
+     * 
+     * @param activity
+     *            The activity in the status bar to display.
+     * @param activityTitle
+     *            The title of the activity, that will displayed in the status
+     *            bar.
+     * @param activityDesc
+     *            The description of the activity, that will displayed in the
+     *            status bar.
+     * @param layoutPosition
+     *            The resource to inflate the menu at this position.
+     * @param searchBox
+     *            If a search window will appear. Notice - you have to implement
+     *            the functionality of the EditText in your activity.
+     */
+    public static void setStatusBar(final Activity activity,
+            String activityTitle, String activityDesc, int layoutPosition,
+            boolean searchBox) {
+
+        // Get the app's shared preferences
+        SharedPreferences app_preferences = PreferenceManager
+                .getDefaultSharedPreferences(activity);
+
+        // Get the value for the status bar check box - default false
+        if (app_preferences.getBoolean("statusleiste", false)) {
+            LayoutInflater statusListInflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LinearLayout statuslayoutHolder = (LinearLayout) activity
+                    .findViewById(layoutPosition);
+            statusListInflater.inflate(R.layout.statusbar_global,
+                    statuslayoutHolder);
+
+            // Set visibility of the search button in the status bar.
+            if (!searchBox) {
+                final ImageButton searchBtn = (ImageButton) activity
+                        .findViewById(R.id.ib_statusbar_searchBtn);
+                searchBtn.setVisibility(8);
+            }
+
+            TextView title = (TextView) activity
+                    .findViewById(R.id.tv_statusbar_activityTitle);
+            TextView desc = (TextView) activity
+                    .findViewById(R.id.tv_statusbar_activityDescription);
+            title.setText(activityTitle);
+            desc.setText(activityDesc);
+        }
 
     }
 }

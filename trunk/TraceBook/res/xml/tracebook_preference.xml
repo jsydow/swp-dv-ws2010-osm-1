@@ -16,17 +16,29 @@
 			android:summary="Von 1 - 60 Sekunden" />
 
 	</PreferenceCategory>
-	<PreferenceCategory android:title="MetaDaten hinzufügen" >
-		
+	<PreferenceCategory android:title="MetaDaten hinzufügen">
+
 		<ListPreference android:key="lst_addMetaDataScreen"
 			android:title="Suchoption" android:defaultValue="Normal"
 			android:entries="@array/addMetaDataScreen" android:entryValues="@array/addMetaDataScreen_values"
 			android:summary="\'Normal\': keine Livesuche \n \'Professional\': Livesuche" />
 	</PreferenceCategory>
-	
+
+	<PreferenceCategory android:title="Statusleiste">
+
+		<CheckBoxPreference android:title="Zeige Statusleiste"
+			android:defaultValue="false"
+			android:summary="Zeigt Statusleiste mit Beschreibung - Link zu Einstellung - Suchfenster und weiteren nützlichen Informationen"
+			android:key="statusleiste" />
+
+
+	</PreferenceCategory>
+
 	<PreferenceCategory android:title="Wegpunkt Optimierungsverfahren">
 
-	<EditTextPreference android:title="Wegpunkt Anzahl" android:defaultValue="3" android:key="wegpunktanzahl"/>
-	<EditTextPreference android:title="Wegpunkt glättung" android:defaultValue="4" android:key="wegpunktglättung"/>	
+		<EditTextPreference android:title="Wegpunkt Anzahl"
+			android:defaultValue="3" android:key="wegpunktanzahl" />
+		<EditTextPreference android:title="Wegpunkt glättung"
+			android:defaultValue="4" android:key="wegpunktglättung" />
 	</PreferenceCategory>
 </PreferenceScreen>

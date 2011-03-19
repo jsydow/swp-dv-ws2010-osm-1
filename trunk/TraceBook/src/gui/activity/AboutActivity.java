@@ -4,9 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import util.Helper;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -26,6 +28,12 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.layout_aboutactivity);
         setTitle(R.string.string_aboutActivity_title);
         setTextViews();
+        // Set status bar
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_aboutTitle),
+                getResources().getString(R.string.tv_statusbar_aboutDesc),
+                R.id.ly_aboutActivity_statusbar, false);
+
     }
 
     /**
@@ -97,5 +105,17 @@ public class AboutActivity extends Activity {
         }
         licenseDialog.show();
 
+    }
+
+    /**
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
+     * 
+     * @param view
+     *            not used
+     */
+    public void statusBarPrefBtn(View view) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
     }
 }
