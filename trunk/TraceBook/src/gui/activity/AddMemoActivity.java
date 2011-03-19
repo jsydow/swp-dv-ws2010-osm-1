@@ -79,9 +79,21 @@ public class AddMemoActivity extends Activity {
      *            no used
      */
     public void stopMemoBtn(View view) {
-        recorder.stop();
-        recorder.appendFileToObject(node);
+        stopMemo();
 
         finish();
+    }
+
+    private void stopMemo() {
+        if (recorder.isRecording()) {
+            recorder.stop();
+            recorder.appendFileToObject(node);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        stopMemo();
+        super.onDestroy();
     }
 }
