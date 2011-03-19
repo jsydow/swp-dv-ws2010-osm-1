@@ -176,4 +176,6 @@
 	<string name="btn_startActivity_reseumeTrack">Track fortsetzen</string>
 	<string name="btn_searchInfoDialog_save">Übernehmen</string>
 <string name="tv_loadtrackActivity_filter">Filter:</string>
+<string name="opt_loadtrack_sortByTimestamp">Nach Zeit sortieren</string>
+<string name="opt_loadtrack_sortByName">Nach Name sortieren</string>
 </resources>
