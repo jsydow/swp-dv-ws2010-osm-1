@@ -1,11 +1,34 @@
 #summary Preferences we want to be able to set.
 
 = GPS =
-  * requestLocationUpdates parameters (minimum distance/time until next location)
+  * requestLocationUpdates parameters (minimum distance/time until next location) (Array)
+  * Check GPS by start (Checkbox)
+  * Stop GPS signal while inactiv after seconds/minutes (Array)
 
 = Map view =
-  * Colors for several item groups (ways, areas, POIs)
-  * Map file to be used (for !MapsForge)
+  * Colors for several item groups (ways, areas, POIs) (Colorpicker)
+  * Map file to be used (for !MapsForge) (EditText)
+  * Trackfilter, with some options(?) 
+  * Default map from SDCard or online (Array)
 
 = !MetaTags =
-  * The max. history size.
+  * The max. history size. (Array)
+
+= !OSM Account =
+  * Accountname (Edittext)
+  * Accountpassword (Edittext)
+
+= !UI =
+  * Statusbar Visible / Invisible (Checkbox)
+  * Themes (Array)
+  * Display always on (Checkbox)
+  * Show GPS signal quality (Checkbox)
+
+= !Track =
+  * Default dataname for tracks (TT.MM.JJJJ or JJJJ.MM.TT etc.) (Array)
+
+= !Media =
+  * Maximum seconds/minutes for video and audio recording (Array)
+
+= !Export =
+  * Mailexport, only GPX file or whole folder of the track(?) (Array)
