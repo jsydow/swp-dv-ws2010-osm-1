@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import util.Helper;
 import util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
@@ -77,6 +78,13 @@ public class LoadTrackActivity extends ListActivity {
         registerForContextMenu(getListView());
 
         setTextChangedListenerToSearchBox();
+
+        // Set status bar
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
+                getResources().getString(R.string.tv_statusbar_loadtrackDesc),
+                R.id.ly_loadtrackActivity_statusbar, true);
+
     }
 
     private void setTextChangedListenerToSearchBox() {
@@ -487,4 +495,45 @@ public class LoadTrackActivity extends ListActivity {
         inflater.inflate(R.menu.optionsmenu_loadtrackactivity, menu);
         return true;
     }
+
+    /**
+     * This Method for the two (title and description) button from the status
+     * bar. This method starts the dialog with all activity informations.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarTitleBtn(View v) {
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
+                getResources().getString(R.string.tv_statusbar_loadtrackDesc));
+    }
+
+    /**
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarPrefBtn(View v) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * This Method for the search image Button from the status bar. This method
+     * change the visibility of edit text view below the status bar.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarSearchBtn(View v) {
+        EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
+        if (searchBox.getVisibility() == 8)
+            searchBox.setVisibility(1);
+        else
+            searchBox.setVisibility(8);
+    }
+
 }

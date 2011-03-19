@@ -12,6 +12,7 @@ import org.mapsforge.android.maps.OverlayItem;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -471,13 +473,62 @@ public final class Helper {
                 searchBtn.setVisibility(8);
             }
 
-            TextView title = (TextView) activity
-                    .findViewById(R.id.tv_statusbar_activityTitle);
-            TextView desc = (TextView) activity
-                    .findViewById(R.id.tv_statusbar_activityDescription);
+            Button title = (Button) activity
+                    .findViewById(R.id.btn_statusbar_activityTitle);
+            Button desc = (Button) activity
+                    .findViewById(R.id.btn_statusbar_activityDescription);
             title.setText(activityTitle);
-            desc.setText(activityDesc);
+            desc.setText(cutString(activityDesc, 50));
         }
 
+    }
+
+    /**
+     * This method cut the given String to a maximum character number.
+     * 
+     * @param toCut
+     *            String to cut
+     * @param maxChar
+     *            Maximum character number to cut the given string
+     * @return String which have only maxChar characters
+     */
+    public static String cutString(String toCut, int maxChar) {
+        if (toCut.length() > maxChar)
+            return toCut.trim().subSequence(0, maxChar) + "...";
+        else if (toCut.length() > 0)
+            return toCut + "...";
+        else
+            return toCut;
+    }
+
+    /**
+     * 
+     * This Method display a dialog box with all information about the activity
+     * for the user. This help's for a better understanding of the functionality
+     * of the active activity.
+     * 
+     * @param activity
+     *            The activity in which the info dialog has to be displayed
+     * @param title
+     *            The title of the activity which has to be displayed in the
+     *            dialog box.
+     * @param desc
+     *            The description of the activity which has to be displayed in
+     *            the dialog box
+     * 
+     */
+    public static void setActivityInfoDialog(Activity activity, String title,
+            String desc) {
+        final Dialog activityInfoDialog = new Dialog(activity);
+        activityInfoDialog.setContentView(R.layout.dialog_activityinfo);
+        activityInfoDialog.setTitle("Activity Informationen");
+        activityInfoDialog.setCancelable(true);
+        TextView dialogTitle = (TextView) activityInfoDialog
+                .findViewById(R.id.tv_dialogactivityinfo_activityTitle);
+        TextView dialogDesc = (TextView) activityInfoDialog
+                .findViewById(R.id.tv_dialogactivityinfo_activityDescription);
+        dialogTitle.setText("Sie befinden sich hier: " + title);
+        dialogDesc.setText("Beschreibung: \n" + desc);
+        activityInfoDialog.show();
     }
 }

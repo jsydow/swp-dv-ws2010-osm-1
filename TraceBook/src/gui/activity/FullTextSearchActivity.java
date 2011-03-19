@@ -282,4 +282,35 @@ public class FullTextSearchActivity extends ListActivity {
         startActivity(intent);
     }
 
+    /**
+     * This Method for the two (title and description) button from the status
+     * bar. This method starts the dialog with all activity informations.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarTitleBtn(View v) {
+        Helper.setActivityInfoDialog(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc));
+    }
+
+    /**
+     * This Method for the search image Button from the status bar. This method
+     * change the visibility of edit text view below the status bar.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarSearchBtn(View v) {
+        EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
+        if (searchBox.getVisibility() == 8)
+            searchBox.setVisibility(1);
+        else
+            searchBox.setVisibility(8);
+    }
+
 }
