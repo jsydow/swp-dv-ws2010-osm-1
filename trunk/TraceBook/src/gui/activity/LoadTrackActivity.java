@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,10 +77,6 @@ public class LoadTrackActivity extends ListActivity {
         registerForContextMenu(getListView());
 
         EditText etFilter = (EditText) findViewById(R.id.et_loadtrackactivity_filter);
-        if (etFilter == null) {
-            Log.e("##", "etfilter is null");
-            return;
-        }
         etFilter.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
@@ -454,5 +451,37 @@ public class LoadTrackActivity extends ListActivity {
     protected void onResume() {
         updateAdapter();
         super.onResume();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.opt_loadtrack_sort:
+            if (sortByName) {
+                item.setTitle(getResources().getString(
+                        R.string.opt_loadtrack_sortByName));
+                sortByName = false;
+            } else {
+                item.setTitle(getResources().getString(
+                        R.string.opt_loadtrack_sortByTimestamp));
+                sortByName = true;
+            }
+            updateAdapter();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * This method inflate the options menu for this activity.
+     * 
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu_loadtrackactivity, menu);
+        return true;
     }
 }
