@@ -24,9 +24,6 @@ import android.util.Log;
  * loading them all.
  * 
  * It is a Singleton!
- * 
- * 
- * 
  */
 public final class DataStorage {
 
@@ -34,10 +31,12 @@ public final class DataStorage {
      * Singleton instance.
      */
     private static DataStorage instance;
+
     /**
      * All loaded Tracks.
      */
     private List<DataTrack> tracks;
+
     /**
      * A List of all possible track names on the working memory and devices
      * memory.
@@ -79,15 +78,15 @@ public final class DataStorage {
     /**
      * This method removes duplicates in a list of Strings.
      * 
-     * @param l
-     *            the list of Strings
+     * @param list
+     *            The list of Strings.
      */
-    static void removeDuplicatesInStringList(List<String> l) {
-        synchronized (l) {
-            Set<String> tmp = new HashSet<String>(l);
-            l.clear();
-            l.addAll(tmp);
-            Collections.sort(l);
+    static void removeDuplicatesInStringList(List<String> list) {
+        synchronized (list) {
+            Set<String> tmp = new HashSet<String>(list);
+            list.clear();
+            list.addAll(tmp);
+            Collections.sort(list);
         }
         return;
     }
@@ -96,7 +95,7 @@ public final class DataStorage {
      * Return a String of the path to the TraceBook directory without an ending
      * / Path is like: /sdcard/TraceBook.
      * 
-     * @return path of the TraceBook directory
+     * @return Path of the TraceBook directory.
      */
     public static String getTraceBookDirPath() {
         return Environment.getExternalStorageDirectory() + File.separator
@@ -106,7 +105,7 @@ public final class DataStorage {
     /**
      * Create a new unique id to use for a new map object.
      * 
-     * @return A new unique id.
+     * @return A new unique id > 0.
      */
     public synchronized int getID() {
         lastID++;
@@ -216,7 +215,7 @@ public final class DataStorage {
     /**
      * Getter-method.
      * 
-     * @return The currently edited Track is returned.
+     * @return The currently edited Track is returned.(may be null)
      */
     public DataTrack getCurrentTrack() {
         return currentTrack;
@@ -239,7 +238,7 @@ public final class DataStorage {
      * 
      * @param name
      *            The name of the Track.
-     * @return the deserialised Track
+     * @return The deserialised Track or null if track does not exist.
      */
     public DataTrack deserialiseTrack(String name) {
         DataTrack dt = DataTrack.deserialise(name);
@@ -261,12 +260,15 @@ public final class DataStorage {
             File[] dirs = tracebookdir.listFiles();
 
             for (File f : dirs) {
+                // is directory?
                 if (f.isDirectory()) {
+                    // does track.tbt exist?
                     File tracktbt = new File(DataTrack.getPathOfTrackTbTFile(f
                             .getName()));
                     if (tracktbt.isFile()) {
                         names.add(f.getName());
                     } else {
+                        // not track.tbt -> delete directory.
                         deleteDirectory(f);
                     }
                 }
@@ -312,7 +314,7 @@ public final class DataStorage {
     }
 
     /**
-     * 
+     * Unloads all tracks from memory without saving them!
      */
     public void unloadAllTracks() {
         tracks.clear();

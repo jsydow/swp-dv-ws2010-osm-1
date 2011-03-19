@@ -14,20 +14,17 @@ import android.location.Location;
 import android.util.Log;
 
 /**
- * A node. A node can be a POI or an element of a list of waypoints that belong
+ * A node. A node can be a POI or an element of a list of way points that belong
  * to a Way or Area.
- * 
- *
- * 
  */
 public class DataNode extends DataMapObject {
 
     /**
-     * This constructor initializes the Latitude and Longitude with data from a
+     * This constructor initialises the Latitude and Longitude with data from a
      * Location object, as well as the DataPointsList that contains this node.
      * 
      * @param loc
-     *            The {@link Location} of the new node. Initializes latitude and
+     *            The {@link Location} of the new node. Initialises latitude and
      *            longitude.
      * @param way
      *            The {@link DataPointsList} this node is belongs to
@@ -41,49 +38,49 @@ public class DataNode extends DataMapObject {
     /**
      * Constructs a DataNode of a Way with given coordinates.
      * 
-     * @param gp
-     *            The coordinates of this node
-     * @param way
+     * @param coordinates
+     *            The coordinates of this node.
+     * @param parentWay
      *            The parent way.
      */
-    public DataNode(GeoPoint gp, DataPointsList way) {
+    public DataNode(GeoPoint coordinates, DataPointsList parentWay) {
         super();
-        this.coordinates = gp;
-        this.parentWay = way;
+        this.coordinates = coordinates;
+        this.parentWay = parentWay;
     }
 
     /**
-     * This constructor initializes the Latitude and Longitude with data from a
+     * This constructor initialises the Latitude and Longitude with data from a
      * Location object.
      * 
-     * @param loc
-     *            The Location of the new node. Initializes latitude and
+     * @param location
+     *            The Location of the new node. Initialises latitude and
      *            longitude.
      */
-    public DataNode(Location loc) {
+    public DataNode(Location location) {
         super();
-        setLocation(loc);
+        setLocation(location);
     }
 
     /**
-     * This constructor initializes the Latitude and Longitude with data from a
+     * This constructor initialises the Latitude and Longitude with data from a
      * {@link GeoPoint} object.
      * 
-     * @param loc
-     *            The {@link GeoPoint} of the new node. Initializes latitude and
+     * @param coordinates
+     *            The {@link GeoPoint} of the new node. Initialises latitude and
      *            longitude.
      */
-    public DataNode(GeoPoint loc) {
+    public DataNode(GeoPoint coordinates) {
         super();
-        setLocation(loc);
+        setLocation(coordinates);
     }
 
     /**
-     * default constructor. Longitude and Latitude stay unchanged
+     * Default constructor. Longitude and Latitude stay unchanged.
      */
     public DataNode() {
         super();
-        setLocation(new Location("TraceBook"));
+        setLocation(new Location(""));
     }
 
     /**
@@ -98,7 +95,7 @@ public class DataNode extends DataMapObject {
     private DataPointsList parentWay;
 
     /**
-     * The overlay Item used by the gui, associated with a certain poi.
+     * The overlay Item used by the GUI, associated with a certain POI.
      */
     private OverlayItem overlayItem;
 
@@ -106,22 +103,22 @@ public class DataNode extends DataMapObject {
      * Set the latitude and longitude to the position given by the Location
      * object which is received from the GPS module.
      * 
-     * @param loc
+     * @param location
      *            The Location object that the GPS module delivers.
      */
-    public void setLocation(Location loc) {
-        if (loc == null)
+    public void setLocation(Location location) {
+        if (location == null)
             this.coordinates = null;
         else
-            this.coordinates = new GeoPoint(loc.getLatitude(),
-                    loc.getLongitude());
+            this.coordinates = new GeoPoint(location.getLatitude(),
+                    location.getLongitude());
     }
 
     /**
      * Sets the position of this DataNode to the location of the GeoPoint.
      * 
      * @param gp
-     *            new position of the node
+     *            New position of the node.
      */
     public void setLocation(GeoPoint gp) {
         this.coordinates = gp;
@@ -132,7 +129,7 @@ public class DataNode extends DataMapObject {
      * point is part of the way.
      * 
      * @param way
-     *            the way that contains this point
+     *            The way that contains this point.
      */
     public void setDataPointsList(DataPointsList way) {
         this.parentWay = way;
@@ -142,7 +139,7 @@ public class DataNode extends DataMapObject {
      * If this node is part of a {@link DataPointsList}, this function will
      * return a reference to this object. Otherwise the return value is null.
      * 
-     * @return the DataPointsList this point is in
+     * @return The DataPointsList this point is in. (can be null)
      */
     public DataPointsList getDataPointsList() {
         return parentWay;
@@ -151,7 +148,7 @@ public class DataNode extends DataMapObject {
     /**
      * Getter-method.
      * 
-     * @return The longitude
+     * @return The longitude.
      */
     public double getLon() {
         if (coordinates == null)
@@ -162,7 +159,7 @@ public class DataNode extends DataMapObject {
     /**
      * Getter-method.
      * 
-     * @return The latitude
+     * @return The latitude.
      */
     public double getLat() {
         if (coordinates == null)
@@ -171,7 +168,7 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * A Point may have been added uninitialized, in this case it does not
+     * A Point may have been added uninitialised, in this case it does not
      * contain any valid positional data - this may be added later once a GPS
      * fix is obtained.
      * 
@@ -182,12 +179,12 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * Serializes a node using a XmlSerializer. It generates a <node>-tag.
+     * Serialises a node using a XmlSerializer. It generates a <node>-tag.
      * 
      * @param serializer
-     *            An XmlSerializer that is initialized.
+     *            An XmlSerializer that is initialised.
      * @param shouldSerialiseMedia
-     *            Should media also be serialized? Adding media means that the
+     *            Should media also be serialised? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
     public void serialise(XmlSerializer serializer, boolean shouldSerialiseMedia) {
@@ -232,7 +229,7 @@ public class DataNode extends DataMapObject {
     /**
      * Converts the DataNode to a GeoPoint.
      * 
-     * @return a GeoPoint with the coordinates of the DataNode
+     * @return A GeoPoint with the coordinates of the DataNode.
      */
     public GeoPoint toGeoPoint() {
         return coordinates;
@@ -241,8 +238,8 @@ public class DataNode extends DataMapObject {
     /**
      * Getter-method.
      * 
-     * @return a reference to the OverlayItem that is drawn and handled by
-     *         MapsForge's overlay
+     * @return A reference to the OverlayItem that is drawn and handled by
+     *         MapsForge's overlay.
      */
     public OverlayItem getOverlayItem() {
         return overlayItem;

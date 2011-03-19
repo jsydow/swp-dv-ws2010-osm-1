@@ -14,9 +14,6 @@ import org.xmlpull.v1.XmlSerializer;
 /**
  * Any object that can have media attached. Media can be added and retrieved.
  * This class is abstract.
- * 
- *
- * 
  */
 public abstract class DataMediaHolder {
     /**
@@ -64,7 +61,7 @@ public abstract class DataMediaHolder {
      * one stored in the MediaHolder. Changing the returned List will therefore
      * change this list.
      * 
-     * @return The list of all media
+     * @return The list of all media. (not null)
      */
     public List<DataMedia> getMedia() {
         return media;
@@ -73,20 +70,22 @@ public abstract class DataMediaHolder {
     /**
      * Getter-method. The creation time string.
      * 
-     * @return The creation time of this object as String.
+     * @return The creation time of this object as String. (Could be null)
      */
     public String getDatetime() {
         return datetime;
     }
 
     /**
-     * Add a new medium to this object.
+     * Add a new medium to this object. Does nothing if parameter is null.
      * 
      * @param medium
      *            The Media object.
      */
     public void addMedia(DataMedia medium) {
-        media.add(medium);
+        if (medium != null) {
+            media.add(medium);
+        }
     }
 
     /**

@@ -13,9 +13,6 @@ import android.util.Log;
  * This is an object that refers to a medium. The medium itself is stored on the
  * background memory of the device. Only the name and path of the actual medium
  * is stored in this object.
- * 
- *
- * 
  */
 public class DataMedia {
 
@@ -119,9 +116,9 @@ public class DataMedia {
      * Constructor that initialises the medium.
      * 
      * @param path
-     *            path to the file (basename)
+     *            Path to the file (basename).
      * @param name
-     *            name of the medium (filename).
+     *            Name of the medium (filename).
      */
     public DataMedia(String path, String name) {
         super();
@@ -134,7 +131,7 @@ public class DataMedia {
     /**
      * Getter-method.
      * 
-     * @return The type of the medium
+     * @return The type of the medium.
      */
     public int getType() {
         return type;
@@ -144,7 +141,7 @@ public class DataMedia {
      * Setter-method.
      * 
      * @param type
-     *            The new type of this medium
+     *            The new type of this medium.
      */
     public void setType(int type) {
         this.type = type;
@@ -162,7 +159,8 @@ public class DataMedia {
     /**
      * Getter-method. Returns path to the directory the medium is in.
      * 
-     * @return The path to the medium on the devices medium.
+     * @return The path to the medium on the devices medium. (Should generally
+     *         be not null, except some idiot misused methods)
      */
     public String getPath() {
         return path;
@@ -171,7 +169,8 @@ public class DataMedia {
     /**
      * Getter-method. The returned String is enough to open the file.
      * 
-     * @return The path to the medium on the devices medium.
+     * @return The path to the medium on the devices medium. (Should generally
+     *         be not null, except some idiot misused methods)
      */
     public String getFullPath() {
         return path + name;
@@ -179,19 +178,22 @@ public class DataMedia {
 
     /**
      * Setter-method. The path should normally not be changed but one never
-     * knows.
+     * knows. Method does nothing if parameter is null.
      * 
      * @param path
-     *            The new path of the medium
+     *            The new path of the medium.
      */
     public void setPath(String path) {
-        this.path = path;
+        if (path != null) {
+            this.path = path;
+        }
     }
 
     /**
      * Getter-method.
      * 
-     * @return The name of the medium as it is displayed.
+     * @return The name of the medium as it is displayed. (Should generally be
+     *         not null, except some idiot misused methods)
      */
     public String getName() {
         return name;
@@ -276,7 +278,7 @@ public class DataMedia {
      * Generates a <link>-tag for this medium.
      * 
      * @param serializer
-     *            The initialised XmlSerialiser
+     *            The initialised XmlSerialiser.
      */
     public void serialise(XmlSerializer serializer) {
         try {

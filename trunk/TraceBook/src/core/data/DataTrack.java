@@ -34,9 +34,6 @@ import android.util.Xml;
  * "tracking session". Normally the user will edit just one Track for one use of
  * the program. All data he collects with this one usage in then grouped in a
  * Track. A Track is not like a simple Way from place A to B but can contain it.
- * 
- * 
- * 
  */
 public class DataTrack extends DataMediaHolder {
 
@@ -92,7 +89,7 @@ public class DataTrack extends DataMediaHolder {
      * Initialising constructor.
      * 
      * @param name
-     *            The display and foldername of the Track.
+     *            The display and folder name of the Track.
      */
     public DataTrack(String name) {
         this();
@@ -126,7 +123,7 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param newname
      *            The new name of the DataTrack
-     * @return returns 0 if renaming was successful, -1 if track could not be
+     * @return Returns 0 if renaming was successful, -1 if track could not be
      *         found, -2 if there is a track with the new track name and -3 if
      *         the renaming fails otherwise.
      */
@@ -143,7 +140,7 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param newname
      *            The new name of the Track
-     * @return returns 0 if renaming was successful, -1 if track could not be
+     * @return Returns 0 if renaming was successful, -1 if track could not be
      *         found, -2 if there is a track with the new track name and -3 if
      *         the renaming fails otherwise.
      */
@@ -174,7 +171,7 @@ public class DataTrack extends DataMediaHolder {
      *            Name of the track as it is on the devices memory.
      * @param newTrackName
      *            The new name of the track.
-     * @return returns 0 if renaming was successful, -1 if track could not be
+     * @return Returns 0 if renaming was successful, -1 if track could not be
      *         found, -2 if there is a track with the new track name and -3 if
      *         the renaming fails otherwise.
      */
@@ -207,7 +204,7 @@ public class DataTrack extends DataMediaHolder {
      * one stored in this object. Changing the returned List will therefore
      * change this list
      * 
-     * @return All POI's of this Track.
+     * @return All POI's of this Track. (not null)
      */
     public List<DataNode> getNodes() {
         return nodes;
@@ -218,7 +215,7 @@ public class DataTrack extends DataMediaHolder {
      * one stored in this object. Changing the returned List will therefore
      * change this list
      * 
-     * @return All ways of this Track.
+     * @return All ways of this Track. (not null)
      */
     public List<DataPointsList> getWays() {
         return ways;
@@ -238,12 +235,12 @@ public class DataTrack extends DataMediaHolder {
     /**
      * Create a new Node (i.e. POI) and add it to the Track
      * 
-     * @param loc
+     * @param location
      *            The Location object to be used for constructing the new Node.
      * @return The newly created POI.
      */
-    public DataNode newNode(Location loc) {
-        DataNode dn = new DataNode(loc);
+    public DataNode newNode(Location location) {
+        DataNode dn = new DataNode(location);
         nodes.add(dn);
         return dn;
     }
@@ -251,24 +248,25 @@ public class DataTrack extends DataMediaHolder {
     /**
      * Create a new Node (i.e. POI) and add it to the Track
      * 
-     * @param loc
-     *            The GeoPoint object to be used for constructing the new Node
-     * @return The newly created POI
+     * @param coordinates
+     *            The GeoPoint object to be used for constructing the new Node.
+     * @return The newly created POI.
      */
-    public DataNode newNode(GeoPoint loc) {
-        DataNode dn = new DataNode(loc);
+    public DataNode newNode(GeoPoint coordinates) {
+        DataNode dn = new DataNode(coordinates);
         nodes.add(dn);
         return dn;
     }
 
     /**
-     * This method deletes a Node (POI) of this Track from the devices memory
-     * and the working memory. If this node does not exist nothing is done.
+     * This method deletes a Node (POI) of this Track or a node of one of the
+     * ways of this track from the devices memory and the working memory. If
+     * this node does not exist nothing is done.
      * 
      * @param id
      *            The id of the POI to delete.
-     * @return true if a node with the id was found and deleted, false if no
-     *         such node did exist
+     * @return True if a node with the id was found and deleted, false if no
+     *         such node did exist.
      */
     public boolean deleteNode(int id) {
         ListIterator<DataNode> lit = nodes.listIterator();
@@ -394,7 +392,7 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param file
      *            The file to be opened.
-     * @return the opened FileOutPutStream.
+     * @return The opened FileOutPutStream or null.
      */
     static FileOutputStream openFile(File file) {
         try {
@@ -470,7 +468,7 @@ public class DataTrack extends DataMediaHolder {
      * @param name
      *            The name of the Track as stored on the memory.
      * @return The deserialised DataTrack object or null if such a Track does
-     *         not exist
+     *         not exist.
      */
     public static DataTrack deserialise(String name) {
 
@@ -608,7 +606,7 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param trackname
      *            The String of the track name
-     * @return The path as String
+     * @return The path as String.
      */
     public static String getPathOfTrackTbTFile(String trackname) {
         return getTrackDirPath(trackname) + File.separator + "track.tbt";

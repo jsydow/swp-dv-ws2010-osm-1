@@ -14,9 +14,6 @@ import android.util.Log;
 /**
  * Basic class for any object that is stored in OSM. All objects have an id and
  * some tags. Additionally all objects can have media attached.
- * 
- * 
- * 
  */
 public abstract class DataMapObject extends DataMediaHolder implements
         Comparable<Integer> {
@@ -37,7 +34,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
     /**
      * Getter-method.
      * 
-     * @return the id of the object
+     * @return The id of the object.
      */
     public int getId() {
         return id;
@@ -49,7 +46,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
      * from an old id which is unique.
      * 
      * @param id
-     *            The new id
+     *            The new id.
      */
     void setId(int id) {
         this.id = id;
@@ -60,7 +57,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
      * tags in OSM are: name, lat, lon, timestamp. Mind that changes in the
      * returned Map change this object in the same way.
      * 
-     * @return map of all tags
+     * @return Map of all tags. (Not null)
      */
     public Map<String, String> getTags() {
         return tags;
@@ -90,7 +87,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
      * Checks whether additional information like Tags or Media data are
      * available for this {@link DataMapObject}.
      * 
-     * @return true if tags or media exists
+     * @return True if tags or media exist.
      */
     public boolean hasAdditionalInfo() {
         return getTags().size() > 0 || getMedia().size() > 0;
@@ -127,7 +124,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
      * out of these <tag>s
      * 
      * @param aNode
-     *            An XML-node
+     *            An XML-node.
      */
     public void deserialiseTags(Node aNode) {
         NodeList metanodes = aNode.getChildNodes();

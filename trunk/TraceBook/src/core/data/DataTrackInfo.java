@@ -22,9 +22,6 @@ import android.util.Xml;
  * A class that simply holds information of a track. It is a class that only
  * provides information but cannot edit them. Use deserialise() to get such an
  * object.
- * 
- * 
- * 
  */
 public class DataTrackInfo {
     private static final String LOG_TAG = "DataTrackInfo";
@@ -74,7 +71,7 @@ public class DataTrackInfo {
     /**
      * Getter-method for the time stamp of a track.
      * 
-     * @return the time stamp as String
+     * @return The time stamp as String.
      */
     public String getTimestamp() {
         return timestamp;
@@ -83,7 +80,7 @@ public class DataTrackInfo {
     /**
      * Getter-method for the name of a track.
      * 
-     * @return the name as String
+     * @return The name as String.
      */
     public String getName() {
         return name;
@@ -92,34 +89,42 @@ public class DataTrackInfo {
     /**
      * Getter-method for the comment of a track.
      * 
-     * @return the comment as String
+     * @return The comment as String.
      */
     public String getComment() {
         return comment;
     }
 
     /**
-     * @return the numberOfPOIs
+     * Getter-method for the number of POIs of a track.
+     * 
+     * @return The number of POIs.
      */
     public int getNumberOfPOIs() {
         return numberOfPOIs;
     }
 
     /**
-     * @return the numberOfWays
+     * Getter-method for the number of ways of a track.
+     * 
+     * @return The number of ways.
      */
     public int getNumberOfWays() {
         return numberOfWays;
     }
 
     /**
-     * @return the numberOfMedia
+     * Getter-method for the number of media of a track.
+     * 
+     * @return The number of media.
      */
     public int getNumberOfMedia() {
         return numberOfMedia;
     }
 
     /**
+     * Deserialises a DataTrackInfo from an info.xml file of a track.
+     * 
      * @param trackname
      *            Name of a track as String.
      * @return The info to this specific track or null if there is not such a
