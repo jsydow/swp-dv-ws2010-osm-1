@@ -90,8 +90,12 @@ public class LoadTrackActivity extends ListActivity {
 
             public void onTextChanged(CharSequence s, int start, int before,
                     int count) {
-                searchText = s.toString();
-                adapter.getFilter().filter(searchText);
+                if (s.toString() != null) {
+                    searchText = s.toString();
+                    if (adapter != null) {
+                        adapter.getFilter().filter(searchText);
+                    }
+                }
             }
 
         });
@@ -443,6 +447,10 @@ public class LoadTrackActivity extends ListActivity {
 
     @Override
     protected void onResume() {
+        if (searchText == null) {
+            searchText = "";
+        }
+
         updateAdapter();
         super.onResume();
     }
