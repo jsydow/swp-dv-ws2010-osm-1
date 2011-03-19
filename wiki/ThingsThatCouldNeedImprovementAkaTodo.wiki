@@ -10,15 +10,15 @@ Brain dump of what could be done in week 4 aside from the new product backlog.
 
   * search in tracklist 
   * sort by timestamp/name
-  * before renaming track check if there is such a track already
+  * before renaming track check if there is such a track already [done]
   * improve waypoint filtering
-  * Landscape should not crash/behave strangely
+  * Landscape should not crash/behave strangely (crashes while renaming track in loadtrack screen when going to landscape)
   * show images of tags
   * unhardcode visible strings
 
 == Non-functional ==
 
-  * Logging (one central class, different methods of logging)
+  * Logging (one central class, different methods of logging) [partly done]
   * stability (no leaks, occasional errors, checking for nullpointers etc)
   * optimisation (speed-wise e.g.) (newTrackActivity starts slowly)
   * general usability / gui tweaks
