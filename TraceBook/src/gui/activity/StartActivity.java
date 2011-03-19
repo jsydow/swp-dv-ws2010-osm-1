@@ -21,8 +21,8 @@ import core.data.db.TagDb;
 import core.logger.ServiceConnector;
 
 /**
- * Start activity of the application.
- * 
+ * Start activity of the application. Initialization of the database for the
+ * FullTextSearch activity.
  */
 public class StartActivity extends Activity {
 
@@ -80,7 +80,7 @@ public class StartActivity extends Activity {
     }
 
     /**
-     * Called if the newTrack Button pressed. Start the NewTrackActivity and the
+     * Called if the newTrack button pressed. Start the NewTrackActivity and the
      * tracking notification for the user
      * 
      * @param view
@@ -101,7 +101,7 @@ public class StartActivity extends Activity {
     }
 
     /**
-     * Called if the loadTrack Button pressed. Start the LoadTrackActivity.
+     * Called if the loadTrack button pressed. Start the LoadTrackActivity.
      * 
      * @param view
      *            the view
@@ -111,14 +111,11 @@ public class StartActivity extends Activity {
         startActivity(intent);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-     */
     @Override
     /**
-     * Initialization of the option menu for the MainActivity
+     * Initialization of the option menu for the MainActivity.
+     * 
+     *  @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -127,7 +124,7 @@ public class StartActivity extends Activity {
     }
 
     /**
-     * Functionality of all Optionmenuitems.
+     * Functionality of all items of the option menu.
      * 
      * @param item
      *            the item
@@ -165,9 +162,7 @@ public class StartActivity extends Activity {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /**
      * @see android.app.Activity#onDestroy()
      */
     @Override

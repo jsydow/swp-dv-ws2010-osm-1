@@ -77,8 +77,20 @@
 	<string name="tv_aboutActivity_projectPage">https://code.google.com/p/swp-dv-ws2010-osm-1/</string>
 	<string name="tv_searchInfoDialog_noInformation">keine Informationen vorhanden...</string>
 	<string name="tv_searchInfoDialog_urlTitle">Wikipedia Link:</string>
-	
-	<!--  Edit Text values-->
+	<string name="tv_statusbar_addpointTitle">Punkt hinzufügen</string>
+	<string name="tv_statusbar_addpointDesc">Sie können hier Meta und Mediadaten hinzufügen.</string>	
+	<string name="tv_statusbar_addpointmetaTitle">MetaTag hinzufügen</string>
+	<string name="tv_statusbar_addpointmetaDesc">Sie können hier Meta und Mediadaten hinzufügen.</string>	
+	<string name="tv_statusbar_fulltextsearchTitle">MetaTag Suche</string>
+	<string name="tv_statusbar_fulltextsearchDesc">Suchen sie nach MetaTags die bereits in OSM vorliegen.</string>	
+	<string name="tv_statusbar_aboutTitle">Über TraceBook</string>
+	<string name="tv_statusbar_aboutDesc">Informationen über die Applikation TraceBook.</string>
+	<string name="tv_statusbar_loadtrackTitle">Track laden</string>
+	<string name="tv_statusbar_loadtrackDesc">Hier können Sie einen gespeicherten Track laden oder durch
+	langes drücken mehr Informationen zu diesem erhalten.</string>	
+
+
+	<!--  Edit Text values -->
 	<string name="et_fulltextsearchActivity_search">Suchen...</string>
 	
 	<!--  Toast values -->

@@ -7,6 +7,7 @@ import gui.adapter.GenericItemDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Helper;
 import Trace.Book.R;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -136,6 +137,16 @@ public class FullTextSearchActivity extends ListActivity {
 
         EditText editBox = (EditText) findViewById(R.id.et_fulltextsearchfullActivity_search);
         editBox.addTextChangedListener(new MyTextWatcher(this));
+
+        // Set status bar
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc),
+                R.id.ly_fulltextsearchActivity_statusbar, true);
+
     }
 
     /**
@@ -257,6 +268,18 @@ public class FullTextSearchActivity extends ListActivity {
 
         infoDialog.show();
 
+    }
+
+    /**
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
+     * 
+     * @param view
+     *            not used
+     */
+    public void statusBarPrefBtn(View view) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
     }
 
 }

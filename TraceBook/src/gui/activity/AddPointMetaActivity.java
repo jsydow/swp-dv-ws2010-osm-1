@@ -11,6 +11,7 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import util.Helper;
 import Trace.Book.R;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -114,6 +115,16 @@ public class AddPointMetaActivity extends ListActivity {
         }
 
         fillListView();
+
+        // Set status bar
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_addpointmetaTitle),
+                getResources()
+                        .getString(R.string.tv_statusbar_addpointmetaDesc),
+                R.id.ly_addpointMetaAtivity_statusbar, false);
+
     }
 
     private void fillListView() {
@@ -205,9 +216,20 @@ public class AddPointMetaActivity extends ListActivity {
      * @param view
      *            not used
      */
-    public void cancelBtn(View view) { // method signature including view is
-        // required
+    public void cancelBtn(View view) {
         finish();
+    }
+
+    /**
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
+     * 
+     * @param view
+     *            not used
+     */
+    public void statusBarPrefBtn(View view) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
     }
 
     @Override

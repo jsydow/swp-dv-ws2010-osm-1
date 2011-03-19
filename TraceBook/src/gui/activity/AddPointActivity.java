@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import util.Helper;
 import util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
@@ -29,6 +30,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
@@ -77,15 +79,16 @@ public class AddPointActivity extends ListActivity {
                 node = DataStorage.getInstance().getCurrentTrack()
                         .getDataMapObjectById(nodeId);
                 if (node == null) {
-                    LogIt.popup(this, "Node does not exist!");
+                    Toast.makeText(this, "Node does not exist!",
+                            Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
         } else
             finish();
 
-        setContentView(R.layout.layout_addpointactivity);
         setTitle(R.string.string_addpointActivity_title);
+        setContentView(R.layout.layout_addpointactivity);
 
         LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.ly_addpointaAtivity_metaMediaBtnPoint);
@@ -97,6 +100,12 @@ public class AddPointActivity extends ListActivity {
 
         registerForContextMenu(getListView());
         setNodeInformation();
+
+        // Set status bar
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_addpointTitle),
+                getResources().getString(R.string.tv_statusbar_addpointDesc),
+                R.id.ly_addpointActivity_statusbar, false);
 
         // Initial Adapter
         mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -297,7 +306,7 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
-     * The Method for the makePicture Button. The Method start the standard
+     * The Method for the makePicture Button. The Method starts the standard
      * cameraActivty.
      * 
      * @param view
@@ -308,6 +317,18 @@ public class AddPointActivity extends ListActivity {
     }
 
     /**
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
+     * 
+     * @param view
+     *            not used
+     */
+    public void statusBarPrefBtn(View view) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
+    }
+
+    /**
      * OnResume is called when the activity was adjournment and we come back to
      * this activity. This method update the ListInformation with the MetaTags
      * of the Node.
@@ -315,8 +336,15 @@ public class AddPointActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Set text views and fill the map with meta information about the
+        // actual
+        // node
         setNodeInformation();
+
+        // Init Adapter and fill with new Information
         initAdapter();
+
     }
 
     @Override
