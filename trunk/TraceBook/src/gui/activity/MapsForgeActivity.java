@@ -14,6 +14,7 @@ import util.DataNodeArrayItemizedOverlay;
 import util.DataPointsListArrayRouteOverlay;
 import util.GpsMessage;
 import util.Helper;
+import util.LogIt;
 import Trace.Book.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +27,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.Toast;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.logger.ServiceConnector;
@@ -83,10 +83,8 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Unable to open map file, fetching tiles from Internet.",
-                        Toast.LENGTH_LONG).show();
+                LogIt.popup(this,
+                        "Unable to open map file, fetching tiles from Internet.");
                 modeLocal = onlineRenderer;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we

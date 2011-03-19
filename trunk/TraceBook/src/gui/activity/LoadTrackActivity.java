@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,7 +35,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import core.data.DataStorage;
 import core.data.DataTrack;
 import core.data.DataTrackInfo;
@@ -76,6 +76,10 @@ public class LoadTrackActivity extends ListActivity {
         setContentView(R.layout.layout_loadtrackactivity);
         registerForContextMenu(getListView());
 
+        setTextChangedListenerToSearchBox();
+    }
+
+    private void setTextChangedListenerToSearchBox() {
         EditText etFilter = (EditText) findViewById(R.id.et_loadtrackactivity_filter);
         etFilter.addTextChangedListener(new TextWatcher() {
 
@@ -139,10 +143,8 @@ public class LoadTrackActivity extends ListActivity {
             } else {
                 Log.e("RenameTrack",
                         "Track to load was not found or is corrupt.");
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Track to load could not be opened. Missing or corrupt.",
-                        Toast.LENGTH_SHORT).show();
+                LogIt.popup(this,
+                        "Track to load could not be opened. Missing or corrupt.");
             }
 
             return true;
@@ -438,9 +440,8 @@ public class LoadTrackActivity extends ListActivity {
             startActivity(intent);
         } else {
             Log.e("RenameTrack", "Track to load was not found or is corrupt.");
-            Toast.makeText(getApplicationContext(),
-                    "Track to load could not be opened. Missing or corrupt.",
-                    Toast.LENGTH_SHORT).show();
+            LogIt.popup(this,
+                    "Track to load could not be opened. Missing or corrupt.");
         }
         super.onListItemClick(l, v, position, id);
     }
