@@ -8,7 +8,7 @@
 = Map view =
   * Colors for several item groups (ways, areas, POIs) (Colorpicker)
   * Map file to be used (for !MapsForge) (EditText)
-  * Trackfilter, with some options(?) 
+  * Trackfilter, with some options 
   * Default map from SDCard or online (Array)
 
 = MetaTags =
