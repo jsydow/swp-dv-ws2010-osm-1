@@ -11,24 +11,24 @@
   * Trackfilter, with some options(?) 
   * Default map from SDCard or online (Array)
 
-= !MetaTags =
+= MetaTags =
   * The max. history size. (Array)
 
-= !OSM Account =
+= OSM Account =
   * Accountname (Edittext)
   * Accountpassword (Edittext)
 
-= !UI =
+= UI =
   * Statusbar Visible / Invisible (Checkbox)
   * Themes (Array)
   * Display always on (Checkbox)
   * Show GPS signal quality (Checkbox)
 
-= !Track =
+= Track =
   * Default dataname for tracks (TT.MM.JJJJ or JJJJ.MM.TT etc.) (Array)
 
-= !Media =
+= Media =
   * Maximum seconds/minutes for video and audio recording (Array)
 
-= !Export =
+= Export =
   * Mailexport, only GPX file or whole folder of the track(?) (Array)
