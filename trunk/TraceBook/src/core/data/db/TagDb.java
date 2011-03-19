@@ -39,6 +39,9 @@ public class TagDb {
         helper = new TagDbOpenHelper(context);
     }
 
+    /**
+     * Opens the database in read-only mode.
+     */
     private void openDb() {
         if (db != null && db.isOpen()) {
             db.close();
@@ -48,7 +51,9 @@ public class TagDb {
     }
 
     /**
-     * @return the {@link TagDbOpenHelper} variable
+     * Returns the TagDbOpenHelper object. Should not be used.
+     * 
+     * @return The {@link TagDbOpenHelper} variable.
      */
     TagDbOpenHelper getHelper() {
         return helper;
@@ -86,6 +91,16 @@ public class TagDb {
         }
     }
 
+    /**
+     * Fills a given tag list with tags that contain the searchText.
+     * 
+     * @param searchText
+     *            The text to search for.
+     * @param language
+     *            The language abbreviation.
+     * @param tags
+     *            The list in that the results are inserted.
+     */
     private void fillTagListWithSearchResults(String searchText,
             String language, List<TagSearchResult> tags) {
 

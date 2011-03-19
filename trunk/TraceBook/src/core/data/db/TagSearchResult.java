@@ -1,7 +1,7 @@
 package core.data.db;
 
 /**
- *
+ * This class holds all information that are needed for the tag search.
  * 
  */
 public class TagSearchResult {
@@ -48,7 +48,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the key
+     * @return The key field of the tag.
      */
     public String getKey() {
         return key;
@@ -57,7 +57,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the value
+     * @return The value field of the tag.
      */
     public String getValue() {
         return value;
@@ -66,7 +66,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the name
+     * @return The displayed name of the tag.
      */
     public String getName() {
         return name;
@@ -75,7 +75,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the description
+     * @return The description of the map feature.
      */
     public String getDescription() {
         return description;
@@ -84,7 +84,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the link
+     * @return The URL to Wiki page of the map feature.
      */
     public String getLink() {
         return link;
@@ -93,7 +93,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the image
+     * @return The image URL.
      */
     public String getImage() {
         return image;
@@ -102,7 +102,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the valueType
+     * @return The type of the value field of the tag.
      */
     public String getValueType() {
         return valueType;
@@ -111,7 +111,7 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return the language
+     * @return The language.
      */
     public String getLanguage() {
         return language;

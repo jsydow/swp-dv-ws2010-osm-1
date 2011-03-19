@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * For when you read this: No more @author, prz. kthx.
+ * Provide comfortable access to the history database.
  */
 public class HistoryDb {
     private TagDbOpenHelper helper;
@@ -27,6 +27,9 @@ public class HistoryDb {
         helper = new TagDbOpenHelper(context);
     }
 
+    /**
+     * Establishes read only access to the database.
+     */
     private void openDb() {
         if (db != null && db.isOpen()) {
             db.close();
@@ -36,7 +39,9 @@ public class HistoryDb {
     }
 
     /**
-     * @return the {@link TagDbOpenHelper} variable
+     * Returns the TagDbOpenHelper object. Should not be used.
+     * 
+     * @return The {@link TagDbOpenHelper} variable.
      */
     TagDbOpenHelper getHelper() {
         return helper;
@@ -76,6 +81,18 @@ public class HistoryDb {
         }
     }
 
+    /**
+     * Selfexplaining. Fills a given tag list with tag that are retrieved from
+     * the database.
+     * 
+     * @param tags
+     *            The list that should be filled.
+     * @param mostUsed
+     *            Ordering: most used is first in list, or recently used is
+     *            first. True means most used tag will be first.
+     * @param length
+     *            The number of tags that are returned.
+     */
     private void fillTagListWithHistoryResults(List<TagSearchResult> tags,
             boolean mostUsed, int length) {
         String orderBy = null;
@@ -136,6 +153,8 @@ public class HistoryDb {
     }
 
     /**
+     * If a tag is used by the user. This method should be called so that the
+     * database is updated.
      * 
      * @param key
      *            The key of the tag.
@@ -159,9 +178,7 @@ public class HistoryDb {
             SQLiteDatabase wdb = helper.getWritableDatabase();
             if (wdb != null && wdb.isOpen()) {
                 ContentValues values = new ContentValues();
-                values
-                        .put("last_use", Long.valueOf(System
-                                .currentTimeMillis()));
+                values.put("last_use", Long.valueOf(System.currentTimeMillis()));
                 values.put("key", key);
                 values.put("value", value);
                 values.put("use_count", Integer.valueOf(1));
