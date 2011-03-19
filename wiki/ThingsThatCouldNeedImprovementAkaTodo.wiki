@@ -14,6 +14,7 @@ Brain dump of what could be done in week 4 aside from the new product backlog.
   * improve waypoint filtering
   * Landscape should not crash/behave strangely
   * show images of tags
+  * unhardcode visible strings
 
 == Non-functional ==
 
