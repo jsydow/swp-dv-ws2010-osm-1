@@ -13,6 +13,7 @@ Brain dump of what could be done in week 4 aside from the new product backlog.
   * before renaming track check if there is such a track already
   * improve waypoint filtering
   * Landscape should not crash/behave strangely
+  * show images of tags
 
 == Non-functional ==
 
