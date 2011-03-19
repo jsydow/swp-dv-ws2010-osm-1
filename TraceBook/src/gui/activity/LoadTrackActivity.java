@@ -150,7 +150,8 @@ public class LoadTrackActivity extends ListActivity {
             alert.setView(input);
             alert.setTitle(getResources().getString(
                     R.string.alert_loadtrackActivity_rename));
-            alert.setPositiveButton("Ok",
+            alert.setPositiveButton(
+                    getResources().getString(R.string.alert_global_ok),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                 int whichButton) {
@@ -175,24 +176,14 @@ public class LoadTrackActivity extends ListActivity {
                             default:
                                 break;
                             }
-                            /*
-                             * DataTrack renametrack = DataTrack
-                             * .deserialise(trackname); if (renametrack != null)
-                             * { if(renametrack.setName(value) != 0) {
-                             * 
-                             * } } else { Log.e("RenameTrack",
-                             * "Track to rename was not found or is corrupt.");
-                             * Toast.makeText(getApplicationContext(),
-                             * "Track to rename could not be opened.",
-                             * Toast.LENGTH_SHORT).show(); }
-                             */
 
                             updateAdapter();
 
                         }
                     });
 
-            alert.setNegativeButton("Cancel",
+            alert.setNegativeButton(
+                    getResources().getString(R.string.alert_global_cancel),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                 int whichButton) {
@@ -389,14 +380,17 @@ public class LoadTrackActivity extends ListActivity {
                     dataItem.setText("TrackName", trackinfo.getName());
 
                     if (trackinfo.getComment().length() > 80) {
-                        comment = "Kommentar: "
+                        comment = getResources().getString(
+                                R.string.string_loadtrackactivity_comment)
                                 + trackinfo.getComment().trim()
                                         .substring(0, 77) + "...";
                     } else if (trackinfo.getComment().length() > 0) {
-                        comment = "Kommentar: " + trackinfo.getComment()
-                                + "...";
+                        comment = getResources().getString(
+                                R.string.string_loadtrackactivity_comment)
+                                + trackinfo.getComment() + "...";
                     } else {
-                        comment = "Kein Kommentar vorhanden";
+                        comment = getResources().getString(
+                                R.string.string_loadtrackactivity_nocomment);
                     }
 
                     dataItem.setText("TrackComment", comment);

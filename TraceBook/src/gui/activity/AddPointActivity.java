@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,7 +29,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.logger.ServiceConnector;
@@ -77,8 +77,7 @@ public class AddPointActivity extends ListActivity {
                 node = DataStorage.getInstance().getCurrentTrack()
                         .getDataMapObjectById(nodeId);
                 if (node == null) {
-                    Toast.makeText(this, "Node does not exist!",
-                            Toast.LENGTH_LONG).show();
+                    LogIt.popup(this, "Node does not exist!");
                     finish();
                 }
             }

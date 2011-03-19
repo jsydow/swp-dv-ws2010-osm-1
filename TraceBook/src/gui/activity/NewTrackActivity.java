@@ -195,8 +195,13 @@ public class NewTrackActivity extends TabActivity {
         }
 
         TextView tv = (TextView) findViewById(R.id.tv_newtrackActivity_gpsStatus);
-        tv.setText("Signalstärke: " + sum + "Anzahl: " + i + " "
-                + it.toString());
+        tv.setText(getResources().getString(
+                R.string.tv_newtrackactivity_signalstrength_strength)
+                + sum
+                + getResources().getString(
+                        R.string.tv_newtrackactivity_signalstrength_count)
+                + i
+                + " " + it.toString());
     }
 
     /**
@@ -275,11 +280,21 @@ public class NewTrackActivity extends TabActivity {
             GenericAdapterData item = new GenericAdapterData(desc);
 
             item.setText("NodeId", "" + dn.getId());
-            item.setText("NodeCoord", "Lat: " + nf.format(dn.getLat())
-                    + " Long: " + nf.format(dn.getLon()));
+            item.setText(
+                    "NodeCoord",
+                    getResources().getString(
+                            R.string.string_newtrackactivity_list_lat)
+                            + nf.format(dn.getLat())
+                            + getResources().getString(
+                                    R.string.string_newtrackactivity_list_lon)
+                            + nf.format(dn.getLon()));
 
             item.setImage("NodeImg", R.drawable.node_icon);
-            item.setText("NodeStats", "Medien: " + dn.getMedia().size());
+            item.setText(
+                    "NodeStats",
+                    getResources().getString(
+                            R.string.string_newtrackactivity_list_media)
+                            + dn.getMedia().size());
 
             listData.add(item);
         }
@@ -292,19 +307,43 @@ public class NewTrackActivity extends TabActivity {
                 DataNode start = dn.getNodes().get(0);
                 DataNode end = dn.getNodes().get(dn.getNodes().size() - 1);
 
-                String endCoord = dn.isArea() ? "" : (" End Lat: "
-                        + nf.format(end.getLat()) + " Long: " + nf.format(end
-                        .getLon()));
+                String endCoord = dn.isArea() ? "" : (getResources().getString(
+                        R.string.string_newtrackactivity_list_end)
+                        + getResources().getString(
+                                R.string.string_newtrackactivity_list_lat)
+                        + nf.format(end.getLat())
+                        + " "
+                        + getResources().getString(
+                                R.string.string_newtrackactivity_list_lon) + nf
+                        .format(end.getLon()));
 
-                item.setText("NodeCoord",
-                        "Start Lat: " + nf.format(start.getLat()) + " Long: "
+                item.setText(
+                        "NodeCoord",
+                        getResources().getString(
+                                R.string.string_newtrackactivity_list_start)
+                                + getResources()
+                                        .getString(
+                                                R.string.string_newtrackactivity_list_lat)
+                                + nf.format(start.getLat())
+                                + " "
+                                + getResources()
+                                        .getString(
+                                                R.string.string_newtrackactivity_list_lon)
                                 + nf.format(start.getLon()) + endCoord);
             }
 
             item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
                     : R.drawable.way_icon);
-            item.setText("NodeStats", "Medien: " + dn.getMedia().size());
-            item.setText("WayPOIs", "Punkte im Weg: " + dn.getNodes().size());
+            item.setText(
+                    "NodeStats",
+                    getResources().getString(
+                            R.string.string_newtrackactivity_list_media)
+                            + dn.getMedia().size());
+            item.setText(
+                    "WayPOIs",
+                    getResources().getString(
+                            R.string.string_newtrackactivity_list_media)
+                            + dn.getNodes().size());
             listData.add(item);
 
         }
