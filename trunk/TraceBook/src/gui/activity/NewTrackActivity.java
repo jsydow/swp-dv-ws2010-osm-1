@@ -349,7 +349,7 @@ public class NewTrackActivity extends TabActivity {
         }
 
         adapter = new GenericAdapter(this, R.layout.listview_edit,
-                R.id.tracks_lvw, listData, null);
+                R.id.tracks_lvw, listData);
 
         listView.setAdapter(adapter);
 

@@ -213,7 +213,7 @@ public class FullTextSearchActivity extends ListActivity {
         }
 
         final GenericAdapter adapter = new GenericAdapter(this,
-                R.layout.listview_fulltextsearch, R.id.list, data, null);
+                R.layout.listview_fulltextsearch, R.id.list, data);
 
         this.runOnUiThread(new Runnable() {
             public void run() {

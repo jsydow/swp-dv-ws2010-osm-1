@@ -44,12 +44,9 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
      *            resource id from which the the item view will be inflated
      * @param objects
      *            list of GenericAdapterData which will be used to fill the list
-     * @param layInf
-     *            Do we realy use it
      */
     public GenericAdapter(Context context, int resource,
-            int textViewResourceId, List<GenericAdapterData> objects,
-            LayoutInflater layInf) {
+            int textViewResourceId, List<GenericAdapterData> objects) {
         super(context, resource, textViewResourceId, objects);
         layoutId = resource;
         layoutInflater = (LayoutInflater) context

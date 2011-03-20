@@ -147,7 +147,7 @@ public class AddPointMetaActivity extends ListActivity {
         }
 
         adapter = new GenericAdapter(this, R.layout.listview_taghistory,
-                R.id.list, data, null);
+                R.id.list, data);
 
         setListAdapter(adapter);
         adapter.notifyDataSetChanged();
