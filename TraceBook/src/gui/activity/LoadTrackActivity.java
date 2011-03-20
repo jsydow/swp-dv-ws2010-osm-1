@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,7 +26,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -473,8 +471,6 @@ public class LoadTrackActivity extends ListActivity {
 
                 thisActivity.runOnUiThread(new Runnable() {
                     public void run() {
-                        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
                         adapter = new GenericAdapter(thisActivity,
                                 R.layout.listview_loadtrack, R.id.list, data);
                         adapter.getFilter().filter(searchText);
