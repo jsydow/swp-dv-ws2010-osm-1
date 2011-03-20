@@ -44,11 +44,6 @@ import core.media.Recorder;
 public class AddPointActivity extends ListActivity {
 
     /**
-     * Here we use the LayoutInflater to inflate the Layout for the ListView.
-     */
-    private LayoutInflater mInflater;
-
-    /**
      * Here we save a reference to the current DataMapObject which is in use.
      */
     DataMapObject node;
@@ -106,8 +101,6 @@ public class AddPointActivity extends ListActivity {
                 getResources().getString(R.string.tv_statusbar_addpointDesc),
                 R.id.ly_addpointActivity_statusbar, false);
 
-        // Initial Adapter
-        mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         initAdapter();
     }
 
