@@ -454,11 +454,11 @@ public final class Helper {
             boolean searchBox) {
 
         // Get the app's shared preferences
-        SharedPreferences app_preferences = PreferenceManager
+        SharedPreferences appPreferences = PreferenceManager
                 .getDefaultSharedPreferences(activity);
 
         // Get the value for the status bar check box - default false
-        if (app_preferences.getBoolean("statusleiste", false)) {
+        if (appPreferences.getBoolean("statusleiste", false)) {
             LayoutInflater statusListInflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout statuslayoutHolder = (LinearLayout) activity

@@ -96,11 +96,11 @@ public class LoadTrackActivity extends ListActivity {
     private EditText checkEditText() {
 
         // Get the app's shared preferences
-        SharedPreferences app_preferences = PreferenceManager
+        SharedPreferences appPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
         // Get the value for the status bar check box - default false
-        if (app_preferences.getBoolean("statusleiste", false)) {
+        if (appPreferences.getBoolean("statusleiste", false)) {
             EditText loadTrackSearch = (EditText) findViewById(R.id.et_loadtrackactivity_search);
             loadTrackSearch.setVisibility(8);
             TextView loadTrackFilter = (TextView) findViewById(R.id.tv_loadtrackactivity_filter);
