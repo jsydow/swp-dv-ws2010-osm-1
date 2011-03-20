@@ -18,11 +18,7 @@ import android.widget.TextView;
  * list view. Where one item can hold one or more views. You can associate views
  * with String tags via the GenericItemDesciption class.
  * 
- * This class provides you easy acces to fill your views with the right data.
- * 
- * 
- * 
- * 
+ * This class provides you easy access to fill your views with the right data.
  * 
  */
 public class GenericAdapterData {

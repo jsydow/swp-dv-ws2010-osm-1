@@ -476,8 +476,7 @@ public class LoadTrackActivity extends ListActivity {
                         LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                         adapter = new GenericAdapter(thisActivity,
-                                R.layout.listview_loadtrack, R.id.list, data,
-                                layoutInflater);
+                                R.layout.listview_loadtrack, R.id.list, data);
                         adapter.getFilter().filter(searchText);
 
                         setListAdapter(adapter);

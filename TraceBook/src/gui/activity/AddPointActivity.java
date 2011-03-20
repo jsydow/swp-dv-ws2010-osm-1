@@ -136,7 +136,7 @@ public class AddPointActivity extends ListActivity {
             data.add(item);
         }
         adapter = new GenericAdapter(this, R.layout.listview_addpoint,
-                R.id.list, data, mInflater);
+                R.id.list, data);
 
         setListAdapter(adapter);
         getListView().setTextFilterEnabled(true);
