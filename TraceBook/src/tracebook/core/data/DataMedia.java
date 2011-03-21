@@ -275,7 +275,7 @@ public class DataMedia {
     }
 
     /**
-     * Generates a <link>-tag for this medium.
+     * Generates a link tag for this medium.
      * 
      * @param serializer
      *            The initialized XmlSerialiser.
