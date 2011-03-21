@@ -23,155 +23,9 @@ public class WaypointLogService extends Service implements LocationListener {
     private static final String LOG_TAG = "LOGSERVICE";
 
     /**
-     * Reference to the {@link DataStorage} singleton.
-     */
-    DataStorage storage = DataStorage.getInstance();
-
-    /**
-     * Current node, null if no node with missing GPS location is present,
-     * otherwise it contains a reference to the {@link DataNode} waiting for a
-     * GPS fix.
-     */
-    DataNode current_node = null;
-
-    /**
-     * Parameters for GPS update intervals.
-     */
-    protected int deltaDistance = 0;
-
-    /**
-     * Time between two GPS fixes.
-     */
-    protected int deltaTime = 0;
-
-    private boolean gps_on = false;
-
-    /**
-     * One shot mode - no continuous tracking, points are only added to the way
-     * on request.
-     */
-    boolean one_shot = false;
-
-    private LocationListener ll = this;
-
-    private GpsMessage sender = null;
-
-    /**
-     * Returns the Intent sender helper.
-     * 
-     * @return a reference to the {@link GpsMessage} helper class
-     */
-    GpsMessage getSender() {
-        return sender;
-    }
-
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-        Log.d(LOG_TAG, "onStart");
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        startGPS();
-        return binder;
-    }
-
-    @Override
-    public synchronized void onCreate() {
-        super.onCreate();
-        Log.d(LOG_TAG, "onCreate");
-        sender = new GpsMessage(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy");
-        stopGPS();
-    }
-
-    /**
-     * Enables GPS updates from the {@link LocationManager}.
-     */
-    void startGPS() {
-        if (!gps_on)
-            ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
-                    .requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            deltaTime, deltaDistance, ll);
-        gps_on = true;
-    }
-
-    /**
-     * Disables GPS updates from the {@link LocationManager}.
-     */
-    void stopGPS() {
-        if (gps_on)
-            ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
-                    .removeUpdates(ll);
-        gps_on = false;
-    }
-
-    /**
-     * Tries to stop first and then to start receiving GPS updates. This
-     * effectively reloads the settings for the {@link LocationManager}
-     */
-    void restartGPS() {
-        stopGPS();
-        startGPS();
-    }
-
-    /**
-     * Returns the status of the GPS logging.
-     * 
-     * @return true if GPS is on.
-     */
-    public boolean gpsEnabled() {
-        return gps_on;
-    }
-
-    /**
-     * Convenience function to get the current way out of the
-     * {@link DataStorage} object.
-     * 
-     * @return the current {@link DataPointsList} way
-     */
-    DataPointsList currentWay() {
-        if (storage == null || storage.getCurrentTrack() == null)
-            return null;
-        return storage.getCurrentTrack().getCurrentWay();
-    }
-
-    /**
      * The IAdderService is defined through IDL.
      */
     private final ILoggerService.Stub binder = new ILoggerService.Stub() {
-
-        public void startTrack() {
-            restartGPS();
-            storage.setCurrentTrack(storage.newTrack());
-        }
-
-        public int stopTrack() {
-            stopGPS();
-
-            if (storage.getCurrentTrack() != null) {
-                storage.getCurrentTrack().serialize();
-                storage.unloadAllTracks();
-                return 1;
-            }
-
-            return -1;
-        }
-
-        public int createPOI(boolean onWay) {
-            if (onWay && currentWay() != null)
-                current_node = currentWay().newNode();
-            else
-                current_node = storage.getCurrentTrack().newNode();
-
-            return current_node.getId();
-        }
 
         public int beginArea(boolean doOneShot) {
             int ret = beginWay(doOneShot);
@@ -190,6 +44,15 @@ public class WaypointLogService extends Service implements LocationListener {
                 current_node = currentWay().newNode();
 
             return currentWay().getId();
+        }
+
+        public int createPOI(boolean onWay) {
+            if (onWay && currentWay() != null)
+                current_node = currentWay().newNode();
+            else
+                current_node = storage.getCurrentTrack().newNode();
+
+            return current_node.getId();
         }
 
         public synchronized int endWay() {
@@ -216,19 +79,23 @@ public class WaypointLogService extends Service implements LocationListener {
             return -1;
         }
 
-        public boolean isWayLogging() {
+        public boolean isAreaLogging() {
             if (storage.getCurrentTrack() != null) {
                 if (currentWay() != null) {
-                    return !currentWay().isArea();
+                    return currentWay().isArea();
                 }
             }
             return false;
         }
 
-        public boolean isAreaLogging() {
+        public boolean isLogging() {
+            return gpsEnabled();
+        }
+
+        public boolean isWayLogging() {
             if (storage.getCurrentTrack() != null) {
                 if (currentWay() != null) {
-                    return currentWay().isArea();
+                    return !currentWay().isArea();
                 }
             }
             return false;
@@ -242,10 +109,86 @@ public class WaypointLogService extends Service implements LocationListener {
             startGPS();
         }
 
-        public boolean isLogging() {
-            return gpsEnabled();
+        public void startTrack() {
+            restartGPS();
+            storage.setCurrentTrack(storage.newTrack());
+        }
+
+        public int stopTrack() {
+            stopGPS();
+
+            if (storage.getCurrentTrack() != null) {
+                storage.getCurrentTrack().serialize();
+                storage.unloadAllTracks();
+                return 1;
+            }
+
+            return -1;
         }
     };
+
+    private boolean gps_on = false;
+
+    private LocationListener ll = this;
+
+    private GpsMessage sender = null;
+
+    /**
+     * Parameters for GPS update intervals.
+     */
+    protected int deltaDistance = 0;
+
+    /**
+     * Time between two GPS fixes.
+     */
+    protected int deltaTime = 0;
+
+    /**
+     * Current node, null if no node with missing GPS location is present,
+     * otherwise it contains a reference to the {@link DataNode} waiting for a
+     * GPS fix.
+     */
+    DataNode current_node = null;
+
+    /**
+     * One shot mode - no continuous tracking, points are only added to the way
+     * on request.
+     */
+    boolean one_shot = false;
+
+    /**
+     * Reference to the {@link DataStorage} singleton.
+     */
+    DataStorage storage = DataStorage.getInstance();
+
+    /**
+     * Returns the status of the GPS logging.
+     * 
+     * @return true if GPS is on.
+     */
+    public boolean gpsEnabled() {
+        return gps_on;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        startGPS();
+        return binder;
+    }
+
+    @Override
+    public synchronized void onCreate() {
+        super.onCreate();
+        Log.d(LOG_TAG, "onCreate");
+        sender = new GpsMessage(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(LOG_TAG, "onDestroy");
+        stopGPS();
+    }
 
     /** GPS related Methods. **/
 
@@ -277,7 +220,64 @@ public class WaypointLogService extends Service implements LocationListener {
         Log.d(LOG_TAG, "GPS Provider Enabled: " + provider);
     }
 
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+        Log.d(LOG_TAG, "onStart");
+    }
+
     public void onStatusChanged(String provider, int status, Bundle extra) {
         Log.d(LOG_TAG, "GPS Status Changed: " + provider);
+    }
+
+    /**
+     * Convenience function to get the current way out of the
+     * {@link DataStorage} object.
+     * 
+     * @return the current {@link DataPointsList} way
+     */
+    DataPointsList currentWay() {
+        if (storage == null || storage.getCurrentTrack() == null)
+            return null;
+        return storage.getCurrentTrack().getCurrentWay();
+    }
+
+    /**
+     * Returns the Intent sender helper.
+     * 
+     * @return a reference to the {@link GpsMessage} helper class
+     */
+    GpsMessage getSender() {
+        return sender;
+    }
+
+    /**
+     * Tries to stop first and then to start receiving GPS updates. This
+     * effectively reloads the settings for the {@link LocationManager}
+     */
+    void restartGPS() {
+        stopGPS();
+        startGPS();
+    }
+
+    /**
+     * Enables GPS updates from the {@link LocationManager}.
+     */
+    void startGPS() {
+        if (!gps_on)
+            ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
+                    .requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            deltaTime, deltaDistance, ll);
+        gps_on = true;
+    }
+
+    /**
+     * Disables GPS updates from the {@link LocationManager}.
+     */
+    void stopGPS() {
+        if (gps_on)
+            ((LocationManager) getSystemService(Context.LOCATION_SERVICE))
+                    .removeUpdates(ll);
+        gps_on = false;
     }
 }

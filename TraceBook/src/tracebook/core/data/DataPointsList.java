@@ -21,10 +21,75 @@ import android.util.Log;
  */
 public class DataPointsList extends DataMapObject {
     /**
-     * The list of nodes of this object. First node is first element in this
-     * list.
+     * Way node is a XML-node labeled "way". This method restores a
+     * DataPointsList from such a XML-Node.
+     * 
+     * @param waynode
+     *            A XML-node
+     * @param allnodes
+     *            All DataNodes that were already retrieved from that XML-file
+     * @return The new DataPointsList
      */
-    protected LinkedList<DataNode> nodes;
+    public static DataPointsList deserialize(Node waynode,
+            List<DataNode> allnodes) {
+        // the returned DataPointsList
+        DataPointsList ret = new DataPointsList();
+
+        // get all attributes
+        NamedNodeMap nodeattributes = waynode.getAttributes();
+        // get time stamp
+        ret
+                .setDatetime(nodeattributes.getNamedItem("timestamp")
+                        .getNodeValue());
+        // get id
+        ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
+                .getNodeValue()));
+
+        // tags and media
+        ret.deserializeMedia(waynode);
+        ret.deserializeTags(waynode);
+
+        // node references
+        // for all <nd>-child nodes
+        NodeList metanodes = waynode.getChildNodes();
+        for (int i = 0; i < metanodes.getLength(); ++i) {
+
+            // is <nd>-node?
+            if (metanodes.item(i).getNodeName().equals("nd")) {
+
+                // get id of the node referenced
+                int nodeId = Integer.parseInt(metanodes.item(i).getAttributes()
+                        .getNamedItem("ref").getNodeValue());
+                // search for this node in allnodes
+                ListIterator<DataNode> it = allnodes.listIterator();
+
+                while (it.hasNext()) {
+                    DataNode dn = it.next();
+                    if (dn.getId() == nodeId) {
+                        // remove from allnodes this node
+                        it.remove();
+                        // add
+                        ret.nodes.add(dn);
+                    }
+                }
+            }
+        }
+
+        // is this Way an Area?
+        String value = ret.getTags().get("key");
+        if (value != null) {
+            if (value.equals("yes")) {
+                ret.setArea(true);
+            }
+        }
+
+        return ret;
+    }
+
+    /**
+     * Route Object for MapsForge.
+     */
+    private OverlayRoute overlayRoute;
 
     /**
      * Is this Object an Area?
@@ -32,9 +97,10 @@ public class DataPointsList extends DataMapObject {
     protected boolean isArea;
 
     /**
-     * Route Object for MapsForge.
+     * The list of nodes of this object. First node is first element in this
+     * list.
      */
-    private OverlayRoute overlayRoute;
+    protected LinkedList<DataNode> nodes;
 
     /**
      * Default constructor.
@@ -53,121 +119,6 @@ public class DataPointsList extends DataMapObject {
     public DataPointsList(boolean isArea) {
         this();
         this.isArea = isArea;
-    }
-
-    /**
-     * Getter-method.
-     * 
-     * @return True if object resembles an Area.
-     */
-    public boolean isArea() {
-        return isArea;
-    }
-
-    /**
-     * Setter-method.
-     * 
-     * @param isArea
-     *            Whether object is an Area.
-     */
-    public void setArea(boolean isArea) {
-        this.isArea = isArea;
-    }
-
-    /**
-     * Getter-method that returns a list of all nodes. The returned List is the
-     * one stored in this object. Changing the returned List will therefore
-     * change this list
-     * 
-     * @return The list of all nodes stored in this object. (not null)
-     */
-    public List<DataNode> getNodes() {
-        return nodes;
-    }
-
-    /**
-     * Returns an array of GeoPoints representing the current way for being
-     * displayed in a RouteOverlay. If isArea() is true, the first point will be
-     * added as last point, this is a requirement of the RouteOverlay.
-     * 
-     * @return The array of GeoPoints. (not null)
-     */
-    public GeoPoint[] toGeoPointArray() {
-        return toGeoPointArray(null);
-    }
-
-    /**
-     * Returns an array of GeoPoints representing the current way for being
-     * displayed in a RouteOverlay. If isArea() is true, the first point will be
-     * added as last point, this is a requirement of the RouteOverlay.
-     * 
-     * @param additional
-     *            additional GeoPoint to be added to the way, may be null
-     * 
-     * @return The array of GeoPoints. (not null)
-     */
-    public GeoPoint[] toGeoPointArray(GeoPoint additional) {
-        GeoPoint[] tmp = new GeoPoint[nodes.size()
-                + (additional != null ? 1 : 0)];
-        GeoPoint first = null;
-
-        int i = 0;
-        for (DataNode n : nodes) {
-            tmp[i] = n.toGeoPoint();
-            if (first == null)
-                first = tmp[i];
-            ++i;
-        }
-
-        if (additional != null)
-            tmp[i++] = additional;
-
-        return tmp;
-    }
-
-    /**
-     * Add a new Node at the end of the list. Call this method if you want to
-     * extend the Way or Area.
-     * 
-     * @return The newly created DataNode.
-     */
-    public DataNode newNode() {
-        DataNode dn = new DataNode();
-        dn.setDataPointsList(this);
-        nodes.add(dn);
-        return dn;
-    }
-
-    /**
-     * Searches for a Node in this Track by the specified id.
-     * 
-     * @param nodeId
-     *            The id of the Node that is being searched for.
-     * @return The DataNode where get_id() == id, or null if not found.
-     */
-    public DataNode getNodeById(int nodeId) {
-        for (DataNode dn : nodes) {
-            if (dn.getId() == nodeId) {
-                return dn;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Add a new Node at the end of the list. Call this method if you want to
-     * extend the Way or Area. Additionally the Location-constructor of the
-     * DataNode is called.
-     * 
-     * @param location
-     *            The Location of this node. Node is initialized with this
-     *            location.
-     * @return The newly created DataNode.
-     */
-    public DataNode newNode(Location location) {
-        DataNode dn = new DataNode(location, this);
-        nodes.add(dn);
-        return dn;
     }
 
     /**
@@ -195,6 +146,33 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
+     * Searches for a Node in this Track by the specified id.
+     * 
+     * @param nodeId
+     *            The id of the Node that is being searched for.
+     * @return The DataNode where get_id() == id, or null if not found.
+     */
+    public DataNode getNodeById(int nodeId) {
+        for (DataNode dn : nodes) {
+            if (dn.getId() == nodeId) {
+                return dn;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Getter-method that returns a list of all nodes. The returned List is the
+     * one stored in this object. Changing the returned List will therefore
+     * change this list
+     * 
+     * @return The list of all nodes stored in this object. (not null)
+     */
+    public List<DataNode> getNodes() {
+        return nodes;
+    }
+
+    /**
      * Gets the route Object used by MapsForge to display this way.
      * 
      * @return The OverlayRoute of this way. (can be null)
@@ -204,13 +182,41 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Sets the OverlayRoute, an object used by MapsForge for visualization.
+     * Getter-method.
      * 
-     * @param overlayRoute
-     *            The new OverlayRoute.
+     * @return True if object resembles an Area.
      */
-    public void setOverlayRoute(OverlayRoute overlayRoute) {
-        this.overlayRoute = overlayRoute;
+    public boolean isArea() {
+        return isArea;
+    }
+
+    /**
+     * Add a new Node at the end of the list. Call this method if you want to
+     * extend the Way or Area.
+     * 
+     * @return The newly created DataNode.
+     */
+    public DataNode newNode() {
+        DataNode dn = new DataNode();
+        dn.setDataPointsList(this);
+        nodes.add(dn);
+        return dn;
+    }
+
+    /**
+     * Add a new Node at the end of the list. Call this method if you want to
+     * extend the Way or Area. Additionally the Location-constructor of the
+     * DataNode is called.
+     * 
+     * @param location
+     *            The Location of this node. Node is initialized with this
+     *            location.
+     * @return The newly created DataNode.
+     */
+    public DataNode newNode(Location location) {
+        DataNode dn = new DataNode(location, this);
+        nodes.add(dn);
+        return dn;
     }
 
     /**
@@ -288,68 +294,62 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Way node is a XML-node labeled "way". This method restores a
-     * DataPointsList from such a XML-Node.
+     * Setter-method.
      * 
-     * @param waynode
-     *            A XML-node
-     * @param allnodes
-     *            All DataNodes that were already retrieved from that XML-file
-     * @return The new DataPointsList
+     * @param isArea
+     *            Whether object is an Area.
      */
-    public static DataPointsList deserialize(Node waynode,
-            List<DataNode> allnodes) {
-        // the returned DataPointsList
-        DataPointsList ret = new DataPointsList();
+    public void setArea(boolean isArea) {
+        this.isArea = isArea;
+    }
 
-        // get all attributes
-        NamedNodeMap nodeattributes = waynode.getAttributes();
-        // get time stamp
-        ret
-                .setDatetime(nodeattributes.getNamedItem("timestamp")
-                        .getNodeValue());
-        // get id
-        ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
-                .getNodeValue()));
+    /**
+     * Sets the OverlayRoute, an object used by MapsForge for visualization.
+     * 
+     * @param overlayRoute
+     *            The new OverlayRoute.
+     */
+    public void setOverlayRoute(OverlayRoute overlayRoute) {
+        this.overlayRoute = overlayRoute;
+    }
 
-        // tags and media
-        ret.deserializeMedia(waynode);
-        ret.deserializeTags(waynode);
+    /**
+     * Returns an array of GeoPoints representing the current way for being
+     * displayed in a RouteOverlay. If isArea() is true, the first point will be
+     * added as last point, this is a requirement of the RouteOverlay.
+     * 
+     * @return The array of GeoPoints. (not null)
+     */
+    public GeoPoint[] toGeoPointArray() {
+        return toGeoPointArray(null);
+    }
 
-        // node references
-        // for all <nd>-child nodes
-        NodeList metanodes = waynode.getChildNodes();
-        for (int i = 0; i < metanodes.getLength(); ++i) {
+    /**
+     * Returns an array of GeoPoints representing the current way for being
+     * displayed in a RouteOverlay. If isArea() is true, the first point will be
+     * added as last point, this is a requirement of the RouteOverlay.
+     * 
+     * @param additional
+     *            additional GeoPoint to be added to the way, may be null
+     * 
+     * @return The array of GeoPoints. (not null)
+     */
+    public GeoPoint[] toGeoPointArray(GeoPoint additional) {
+        GeoPoint[] tmp = new GeoPoint[nodes.size()
+                + (additional != null ? 1 : 0)];
+        GeoPoint first = null;
 
-            // is <nd>-node?
-            if (metanodes.item(i).getNodeName().equals("nd")) {
-
-                // get id of the node referenced
-                int nodeId = Integer.parseInt(metanodes.item(i).getAttributes()
-                        .getNamedItem("ref").getNodeValue());
-                // search for this node in allnodes
-                ListIterator<DataNode> it = allnodes.listIterator();
-
-                while (it.hasNext()) {
-                    DataNode dn = it.next();
-                    if (dn.getId() == nodeId) {
-                        // remove from allnodes this node
-                        it.remove();
-                        // add
-                        ret.nodes.add(dn);
-                    }
-                }
-            }
+        int i = 0;
+        for (DataNode n : nodes) {
+            tmp[i] = n.toGeoPoint();
+            if (first == null)
+                first = tmp[i];
+            ++i;
         }
 
-        // is this Way an Area?
-        String value = ret.getTags().get("key");
-        if (value != null) {
-            if (value.equals("yes")) {
-                ret.setArea(true);
-            }
-        }
+        if (additional != null)
+            tmp[i++] = additional;
 
-        return ret;
+        return tmp;
     }
 }

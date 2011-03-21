@@ -13,8 +13,8 @@ import android.util.Log;
  * Provide comfortable access to the history database.
  */
 public class HistoryDb {
-    private TagDbOpenHelper helper;
     private SQLiteDatabase db;
+    private TagDbOpenHelper helper;
 
     /**
      * Constructor, opens the database.
@@ -25,33 +25,6 @@ public class HistoryDb {
     public HistoryDb(Context context) {
         super();
         helper = new TagDbOpenHelper(context);
-    }
-
-    /**
-     * Establishes read only access to the database.
-     */
-    private void openDb() {
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
-
-        db = helper.getReadableDatabase();
-    }
-
-    /**
-     * Returns the TagDbOpenHelper object. Should not be used.
-     * 
-     * @return The {@link TagDbOpenHelper} variable.
-     */
-    TagDbOpenHelper getHelper() {
-        return helper;
-    }
-
-    /**
-     * Closes the database. Dot not forget to call this method!
-     */
-    private void closeDb() {
-        db.close();
     }
 
     /**
@@ -79,6 +52,58 @@ public class HistoryDb {
             Log.e("TagDataBase", "Could not open Database.");
             return null;
         }
+    }
+
+    /**
+     * If a tag is used by the user. This method should be called so that the
+     * database is updated.
+     * 
+     * @param key
+     *            The key of the tag.
+     * @param value
+     *            The value of the tag.
+     */
+    public void updateTag(String key, String value) {
+
+        if (rowsCountWithTag(key, value) > 0) {
+            SQLiteDatabase wdb = helper.getWritableDatabase();
+            if (wdb != null && wdb.isOpen()) {
+                wdb.execSQL("UPDATE " + TagDbOpenHelper.getHistoryTableName()
+                        + " SET " + TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT
+                        + "=" + TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT
+                        + "+1, " + TagDbOpenHelper.HISTORY_COLUMN_LAST_USE
+                        + "=" + System.currentTimeMillis() + " WHERE "
+                        + TagDbOpenHelper.HISTORY_COLUMN_KEY + "='" + key
+                        + "' AND " + TagDbOpenHelper.HISTORY_COLUMN_VALUE
+                        + "='" + value + "'");
+                wdb.close();
+            } else {
+                Log.e("HistoryDb", "Could not open database to write.");
+            }
+        } else {
+            SQLiteDatabase wdb = helper.getWritableDatabase();
+            if (wdb != null && wdb.isOpen()) {
+                ContentValues values = new ContentValues();
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_LAST_USE, Long
+                        .valueOf(System.currentTimeMillis()));
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_KEY, key);
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_VALUE, value);
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT, Integer
+                        .valueOf(1));
+                wdb.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
+                wdb.close();
+            } else {
+                Log.e("HistoryDb", "Could not open database to write.");
+            }
+        }
+        return;
+    }
+
+    /**
+     * Closes the database. Dot not forget to call this method!
+     */
+    private void closeDb() {
+        db.close();
     }
 
     /**
@@ -127,6 +152,17 @@ public class HistoryDb {
     }
 
     /**
+     * Establishes read only access to the database.
+     */
+    private void openDb() {
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+
+        db = helper.getReadableDatabase();
+    }
+
+    /**
      * Returns the number of rows that are in the database with a given tag.
      * 
      * @param key
@@ -159,47 +195,11 @@ public class HistoryDb {
     }
 
     /**
-     * If a tag is used by the user. This method should be called so that the
-     * database is updated.
+     * Returns the TagDbOpenHelper object. Should not be used.
      * 
-     * @param key
-     *            The key of the tag.
-     * @param value
-     *            The value of the tag.
+     * @return The {@link TagDbOpenHelper} variable.
      */
-    public void updateTag(String key, String value) {
-
-        if (rowsCountWithTag(key, value) > 0) {
-            SQLiteDatabase wdb = helper.getWritableDatabase();
-            if (wdb != null && wdb.isOpen()) {
-                wdb.execSQL("UPDATE " + TagDbOpenHelper.getHistoryTableName()
-                        + " SET " + TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT
-                        + "=" + TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT
-                        + "+1, " + TagDbOpenHelper.HISTORY_COLUMN_LAST_USE
-                        + "=" + System.currentTimeMillis() + " WHERE "
-                        + TagDbOpenHelper.HISTORY_COLUMN_KEY + "='" + key
-                        + "' AND " + TagDbOpenHelper.HISTORY_COLUMN_VALUE
-                        + "='" + value + "'");
-                wdb.close();
-            } else {
-                Log.e("HistoryDb", "Could not open database to write.");
-            }
-        } else {
-            SQLiteDatabase wdb = helper.getWritableDatabase();
-            if (wdb != null && wdb.isOpen()) {
-                ContentValues values = new ContentValues();
-                values.put(TagDbOpenHelper.HISTORY_COLUMN_LAST_USE, Long
-                        .valueOf(System.currentTimeMillis()));
-                values.put(TagDbOpenHelper.HISTORY_COLUMN_KEY, key);
-                values.put(TagDbOpenHelper.HISTORY_COLUMN_VALUE, value);
-                values.put(TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT, Integer
-                        .valueOf(1));
-                wdb.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
-                wdb.close();
-            } else {
-                Log.e("HistoryDb", "Could not open database to write.");
-            }
-        }
-        return;
+    TagDbOpenHelper getHelper() {
+        return helper;
     }
 }

@@ -59,94 +59,31 @@ public class LoadTrackActivity extends ListActivity {
     GenericAdapter adapter;
 
     /**
+     * The text that is in the search text box.
+     */
+    String searchText = "";
+    /**
      * Should the list be sorted by name? If not then the list is sorted by
      * time.
      */
     boolean sortByName = true;
-    /**
-     * The text that is in the search text box.
-     */
-    String searchText = "";
 
-    /*
-     * (non-Javadoc)
+    /**
+     * @param v
+     *            used to get the text of the view. Could be dangerous.
      * 
-     * @see android.app.Activity#onCreate(android.os.Bundle)
      */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        updateAdapter();
-        setTitle(R.string.string_loadtrackActivity_title);
-        setContentView(R.layout.activity_loadtrackactivity);
-        registerForContextMenu(getListView());
-
-        setTextChangedListenerToSearchBox(checkEditText());
-
-        // Set status bar
-        Helper.setStatusBar(this,
-                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
-                getResources().getString(R.string.tv_statusbar_loadtrackDesc),
-                R.id.ly_loadtrackActivity_statusbar, true);
-
-    }
-
-    private EditText checkEditText() {
-
-        // Get the app's shared preferences
-        SharedPreferences appPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        // Get the value for the status bar check box - default false
-        if (appPreferences.getBoolean("check_visbilityStatusbar", false)) {
-            EditText loadTrackSearch = (EditText) findViewById(R.id.et_loadtrackactivity_search);
-            loadTrackSearch.setVisibility(8);
-            TextView loadTrackFilter = (TextView) findViewById(R.id.tv_loadtrackactivity_filter);
-            loadTrackFilter.setVisibility(8);
-            return (EditText) findViewById(R.id.et_statusbar_search);
-        } else
-            return (EditText) findViewById(R.id.et_loadtrackactivity_search);
-    }
-
-    private void setTextChangedListenerToSearchBox(EditText etFilter) {
-
-        if (etFilter == null)
+    public void deleteTrackBtn(View v) {
+        if (v == null) {
+            Log.w("BUTTON", "view is null");
             return;
-
-        etFilter.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                // nothing done here
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                    int after) {
-                // nothing done here
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before,
-                    int count) {
-                if (s.toString() != null) {
-                    searchText = s.toString();
-                    textSearchUpdate();
-                }
-            }
-
-        });
-    }
-
-    /**
-     * Create ContextMenu for this activity.
-     */
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.contextmenu_loadtrackactivity, menu);
-        menu.setHeaderIcon(android.R.drawable.ic_menu_compass);
-        menu.setHeaderTitle(getResources().getString(
-                R.string.cm_loadtrackActivity_title));
+        }
+        if (v.getTag() == null) {
+            Log.w("BUTTON", "tag is null");
+            return;
+        }
+        Log.w("BUTTON", (String) v.getTag());
+        deleteTrack((String) v.getTag());
     }
 
     /**
@@ -314,6 +251,43 @@ public class LoadTrackActivity extends ListActivity {
         return super.onContextItemSelected(item);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see android.app.Activity#onCreate(android.os.Bundle)
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        updateAdapter();
+        setTitle(R.string.string_loadtrackActivity_title);
+        setContentView(R.layout.activity_loadtrackactivity);
+        registerForContextMenu(getListView());
+
+        setTextChangedListenerToSearchBox(checkEditText());
+
+        // Set status bar
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
+                getResources().getString(R.string.tv_statusbar_loadtrackDesc),
+                R.id.ly_loadtrackActivity_statusbar, true);
+
+    }
+
+    /**
+     * Create ContextMenu for this activity.
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contextmenu_loadtrackactivity, menu);
+        menu.setHeaderIcon(android.R.drawable.ic_menu_compass);
+        menu.setHeaderTitle(getResources().getString(
+                R.string.cm_loadtrackActivity_title));
+    }
+
     /**
      * This method inflate the options menu for this activity.
      */
@@ -346,21 +320,61 @@ public class LoadTrackActivity extends ListActivity {
     }
 
     /**
-     * @param v
-     *            used to get the text of the view. Could be dangerous.
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
      * 
+     * @param v
+     *            not used
      */
-    public void deleteTrackBtn(View v) {
-        if (v == null) {
-            Log.w("BUTTON", "view is null");
-            return;
-        }
-        if (v.getTag() == null) {
-            Log.w("BUTTON", "tag is null");
-            return;
-        }
-        Log.w("BUTTON", (String) v.getTag());
-        deleteTrack((String) v.getTag());
+    public void statusBarPrefBtn(View v) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * This Method for the search image Button from the status bar. This method
+     * change the visibility of edit text view below the status bar.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarSearchBtn(View v) {
+        EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
+        if (searchBox.getVisibility() == 8) {
+            searchBox.setVisibility(1);
+            setTextChangedListenerToSearchBox(searchBox);
+        } else
+            searchBox.setVisibility(8);
+    }
+
+    /**
+     * This Method for the two (title and description) button from the status
+     * bar. This method starts the dialog with all activity informations.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarTitleBtn(View v) {
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
+                getResources().getString(R.string.tv_statusbar_loadtrackDesc));
+    }
+
+    private EditText checkEditText() {
+
+        // Get the app's shared preferences
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        // Get the value for the status bar check box - default false
+        if (appPreferences.getBoolean("check_visbilityStatusbar", false)) {
+            EditText loadTrackSearch = (EditText) findViewById(R.id.et_loadtrackactivity_search);
+            loadTrackSearch.setVisibility(8);
+            TextView loadTrackFilter = (TextView) findViewById(R.id.tv_loadtrackactivity_filter);
+            loadTrackFilter.setVisibility(8);
+            return (EditText) findViewById(R.id.et_statusbar_search);
+        } else
+            return (EditText) findViewById(R.id.et_loadtrackactivity_search);
     }
 
     private void deleteTrack(final String trname) {
@@ -388,6 +402,101 @@ public class LoadTrackActivity extends ListActivity {
                             }
                         });
         builder.show();
+    }
+
+    private void setTextChangedListenerToSearchBox(EditText etFilter) {
+
+        if (etFilter == null)
+            return;
+
+        etFilter.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                // nothing done here
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                    int after) {
+                // nothing done here
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                    int count) {
+                if (s.toString() != null) {
+                    searchText = s.toString();
+                    textSearchUpdate();
+                }
+            }
+
+        });
+    }
+
+    /**
+     * Fills the adapter with the data that are stored in datalist.
+     * 
+     * @param datalist
+     *            The data used for filling the adapter.
+     */
+    protected void fillAdapter(final List<GenericAdapterData> datalist) {
+        final Activity thisActivity = this;
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                adapter = new GenericAdapter(thisActivity,
+                        R.layout.listview_loadtrack, R.id.list, datalist);
+
+                setListAdapter(adapter);
+
+                getListView().setTextFilterEnabled(true);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * If a ListItem selected, the method will load the track.
+     */
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        GenericAdapterData datum = adapter.getItem(position);
+        final String trackname = datum.getText("TrackName");
+        DataTrack track = DataStorage.getInstance().deserializeTrack(trackname);
+        if (track != null) {
+            DataStorage.getInstance().setCurrentTrack(track);
+            final Intent intent = new Intent(this, NewTrackActivity.class);
+            startActivity(intent);
+        } else {
+            Log.e("RenameTrack", "Track to load was not found or is corrupt.");
+            LogIt.popup(this,
+                    "Track to load could not be opened. Missing or corrupt.");
+        }
+        super.onListItemClick(l, v, position, id);
+    }
+
+    @Override
+    protected void onResume() {
+        if (searchText == null) {
+            searchText = "";
+        }
+
+        updateAdapter();
+        super.onResume();
+    }
+
+    /**
+     * If search text changes this method updates the list.
+     */
+    protected void textSearchUpdate() {
+        if (searchText != null && searchText.length() > 0) {
+            List<GenericAdapterData> datalist = new ArrayList<GenericAdapterData>();
+            for (GenericAdapterData gda : data) {
+                if (gda.getText("TrackName").contains(searchText)) {
+                    datalist.add(gda);
+                }
+            }
+            fillAdapter(datalist);
+        }
     }
 
     /**
@@ -469,114 +578,5 @@ public class LoadTrackActivity extends ListActivity {
                 thisActivity.fillAdapter(data);
             }
         }).start();
-    }
-
-    /**
-     * Fills the adapter with the data that are stored in datalist.
-     * 
-     * @param datalist
-     *            The data used for filling the adapter.
-     */
-    protected void fillAdapter(final List<GenericAdapterData> datalist) {
-        final Activity thisActivity = this;
-        this.runOnUiThread(new Runnable() {
-            public void run() {
-                adapter = new GenericAdapter(thisActivity,
-                        R.layout.listview_loadtrack, R.id.list, datalist);
-
-                setListAdapter(adapter);
-
-                getListView().setTextFilterEnabled(true);
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    /**
-     * If search text changes this method updates the list.
-     */
-    protected void textSearchUpdate() {
-        if (searchText != null && searchText.length() > 0) {
-            List<GenericAdapterData> datalist = new ArrayList<GenericAdapterData>();
-            for (GenericAdapterData gda : data) {
-                if (gda.getText("TrackName").contains(searchText)) {
-                    datalist.add(gda);
-                }
-            }
-            fillAdapter(datalist);
-        }
-    }
-
-    /**
-     * If a ListItem selected, the method will load the track.
-     */
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-
-        GenericAdapterData datum = adapter.getItem(position);
-        final String trackname = datum.getText("TrackName");
-        DataTrack track = DataStorage.getInstance().deserializeTrack(trackname);
-        if (track != null) {
-            DataStorage.getInstance().setCurrentTrack(track);
-            final Intent intent = new Intent(this, NewTrackActivity.class);
-            startActivity(intent);
-        } else {
-            Log.e("RenameTrack", "Track to load was not found or is corrupt.");
-            LogIt.popup(this,
-                    "Track to load could not be opened. Missing or corrupt.");
-        }
-        super.onListItemClick(l, v, position, id);
-    }
-
-    @Override
-    protected void onResume() {
-        if (searchText == null) {
-            searchText = "";
-        }
-
-        updateAdapter();
-        super.onResume();
-    }
-
-    /**
-     * This Method for the two (title and description) button from the status
-     * bar. This method starts the dialog with all activity informations.
-     * 
-     * @param v
-     *            not used
-     */
-    public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this,
-                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
-                getResources().getString(R.string.tv_statusbar_loadtrackDesc));
-    }
-
-    /**
-     * The Method for the preference image Button from the status bar. The
-     * Method starts the PreferenceActivity.
-     * 
-     * @param v
-     *            not used
-     */
-    public void statusBarPrefBtn(View v) {
-        final Intent intent = new Intent(this, PreferencesActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * This Method for the search image Button from the status bar. This method
-     * change the visibility of edit text view below the status bar.
-     * 
-     * @param v
-     *            not used
-     */
-    public void statusBarSearchBtn(View v) {
-        EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
-        if (searchBox.getVisibility() == 8) {
-            searchBox.setVisibility(1);
-            setTextChangedListenerToSearchBox(searchBox);
-        } else
-            searchBox.setVisibility(8);
     }
 }

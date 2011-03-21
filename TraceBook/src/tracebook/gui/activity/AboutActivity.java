@@ -20,66 +20,6 @@ import android.widget.TextView;
  */
 public class AboutActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aboutactivity);
-        setTitle(R.string.string_aboutActivity_title);
-        setTextViews();
-        // Set status bar
-        Helper.setStatusBar(this,
-                getResources().getString(R.string.tv_statusbar_aboutTitle),
-                getResources().getString(R.string.tv_statusbar_aboutDesc),
-                R.id.ly_aboutActivity_statusbar, false);
-
-    }
-
-    /**
-     * Sets the text of the TextView resources with the resource.txt from the
-     * assets directory.
-     */
-    void setTextViews() {
-        TextView resources = (TextView) findViewById(R.id.tv_aboutActivity_usedResources);
-        try {
-            resources.setText(readTxt("used_resources.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Parses the textFile with the gplLicense.
-     * 
-     * @param dataname
-     *            String - which file has to be parsed
-     * 
-     * @return The OutputStream of the LicenseTxtFile as a String
-     * @throws IOException
-     *             not used
-     */
-    String readTxt(String dataname) throws IOException {
-
-        InputStream inputStream = getAssets().open(dataname);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        int i;
-        try {
-            i = inputStream.read();
-            while (i != -1) {
-                byteArrayOutputStream.write(i);
-                i = inputStream.read();
-            }
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return byteArrayOutputStream.toString();
-    }
-
     /**
      * Shows a dialog box with the used license.
      * 
@@ -129,5 +69,65 @@ public class AboutActivity extends Activity {
         Helper.setActivityInfoDialog(this,
                 getResources().getString(R.string.tv_statusbar_aboutTitle),
                 getResources().getString(R.string.tv_statusbar_aboutDesc));
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_aboutactivity);
+        setTitle(R.string.string_aboutActivity_title);
+        setTextViews();
+        // Set status bar
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_aboutTitle),
+                getResources().getString(R.string.tv_statusbar_aboutDesc),
+                R.id.ly_aboutActivity_statusbar, false);
+
+    }
+
+    /**
+     * Parses the textFile with the gplLicense.
+     * 
+     * @param dataname
+     *            String - which file has to be parsed
+     * 
+     * @return The OutputStream of the LicenseTxtFile as a String
+     * @throws IOException
+     *             not used
+     */
+    String readTxt(String dataname) throws IOException {
+
+        InputStream inputStream = getAssets().open(dataname);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return byteArrayOutputStream.toString();
+    }
+
+    /**
+     * Sets the text of the TextView resources with the resource.txt from the
+     * assets directory.
+     */
+    void setTextViews() {
+        TextView resources = (TextView) findViewById(R.id.tv_aboutActivity_usedResources);
+        try {
+            resources.setText(readTxt("used_resources.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

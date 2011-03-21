@@ -17,6 +17,22 @@ import org.xmlpull.v1.XmlSerializer;
  */
 public abstract class DataMediaHolder {
     /**
+     * Creates a time stamp of the current time formatted according to W3C.
+     * 
+     * @return A time stamp String.
+     */
+    public static String getW3CFormattedTimeStamp() {
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        return sdf.format(new Date());
+    }
+
+    /**
+     * The Creation time.
+     */
+    private String datetime;
+
+    /**
      * The list of Media.
      */
     protected List<DataMedia> media;
@@ -30,53 +46,6 @@ public abstract class DataMediaHolder {
     }
 
     /**
-     * Creates a time stamp of the current time formatted according to W3C.
-     * 
-     * @return A time stamp String.
-     */
-    public static String getW3CFormattedTimeStamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        return sdf.format(new Date());
-    }
-
-    /**
-     * Set the Creation time of this MediaHolder. Used to restore an old
-     * MediaHolder while deserialization.
-     * 
-     * @param datetime
-     *            The new time stamp as String.
-     */
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
-    }
-
-    /**
-     * The Creation time.
-     */
-    private String datetime;
-
-    /**
-     * Getter-method that returns a list of all media. The returned List is the
-     * one stored in the MediaHolder. Changing the returned List will therefore
-     * change this list.
-     * 
-     * @return The list of all media. (not null)
-     */
-    public List<DataMedia> getMedia() {
-        return media;
-    }
-
-    /**
-     * Getter-method. The creation time string.
-     * 
-     * @return The creation time of this object as String. (Could be null)
-     */
-    public String getDatetime() {
-        return datetime;
-    }
-
-    /**
      * Add a new medium to this object. Does nothing if parameter is null.
      * 
      * @param medium
@@ -85,19 +54,6 @@ public abstract class DataMediaHolder {
     public void addMedia(DataMedia medium) {
         if (medium != null) {
             media.add(medium);
-        }
-    }
-
-    /**
-     * This method generates the media-tags ("link") for a
-     * DataMediaHolder-object. The enclosing tag must be opened.
-     * 
-     * @param serializer
-     *            An XmlSerializer that is initialized.
-     */
-    public void serializeMedia(XmlSerializer serializer) {
-        for (DataMedia m : media) {
-            m.serialize(serializer);
         }
     }
 
@@ -143,5 +99,49 @@ public abstract class DataMediaHolder {
 
             }
         }
+    }
+
+    /**
+     * Getter-method. The creation time string.
+     * 
+     * @return The creation time of this object as String. (Could be null)
+     */
+    public String getDatetime() {
+        return datetime;
+    }
+
+    /**
+     * Getter-method that returns a list of all media. The returned List is the
+     * one stored in the MediaHolder. Changing the returned List will therefore
+     * change this list.
+     * 
+     * @return The list of all media. (not null)
+     */
+    public List<DataMedia> getMedia() {
+        return media;
+    }
+
+    /**
+     * This method generates the media-tags ("link") for a
+     * DataMediaHolder-object. The enclosing tag must be opened.
+     * 
+     * @param serializer
+     *            An XmlSerializer that is initialized.
+     */
+    public void serializeMedia(XmlSerializer serializer) {
+        for (DataMedia m : media) {
+            m.serialize(serializer);
+        }
+    }
+
+    /**
+     * Set the Creation time of this MediaHolder. Used to restore an old
+     * MediaHolder while deserialization.
+     * 
+     * @param datetime
+     *            The new time stamp as String.
+     */
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 }

@@ -22,9 +22,9 @@ import android.util.Xml;
  */
 public class TagDb {
 
-    private TagDbOpenHelper helper;
-    private SQLiteDatabase db;
     private Context context;
+    private SQLiteDatabase db;
+    private TagDbOpenHelper helper;
 
     /**
      * Constructor, opens the database.
@@ -36,99 +36,6 @@ public class TagDb {
         super();
         this.context = context;
         helper = new TagDbOpenHelper(context);
-    }
-
-    /**
-     * Opens the database in read-only mode.
-     */
-    private void openDb() {
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
-
-        db = helper.getReadableDatabase();
-    }
-
-    /**
-     * Returns the TagDbOpenHelper object. Should not be used.
-     * 
-     * @return The {@link TagDbOpenHelper} variable.
-     */
-    TagDbOpenHelper getHelper() {
-        return helper;
-    }
-
-    /**
-     * Closes the database. Dot not forget to call this method!
-     */
-    private void closeDb() {
-        db.close();
-    }
-
-    /**
-     * Searches the database for a text in its description, keywords and name.
-     * 
-     * @param searchText
-     *            The text to search for.
-     * @param language
-     *            The language abbreviation as string like "de" or "en".
-     * @return The list of search results.
-     */
-    public List<TagSearchResult> getTag(String searchText, String language) {
-        openDb();
-
-        if (db != null && db.isOpen()) {
-            List<TagSearchResult> tags = new Vector<TagSearchResult>();
-
-            fillTagListWithSearchResults(searchText, language, tags);
-
-            closeDb();
-            return tags;
-        } else {
-            Log.e("TagDataBase", "Could not open Database.");
-            return null;
-        }
-    }
-
-    /**
-     * Fills a given tag list with tags that contain the searchText.
-     * 
-     * @param searchText
-     *            The text to search for.
-     * @param language
-     *            The language abbreviation.
-     * @param tags
-     *            The list in that the results are inserted.
-     */
-    private void fillTagListWithSearchResults(String searchText,
-            String language, List<TagSearchResult> tags) {
-
-        if (searchText.length() >= 2) {
-            Cursor result = db.query(TagDbOpenHelper.getDictTableName(),
-                    TagDbOpenHelper.getDictColumns(), "("
-                            + TagDbOpenHelper.DICT_COLUMN_NAME + " LIKE '%"
-                            + searchText + "%' OR "
-                            + TagDbOpenHelper.DICT_COLUMN_KEYWORDS + " LIKE '%"
-                            + searchText + "%' OR "
-                            + TagDbOpenHelper.DICT_COLUMN_DESC + " LIKE '%"
-                            + searchText + "%' OR "
-                            + TagDbOpenHelper.DICT_COLUMN_VALUE + " LIKE '%"
-                            + searchText + "%' OR "
-                            + TagDbOpenHelper.DICT_COLUMN_KEY + " LIKE '%"
-                            + searchText + "%') AND "
-                            + TagDbOpenHelper.DICT_COLUMN_LANG + " LIKE '"
-                            + language + "'", null, null, null, null, "20");
-
-            if (result.moveToFirst()) {
-                while (!result.isAfterLast()) {
-                    // insert row to tags list
-                    tags.add(TagDbOpenHelper.getResultFromCursor(result));
-
-                    result.moveToNext();
-                }
-            }
-            result.close();
-        }
     }
 
     /**
@@ -158,6 +65,31 @@ public class TagDb {
     }
 
     /**
+     * Searches the database for a text in its description, keywords and name.
+     * 
+     * @param searchText
+     *            The text to search for.
+     * @param language
+     *            The language abbreviation as string like "de" or "en".
+     * @return The list of search results.
+     */
+    public List<TagSearchResult> getTag(String searchText, String language) {
+        openDb();
+
+        if (db != null && db.isOpen()) {
+            List<TagSearchResult> tags = new Vector<TagSearchResult>();
+
+            fillTagListWithSearchResults(searchText, language, tags);
+
+            closeDb();
+            return tags;
+        } else {
+            Log.e("TagDataBase", "Could not open Database.");
+            return null;
+        }
+    }
+
+    /**
      * Loads an XML file into the database.
      * 
      * @param id
@@ -167,49 +99,24 @@ public class TagDb {
         try {
             Xml.parse(context.getResources().openRawResource(id),
                     Xml.Encoding.UTF_8, new DefaultHandler() {
-                        SQLiteDatabase writeDb;
-
-                        /*
-                         * (non-Javadoc)
-                         * 
-                         * @see org.xml.sax.helpers.DefaultHandler#endDocument()
-                         */
-                        @Override
-                        public void endDocument() throws SAXException {
-                            writeDb.setTransactionSuccessful();
-                            writeDb.endTransaction();
-                            writeDb.close();
-                            super.endDocument();
-                        }
-
-                        /*
-                         * (non-Javadoc)
-                         * 
-                         * @see
-                         * org.xml.sax.helpers.DefaultHandler#startDocument()
-                         */
-                        @Override
-                        public void startDocument() throws SAXException {
-                            writeDb = getHelper().getWritableDatabase();
-                            writeDb.beginTransaction();
-                            super.startDocument();
-                        }
-
-                        String language = null;
-                        String key = null;
-                        String value = null;
-                        String link = null;
-                        String description = null;
-                        String type = null;
-                        String name = null;
-                        String imgUrl = null;
-                        String keywords = null;
                         int depth = 0;
-                        boolean descriptionTagOpened = false;
-                        boolean uriTagOpened = false;
-                        boolean keywordsOpened = false;
-                        boolean imgOpened = false;
 
+                        String description = null;
+
+                        boolean descriptionTagOpened = false;
+
+                        boolean imgOpened = false;
+                        String imgUrl = null;
+                        String key = null;
+                        String keywords = null;
+                        boolean keywordsOpened = false;
+                        String language = null;
+                        String link = null;
+                        String name = null;
+                        String type = null;
+                        boolean uriTagOpened = false;
+                        String value = null;
+                        SQLiteDatabase writeDb;
                         @Override
                         public void characters(char[] ch, int start, int length) {
                             String tmp = new String(ch, start, length);
@@ -224,6 +131,18 @@ public class TagDb {
                             } else if (imgOpened) {
                                 imgUrl += tmp;
                             }
+                        }
+                        /*
+                         * (non-Javadoc)
+                         * 
+                         * @see org.xml.sax.helpers.DefaultHandler#endDocument()
+                         */
+                        @Override
+                        public void endDocument() throws SAXException {
+                            writeDb.setTransactionSuccessful();
+                            writeDb.endTransaction();
+                            writeDb.close();
+                            super.endDocument();
                         }
 
                         @Override
@@ -264,6 +183,19 @@ public class TagDb {
                                 imgOpened = false;
                             }
                             depth--;
+                        }
+
+                        /*
+                         * (non-Javadoc)
+                         * 
+                         * @see
+                         * org.xml.sax.helpers.DefaultHandler#startDocument()
+                         */
+                        @Override
+                        public void startDocument() throws SAXException {
+                            writeDb = getHelper().getWritableDatabase();
+                            writeDb.beginTransaction();
+                            super.startDocument();
                         }
 
                         @Override
@@ -320,5 +252,73 @@ public class TagDb {
         }
         crs.close();
         closeDb();
+    }
+
+    /**
+     * Closes the database. Dot not forget to call this method!
+     */
+    private void closeDb() {
+        db.close();
+    }
+
+    /**
+     * Fills a given tag list with tags that contain the searchText.
+     * 
+     * @param searchText
+     *            The text to search for.
+     * @param language
+     *            The language abbreviation.
+     * @param tags
+     *            The list in that the results are inserted.
+     */
+    private void fillTagListWithSearchResults(String searchText,
+            String language, List<TagSearchResult> tags) {
+
+        if (searchText.length() >= 2) {
+            Cursor result = db.query(TagDbOpenHelper.getDictTableName(),
+                    TagDbOpenHelper.getDictColumns(), "("
+                            + TagDbOpenHelper.DICT_COLUMN_NAME + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_KEYWORDS + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_DESC + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_VALUE + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_KEY + " LIKE '%"
+                            + searchText + "%') AND "
+                            + TagDbOpenHelper.DICT_COLUMN_LANG + " LIKE '"
+                            + language + "'", null, null, null, null, "20");
+
+            if (result.moveToFirst()) {
+                while (!result.isAfterLast()) {
+                    // insert row to tags list
+                    tags.add(TagDbOpenHelper.getResultFromCursor(result));
+
+                    result.moveToNext();
+                }
+            }
+            result.close();
+        }
+    }
+
+    /**
+     * Opens the database in read-only mode.
+     */
+    private void openDb() {
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+
+        db = helper.getReadableDatabase();
+    }
+
+    /**
+     * Returns the TagDbOpenHelper object. Should not be used.
+     * 
+     * @return The {@link TagDbOpenHelper} variable.
+     */
+    TagDbOpenHelper getHelper() {
+        return helper;
     }
 }

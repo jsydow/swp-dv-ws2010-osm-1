@@ -41,14 +41,45 @@ import android.widget.TextView;
  */
 public class FullTextSearchActivity extends ListActivity {
 
-    private int currResIndex;
-    private List<TagSearchResult> currTagSearchResult;
-
     /**
-     * We use this to get Tag Information about the press Item in our ListView.
+     * The text watcher tracks changes in the search edit box. As soon as some
+     * text matches with the description text, the result will be displayed in
+     * the list view.
      */
-    TagSearchResult ts;
+    static class MyTextWatcher implements TextWatcher {
 
+        /**
+         * Reference to the FullTextSearchActivity to update the list view.
+         */
+        FullTextSearchActivity act;
+
+        /**
+         * 
+         * @param act
+         *            reference to the FullTextSearchActivity to update the list
+         *            view.
+         */
+        public MyTextWatcher(FullTextSearchActivity act) {
+            this.act = act;
+        }
+
+        public void afterTextChanged(Editable arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                int arg3) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                int arg3) {
+            final String searchText = arg0.toString();
+            new SearchThread(act, act.increaseIndex(), searchText).start();
+        }
+    }
     /**
      * A simple thread class which deals with search jobs in our database.
      */
@@ -99,89 +130,14 @@ public class FullTextSearchActivity extends ListActivity {
         }
     }
 
-    /**
-     * The text watcher tracks changes in the search edit box. As soon as some
-     * text matches with the description text, the result will be displayed in
-     * the list view.
-     */
-    static class MyTextWatcher implements TextWatcher {
+    private int currResIndex;
 
-        /**
-         * Reference to the FullTextSearchActivity to update the list view.
-         */
-        FullTextSearchActivity act;
-
-        /**
-         * 
-         * @param act
-         *            reference to the FullTextSearchActivity to update the list
-         *            view.
-         */
-        public MyTextWatcher(FullTextSearchActivity act) {
-            this.act = act;
-        }
-
-        public void afterTextChanged(Editable arg0) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                int arg3) {
-            // TODO Auto-generated method stub
-
-        }
-
-        public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                int arg3) {
-            final String searchText = arg0.toString();
-            new SearchThread(act, act.increaseIndex(), searchText).start();
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fulltextsearchactivity);
-        setTitle(R.string.string_fulltextsearchActivity_title);
-
-        // Set status bar
-        Helper.setStatusBar(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc),
-                R.id.ly_fulltextsearchActivity_statusbar, true);
-
-        EditText editBox = checkEditText();
-        if (editBox != null)
-            editBox.addTextChangedListener(new MyTextWatcher(this));
-
-    }
+    private List<TagSearchResult> currTagSearchResult;
 
     /**
-     * This method check the status bar "status". If status bar is available the
-     * edit text visibility of the fullTextSearchActivity change to invisible.
-     * 
-     * @return The correct and used edit text.
+     * We use this to get Tag Information about the press Item in our ListView.
      */
-    private EditText checkEditText() {
-
-        // Get the app's shared preferences
-        SharedPreferences appPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        // Get the value for the status bar check box - default false
-        if (appPreferences.getBoolean("check_visbilityStatusbar", false)) {
-            EditText loadTrackSearch = (EditText) findViewById(R.id.et_fulltextsearchActivity_search);
-            loadTrackSearch.setVisibility(8);
-            EditText statusBarSearch = (EditText) findViewById(R.id.et_statusbar_search);
-            statusBarSearch.setVisibility(1);
-            return statusBarSearch;
-        } else
-            return (EditText) findViewById(R.id.et_fulltextsearchActivity_search);
-    }
+    TagSearchResult ts;
 
     /**
      * Fill the ListView with the tag results. Since we are using threads to do
@@ -248,6 +204,93 @@ public class FullTextSearchActivity extends ListActivity {
         return ++currResIndex;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fulltextsearchactivity);
+        setTitle(R.string.string_fulltextsearchActivity_title);
+
+        // Set status bar
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc),
+                R.id.ly_fulltextsearchActivity_statusbar, true);
+
+        EditText editBox = checkEditText();
+        if (editBox != null)
+            editBox.addTextChangedListener(new MyTextWatcher(this));
+
+    }
+
+    /**
+     * The Method for the preference image Button from the status bar. The
+     * Method starts the PreferenceActivity.
+     * 
+     * @param view
+     *            not used
+     */
+    public void statusBarPrefBtn(View view) {
+        final Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * This Method for the search image Button from the status bar. This method
+     * change the visibility of edit text view below the status bar.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarSearchBtn(View v) {
+        EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
+        if (searchBox.getVisibility() == 8)
+            searchBox.setVisibility(1);
+        else
+            searchBox.setVisibility(8);
+    }
+
+    /**
+     * This Method for the two (title and description) button from the status
+     * bar. This method starts the dialog with all activity informations.
+     * 
+     * @param v
+     *            not used
+     */
+    public void statusBarTitleBtn(View v) {
+        Helper.setActivityInfoDialog(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc));
+    }
+
+    /**
+     * This method check the status bar "status". If status bar is available the
+     * edit text visibility of the fullTextSearchActivity change to invisible.
+     * 
+     * @return The correct and used edit text.
+     */
+    private EditText checkEditText() {
+
+        // Get the app's shared preferences
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        // Get the value for the status bar check box - default false
+        if (appPreferences.getBoolean("check_visbilityStatusbar", false)) {
+            EditText loadTrackSearch = (EditText) findViewById(R.id.et_fulltextsearchActivity_search);
+            loadTrackSearch.setVisibility(8);
+            EditText statusBarSearch = (EditText) findViewById(R.id.et_statusbar_search);
+            statusBarSearch.setVisibility(1);
+            return statusBarSearch;
+        } else
+            return (EditText) findViewById(R.id.et_fulltextsearchActivity_search);
+    }
+
     /**
      * Show dialog for the selected Item with all tag informations. 1. Category
      * 2. Value 3. Description 4. Image 5. Wikipedia link
@@ -302,49 +345,6 @@ public class FullTextSearchActivity extends ListActivity {
 
         infoDialog.show();
 
-    }
-
-    /**
-     * The Method for the preference image Button from the status bar. The
-     * Method starts the PreferenceActivity.
-     * 
-     * @param view
-     *            not used
-     */
-    public void statusBarPrefBtn(View view) {
-        final Intent intent = new Intent(this, PreferencesActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     * This Method for the two (title and description) button from the status
-     * bar. This method starts the dialog with all activity informations.
-     * 
-     * @param v
-     *            not used
-     */
-    public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc));
-    }
-
-    /**
-     * This Method for the search image Button from the status bar. This method
-     * change the visibility of edit text view below the status bar.
-     * 
-     * @param v
-     *            not used
-     */
-    public void statusBarSearchBtn(View v) {
-        EditText searchBox = (EditText) findViewById(R.id.et_statusbar_search);
-        if (searchBox.getVisibility() == 8)
-            searchBox.setVisibility(1);
-        else
-            searchBox.setVisibility(8);
     }
 
 }

@@ -31,10 +31,135 @@ import android.os.RemoteException;
  * This Class is derived from the {@link ArrayItemizedOverlay} of MapsForge
  */
 public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
+    private class CurrentPosListener implements DialogInterface.OnClickListener {
+        private final CharSequence[] items_default = {
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_start) };
+        private final CharSequence[] items_way = {
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_end),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_add) };
+
+        private GeoPoint point;
+
+        public CurrentPosListener() {
+            // do nothing
+        }
+
+        public CharSequence[] getItems() {
+            return tagging() ? items_way : items_default;
+        }
+
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+            case 0: // Tag this
+                final Intent intent = new Intent(context,
+                        AddPointActivity.class);
+                intent.putExtra("DataNodeId", currentTrack.newNode(point)
+                        .getId());
+
+                context.startActivity(intent);
+                break;
+            case 1: // Start/Stop way
+                try {
+                    if (tagging())
+                        ServiceConnector.getLoggerService().endWay();
+                    else
+                        ServiceConnector.getLoggerService().beginWay(true);
+                } catch (RemoteException e) {
+                    Helper.handleNastyException(context, e, LOG_TAG);
+                }
+                break;
+            case 2: // add way point
+                try {
+                    ServiceConnector.getLoggerService().beginWay(true);
+                } catch (RemoteException e) {
+                    Helper.handleNastyException(context, e, LOG_TAG);
+                }
+                break;
+            default:
+                break;
+            }
+        }
+
+        public void setPos(GeoPoint point) {
+            this.point = point;
+        }
+
+        private boolean tagging() {
+            return Helper.currentTrack().getCurrentWay() != null;
+        }
+    }
+    private class DefaultListener implements DialogInterface.OnClickListener {
+        private final CharSequence[] items = {
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_move),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_delete) };
+
+        private int nodeId = 0;
+
+        private GpsMessage sender;
+
+        public DefaultListener() {
+            sender = new GpsMessage(context);
+        }
+
+        public CharSequence[] getItems() {
+            return items;
+        }
+
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+            case 0: // Tag this
+                final Intent intent = new Intent(context,
+                        AddPointActivity.class);
+                intent.putExtra("DataNodeId", nodeId);
+                context.startActivity(intent);
+                break;
+            case 1: // move this
+                sender.sendMovePoint(nodeId);
+                break;
+            case 2: // delete this
+                final DataNode node = currentTrack.getNodeById(nodeId);
+                DataPointsList way = null;
+                if (node != null)
+                    way = node.getDataPointsList();
+                if (currentTrack.deleteNode(nodeId)) {
+                    remove(nodeId);
+                    if (way != null) // we have to redraw the way
+                        sender.sendWayUpdate(way.getId());
+                } else
+                    LogIt.popup(context, "Can not delete Node id=" + nodeId);
+                break;
+            default:
+                break;
+            }
+        }
+
+        public void setNodeId(int id) {
+            nodeId = id;
+        }
+    }
     private static final int ARRAY_LIST_INITIAL_CAPACITY = 8;
-    private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
-    private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
     private static final String LOG_TAG = "DNAIO";
+
+    private static final String THREAD_NAME = "DataNodeArrayItemizedOverlay";
+
+    private CurrentPosListener contextMenueCurrentPosListener;
+
+    private DefaultListener contextMenueListener;
+
+    private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
+
+    private DataPointsListArrayRouteOverlay routesOverlay;
 
     /**
      * Context of the MapActivity.
@@ -45,8 +170,6 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Reference to the current DataTrack.
      */
     DataTrack currentTrack;
-
-    private DataPointsListArrayRouteOverlay routesOverlay;
 
     /**
      * Constructs a new ArrayItemizedOverlay.
@@ -71,6 +194,18 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     /**
+     * Adds the DataNode to the overlay, assuming a OverlayItem was already
+     * specified.
+     * 
+     * @param node
+     *            The DataNode - must contain a OverlayItem as well as a unique
+     *            ID
+     */
+    public void addOverlay(DataNode node) {
+        addOverlay(node.getOverlayItem(), node.getId());
+    }
+
+    /**
      * Adds the given item to the overlay.
      * 
      * @param overlayItem
@@ -87,15 +222,77 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     /**
-     * Adds the DataNode to the overlay, assuming a OverlayItem was already
-     * specified.
+     * Add a list of POIs to the overlay.
      * 
-     * @param node
-     *            The DataNode - must contain a OverlayItem as well as a unique
-     *            ID
+     * @param nodes
+     *            {@link DataNode}s to be added to overlay
      */
-    public void addOverlay(DataNode node) {
-        addOverlay(node.getOverlayItem(), node.getId());
+    public void addPoints(List<DataNode> nodes) {
+        synchronized (this.overlayItems) {
+            for (DataNode n : nodes) {
+                if (n.getOverlayItem() == null)
+                    n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
+                this.overlayItems.add(new Pair<OverlayItem, Integer>(n
+                        .getOverlayItem(), Integer.valueOf(n.getId())));
+            }
+        }
+        populate();
+    }
+
+    /**
+     * Removes all items from the overlay.
+     */
+    public void clear() {
+        synchronized (this.overlayItems) {
+            this.overlayItems.clear();
+        }
+        populate();
+    }
+
+    @Override
+    public String getThreadName() {
+        return THREAD_NAME;
+    }
+
+    /**
+     * This function removes all OverlayItems, which are not associated with any
+     * {@link DataNode}. It also updates all OverlayItems associated with a
+     * DataNode to the DataNodes position.
+     * <p>
+     * Warning: This function effectively has a runtime of n³!
+     * </p>
+     */
+    public void removeOrphans() {
+        synchronized (this.overlayItems) {
+            Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
+            while (iter.hasNext()) {
+                Pair<OverlayItem, Integer> item = iter.next();
+                int id = item.second.intValue();
+                if (id > 0) {
+                    DataNode node = Helper.currentTrack().getNodeById(id);
+                    if (node == null) // remove orphan
+                        iter.remove();
+                    else {
+                        // update OverlayItem
+                        item.first = Helper.getOverlayItem(node.toGeoPoint(),
+                                item.first.getMarker());
+                        node.setOverlayItem(item.first);
+                    }
+                }
+            }
+        }
+        populate();
+    }
+
+    /**
+     * Removes the given item from the overlay.
+     * 
+     * @param id
+     *            the id of the {@link DataNode} object
+     */
+    public void removeOverlay(int id) {
+        remove(id);
+        populate();
     }
 
     /**
@@ -106,6 +303,46 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      */
     public void setCurrentPosition(GeoPoint currentPos) {
         updateItem(currentPos, -1, R.drawable.marker_green);
+    }
+
+    /**
+     * We need to set the RoutesOverlay as the class will be created after this
+     * one.
+     * 
+     * @param routesOverlay
+     *            the routesOverlay also on the MapActivity
+     */
+    public void setRoutesOverlay(DataPointsListArrayRouteOverlay routesOverlay) {
+        this.routesOverlay = routesOverlay;
+    }
+
+    @Override
+    public int size() {
+        synchronized (this.overlayItems) {
+            return this.overlayItems.size();
+        }
+    }
+    /**
+     * When a {@link DataNode} has been changed, update it's visualization on
+     * the DataNodeArrayItemizedOverlay.
+     * 
+     * @param node
+     *            the node whose position or OverlayItem has changed
+     */
+    public void updateItem(DataNode node) {
+        boolean found = false;
+        synchronized (this.overlayItems) {
+            for (Pair<OverlayItem, Integer> item : overlayItems)
+                if (item.second.intValue() == node.getId()) {
+                    item.first = node.getOverlayItem();
+                    found = true;
+                    break;
+                }
+        }
+        if (!found)
+            addOverlay(node); // addOverlay populates the Overlay on its own
+        else
+            populate();
     }
 
     /**
@@ -149,130 +386,6 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         populate();
     }
 
-    /**
-     * When a {@link DataNode} has been changed, update it's visualization on
-     * the DataNodeArrayItemizedOverlay.
-     * 
-     * @param node
-     *            the node whose position or OverlayItem has changed
-     */
-    public void updateItem(DataNode node) {
-        boolean found = false;
-        synchronized (this.overlayItems) {
-            for (Pair<OverlayItem, Integer> item : overlayItems)
-                if (item.second.intValue() == node.getId()) {
-                    item.first = node.getOverlayItem();
-                    found = true;
-                    break;
-                }
-        }
-        if (!found)
-            addOverlay(node); // addOverlay populates the Overlay on its own
-        else
-            populate();
-    }
-
-    /**
-     * Add a list of POIs to the overlay.
-     * 
-     * @param nodes
-     *            {@link DataNode}s to be added to overlay
-     */
-    public void addPoints(List<DataNode> nodes) {
-        synchronized (this.overlayItems) {
-            for (DataNode n : nodes) {
-                if (n.getOverlayItem() == null)
-                    n.setOverlayItem(new OverlayItem(n.toGeoPoint(), "", ""));
-                this.overlayItems.add(new Pair<OverlayItem, Integer>(n
-                        .getOverlayItem(), Integer.valueOf(n.getId())));
-            }
-        }
-        populate();
-    }
-
-    /**
-     * Removes all items from the overlay.
-     */
-    public void clear() {
-        synchronized (this.overlayItems) {
-            this.overlayItems.clear();
-        }
-        populate();
-    }
-
-    @Override
-    public String getThreadName() {
-        return THREAD_NAME;
-    }
-
-    /**
-     * Removes the given item from the overlay.
-     * 
-     * @param id
-     *            the id of the {@link DataNode} object
-     */
-    public void removeOverlay(int id) {
-        remove(id);
-        populate();
-    }
-
-    /**
-     * Removes an {@link OverlayItem} by the ID of the associated
-     * {@link DataNode}.
-     * 
-     * @param id
-     *            ID of the {@link DataNode} associated with the
-     *            {@link OverlayItem}, -1 for the marker of the current position
-     *            which is not associated with any DataNode object
-     */
-    void remove(int id) {
-        synchronized (this.overlayItems) {
-            Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
-            while (iter.hasNext())
-                if (iter.next().second.intValue() == id) {
-                    iter.remove();
-                    break;
-                }
-        }
-    }
-
-    /**
-     * This function removes all OverlayItems, which are not associated with any
-     * {@link DataNode}. It also updates all OverlayItems associated with a
-     * DataNode to the DataNodes position.
-     * <p>
-     * Warning: This function effectively has a runtime of n³!
-     * </p>
-     */
-    public void removeOrphans() {
-        synchronized (this.overlayItems) {
-            Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
-            while (iter.hasNext()) {
-                Pair<OverlayItem, Integer> item = iter.next();
-                int id = item.second.intValue();
-                if (id > 0) {
-                    DataNode node = Helper.currentTrack().getNodeById(id);
-                    if (node == null) // remove orphan
-                        iter.remove();
-                    else {
-                        // update OverlayItem
-                        item.first = Helper.getOverlayItem(node.toGeoPoint(),
-                                item.first.getMarker());
-                        node.setOverlayItem(item.first);
-                    }
-                }
-            }
-        }
-        populate();
-    }
-
-    @Override
-    public int size() {
-        synchronized (this.overlayItems) {
-            return this.overlayItems.size();
-        }
-    }
-
     @Override
     protected OverlayItem createItem(int i) {
         synchronized (this.overlayItems) {
@@ -282,9 +395,6 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 return null;
         }
     }
-
-    private DefaultListener contextMenueListener;
-    private CurrentPosListener contextMenueCurrentPosListener;
 
     @Override
     protected boolean onTap(int index) {
@@ -314,133 +424,23 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         return true;
     }
 
-    private class DefaultListener implements DialogInterface.OnClickListener {
-        private GpsMessage sender;
-
-        private final CharSequence[] items = {
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_move),
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_delete) };
-
-        public DefaultListener() {
-            sender = new GpsMessage(context);
-        }
-
-        public CharSequence[] getItems() {
-            return items;
-        }
-
-        private int nodeId = 0;
-
-        public void setNodeId(int id) {
-            nodeId = id;
-        }
-
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-            case 0: // Tag this
-                final Intent intent = new Intent(context,
-                        AddPointActivity.class);
-                intent.putExtra("DataNodeId", nodeId);
-                context.startActivity(intent);
-                break;
-            case 1: // move this
-                sender.sendMovePoint(nodeId);
-                break;
-            case 2: // delete this
-                final DataNode node = currentTrack.getNodeById(nodeId);
-                DataPointsList way = null;
-                if (node != null)
-                    way = node.getDataPointsList();
-                if (currentTrack.deleteNode(nodeId)) {
-                    remove(nodeId);
-                    if (way != null) // we have to redraw the way
-                        sender.sendWayUpdate(way.getId());
-                } else
-                    LogIt.popup(context, "Can not delete Node id=" + nodeId);
-                break;
-            default:
-                break;
-            }
-        }
-    }
-
-    private class CurrentPosListener implements DialogInterface.OnClickListener {
-        private final CharSequence[] items_default = {
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_way_start) };
-        private final CharSequence[] items_way = {
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_tag),
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_way_end),
-                context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_way_add) };
-
-        public CurrentPosListener() {
-            // do nothing
-        }
-
-        public CharSequence[] getItems() {
-            return tagging() ? items_way : items_default;
-        }
-
-        private GeoPoint point;
-
-        public void setPos(GeoPoint point) {
-            this.point = point;
-        }
-
-        private boolean tagging() {
-            return Helper.currentTrack().getCurrentWay() != null;
-        }
-
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-            case 0: // Tag this
-                final Intent intent = new Intent(context,
-                        AddPointActivity.class);
-                intent.putExtra("DataNodeId", currentTrack.newNode(point)
-                        .getId());
-
-                context.startActivity(intent);
-                break;
-            case 1: // Start/Stop way
-                try {
-                    if (tagging())
-                        ServiceConnector.getLoggerService().endWay();
-                    else
-                        ServiceConnector.getLoggerService().beginWay(true);
-                } catch (RemoteException e) {
-                    Helper.handleNastyException(context, e, LOG_TAG);
-                }
-                break;
-            case 2: // add way point
-                try {
-                    ServiceConnector.getLoggerService().beginWay(true);
-                } catch (RemoteException e) {
-                    Helper.handleNastyException(context, e, LOG_TAG);
-                }
-                break;
-            default:
-                break;
-            }
-        }
-    }
-
     /**
-     * We need to set the RoutesOverlay as the class will be created after this
-     * one.
+     * Removes an {@link OverlayItem} by the ID of the associated
+     * {@link DataNode}.
      * 
-     * @param routesOverlay
-     *            the routesOverlay also on the MapActivity
+     * @param id
+     *            ID of the {@link DataNode} associated with the
+     *            {@link OverlayItem}, -1 for the marker of the current position
+     *            which is not associated with any DataNode object
      */
-    public void setRoutesOverlay(DataPointsListArrayRouteOverlay routesOverlay) {
-        this.routesOverlay = routesOverlay;
+    void remove(int id) {
+        synchronized (this.overlayItems) {
+            Iterator<Pair<OverlayItem, Integer>> iter = overlayItems.iterator();
+            while (iter.hasNext())
+                if (iter.next().second.intValue() == id) {
+                    iter.remove();
+                    break;
+                }
+        }
     }
 }

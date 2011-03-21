@@ -33,37 +33,6 @@ public final class DataStorage {
     private static DataStorage instance;
 
     /**
-     * All loaded Tracks.
-     */
-    private List<DataTrack> tracks;
-
-    /**
-     * A List of all possible track names on the working memory and devices
-     * memory.
-     */
-    private List<String> names;
-
-    /**
-     * Last given ID for a MapObject.
-     */
-    private int lastID;
-
-    /**
-     * Currently active Track.
-     */
-    private DataTrack currentTrack;
-
-    /**
-     * Default private constructor for Singleton implementation.
-     */
-    private DataStorage() {
-        tracks = Collections.synchronizedList(new ArrayList<DataTrack>());
-        names = Collections.synchronizedList(new ArrayList<String>());
-        retrieveTrackNames();
-        lastID = 1;
-    }
-
-    /**
      * Singleton implementation. This method returns the one and only instance
      * of this class.
      * 
@@ -76,22 +45,6 @@ public final class DataStorage {
     }
 
     /**
-     * This method removes duplicates in a list of Strings.
-     * 
-     * @param list
-     *            The list of Strings.
-     */
-    static void removeDuplicatesInStringList(List<String> list) {
-        synchronized (list) {
-            Set<String> tmp = new HashSet<String>(list);
-            list.clear();
-            list.addAll(tmp);
-            Collections.sort(list);
-        }
-        return;
-    }
-
-    /**
      * Return a String of the path to the TraceBook directory without an ending
      * / Path is like: /sdcard/TraceBook.
      * 
@@ -100,28 +53,6 @@ public final class DataStorage {
     public static String getTraceBookDirPath() {
         return Environment.getExternalStorageDirectory() + File.separator
                 + "TraceBook";
-    }
-
-    /**
-     * Create a new unique id to use for a new map object.
-     * 
-     * @return A new unique id > 0.
-     */
-    public synchronized int getID() {
-        lastID++;
-        return lastID;
-    }
-
-    /**
-     * Returns a list of the names of all tracks that are currently stored in
-     * this DataStorage object. The names can be used as argument to getTrack().
-     * 
-     * @return List of the names of all tracks. If there are no tracks stored
-     *         then the list will be empty.
-     */
-    public List<String> getAllTracks() {
-        updateNames();
-        return names;
     }
 
     /**
@@ -152,21 +83,60 @@ public final class DataStorage {
     }
 
     /**
-     * This method returns a Track object that specified by a name. Note that
-     * only tracks that the DataStorage currently stores can be returned.
+     * This method removes duplicates in a list of Strings.
      * 
-     * @param name
-     *            The name of a track as returned by getAllTracks()
-     * @return If such a track exists the Track itself is returned. If the track
-     *         does not exist however null is returned.
+     * @param list
+     *            The list of Strings.
      */
-    public DataTrack getTrack(String name) {
-        for (DataTrack dt : tracks) {
-            if (dt.getName().equals(name)) {
-                return dt;
-            }
+    static void removeDuplicatesInStringList(List<String> list) {
+        synchronized (list) {
+            Set<String> tmp = new HashSet<String>(list);
+            list.clear();
+            list.addAll(tmp);
+            Collections.sort(list);
         }
-        return null;
+        return;
+    }
+
+    /**
+     * Currently active Track.
+     */
+    private DataTrack currentTrack;
+
+    /**
+     * Last given ID for a MapObject.
+     */
+    private int lastID;
+
+    /**
+     * A List of all possible track names on the working memory and devices
+     * memory.
+     */
+    private List<String> names;
+
+    /**
+     * All loaded Tracks.
+     */
+    private List<DataTrack> tracks;
+
+    /**
+     * Default private constructor for Singleton implementation.
+     */
+    private DataStorage() {
+        tracks = Collections.synchronizedList(new ArrayList<DataTrack>());
+        names = Collections.synchronizedList(new ArrayList<String>());
+        retrieveTrackNames();
+        lastID = 1;
+    }
+
+    /**
+     * Will delete ALL tracks! Therefore resets the all data that have been
+     * stored on the device.
+     */
+    public void delete() {
+        for (DataTrack dt : tracks)
+            dt.delete();
+        tracks.clear();
     }
 
     /**
@@ -187,38 +157,6 @@ public final class DataStorage {
                 break;
             }
         }
-    }
-
-    /**
-     * Create a new Track in working memory. Don't forget to serialize it!
-     * 
-     * @return The newly created Track.
-     */
-    public DataTrack newTrack() {
-        DataTrack dt = new DataTrack();
-        tracks.add(dt);
-        return dt;
-    }
-
-    /**
-     * Setter-method for the currently edited Track.
-     * 
-     * @param currentTrack
-     *            The new currently edited Track.
-     * @return The parameter currentTrack is simple returned for further use.
-     */
-    public DataTrack setCurrentTrack(DataTrack currentTrack) {
-        this.currentTrack = currentTrack;
-        return currentTrack;
-    }
-
-    /**
-     * Getter-method.
-     * 
-     * @return The currently edited Track is returned.(may be null)
-     */
-    public DataTrack getCurrentTrack() {
-        return currentTrack;
     }
 
     /**
@@ -244,6 +182,66 @@ public final class DataStorage {
         DataTrack dt = DataTrack.deserialize(name);
         if (dt != null)
             tracks.add(dt);
+        return dt;
+    }
+
+    /**
+     * Returns a list of the names of all tracks that are currently stored in
+     * this DataStorage object. The names can be used as argument to getTrack().
+     * 
+     * @return List of the names of all tracks. If there are no tracks stored
+     *         then the list will be empty.
+     */
+    public List<String> getAllTracks() {
+        updateNames();
+        return names;
+    }
+
+    /**
+     * Getter-method.
+     * 
+     * @return The currently edited Track is returned.(may be null)
+     */
+    public DataTrack getCurrentTrack() {
+        return currentTrack;
+    }
+
+    /**
+     * Create a new unique id to use for a new map object.
+     * 
+     * @return A new unique id > 0.
+     */
+    public synchronized int getID() {
+        lastID++;
+        return lastID;
+    }
+
+    /**
+     * This method returns a Track object that specified by a name. Note that
+     * only tracks that the DataStorage currently stores can be returned.
+     * 
+     * @param name
+     *            The name of a track as returned by getAllTracks()
+     * @return If such a track exists the Track itself is returned. If the track
+     *         does not exist however null is returned.
+     */
+    public DataTrack getTrack(String name) {
+        for (DataTrack dt : tracks) {
+            if (dt.getName().equals(name)) {
+                return dt;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Create a new Track in working memory. Don't forget to serialize it!
+     * 
+     * @return The newly created Track.
+     */
+    public DataTrack newTrack() {
+        DataTrack dt = new DataTrack();
+        tracks.add(dt);
         return dt;
     }
 
@@ -282,6 +280,35 @@ public final class DataStorage {
     }
 
     /**
+     * Will serialize all tracks that are currently stored in this DataStorage.
+     */
+    public void serialize() {
+        for (DataTrack dt : tracks)
+            dt.serialize();
+    }
+
+    /**
+     * Setter-method for the currently edited Track.
+     * 
+     * @param currentTrack
+     *            The new currently edited Track.
+     * @return The parameter currentTrack is simple returned for further use.
+     */
+    public DataTrack setCurrentTrack(DataTrack currentTrack) {
+        this.currentTrack = currentTrack;
+        return currentTrack;
+    }
+
+    /**
+     * Unloads all tracks from memory without saving them!
+     */
+    public void unloadAllTracks() {
+        tracks.clear();
+        setCurrentTrack(null);
+        updateNames();
+    }
+
+    /**
      * Updates the list of all names. Normally it is unnecessary to use this
      * method as getAllTracks() calls this method.
      */
@@ -294,33 +321,6 @@ public final class DataStorage {
         }
 
         removeDuplicatesInStringList(names);
-    }
-
-    /**
-     * Will serialize all tracks that are currently stored in this DataStorage.
-     */
-    public void serialize() {
-        for (DataTrack dt : tracks)
-            dt.serialize();
-    }
-
-    /**
-     * Will delete ALL tracks! Therefore resets the all data that have been
-     * stored on the device.
-     */
-    public void delete() {
-        for (DataTrack dt : tracks)
-            dt.delete();
-        tracks.clear();
-    }
-
-    /**
-     * Unloads all tracks from memory without saving them!
-     */
-    public void unloadAllTracks() {
-        tracks.clear();
-        setCurrentTrack(null);
-        updateNames();
     }
 
 }

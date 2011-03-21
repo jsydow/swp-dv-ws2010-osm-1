@@ -17,74 +17,41 @@ import android.util.Log;
 public class DataMedia {
 
     /**
-     * Media type constants. Type video.
-     */
-    public static final int TYPE_VIDEO = 3;
-    /**
      * Media type constants. Type audio.
      */
     public static final int TYPE_AUDIO = 2;
+    /**
+     * Media type constants. Type picture.
+     */
+    public static final int TYPE_PICTURE = 1;
     /**
      * Media type constants. Type text.
      */
     public static final int TYPE_TEXT = 0;
     /**
-     * Media type constants. Type picture.
+     * Media type constants. Type video.
      */
-    public static final int TYPE_PICTURE = 1;
+    public static final int TYPE_VIDEO = 3;
 
+    private static String[] extensions = { ".txt", ".jpg", ".m4a", ".mp4" };
     private static String[] typesAsString = { "text", "picture", "audio",
             "video" };
-    private static String[] extensions = { ".txt", ".jpg", ".m4a", ".mp4" };
 
     /**
-     * The internal id for this medium.
-     */
-    private int id;
-
-    /**
-     * The path to the file of the medium on the memory. This path+name should
-     * be sufficient to open the file. Path is therefore the base name.
-     */
-    private String path;
-
-    /**
-     * This name is the displayed name and filename (contains extension).
-     */
-    private String name;
-
-    /**
-     * This is the type of the medium. Use the TYPE_****-constants!
-     */
-    private int type;
-
-    /**
-     * Basically a toString()-method of the type-variable.
+     * This method loads a medium reference from the devices memory.
      * 
-     * @param paramType
-     *            The type-variable of this class/object.
-     * @return The type as String or empty String if parameter type has illegal
-     *         value.
+     * @param path
+     *            The complete path to the medium.
+     * @return The deserialized DataMedia object or null if medium doesn't
+     *         exist.
      */
-    public static String typeToString(int paramType) {
-        if (paramType > TYPE_VIDEO || paramType < TYPE_TEXT)
-            return "";
-        return typesAsString[paramType];
-    }
-
-    /**
-     * Returns the extension of files of this type. Format is ".***" like
-     * ".jpg".
-     * 
-     * @param paramType
-     *            The type-variable of this class/object.
-     * @return The extension String or empty String if parameter type has
-     *         illegal value.
-     */
-    public static String typeToExtension(int paramType) {
-        if (paramType > TYPE_VIDEO || paramType < TYPE_TEXT)
-            return "";
-        return extensions[paramType];
+    public static DataMedia deserialize(String path) {
+        File medium = new File(path);
+        if (medium.exists()) {
+            return new DataMedia(medium.getParent(), medium.getName());
+        }
+        Log.w("Media", "Medium was not found. Was trying to load a medium.");
+        return null;
     }
 
     /**
@@ -113,6 +80,56 @@ public class DataMedia {
     }
 
     /**
+     * Returns the extension of files of this type. Format is ".***" like
+     * ".jpg".
+     * 
+     * @param paramType
+     *            The type-variable of this class/object.
+     * @return The extension String or empty String if parameter type has
+     *         illegal value.
+     */
+    public static String typeToExtension(int paramType) {
+        if (paramType > TYPE_VIDEO || paramType < TYPE_TEXT)
+            return "";
+        return extensions[paramType];
+    }
+
+    /**
+     * Basically a toString()-method of the type-variable.
+     * 
+     * @param paramType
+     *            The type-variable of this class/object.
+     * @return The type as String or empty String if parameter type has illegal
+     *         value.
+     */
+    public static String typeToString(int paramType) {
+        if (paramType > TYPE_VIDEO || paramType < TYPE_TEXT)
+            return "";
+        return typesAsString[paramType];
+    }
+
+    /**
+     * The internal id for this medium.
+     */
+    private int id;
+
+    /**
+     * This name is the displayed name and filename (contains extension).
+     */
+    private String name;
+
+    /**
+     * The path to the file of the medium on the memory. This path+name should
+     * be sufficient to open the file. Path is therefore the base name.
+     */
+    private String path;
+
+    /**
+     * This is the type of the medium. Use the TYPE_****-constants!
+     */
+    private int type;
+
+    /**
      * Constructor that initializes the medium.
      * 
      * @param path
@@ -129,41 +146,16 @@ public class DataMedia {
     }
 
     /**
-     * Getter-method.
-     * 
-     * @return The type of the medium.
+     * Deletes a medium on the devices memory. Note: Make sure that there is no
+     * reference to this medium anymore.
      */
-    public int getType() {
-        return type;
-    }
-
-    /**
-     * Setter-method.
-     * 
-     * @param type
-     *            The new type of this medium.
-     */
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    /**
-     * Getter-method.
-     * 
-     * @return The unique id of the medium.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Getter-method. Returns path to the directory the medium is in.
-     * 
-     * @return The path to the medium on the devices medium. (Should generally
-     *         be not null, except some idiot misused methods)
-     */
-    public String getPath() {
-        return path;
+    public void delete() {
+        File medium = new File(getFullPath());
+        if (medium.isFile()) {
+            if (!medium.delete()) {
+                Log.w("Media", "Could not delete medium");
+            }
+        }
     }
 
     /**
@@ -177,16 +169,12 @@ public class DataMedia {
     }
 
     /**
-     * Setter-method. The path should normally not be changed but one never
-     * knows. Method does nothing if parameter is null.
+     * Getter-method.
      * 
-     * @param path
-     *            The new path of the medium.
+     * @return The unique id of the medium.
      */
-    public void setPath(String path) {
-        if (path != null) {
-            this.path = path;
-        }
+    public int getId() {
+        return id;
     }
 
     /**
@@ -200,51 +188,22 @@ public class DataMedia {
     }
 
     /**
-     * Setter-method. Changing the name may have no impact on serialization. On
-     * next deserialization the old name may appear again.
+     * Getter-method. Returns path to the directory the medium is in.
      * 
-     * @param newname
-     *            The new name for the medium.
+     * @return The path to the medium on the devices medium. (Should generally
+     *         be not null, except some idiot misused methods)
      */
-    public void setName(String newname) {
-        File oldfile = new File(getFullPath());
-        File newfile = new File(getPath() + newname);
-        boolean success = oldfile.renameTo(newfile);
-        if (!success) {
-            Log.e("MediaRenaming", "Could not rename medium.");
-        } else {
-            this.name = newname;
-        }
+    public String getPath() {
+        return path;
     }
 
     /**
-     * This method loads a medium reference from the devices memory.
+     * Getter-method.
      * 
-     * @param path
-     *            The complete path to the medium.
-     * @return The deserialized DataMedia object or null if medium doesn't
-     *         exist.
+     * @return The type of the medium.
      */
-    public static DataMedia deserialize(String path) {
-        File medium = new File(path);
-        if (medium.exists()) {
-            return new DataMedia(medium.getParent(), medium.getName());
-        }
-        Log.w("Media", "Medium was not found. Was trying to load a medium.");
-        return null;
-    }
-
-    /**
-     * Deletes a medium on the devices memory. Note: Make sure that there is no
-     * reference to this medium anymore.
-     */
-    public void delete() {
-        File medium = new File(getFullPath());
-        if (medium.isFile()) {
-            if (!medium.delete()) {
-                Log.w("Media", "Could not delete medium");
-            }
-        }
+    public int getType() {
+        return type;
     }
 
     /**
@@ -293,5 +252,46 @@ public class DataMedia {
         } catch (IOException e) {
             Log.e("MediaSerialisation", "Could not serialize medium " + name);
         }
+    }
+
+    /**
+     * Setter-method. Changing the name may have no impact on serialization. On
+     * next deserialization the old name may appear again.
+     * 
+     * @param newname
+     *            The new name for the medium.
+     */
+    public void setName(String newname) {
+        File oldfile = new File(getFullPath());
+        File newfile = new File(getPath() + newname);
+        boolean success = oldfile.renameTo(newfile);
+        if (!success) {
+            Log.e("MediaRenaming", "Could not rename medium.");
+        } else {
+            this.name = newname;
+        }
+    }
+
+    /**
+     * Setter-method. The path should normally not be changed but one never
+     * knows. Method does nothing if parameter is null.
+     * 
+     * @param path
+     *            The new path of the medium.
+     */
+    public void setPath(String path) {
+        if (path != null) {
+            this.path = path;
+        }
+    }
+
+    /**
+     * Setter-method.
+     * 
+     * @param type
+     *            The new type of this medium.
+     */
+    public void setType(int type) {
+        this.type = type;
     }
 }
