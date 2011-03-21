@@ -168,7 +168,11 @@ public class StartActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ServiceConnector.releaseService();
+        try {
+            ServiceConnector.releaseService();
+        } catch (IllegalArgumentException e) {
+            Log.e("TraceBook", "Service not connected.");
+        }
     }
 
     @Override
