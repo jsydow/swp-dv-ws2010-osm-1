@@ -118,7 +118,7 @@ public class NewTrackActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_newtrackactivity);
+        setContentView(R.layout.activity_newtrackactivity);
         setTitle(R.string.string_newtrackActivity_title);
         // Initialize TabHost
         initTabHost();

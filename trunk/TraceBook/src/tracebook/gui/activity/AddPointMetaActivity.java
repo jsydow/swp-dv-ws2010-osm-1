@@ -63,7 +63,7 @@ public class AddPointMetaActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_addpointmetaactivity);
+        setContentView(R.layout.activity_addpointmetaactivity);
         setTitle(R.string.string_addpointmetaActivity_title);
 
         final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_value);
@@ -115,9 +115,12 @@ public class AddPointMetaActivity extends ListActivity {
         fillListView();
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_addpointmetaTitle), getResources()
-                .getString(R.string.tv_statusbar_addpointmetaDesc),
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_addpointmetaTitle),
+                getResources()
+                        .getString(R.string.tv_statusbar_addpointmetaDesc),
                 R.id.ly_addpointMetaAtivity_statusbar, false);
 
     }
@@ -238,9 +241,12 @@ public class AddPointMetaActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_addpointmetaTitle), getResources()
-                .getString(R.string.tv_statusbar_addpointmetaDesc));
+        Helper.setActivityInfoDialog(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_addpointmetaTitle),
+                getResources()
+                        .getString(R.string.tv_statusbar_addpointmetaDesc));
     }
 
     @Override

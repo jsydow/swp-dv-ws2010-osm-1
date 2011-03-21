@@ -78,7 +78,7 @@ public class LoadTrackActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         updateAdapter();
         setTitle(R.string.string_loadtrackActivity_title);
-        setContentView(R.layout.layout_loadtrackactivity);
+        setContentView(R.layout.activity_loadtrackactivity);
         registerForContextMenu(getListView());
 
         setTextChangedListenerToSearchBox(checkEditText());

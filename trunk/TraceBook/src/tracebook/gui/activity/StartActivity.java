@@ -33,7 +33,7 @@ public class StartActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_startactivity);
+        setContentView(R.layout.activity_startactivity);
         setTitle(R.string.string_startActivity_title);
         final TagDb db = new TagDb(this);
 
