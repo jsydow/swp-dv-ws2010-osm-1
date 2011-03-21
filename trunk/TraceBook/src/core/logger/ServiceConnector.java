@@ -15,13 +15,6 @@ public class ServiceConnector {
     private static Activity activity = null;
 
     /**
-     * Default constructor.
-     */
-    protected ServiceConnector() {
-        super();
-    }
-
-    /**
      * Bind the logger service to this activity.
      */
     public static synchronized void initService() {
