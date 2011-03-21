@@ -33,7 +33,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     /**
      * Show a knob for every waypoint.
      */
-    boolean showGnubbel = false;
+    boolean showWaypoints = false;
 
     private Activity context;
 
@@ -116,8 +116,8 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
             }
             addRoute(l.getOverlayRoute());
 
-            if (showGnubbel)
-                addGnubbel(l);
+            if (showWaypoints)
+                addWaypoints(l);
         }
     }
 
@@ -142,9 +142,9 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
                 color.first, color.second));
         addRoute(way.getOverlayRoute());
 
-        if (showGnubbel)
+        if (showWaypoints)
             for (DataNode n : way.getNodes()) {
-                putGnubbel(n);
+                putWaypoint(n);
                 pointsOverlay.updateItem(n);
             }
     }
@@ -163,14 +163,14 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
                 currentWay != null && currentWay.getId() == id, null);
     }
 
-    private void addGnubbel(DataPointsList way) {
+    private void addWaypoints(DataPointsList way) {
         for (DataNode n : way.getNodes()) {
-            putGnubbel(n);
+            putWaypoint(n);
             pointsOverlay.addOverlay(n);
         }
     }
 
-    private void removeGnubbel(DataPointsList way) {
+    private void removeWaypoints(DataPointsList way) {
         for (DataNode n : way.getNodes())
             pointsOverlay.removeOverlay(n.getId());
     }
@@ -178,23 +178,23 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     /**
      * enable/disable the drawing of waypoint markers.
      */
-    public void toggleGnubbel() {
-        showGnubbel = !showGnubbel;
+    public void toggleWaypoints() {
+        showWaypoints = !showWaypoints;
 
         for (DataPointsList dpl : Helper.getWays())
-            if (showGnubbel)
-                addGnubbel(dpl);
+            if (showWaypoints)
+                addWaypoints(dpl);
             else
-                removeGnubbel(dpl);
+                removeWaypoints(dpl);
     }
 
     /**
      * Creates a new OverlayItem for n if it has none yet.
      * 
      * @param n
-     *            DataNode that should get a gnubbel
+     *            DataNode that should get a marker
      */
-    private void putGnubbel(DataNode n) {
+    private void putWaypoint(DataNode n) {
         if (n.getOverlayItem() == null)
             n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
                     R.drawable.dot_blue, context, true));
