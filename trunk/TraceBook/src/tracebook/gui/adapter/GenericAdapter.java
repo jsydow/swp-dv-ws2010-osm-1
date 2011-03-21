@@ -52,10 +52,12 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View genView = layoutInflater.inflate(layoutId, null);
-        GenericAdapterData data = super.getItem(position);
-        data.fillView(genView);
+        if (convertView == null)
+            convertView = layoutInflater.inflate(layoutId, parent, false);
 
-        return genView;
+        GenericAdapterData data = super.getItem(position);
+        data.fillView(convertView);
+
+        return convertView;
     }
 }
