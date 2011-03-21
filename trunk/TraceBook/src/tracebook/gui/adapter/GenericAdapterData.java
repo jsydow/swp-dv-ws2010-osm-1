@@ -42,7 +42,7 @@ public class GenericAdapterData {
     }
 
     /**
-     * An enum to define the three different types of views in a item.
+     * An enumeration to define the three different types of views in a item.
      */
     enum ItemTypes {
         /**

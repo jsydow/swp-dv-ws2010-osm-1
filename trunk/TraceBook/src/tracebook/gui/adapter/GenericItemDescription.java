@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class defines and handles the mapping of string tags with view ressource
- * ids. A reference of this class have to be connected to each instance of a
+ * This class defines and handles the mapping of string tags with view resource
+ * IDs. A reference of this class have to be connected to each instance of a
  * GenericAdapterData. So each item in a ListView can associate its view
  * elements.
  */
