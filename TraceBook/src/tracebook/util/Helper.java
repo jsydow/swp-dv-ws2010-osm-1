@@ -467,7 +467,7 @@ public final class Helper {
                 .getDefaultSharedPreferences(activity);
 
         // Get the value for the status bar check box - default false
-        if (appPreferences.getBoolean("statusleiste", false)) {
+        if (appPreferences.getBoolean("check_visbilityStatusbar", false)) {
             LayoutInflater statusListInflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             LinearLayout statuslayoutHolder = (LinearLayout) activity

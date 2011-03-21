@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<PreferenceCategory android:title="OSM Account">
+	<PreferenceCategory android:title="@string/string_preferences_catGPS">
+		<CheckBoxPreference android:title="@string/string_preferences_checkGPS"
+			android:defaultValue="true" android:summary="@string/string_preferences_descGPS"
+			android:key="check_GPSbyStartTracking" />
 
+		<ListPreference android:title="@string/string_preferences_stopGPS"
+			android:key="lst_stopGPSafterSeconds" android:defaultValue="10"
+			android:entries="@array/stopTrackingAfter" android:entryValues="@array/stopTrackingAfter_values"
+			android:summary="@string/string_preferences_StopGPSsummary" />
+
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/string_preferences_catMapView">
+
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/string_preferences_catMetaTag">
+	
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/string_preferences_catOSM">
 		<EditTextPreference android:key="nickname"
 			android:title="Nickname" android:defaultValue="" />
 		<EditTextPreference android:key="password"
 			android:title="Password" android:defaultValue="" />
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="Aufzeichnung">
-		<ListPreference android:key="lst_recordinterval"
-			android:title="Aufzeichnungsintervall" android:defaultValue="1"
-			android:entries="@array/recordinterval" android:entryValues="@array/recordinterval_values"
-			android:summary="Von 1 - 60 Sekunden" />
+	<PreferenceCategory android:title="@string/string_preferences_catGUI">
 
-	</PreferenceCategory>
-	<PreferenceCategory android:title="MetaDaten hinzufügen">
-
-		<ListPreference android:key="lst_addMetaDataScreen"
-			android:title="Suchoption" android:defaultValue="Normal"
-			android:entries="@array/addMetaDataScreen" android:entryValues="@array/addMetaDataScreen_values"
-			android:summary="\'Normal\': keine Livesuche \n \'Professional\': Livesuche" />
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="Statusleiste">
-
-		<CheckBoxPreference android:title="Zeige Statusleiste"
+		<CheckBoxPreference android:title="@string/string_preferences_showStatusbar"
 			android:defaultValue="false"
-			android:summary="Zeigt Statusleiste mit Beschreibung - Link zu Einstellung - Suchfenster und weiteren nützlichen Informationen"
-			android:key="statusleiste" />
-
-
+			android:summary="@string/string_preferences_descShowStatusbar"
+			android:key="check_visbilityStatusbar" />
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="Wegpunkt Optimierungsverfahren">
+	<PreferenceCategory android:title="@string/string_preferences_catTrack"></PreferenceCategory>
 
-		<EditTextPreference android:title="Wegpunkt Anzahl"
-			android:defaultValue="3" android:key="wegpunktanzahl" />
-		<EditTextPreference android:title="Wegpunktglättung"
-			android:defaultValue="4" android:key="wegpunktglättung" />
-	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/string_preferences_catMedia"></PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/string_preferences_catExport"></PreferenceCategory>
 </PreferenceScreen>
