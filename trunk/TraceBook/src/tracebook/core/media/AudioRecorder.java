@@ -17,21 +17,6 @@ public class AudioRecorder extends Recorder {
     private MediaRecorder recorder = new MediaRecorder();
 
     /*
-     * (non-Javadoc)!
-     * 
-     * @see core.media.Recorder#getNewFilename()
-     */
-    @Override
-    protected String getNewFilename() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        String newFilename = sdf.format(new Date());
-
-        newFilename = "audio_" + newFilename + ".m4a";
-
-        return newFilename;
-    }
-
-    /*
      * (non-Javadoc)
      * 
      * @see core.media.Recorder#start()
@@ -78,5 +63,20 @@ public class AudioRecorder extends Recorder {
 
             isRecording = false;
         }
+    }
+
+    /*
+     * (non-Javadoc)!
+     * 
+     * @see core.media.Recorder#getNewFilename()
+     */
+    @Override
+    protected String getNewFilename() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String newFilename = sdf.format(new Date());
+
+        newFilename = "audio_" + newFilename + ".m4a";
+
+        return newFilename;
     }
 }

@@ -12,8 +12,8 @@ import android.view.Surface;
  * in order to acquire a video file.
  */
 public class VideoRecorder extends Recorder {
-    private MediaRecorder recorder = new MediaRecorder();
     private boolean isReady = false;
+    private MediaRecorder recorder = new MediaRecorder();
 
     /**
      * Because of the nature of recording a video with MediaRecorder, we have to

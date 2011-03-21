@@ -21,16 +21,12 @@ public class PictureRecorder extends Recorder {
     /*
      * (non-Javadoc)
      * 
-     * @see core.media.Recorder#getNewFilename()
+     * @see core.media.Recorder#start()
      */
     @Override
-    protected String getNewFilename() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        String newFilename = sdf.format(new Date());
-
-        newFilename = "image_" + newFilename + ".jpg";
-
-        return newFilename;
+    public String start() {
+        // Nothing to start.
+        return null;
     }
 
     /**
@@ -51,21 +47,25 @@ public class PictureRecorder extends Recorder {
     /*
      * (non-Javadoc)
      * 
-     * @see core.media.Recorder#start()
-     */
-    @Override
-    public String start() {
-        // Nothing to start.
-        return null;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
      * @see core.media.Recorder#stop()
      */
     @Override
     public void stop() {
         // Nothing to stop.
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see core.media.Recorder#getNewFilename()
+     */
+    @Override
+    protected String getNewFilename() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String newFilename = sdf.format(new Date());
+
+        newFilename = "image_" + newFilename + ".jpg";
+
+        return newFilename;
     }
 }
