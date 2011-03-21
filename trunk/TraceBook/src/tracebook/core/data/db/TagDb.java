@@ -19,7 +19,6 @@ import android.util.Xml;
 /**
  * Provides access to the database containing all the tags with their
  * description.
- * 
  */
 public class TagDb {
 
@@ -247,10 +246,11 @@ public class TagDb {
                                 row.put(TagDbOpenHelper.DICT_COLUMN_NAME, name);
                                 row.put(TagDbOpenHelper.DICT_COLUMN_KEYWORDS,
                                         keywords);
-                                row.put(TagDbOpenHelper.DICT_COLUMN_IMG, imgUrl);
-                                writeDb.insert(
-                                        TagDbOpenHelper.getDictTableName(), "",
-                                        row);
+                                row
+                                        .put(TagDbOpenHelper.DICT_COLUMN_IMG,
+                                                imgUrl);
+                                writeDb.insert(TagDbOpenHelper
+                                        .getDictTableName(), "", row);
 
                             } else if (lname.equals("description")) {
                                 descriptionTagOpened = false;
