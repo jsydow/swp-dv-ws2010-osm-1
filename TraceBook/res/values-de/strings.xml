@@ -221,8 +221,8 @@
 	<string name="tv_newtrackactivity_signalstrength_count">Anzahl: </string>
 	<string name="string_newtrackactivity_list_lat">Lat: </string>
 	<string name="string_newtrackactivity_list_lon">Lon:</string>
-	<string name="string_newtrackactivity_list_media">Medien: </string>
-	<string name="string_newtrackactivity_list_pointcount">Anzahl Punkte:</string>
+	<string name="string_newtrackactivity_list_media">Anzahl der angefügten Medien: </string>
+	<string name="string_newtrackactivity_list_pointcount">Anzahl der vorkommenden Punkte: </string>
 	<string name="string_newtrackactivity_list_start">Start </string>
 	<string name="string_newtrackactivity_list_end">End </string>
 </resources>
