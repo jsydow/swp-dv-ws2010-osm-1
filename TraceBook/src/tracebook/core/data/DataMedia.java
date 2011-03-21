@@ -225,7 +225,7 @@ public class DataMedia {
      * @return The deserialized DataMedia object or null if medium doesn't
      *         exist.
      */
-    public static DataMedia deserialise(String path) {
+    public static DataMedia deserialize(String path) {
         File medium = new File(path);
         if (medium.exists()) {
             return new DataMedia(medium.getParent(), medium.getName());
@@ -264,7 +264,7 @@ public class DataMedia {
             File[] files = dir.listFiles();
             for (File f : files) {
                 if (getTypeFromFilename(f.getPath()) != -1) {
-                    ret.add(DataMedia.deserialise(f.getPath()));
+                    ret.add(DataMedia.deserialize(f.getPath()));
                 }
             }
         } else {
@@ -280,7 +280,7 @@ public class DataMedia {
      * @param serializer
      *            The initialized XmlSerialiser.
      */
-    public void serialise(XmlSerializer serializer) {
+    public void serialize(XmlSerializer serializer) {
         try {
             serializer.startTag(null, "link");
             // serializer.attribute(null, "type", typeToString(type)); not used
@@ -291,7 +291,7 @@ public class DataMedia {
         } catch (IllegalStateException e) {
             Log.e("MediaSerialisation", "Illegal state");
         } catch (IOException e) {
-            Log.e("MediaSerialisation", "Could not serialise medium " + name);
+            Log.e("MediaSerialisation", "Could not serialize medium " + name);
         }
     }
 }

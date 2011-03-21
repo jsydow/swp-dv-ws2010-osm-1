@@ -20,7 +20,7 @@ import android.util.Xml;
 
 /**
  * A class that simply holds information of a track. It is a class that only
- * provides information but cannot edit them. Use deserialise() to get such an
+ * provides information but cannot edit them. Use deserialize() to get such an
  * object.
  */
 public class DataTrackInfo {
@@ -130,7 +130,7 @@ public class DataTrackInfo {
      * @return The info to this specific track or null if there is not such a
      *         track.
      */
-    public static DataTrackInfo deserialise(String trackname) {
+    public static DataTrackInfo deserialize(String trackname) {
         DataTrackInfo info = new DataTrackInfo();
         info.name = trackname;
 
@@ -199,7 +199,7 @@ public class DataTrackInfo {
      * Serializes the track info. Creates a info.xml file in the directory of
      * the track.
      */
-    public void serialise() {
+    public void serialize() {
         File file = new File(DataTrack.getTrackDirPath(name) + File.separator
                 + "info.xml");
         FileOutputStream fileos = DataTrack.openFile(file);

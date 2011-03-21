@@ -222,10 +222,10 @@ public class DataPointsList extends DataMapObject {
      *            Should the media be also serialized? If yes then the resulting
      *            XML-file is not conform to OSM.
      */
-    public void serialiseNodes(XmlSerializer serializer,
+    public void serializeNodes(XmlSerializer serializer,
             boolean shouldSerialiseMedia) {
         for (DataNode dn : nodes) {
-            dn.serialise(serializer, shouldSerialiseMedia);
+            dn.serialize(serializer, shouldSerialiseMedia);
         }
         return;
     }
@@ -240,7 +240,7 @@ public class DataPointsList extends DataMapObject {
      *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
-    public void serialiseWay(XmlSerializer serializer,
+    public void serializeWay(XmlSerializer serializer,
             boolean shouldSerialiseMedia) {
         if (nodes.size() > 0) {
             try {
@@ -270,9 +270,9 @@ public class DataPointsList extends DataMapObject {
                     serializer.endTag(null, "tag");
                 }
 
-                serialiseTags(serializer);
+                serializeTags(serializer);
                 if (shouldSerialiseMedia) {
-                    serialiseMedia(serializer);
+                    serializeMedia(serializer);
                 }
 
                 serializer.endTag(null, "way");
@@ -282,7 +282,7 @@ public class DataPointsList extends DataMapObject {
             } catch (IllegalStateException e) {
                 Log.e("WaySerialisation", "Illegal state");
             } catch (IOException e) {
-                Log.e("WaySerialisation", "Could not serialise way");
+                Log.e("WaySerialisation", "Could not serialize way");
             }
         }
     }
@@ -297,7 +297,7 @@ public class DataPointsList extends DataMapObject {
      *            All DataNodes that were already retrieved from that XML-file
      * @return The new DataPointsList
      */
-    public static DataPointsList deserialise(Node waynode,
+    public static DataPointsList deserialize(Node waynode,
             List<DataNode> allnodes) {
         // the returned DataPointsList
         DataPointsList ret = new DataPointsList();
@@ -313,8 +313,8 @@ public class DataPointsList extends DataMapObject {
                 .getNodeValue()));
 
         // tags and media
-        ret.deserialiseMedia(waynode);
-        ret.deserialiseTags(waynode);
+        ret.deserializeMedia(waynode);
+        ret.deserializeTags(waynode);
 
         // node references
         // for all <nd>-child nodes

@@ -326,7 +326,7 @@ public class DataTrack extends DataMediaHolder {
      *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
-    public void serialise(boolean shouldSerialiseMedia) {
+    public void serialize(boolean shouldSerialiseMedia) {
         int totalMedia = media.size();
 
         Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
@@ -353,18 +353,18 @@ public class DataTrack extends DataMediaHolder {
             serializer.attribute(null, "generator", "TraceBook");
 
             for (DataNode dn : nodes) {
-                dn.serialise(serializer, shouldSerialiseMedia);
+                dn.serialize(serializer, shouldSerialiseMedia);
                 totalMedia += dn.getMedia().size();
             }
             for (DataPointsList dpl : ways) {
-                dpl.serialiseNodes(serializer, shouldSerialiseMedia);
+                dpl.serializeNodes(serializer, shouldSerialiseMedia);
                 totalMedia += dpl.getMedia().size();
             }
             for (DataPointsList dpl : ways) {
-                dpl.serialiseWay(serializer, shouldSerialiseMedia);
+                dpl.serializeWay(serializer, shouldSerialiseMedia);
             }
 
-            serialiseMedia(serializer);
+            serializeMedia(serializer);
 
             serializer.endTag(null, "osm");
             serializer.flush();
@@ -385,7 +385,7 @@ public class DataTrack extends DataMediaHolder {
         }
 
         (new DataTrackInfo(name, getDatetime(), comment, nodes.size(), ways
-                .size(), totalMedia)).serialise();
+                .size(), totalMedia)).serialize();
 
     }
 
@@ -472,7 +472,7 @@ public class DataTrack extends DataMediaHolder {
      * @return The deserialized DataTrack object or null if such a Track does
      *         not exist.
      */
-    public static DataTrack deserialise(String name) {
+    public static DataTrack deserialize(String name) {
 
         // cache all nodes
         List<DataNode> allnodes = new LinkedList<DataNode>();
@@ -480,7 +480,7 @@ public class DataTrack extends DataMediaHolder {
         File track = new File(getPathOfTrackTbTFile(name));
         // Track that should be filled/initialized
         DataTrack ret = new DataTrack(track.getParentFile().getName());
-        DataTrackInfo info = DataTrackInfo.deserialise(name);
+        DataTrackInfo info = DataTrackInfo.deserialize(name);
         if (info != null) {
             ret.setComment(info.getComment());
             ret.setDatetime(info.getTimestamp());
@@ -505,7 +505,7 @@ public class DataTrack extends DataMediaHolder {
                     throw new SAXException();
                 for (int i = 0; i < nodeelements.getLength(); ++i) {
                     // generate a node
-                    allnodes.add(DataNode.deserialise(nodeelements.item(i)));
+                    allnodes.add(DataNode.deserialize(nodeelements.item(i)));
                 }
 
                 // all ways
@@ -514,7 +514,7 @@ public class DataTrack extends DataMediaHolder {
                     throw new SAXException();
                 for (int i = 0; i < wayelements.getLength(); ++i) {
                     // generate ways
-                    DataPointsList dpl = DataPointsList.deserialise(wayelements
+                    DataPointsList dpl = DataPointsList.deserialize(wayelements
                             .item(i), allnodes);
                     // add them
                     ret.addWay(dpl);
@@ -531,12 +531,12 @@ public class DataTrack extends DataMediaHolder {
                     // path to medium is value of href-attribute
                     Node path = attributes.getNamedItem("href");
                     // path to medium is path to track directory + media name
-                    ret.addMedia(DataMedia.deserialise(ret.getTrackDirPath()
+                    ret.addMedia(DataMedia.deserialize(ret.getTrackDirPath()
                             + File.separator + path.getNodeValue()));
                 }
 
                 // nodes -> POIs, all nodes that are still in allnodes are POIs
-                // DataNode.deserialise erase those, that are part of a way
+                // DataNode.deserialize erase those, that are part of a way
                 ret.getNodes().addAll(allnodes);
 
             } catch (IOException e) {
@@ -563,8 +563,8 @@ public class DataTrack extends DataMediaHolder {
      * TraceBook/<track name>. Also serializes all Media. The XML-file is
      * therefore not OSM compatible.
      */
-    public void serialise() {
-        serialise(true);
+    public void serialize() {
+        serialize(true);
     }
 
     /**

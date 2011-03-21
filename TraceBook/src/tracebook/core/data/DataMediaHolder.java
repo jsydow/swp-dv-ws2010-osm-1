@@ -95,9 +95,9 @@ public abstract class DataMediaHolder {
      * @param serializer
      *            An XmlSerializer that is initialised.
      */
-    public void serialiseMedia(XmlSerializer serializer) {
+    public void serializeMedia(XmlSerializer serializer) {
         for (DataMedia m : media) {
-            m.serialise(serializer);
+            m.serialize(serializer);
         }
     }
 
@@ -129,7 +129,7 @@ public abstract class DataMediaHolder {
      * @param aNode
      *            An XML-node.
      */
-    public void deserialiseMedia(Node aNode) {
+    public void deserializeMedia(Node aNode) {
         NodeList metanodes = aNode.getChildNodes();
 
         for (int i = 0; i < metanodes.getLength(); ++i) {
@@ -138,7 +138,7 @@ public abstract class DataMediaHolder {
                 NamedNodeMap attributes = metanodes.item(i).getAttributes();
                 Node path = attributes.getNamedItem("href");
                 // misuse of getTrackDirPath
-                addMedia(DataMedia.deserialise(DataTrack.getTrackDirPath(path
+                addMedia(DataMedia.deserialize(DataTrack.getTrackDirPath(path
                         .getNodeValue())));
 
             }

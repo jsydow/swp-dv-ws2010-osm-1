@@ -187,7 +187,7 @@ public class DataNode extends DataMapObject {
      *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
-    public void serialise(XmlSerializer serializer, boolean shouldSerialiseMedia) {
+    public void serialize(XmlSerializer serializer, boolean shouldSerialiseMedia) {
         DecimalFormatSymbols dfs = new DecimalFormatSymbols();
         dfs.setDecimalSeparator('.');
         DecimalFormat df = new DecimalFormat("0.0000000", dfs);
@@ -200,9 +200,9 @@ public class DataNode extends DataMapObject {
             serializer.attribute(null, "timestamp", this.getDatetime());
             serializer.attribute(null, "version", "1");
 
-            serialiseTags(serializer);
+            serializeTags(serializer);
             if (shouldSerialiseMedia) {
-                serialiseMedia(serializer);
+                serializeMedia(serializer);
             }
 
             serializer.endTag(null, "node");
@@ -212,7 +212,7 @@ public class DataNode extends DataMapObject {
         } catch (IllegalStateException e) {
             Log.e("NodeSerialisation", "Illegal state");
         } catch (IOException e) {
-            Log.e("NodeSerialisation", "Could not serialise node");
+            Log.e("NodeSerialisation", "Could not serialize node");
         }
     }
 
@@ -263,7 +263,7 @@ public class DataNode extends DataMapObject {
      *            The XML-node
      * @return The new DataNode-object
      */
-    public static DataNode deserialise(Node nodenode) {
+    public static DataNode deserialize(Node nodenode) {
         // the returned DataNode, must be initialized
         DataNode ret = new DataNode();
 
@@ -285,8 +285,8 @@ public class DataNode extends DataMapObject {
                 .getNodeValue()));
 
         // tags and media
-        ret.deserialiseMedia(nodenode);
-        ret.deserialiseTags(nodenode);
+        ret.deserializeMedia(nodenode);
+        ret.deserializeTags(nodenode);
 
         return ret;
     }

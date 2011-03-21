@@ -100,7 +100,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
      * @param serializer
      *            An XmlSerializer that is initialised.
      */
-    public void serialiseTags(XmlSerializer serializer) {
+    public void serializeTags(XmlSerializer serializer) {
         try {
             for (String tag : tags.keySet()) {
 
@@ -114,7 +114,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
         } catch (IllegalStateException e) {
             Log.e("TagSerialisation", "Illegal state");
         } catch (IOException e) {
-            Log.e("TagSerialisation", "Could not serialise tags");
+            Log.e("TagSerialisation", "Could not serialize tags");
         }
         return;
     }
@@ -126,7 +126,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
      * @param aNode
      *            An XML-node.
      */
-    public void deserialiseTags(Node aNode) {
+    public void deserializeTags(Node aNode) {
         NodeList metanodes = aNode.getChildNodes();
         for (int i = 0; i < metanodes.getLength(); ++i) {
             if (metanodes.item(i).getNodeName().equals("tag")) {

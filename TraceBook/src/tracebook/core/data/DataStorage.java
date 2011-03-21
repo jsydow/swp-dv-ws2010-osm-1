@@ -225,10 +225,10 @@ public final class DataStorage {
      * Loads all Tracks. Caution this can be a lot of Data! If only the names
      * are needed use retrieveTrackNames()
      */
-    public void deserialiseAll() {
+    public void deserializeAll() {
         retrieveTrackNames();
         for (String tname : names) {
-            deserialiseTrack(DataTrack.getTrackDirPath(tname));
+            deserializeTrack(DataTrack.getTrackDirPath(tname));
         }
     }
 
@@ -240,8 +240,8 @@ public final class DataStorage {
      *            The name of the Track.
      * @return The deserialized Track or null if track does not exist.
      */
-    public DataTrack deserialiseTrack(String name) {
-        DataTrack dt = DataTrack.deserialise(name);
+    public DataTrack deserializeTrack(String name) {
+        DataTrack dt = DataTrack.deserialize(name);
         if (dt != null)
             tracks.add(dt);
         return dt;
@@ -299,9 +299,9 @@ public final class DataStorage {
     /**
      * Will serialize all tracks that are currently stored in this DataStorage.
      */
-    public void serialise() {
+    public void serialize() {
         for (DataTrack dt : tracks)
-            dt.serialise();
+            dt.serialize();
     }
 
     /**
