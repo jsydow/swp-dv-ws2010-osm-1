@@ -5,7 +5,6 @@ import java.io.IOException;
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.VideoRecorder;
-
 import Trace.Book.R;
 import android.app.Activity;
 import android.graphics.PixelFormat;
@@ -78,7 +77,9 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordBtn(View view) {
-        camera.unlock();
+        if (recorder.isRecording()) {
+            camera.unlock();
+        }
 
         try {
             recorder.prepare(camera, surfaceHolder.getSurface());
