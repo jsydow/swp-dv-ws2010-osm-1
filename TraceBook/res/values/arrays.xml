@@ -28,13 +28,70 @@
 		<item>10</item>
 		<item>0</item>
 	</string-array>
+	<string-array name="switchTheme">
+		<item>Android-White</item>
+		<item>Android-Black</item>
+		<item>Custom-Light</item>
+		<item>Custom-Dark</item>
+	</string-array>
+	<string-array name="switchTheme_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="onlineTitleStyle">
+		<item>OSMA-Renderer</item>
+		<item>MAPNIK</item>
+		<item>OpenCycleMap</item>
+	</string-array>
+	<string-array name="onlineTitleStyle_values">
+		<item>OSMA</item>
+		<item>MAPNIK</item>
+		<item>OPEN</item>
+	</string-array>
+	<string-array name="maxHistorySize">
+		<item>20</item>
+		<item>30</item>
+		<item>40</item>
+		<item>50</item>
+		<item>keine Grenze</item>
+	</string-array>
+	<string-array name="maxHistorySize_values">
+		<item>20</item>
+		<item>30</item>
+		<item>40</item>
+		<item>50</item>
+		<item>0</item>
+	</string-array>
+	<string-array name="setMaxAudioRecordingTime">
+		<item>1 Minute</item>
+		<item>2 Minute</item>
+		<item>5 Minute</item>
+		<item>10 Minute</item>
+		<item>keine Grenze</item>
+	</string-array>
+	<string-array name="setMaxAudioRecordingTime_values">
+		<item>1</item>
+		<item>2</item>
+		<item>5</item>
+		<item>10</item>
+		<item>0</item>
+	</string-array>
+	<string-array name="setMaxVideoRecordingTime">
+		<item>1 Minute</item>
+		<item>2 Minute</item>
+		<item>5 Minute</item>
+		<item>10 Minute</item>
+		<item>keine Grenze</item>
+	</string-array>
+	<string-array name="setMaxVideoRecordingTime_values">
+		<item>1</item>
+		<item>2</item>
+		<item>5</item>
+		<item>10</item>
+		<item>0</item>
+	</string-array>
 
-	<string-array name="addMetaDataScreen">
-		<item>Normal</item>
-		<item>Advanced</item>
-	</string-array>
-	<string-array name="addMetaDataScreen_values">
-		<item>Normal</item>
-		<item>Advanced</item>
-	</string-array>
+
 </resources>
