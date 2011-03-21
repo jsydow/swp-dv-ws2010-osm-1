@@ -17,7 +17,6 @@ import android.widget.TextView;
  * The Class AboutActivity shows the about layout with the version number,
  * credits, all used resources and the license of TraceBook. This class called
  * from the option menu of the StartActivity.
- * 
  */
 public class AboutActivity extends Activity {
 
@@ -29,16 +28,16 @@ public class AboutActivity extends Activity {
         setTitle(R.string.string_aboutActivity_title);
         setTextViews();
         // Set status bar
-        Helper.setStatusBar(this,
-                getResources().getString(R.string.tv_statusbar_aboutTitle),
-                getResources().getString(R.string.tv_statusbar_aboutDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_aboutTitle), getResources().getString(
+                R.string.tv_statusbar_aboutDesc),
                 R.id.ly_aboutActivity_statusbar, false);
 
     }
 
     /**
-     * This method sets the text of the TextView resources with the resource.txt
-     * from the assets directory.
+     * Sets the text of the TextView resources with the resource.txt from the
+     * assets directory.
      */
     void setTextViews() {
         TextView resources = (TextView) findViewById(R.id.tv_aboutActivity_usedResources);
@@ -51,7 +50,7 @@ public class AboutActivity extends Activity {
     }
 
     /**
-     * This method parse the textFile with the gplLicense.
+     * Parses the textFile with the gplLicense.
      * 
      * @param dataname
      *            String - which file has to be parsed
@@ -82,7 +81,7 @@ public class AboutActivity extends Activity {
     }
 
     /**
-     * This method shows a dialog box with the used license.
+     * Shows a dialog box with the used license.
      * 
      * @param view
      *            not used
@@ -108,8 +107,8 @@ public class AboutActivity extends Activity {
     }
 
     /**
-     * The Method for the preference image Button from the status bar. The
-     * Method starts the PreferenceActivity.
+     * Starts the PreferencesActivity. The Method for the preference image
+     * Button from the status bar.
      * 
      * @param view
      *            not used
@@ -120,15 +119,15 @@ public class AboutActivity extends Activity {
     }
 
     /**
-     * This Method for the two (title and description) button from the status
-     * bar. This method starts the dialog with all activity informations.
+     * Starts the dialog with all activity informations. This Method for the two
+     * (title and description) button from the status bar.
      * 
      * @param v
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this,
-                getResources().getString(R.string.tv_statusbar_aboutTitle),
-                getResources().getString(R.string.tv_statusbar_aboutDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_aboutTitle), getResources().getString(
+                R.string.tv_statusbar_aboutDesc));
     }
 }

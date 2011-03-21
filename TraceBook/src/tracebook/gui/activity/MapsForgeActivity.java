@@ -69,13 +69,13 @@ public class MapsForgeActivity extends MapActivity {
     /**
      * Changes the render mode of the map. Possible modes are specified in
      * {@link MapViewMode}, if file is specified and the CANVAS_RENDERER mode is
-     * selected, the map will be rendered offline. If the file does not exist,
+     * selected, the map will be rendered off-line. If the file does not exist,
      * it will default to fetching the tiles from the Internet
      * 
      * @param mode
      *            {@link MapViewMode} render mode
      * @param file
-     *            map file for offline rendering
+     *            map file for off-line rendering
      */
     void changeMapViewMode(MapViewMode mode, File file) {
         MapViewMode modeLocal = mode;
@@ -174,13 +174,13 @@ public class MapsForgeActivity extends MapActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        // when a node is edited, the user can move it by
+        // When a node is edited, the user can move it by
         // moving his finger on the display
         if (editNode != null) {
             GeoPoint projection = mapView.getProjection().fromPixels(
                     (int) ev.getX(), (int) ev.getY());
 
-            // we will never need to specify a icon as the OverlayItem already
+            // We will never need to specify a icon as the OverlayItem already
             // must have had one, otherwise we couldn't have grabbed it in the
             // first place.
             pointsOverlay.updateItem(projection, editNode.getId(), 0);
@@ -207,11 +207,10 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * This method catch the selected MenuItem from the options menu and 1.
-     * activate the Internet to get more Mapmaterial 2. Center the Map to the
-     * actual own position 3. Stop tracking, show alert and go back to
-     * MainActivity 4. Pause tracking and show alert 5. Export actual Seassion
-     * to...
+     * Catches the selected MenuItem from the options menu and 1. activate the
+     * Internet to get more map data 2. Center the Map to the actual own
+     * position 3. Stop tracking, show alert and go back to MainActivity 4.
+     * Pause tracking and show alert 5. Export actual session to...
      * 
      * @param item
      *            the item
@@ -285,9 +284,9 @@ public class MapsForgeActivity extends MapActivity {
     private class GPSReceiver extends BroadcastReceiver {
 
         /**
-         * will center the map to the current position if true. This will be set
-         * to false once the map is centered, it's used to initially center the
-         * map when no GPS fix is available yet
+         * Centers the map to the current position if true. This will be set to
+         * false once the map is centered, it's used to initially center the map
+         * when no GPS fix is available yet
          */
         boolean centerMap = true;
 
@@ -331,8 +330,8 @@ public class MapsForgeActivity extends MapActivity {
                 pointsOverlay.setCurrentPosition(currentGeoPoint);
 
                 /*
-                 * in one_shot mode, we add the current point to the
-                 * visualisation
+                 * In one_shot mode, we add the current point to the
+                 * visualization
                  */
                 if (intend.getExtras().getBoolean("one_shot")) {
                     DataPointsList currentWay = Helper.currentTrack()

@@ -26,9 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * 
- *
- * 
+ * TODO: Javadoc.
  */
 public class FullTextSearchActivity extends ListActivity {
 
@@ -64,7 +62,7 @@ public class FullTextSearchActivity extends ListActivity {
         /**
          * 
          * The constructor takes different references to perform the search task
-         * and to tell the gui to update its content.
+         * and to tell the GUI to update its content.
          * 
          * @param act
          *            Reference to the FullTextSearchActivity
@@ -137,12 +135,9 @@ public class FullTextSearchActivity extends ListActivity {
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar
-        Helper.setStatusBar(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_fulltextsearchTitle), getResources()
+                .getString(R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
@@ -315,12 +310,9 @@ public class FullTextSearchActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_fulltextsearchTitle), getResources()
+                .getString(R.string.tv_statusbar_fulltextsearchDesc));
     }
 
     /**
