@@ -3,11 +3,9 @@
 	<target name="javadoc">
 	    <javadoc
 	        excludepackagenames=""
-	          access="public"
+	          access="protected"
 	           destdir="doc"
-	           author="true"
 	           version="true"
-	           use="true"
 	           windowtitle="TraceBook"
 	    	sourcepath="src"
 	       >
@@ -15,7 +13,7 @@
 	        <fileset dir="src" defaultexcludes="yes">
 	        	<include name="*.java"/>	            
 	        </fileset>
-	    	<link href="http://download.oracle.com/javase/6/docs/api/"/>
+	    	
 	    	<link href="http://code.google.com/p/mapsforge/source/browse/tags/0.2.1/javadoc/"/>
 	    	<link href="http://developer.android.com/reference"
 	    	                              offline="true"
