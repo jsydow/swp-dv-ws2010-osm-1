@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 import core.data.DataMapObject;
 import core.data.DataStorage;
 import core.media.VideoRecorder;
@@ -60,6 +61,10 @@ public class RecordVideoActivity extends Activity implements
         if (recorder.isRecording()) {
             recorder.stop();
             recorder.appendFileToObject(node);
+
+            // TODO: l10n!
+            Toast.makeText(this, "Video recorded successfully.",
+                    Toast.LENGTH_SHORT).show();
         }
 
         finish();
