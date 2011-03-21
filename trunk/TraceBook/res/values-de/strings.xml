@@ -20,7 +20,7 @@
 	<string name="string_preferencesActivity_title">Einstellungen</string>
 	<string name="string_startActivity_title">Tracebook</string>
 	<string name="string_recordvideoActivity_title">Video aufnehmen</string>
-	<string name="string_searchInfoDialog_title">MetaDaten Informationen</string>
+	<string name="string_searchInfoDialog_title">Informationen zu Metadaten</string>
 	<string name="string_statusDialog_here">Sie befinden sich hier</string>
 
 	<!-- App values -->
