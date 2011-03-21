@@ -52,26 +52,6 @@ public abstract class Recorder {
     }
 
     /**
-     * This method starts recording a media file, if it is a continuous process,
-     * such as recording audio or video files.
-     * 
-     * For one-shot acquisition (e. g. taking pictures), start() and stop()
-     * should not be used, because of misleading semantics.
-     * 
-     * @return Filename of the created media file.
-     */
-    public abstract String start();
-
-    /**
-     * This method stops recording a media file, if it is a continuous process,
-     * such as recording audio or video files.
-     * 
-     * For one-shot acquisition (e. g. taking pictures), start() and stop()
-     * should not be used, because of misleading semantics.
-     */
-    public abstract void stop();
-
-    /**
      * Attaches the recorded media file to the given node of our data structure.
      * 
      * @param parent
@@ -113,6 +93,26 @@ public abstract class Recorder {
     public final boolean isRecording() {
         return isRecording;
     }
+
+    /**
+     * This method starts recording a media file, if it is a continuous process,
+     * such as recording audio or video files.
+     * 
+     * For one-shot acquisition (e. g. taking pictures), start() and stop()
+     * should not be used, because of misleading semantics.
+     * 
+     * @return Filename of the created media file.
+     */
+    public abstract String start();
+
+    /**
+     * This method stops recording a media file, if it is a continuous process,
+     * such as recording audio or video files.
+     * 
+     * For one-shot acquisition (e. g. taking pictures), start() and stop()
+     * should not be used, because of misleading semantics.
+     */
+    public abstract void stop();
 
     /**
      * WARNING: Because of the nature of how the full path to the file is
