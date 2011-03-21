@@ -63,6 +63,23 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * The value_type column of the table "dictionary".
      */
     static final String DICT_COLUMN_TYPE = "value_type";
+
+    /**
+     * The key column of the table "history".
+     */
+    static final String HISTORY_COLUMN_KEY = "key";
+    /**
+     * The value column of the table "history".
+     */
+    static final String HISTORY_COLUMN_VALUE = "value";
+    /**
+     * The last_use column of the table "history".
+     */
+    static final String HISTORY_COLUMN_LAST_USE = "last_use";
+    /**
+     * The use_count column of the table "history".
+     */
+    static final String HISTORY_COLUMN_USE_COUNT = "use_count";
     /**
      * String to create table.
      */
@@ -76,8 +93,9 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * String to create table.
      */
     private static final String HISTORY_TABLE_CREATE = "CREATE TABLE "
-            + HISTORY_TABLE_NAME
-            + " (key TEXT, value TEXT, use_count INT, last_use INT);";
+            + HISTORY_TABLE_NAME + " (" + HISTORY_COLUMN_KEY + " TEXT, "
+            + HISTORY_COLUMN_VALUE + " TEXT, " + HISTORY_COLUMN_USE_COUNT
+            + " INT, " + HISTORY_COLUMN_LAST_USE + " INT);";
     /**
      * String to drop table.
      */

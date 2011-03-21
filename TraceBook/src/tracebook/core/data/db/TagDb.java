@@ -106,13 +106,19 @@ public class TagDb {
 
         if (searchText.length() >= 2) {
             Cursor result = db.query(TagDbOpenHelper.getDictTableName(),
-                    TagDbOpenHelper.getDictColumns(), "(name LIKE '%"
-                            + searchText + "%' OR keywords LIKE '%"
-                            + searchText + "%' OR description LIKE '%"
-                            + searchText + "%' OR value LIKE '%" + searchText
-                            + "%' OR key LIKE '%" + searchText
-                            + "%') AND language LIKE '" + language + "'", null,
-                    null, null, null, "20");
+                    TagDbOpenHelper.getDictColumns(), "("
+                            + TagDbOpenHelper.DICT_COLUMN_NAME + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_KEYWORDS + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_DESC + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_VALUE + " LIKE '%"
+                            + searchText + "%' OR "
+                            + TagDbOpenHelper.DICT_COLUMN_KEY + " LIKE '%"
+                            + searchText + "%') AND "
+                            + TagDbOpenHelper.DICT_COLUMN_LANG + " LIKE '"
+                            + language + "'", null, null, null, null, "20");
 
             if (result.moveToFirst()) {
                 while (!result.isAfterLast()) {

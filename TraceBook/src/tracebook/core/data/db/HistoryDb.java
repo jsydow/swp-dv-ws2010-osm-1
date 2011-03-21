@@ -97,9 +97,9 @@ public class HistoryDb {
             boolean mostUsed, int length) {
         String orderBy = null;
         if (mostUsed) {
-            orderBy = "use_count DESC";
+            orderBy = TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT + " DESC";
         } else {
-            orderBy = "last_use DESC";
+            orderBy = TagDbOpenHelper.HISTORY_COLUMN_LAST_USE + " DESC";
         }
 
         Cursor result = db.query(TagDbOpenHelper.getHistoryTableName(),
@@ -109,10 +109,12 @@ public class HistoryDb {
         if (result.moveToFirst()) {
             while (!result.isAfterLast()) {
                 // insert row to tags list
-                tags.add(new TagSearchResult(result.getString(result
-                        .getColumnIndex("key")), result.getString(result
-                        .getColumnIndex("value")), null, null, null, null,
-                        null, null));
+                tags.add(new TagSearchResult(
+                        result.getString(result
+                                .getColumnIndex(TagDbOpenHelper.HISTORY_COLUMN_KEY)),
+                        result.getString(result
+                                .getColumnIndex(TagDbOpenHelper.HISTORY_COLUMN_VALUE)),
+                        null, null, null, null, null, null));
 
                 result.moveToNext();
             }
@@ -137,9 +139,10 @@ public class HistoryDb {
 
         if (db != null && db.isOpen()) {
             Cursor crs = db.query(TagDbOpenHelper.getHistoryTableName(),
-                    new String[] { "COUNT(*)" }, "key='" + key
-                            + "' AND value='" + value + "'", null, null, null,
-                    null);
+                    new String[] { "COUNT(*)" },
+                    TagDbOpenHelper.HISTORY_COLUMN_KEY + "='" + key + "' AND "
+                            + TagDbOpenHelper.HISTORY_COLUMN_VALUE + "='"
+                            + value + "'", null, null, null, null);
 
             if (crs.moveToFirst()) {
                 rowCount = crs.getInt(0);
@@ -167,9 +170,13 @@ public class HistoryDb {
             SQLiteDatabase wdb = helper.getWritableDatabase();
             if (wdb != null && wdb.isOpen()) {
                 wdb.execSQL("UPDATE " + TagDbOpenHelper.getHistoryTableName()
-                        + " SET use_count=use_count+1, last_use="
-                        + System.currentTimeMillis() + " WHERE key='" + key
-                        + "' AND value='" + value + "'");
+                        + " SET " + TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT
+                        + "=" + TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT
+                        + "+1, " + TagDbOpenHelper.HISTORY_COLUMN_LAST_USE
+                        + "=" + System.currentTimeMillis() + " WHERE "
+                        + TagDbOpenHelper.HISTORY_COLUMN_KEY + "='" + key
+                        + "' AND " + TagDbOpenHelper.HISTORY_COLUMN_VALUE
+                        + "='" + value + "'");
                 wdb.close();
             } else {
                 Log.e("HistoryDb", "Could not open database to write.");
@@ -178,10 +185,12 @@ public class HistoryDb {
             SQLiteDatabase wdb = helper.getWritableDatabase();
             if (wdb != null && wdb.isOpen()) {
                 ContentValues values = new ContentValues();
-                values.put("last_use", Long.valueOf(System.currentTimeMillis()));
-                values.put("key", key);
-                values.put("value", value);
-                values.put("use_count", Integer.valueOf(1));
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_LAST_USE,
+                        Long.valueOf(System.currentTimeMillis()));
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_KEY, key);
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_VALUE, value);
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT,
+                        Integer.valueOf(1));
                 wdb.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
                 wdb.close();
             } else {
