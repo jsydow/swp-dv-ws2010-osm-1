@@ -42,7 +42,7 @@ public abstract class DataMediaHolder {
 
     /**
      * Set the Creation time of this MediaHolder. Used to restore an old
-     * MediaHolder while deserialisation.
+     * MediaHolder while deserialization.
      * 
      * @param datetime
      *            The new time stamp as String.

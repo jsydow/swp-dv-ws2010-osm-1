@@ -42,7 +42,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
 
     /**
      * Method to set the id. Do not use! If some MapObjects have the same id
-     * errors might occur. It is intended to use to initialise a DataMapObject
+     * errors might occur. It is intended to use to initialize a DataMapObject
      * from an old id which is unique.
      * 
      * @param id
