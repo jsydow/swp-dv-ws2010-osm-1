@@ -9,13 +9,17 @@ import android.util.Log;
  * This class provides methods for controlling the {@link WaypointLogService}.
  */
 public final class ServiceConnector {
-    private static final String LOG_TAG = "LOGSERVICECLIENT";
-    private static volatile LoggerServiceConnection conn = null;
-    private static boolean started = false;
     private static Activity activity = null;
+    private static volatile LoggerServiceConnection conn = null;
+    private static final String LOG_TAG = "LOGSERVICECLIENT";
+    private static boolean started = false;
 
-    private ServiceConnector() {
-        // Empty constructor, yo.
+    /**
+     * @return get a reference to the loggerService
+     */
+    public static ILoggerService getLoggerService() {
+        // danger - ?!
+        return conn.getLoggerService();
     }
 
     /**
@@ -81,12 +85,8 @@ public final class ServiceConnector {
         }
     }
 
-    /**
-     * @return get a reference to the loggerService
-     */
-    public static ILoggerService getLoggerService() {
-        // danger - ?!
-        return conn.getLoggerService();
+    private ServiceConnector() {
+        // Empty constructor, yo.
     }
 
 }

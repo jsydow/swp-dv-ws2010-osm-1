@@ -22,9 +22,9 @@ import android.widget.Toast;
 public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {
 
-    private SurfaceHolder surfaceHolder;
-    private VideoRecorder recorder = new VideoRecorder();
     private DataMapObject node;
+    private VideoRecorder recorder = new VideoRecorder();
+    private SurfaceHolder surfaceHolder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,18 +47,10 @@ public class RecordVideoActivity extends Activity implements
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
-    /**
-     * This function is called when the "Stop recording" button is clicked.
-     * 
-     * @param view
-     *            Not used.
-     */
-    public void onRecordStop(View view) {
-        if (recorder.isRecording()) {
-            stopRecording();
-        }
-
-        finish();
+    @Override
+    public void onDestroy() {
+        stopRecording();
+        super.onDestroy();
     }
 
     /**
@@ -73,12 +65,40 @@ public class RecordVideoActivity extends Activity implements
         }
     }
 
+    /**
+     * This function is called when the "Stop recording" button is clicked.
+     * 
+     * @param view
+     *            Not used.
+     */
+    public void onRecordStop(View view) {
+        if (recorder.isRecording()) {
+            stopRecording();
+        }
+
+        finish();
+    }
+
+    @Override
+    public void onStop() {
+        stopRecording();
+    }
+
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+            int height) {
+        // Does nothing. Literally.
+    }
+
     public void surfaceCreated(SurfaceHolder holder) {
         try {
             recorder.prepare(holder.getSurface());
         } catch (IOException e) {
             Log.e("TraceBook", e.toString());
         }
+    }
+
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // Does nothing. Literally.
     }
 
     private void stopRecording() {
@@ -90,25 +110,5 @@ public class RecordVideoActivity extends Activity implements
             Toast.makeText(this, "Video recorded successfully.",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onStop() {
-        stopRecording();
-    }
-
-    @Override
-    public void onDestroy() {
-        stopRecording();
-        super.onDestroy();
-    }
-
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-            int height) {
-        // Does nothing. Literally.
-    }
-
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        // Does nothing. Literally.
     }
 }

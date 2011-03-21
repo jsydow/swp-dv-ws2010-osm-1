@@ -22,22 +22,44 @@ import android.graphics.Paint;
  * 
  */
 public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
+    /**
+     * Generates a pair of paint objects with the same color, but different
+     * levels of transparency.
+     */
+    private static Pair<Paint, Paint> getPaintPair(int color, boolean area) {
+        Paint paintOutline = new Paint();
+        paintOutline.setAntiAlias(true);
+        paintOutline.setStyle(Paint.Style.STROKE);
+        paintOutline.setStrokeWidth(4);
+        paintOutline.setStrokeCap(Paint.Cap.BUTT);
+        paintOutline.setStrokeJoin(Paint.Join.ROUND);
+        paintOutline.setColor(color);
+        paintOutline.setAlpha(96);
+
+        Paint paintFill = new Paint(paintOutline);
+        if (area)
+            paintFill.setStyle(Paint.Style.FILL);
+        paintFill.setAlpha(160);
+
+        return new Pair<Paint, Paint>(paintFill, paintOutline);
+    }
+    private List<Pair<Paint, Paint>> areaColors;
     private int colorID = 0;
+
+    private Activity context;
+
+    private DataNodeArrayItemizedOverlay pointsOverlay;
+
     /**
      * List of possible colors for ways and areas the first color in the list is
      * always used for the current way.
      */
     private List<Pair<Paint, Paint>> wayColors;
-    private List<Pair<Paint, Paint>> areaColors;
 
     /**
      * Show a knob for every way point.
      */
     boolean showWaypoints = false;
-
-    private Activity context;
-
-    private DataNodeArrayItemizedOverlay pointsOverlay;
 
     /**
      * Sets overlays and generates color array.
@@ -68,48 +90,6 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         areaColors.add(getPaintPair(Color.rgb(230, 0, 0), true));
         areaColors.add(getPaintPair(Color.rgb(200, 0, 0), true));
         areaColors.add(getPaintPair(Color.rgb(170, 0, 0), true));
-    }
-
-    /**
-     * Gets a color from the rotating color array.
-     * 
-     * @param editing
-     *            true if the track is currently edited and the color pair for
-     *            the current way should be used
-     * @param area
-     *            true if the color should be used for an area
-     * 
-     * @return a {@link Pair} of {@link Paint} where the first element is the
-     *         FillPaint and the second one the OutlinePaint
-     */
-    Pair<Paint, Paint> getColor(boolean editing, boolean area) {
-        List<Pair<Paint, Paint>> colors = area ? areaColors : wayColors;
-        // the first color is used for the current track, so rotate over the
-        // remaining array fields.
-        colorID = editing ? 0 : colorID % (colors.size() - 1) + 1;
-        return colors.get(colorID);
-    }
-
-    /**
-     * Generates a pair of paint objects with the same color, but different
-     * levels of transparency.
-     */
-    private static Pair<Paint, Paint> getPaintPair(int color, boolean area) {
-        Paint paintOutline = new Paint();
-        paintOutline.setAntiAlias(true);
-        paintOutline.setStyle(Paint.Style.STROKE);
-        paintOutline.setStrokeWidth(4);
-        paintOutline.setStrokeCap(Paint.Cap.BUTT);
-        paintOutline.setStrokeJoin(Paint.Join.ROUND);
-        paintOutline.setColor(color);
-        paintOutline.setAlpha(96);
-
-        Paint paintFill = new Paint(paintOutline);
-        if (area)
-            paintFill.setStyle(Paint.Style.FILL);
-        paintFill.setAlpha(160);
-
-        return new Pair<Paint, Paint>(paintFill, paintOutline);
     }
 
     /**
@@ -177,18 +157,6 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
                 currentWay != null && currentWay.getId() == id, null);
     }
 
-    private void addWaypoints(DataPointsList way) {
-        for (DataNode n : way.getNodes()) {
-            putWaypoint(n);
-            pointsOverlay.addOverlay(n);
-        }
-    }
-
-    private void removeWaypoints(DataPointsList way) {
-        for (DataNode n : way.getNodes())
-            pointsOverlay.removeOverlay(n.getId());
-    }
-
     /**
      * Enable/disable the drawing of way point markers.
      */
@@ -202,6 +170,13 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
                 removeWaypoints(dpl);
     }
 
+    private void addWaypoints(DataPointsList way) {
+        for (DataNode n : way.getNodes()) {
+            putWaypoint(n);
+            pointsOverlay.addOverlay(n);
+        }
+    }
+
     /**
      * Creates a new OverlayItem for n if it has none yet.
      * 
@@ -212,6 +187,31 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         if (n.getOverlayItem() == null)
             n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
                     R.drawable.dot_blue, context, true));
+    }
+
+    private void removeWaypoints(DataPointsList way) {
+        for (DataNode n : way.getNodes())
+            pointsOverlay.removeOverlay(n.getId());
+    }
+
+    /**
+     * Gets a color from the rotating color array.
+     * 
+     * @param editing
+     *            true if the track is currently edited and the color pair for
+     *            the current way should be used
+     * @param area
+     *            true if the color should be used for an area
+     * 
+     * @return a {@link Pair} of {@link Paint} where the first element is the
+     *         FillPaint and the second one the OutlinePaint
+     */
+    Pair<Paint, Paint> getColor(boolean editing, boolean area) {
+        List<Pair<Paint, Paint>> colors = area ? areaColors : wayColors;
+        // the first color is used for the current track, so rotate over the
+        // remaining array fields.
+        colorID = editing ? 0 : colorID % (colors.size() - 1) + 1;
+        return colors.get(colorID);
     }
 
 }

@@ -5,14 +5,14 @@ package tracebook.core.data.db;
  * 
  */
 public class TagSearchResult {
-    private String key;
-    private String value;
-    private String name;
     private String description;
-    private String link;
     private String image;
-    private String valueType;
+    private String key;
     private String language;
+    private String link;
+    private String name;
+    private String value;
+    private String valueType;
 
     /**
      * @param key
@@ -48,46 +48,10 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return The key field of the tag.
-     */
-    public String getKey() {
-        return key;
-    }
-
-    /**
-     * Getter method.
-     * 
-     * @return The value field of the tag.
-     */
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     * Getter method.
-     * 
-     * @return The displayed name of the tag.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Getter method.
-     * 
      * @return The description of the map feature.
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Getter method.
-     * 
-     * @return The URL to Wiki page of the map feature.
-     */
-    public String getLink() {
-        return link;
     }
 
     /**
@@ -102,10 +66,10 @@ public class TagSearchResult {
     /**
      * Getter method.
      * 
-     * @return The type of the value field of the tag.
+     * @return The key field of the tag.
      */
-    public String getValueType() {
-        return valueType;
+    public String getKey() {
+        return key;
     }
 
     /**
@@ -115,5 +79,41 @@ public class TagSearchResult {
      */
     public String getLanguage() {
         return language;
+    }
+
+    /**
+     * Getter method.
+     * 
+     * @return The URL to Wiki page of the map feature.
+     */
+    public String getLink() {
+        return link;
+    }
+
+    /**
+     * Getter method.
+     * 
+     * @return The displayed name of the tag.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Getter method.
+     * 
+     * @return The value field of the tag.
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * Getter method.
+     * 
+     * @return The type of the value field of the tag.
+     */
+    public String getValueType() {
+        return valueType;
     }
 }

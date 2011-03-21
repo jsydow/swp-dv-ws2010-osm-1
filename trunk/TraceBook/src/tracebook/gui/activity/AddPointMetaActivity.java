@@ -46,19 +46,52 @@ public class AddPointMetaActivity extends ListActivity {
         /**
          * 
          */
-        VALUE,
+        USEFUL,
         /**
          * 
          */
-        USEFUL
+        VALUE
     }
+
+    private GenericAdapter adapter;
 
     /**
      * Reference to the current DataMapObject in use.
      */
     DataMapObject node;
 
-    private GenericAdapter adapter;
+    /**
+     * 
+     * @param view
+     *            not used
+     */
+    public void cancelBtn(View view) {
+        finish();
+    }
+
+    /**
+     * Give all the tag category's from the Tag-XML.
+     * 
+     * @return a string array containing the category's
+     */
+    public String[] getCategoryTags() {
+        // Test array
+        String[] firstGroupTags = parseTags(Tags.KEY, "");
+        return firstGroupTags;
+    }
+
+    /**
+     * Generate the all linked values for the category tag.
+     * 
+     * @param category
+     *            Category to get the values from
+     * @return return a string array with values for the given category
+     */
+    public String[] getValues(String category) {
+        // return the value tags for the selected category tag
+        String[] valueTags = parseTags(Tags.VALUE, category);
+        return valueTags;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,57 +158,6 @@ public class AddPointMetaActivity extends ListActivity {
 
     }
 
-    private void fillListView() {
-        HistoryDb db = new HistoryDb(this);
-        // TODO user can change most used vs recently used
-        List<TagSearchResult> result = db.getHistory(false, 10);
-
-        GenericItemDescription desc = new GenericItemDescription();
-        desc.addResourceId("Key", R.id.tv_history_key);
-        desc.addResourceId("Value", R.id.tv_history_value);
-
-        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
-
-        for (TagSearchResult res : result) {
-            GenericAdapterData item = new GenericAdapterData(desc);
-
-            item.setText("Key", res.getKey());
-            item.setText("Value", res.getValue());
-            data.add(item);
-        }
-
-        adapter = new GenericAdapter(this, R.layout.listview_taghistory,
-                R.id.list, data);
-
-        setListAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-    }
-
-    /**
-     * Give all the tag category's from the Tag-XML.
-     * 
-     * @return a string array containing the category's
-     */
-    public String[] getCategoryTags() {
-        // Test array
-        String[] firstGroupTags = parseTags(Tags.KEY, "");
-        return firstGroupTags;
-    }
-
-    /**
-     * Generate the all linked values for the category tag.
-     * 
-     * @param category
-     *            Category to get the values from
-     * @return return a string array with values for the given category
-     */
-    public String[] getValues(String category) {
-        // return the value tags for the selected category tag
-        String[] valueTags = parseTags(Tags.VALUE, category);
-        return valueTags;
-    }
-
     /**
      * Save the MetaData to the Node-Meta and go back to the information
      * activity.
@@ -213,15 +195,6 @@ public class AddPointMetaActivity extends ListActivity {
     }
 
     /**
-     * 
-     * @param view
-     *            not used
-     */
-    public void cancelBtn(View view) {
-        finish();
-    }
-
-    /**
      * The Method for the preference image Button from the status bar. The
      * Method starts the PreferenceActivity.
      * 
@@ -249,29 +222,30 @@ public class AddPointMetaActivity extends ListActivity {
                         .getString(R.string.tv_statusbar_addpointmetaDesc));
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    private void fillListView() {
+        HistoryDb db = new HistoryDb(this);
+        // TODO user can change most used vs recently used
+        List<TagSearchResult> result = db.getHistory(false, 10);
 
-        // data == null when the user has used the back button to exit the
-        // previous activity
-        if (data == null)
-            return;
+        GenericItemDescription desc = new GenericItemDescription();
+        desc.addResourceId("Key", R.id.tv_history_key);
+        desc.addResourceId("Value", R.id.tv_history_value);
 
-        final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_value);
-        final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_categorie);
+        List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
 
-        final Bundle extras = data.getExtras();
+        for (TagSearchResult res : result) {
+            GenericAdapterData item = new GenericAdapterData(desc);
 
-        if (extras != null) {
-            if (extras.containsKey("DataNodeKey")) {
-                String key = extras.getString("DataNodeKey");
-                autoComplCat.setText(key);
-            }
-            if (extras.containsKey("DataNodeValue")) {
-                String value = extras.getString("DataNodeValue");
-                autoComplVal.setText(value);
-            }
+            item.setText("Key", res.getKey());
+            item.setText("Value", res.getValue());
+            data.add(item);
         }
+
+        adapter = new GenericAdapter(this, R.layout.listview_taghistory,
+                R.id.list, data);
+
+        setListAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -349,6 +323,32 @@ public class AddPointMetaActivity extends ListActivity {
         }
         String[] tagStringsArray = new String[tagStrings.size()];
         return tagStrings.toArray(tagStringsArray);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // data == null when the user has used the back button to exit the
+        // previous activity
+        if (data == null)
+            return;
+
+        final AutoCompleteTextView autoComplVal = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_value);
+        final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_categorie);
+
+        final Bundle extras = data.getExtras();
+
+        if (extras != null) {
+            if (extras.containsKey("DataNodeKey")) {
+                String key = extras.getString("DataNodeKey");
+                autoComplCat.setText(key);
+            }
+            if (extras.containsKey("DataNodeValue")) {
+                String value = extras.getString("DataNodeValue");
+                autoComplVal.setText(value);
+            }
+        }
+
     }
 
     @Override

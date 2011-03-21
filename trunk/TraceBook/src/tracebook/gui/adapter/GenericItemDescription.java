@@ -10,23 +10,22 @@ import java.util.Map;
  * elements.
  */
 public class GenericItemDescription {
+    private String itemNameTag = null;
+
     /**
      * Map to associate a String tag with an id.
      * 
      */
     Map<String, Integer> resourceIds = new HashMap<String, Integer>();
 
-    private String itemNameTag = null;
-
     /**
-     * Sets the name of the tag that is used for the toString() method of the
-     * AdapterData.
-     * 
      * @param tag
-     *            The name of the tag.
+     *            tag to associate the resource id
+     * @param id
+     *            the resource id
      */
-    public void setNameTag(String tag) {
-        itemNameTag = tag;
+    public void addResourceId(String tag, int id) {
+        resourceIds.put(tag, Integer.valueOf(id));
     }
 
     /**
@@ -40,20 +39,21 @@ public class GenericItemDescription {
 
     /**
      * @param tag
-     *            tag to associate the resource id
-     * @param id
-     *            the resource id
-     */
-    public void addResourceId(String tag, int id) {
-        resourceIds.put(tag, Integer.valueOf(id));
-    }
-
-    /**
-     * @param tag
      *            tag which is associated with a given resources id.
      * @return return the id of a resource which is associated with a given tag
      */
     public int getResourceId(String tag) {
         return resourceIds.get(tag).intValue();
+    }
+
+    /**
+     * Sets the name of the tag that is used for the toString() method of the
+     * AdapterData.
+     * 
+     * @param tag
+     *            The name of the tag.
+     */
+    public void setNameTag(String tag) {
+        itemNameTag = tag;
     }
 }

@@ -22,23 +22,71 @@ import android.widget.TextView;
  */
 public class GenericAdapterData {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#toString()
+    private interface GenericItem {
+        void fillItem(View view, int id);
+    }
+
+    /**
+     * The class representation to handle Button data.
      */
-    @Override
-    public String toString() {
-        if (description.getNameTag() != null) {
-            GenericItem item = items.get(description.getNameTag());
-            if (item != null) {
-                return item.toString();
-            } else {
-                return super.toString();
-            }
-        } else {
-            return super.toString();
+    static class ButtonItem implements GenericItem {
+
+        /**
+         * Reference to an onClickListener which will be called when an onClick
+         * event occurs.
+         */
+        View.OnClickListener onClickListener;
+
+        /**
+         * @param onClickListener
+         *            reference to a onClickListener which will be called then a
+         *            onClick event occurs
+         */
+        public ButtonItem(View.OnClickListener onClickListener) {
+            this.onClickListener = onClickListener;
         }
+
+        public void fillItem(View view, int id) {
+            Button button = (Button) view.findViewById(id);
+            button.setOnClickListener(onClickListener);
+        }
+
+        @Override
+        public String toString() {
+            return "Button";
+        }
+
+    }
+
+    /**
+     * The class representation to handle ImageView data.
+     */
+    static class ImageItem implements GenericItem {
+
+        /**
+         * The resource id to an image.
+         */
+        int imageId;
+
+        /**
+         * @param imageId
+         *            resource id of an image to set
+         */
+        public ImageItem(int imageId) {
+            this.imageId = imageId;
+        }
+
+        public void fillItem(View view, int id) {
+            ImageView imageView = (ImageView) view.findViewById(id);
+            imageView.setImageResource(imageId);
+            imageView.invalidate();
+        }
+
+        @Override
+        public String toString() {
+            return "Image " + imageId;
+        }
+
     }
 
     /**
@@ -46,22 +94,18 @@ public class GenericAdapterData {
      */
     enum ItemTypes {
         /**
-         * TextView.
+         * Button.
          */
-        ItemType_Text,
+        ItemType_Button,
         /**
          * ImageView.
          */
         ItemType_Image,
 
         /**
-         * Button.
+         * TextView.
          */
-        ItemType_Button,
-    }
-
-    private interface GenericItem {
-        void fillItem(View view, int id);
+        ItemType_Text,
     }
 
     /**
@@ -108,77 +152,14 @@ public class GenericAdapterData {
     }
 
     /**
-     * The class representation to handle ImageView data.
-     */
-    static class ImageItem implements GenericItem {
-
-        /**
-         * The resource id to an image.
-         */
-        int imageId;
-
-        /**
-         * @param imageId
-         *            resource id of an image to set
-         */
-        public ImageItem(int imageId) {
-            this.imageId = imageId;
-        }
-
-        public void fillItem(View view, int id) {
-            ImageView imageView = (ImageView) view.findViewById(id);
-            imageView.setImageResource(imageId);
-            imageView.invalidate();
-        }
-
-        @Override
-        public String toString() {
-            return "Image " + imageId;
-        }
-
-    }
-
-    /**
-     * The class representation to handle Button data.
-     */
-    static class ButtonItem implements GenericItem {
-
-        /**
-         * Reference to an onClickListener which will be called when an onClick
-         * event occurs.
-         */
-        View.OnClickListener onClickListener;
-
-        /**
-         * @param onClickListener
-         *            reference to a onClickListener which will be called then a
-         *            onClick event occurs
-         */
-        public ButtonItem(View.OnClickListener onClickListener) {
-            this.onClickListener = onClickListener;
-        }
-
-        public void fillItem(View view, int id) {
-            Button button = (Button) view.findViewById(id);
-            button.setOnClickListener(onClickListener);
-        }
-
-        @Override
-        public String toString() {
-            return "Button";
-        }
-
-    }
-
-    /**
      * Reference to a description object. See @GenericItemDescription
      */
     GenericItemDescription description;
+
     /**
      * Map items to string tags.
      */
     Map<String, GenericItem> items = new HashMap<String, GenericItem>();
-
     /**
      * @param desc
      *            reference to a GenericItemDescription object which will handle
@@ -206,23 +187,13 @@ public class GenericAdapterData {
 
     /**
      * @param tag
-     *            tag which is associated with an given TextView.
-     * @param text
-     *            text to set.
-     * 
+     *            Tag which is associated with the TextView
+     * @return return the text for a given TextView
      */
-    public void setText(String tag, String text) {
-        items.put(tag, new TextItem(text));
-    }
+    public String getText(String tag) {
+        TextItem textItem = (TextItem) items.get(tag);
+        return textItem.getCurrentText();
 
-    /**
-     * @param tag
-     *            tag which is associated with a given ImageView.
-     * @param image
-     *            resource id of an image
-     */
-    public void setImage(String tag, int image) {
-        items.put(tag, new ImageItem(image));
     }
 
     /**
@@ -240,13 +211,42 @@ public class GenericAdapterData {
 
     /**
      * @param tag
-     *            Tag which is associated with the TextView
-     * @return return the text for a given TextView
+     *            tag which is associated with a given ImageView.
+     * @param image
+     *            resource id of an image
      */
-    public String getText(String tag) {
-        TextItem textItem = (TextItem) items.get(tag);
-        return textItem.getCurrentText();
+    public void setImage(String tag, int image) {
+        items.put(tag, new ImageItem(image));
+    }
 
+    /**
+     * @param tag
+     *            tag which is associated with an given TextView.
+     * @param text
+     *            text to set.
+     * 
+     */
+    public void setText(String tag, String text) {
+        items.put(tag, new TextItem(text));
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        if (description.getNameTag() != null) {
+            GenericItem item = items.get(description.getNameTag());
+            if (item != null) {
+                return item.toString();
+            } else {
+                return super.toString();
+            }
+        } else {
+            return super.toString();
+        }
     }
 
 }

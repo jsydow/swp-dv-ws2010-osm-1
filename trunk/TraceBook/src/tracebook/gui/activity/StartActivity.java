@@ -25,6 +25,38 @@ import android.widget.Button;
  */
 public class StartActivity extends Activity {
 
+    /**
+     * Called if the loadTrack button pressed. Start the LoadTrackActivity.
+     * 
+     * @param view
+     *            the view
+     */
+    public void loadTrackBtn(View view) {
+        Intent intent = new Intent(this, LoadTrackActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Called if the newTrack button pressed. Start the NewTrackActivity and the
+     * tracking notification for the user
+     * 
+     * @param view
+     *            the view
+     */
+    public void newTrackBtn(View view) {
+
+        if (Helper.currentTrack() == null)
+            try {
+                ServiceConnector.getLoggerService().startTrack();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+        Intent intent = new Intent(this, NewTrackActivity.class);
+        startActivity(intent);
+
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -76,38 +108,6 @@ public class StartActivity extends Activity {
                         "Could not create TraceBook-directory");
             }
         }
-    }
-
-    /**
-     * Called if the newTrack button pressed. Start the NewTrackActivity and the
-     * tracking notification for the user
-     * 
-     * @param view
-     *            the view
-     */
-    public void newTrackBtn(View view) {
-
-        if (Helper.currentTrack() == null)
-            try {
-                ServiceConnector.getLoggerService().startTrack();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-        Intent intent = new Intent(this, NewTrackActivity.class);
-        startActivity(intent);
-
-    }
-
-    /**
-     * Called if the loadTrack button pressed. Start the LoadTrackActivity.
-     * 
-     * @param view
-     *            the view
-     */
-    public void loadTrackBtn(View view) {
-        Intent intent = new Intent(this, LoadTrackActivity.class);
-        startActivity(intent);
     }
 
     @Override

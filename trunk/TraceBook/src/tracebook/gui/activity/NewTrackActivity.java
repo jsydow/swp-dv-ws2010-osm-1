@@ -97,6 +97,11 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
+     * 
+     */
+    GenericAdapter adapter;
+
+    /**
      * TextView which shows the current text for media buttons.
      */
     TextView mediaData;
@@ -107,9 +112,154 @@ public class NewTrackActivity extends TabActivity {
     PictureRecorder pictureRecorder = new PictureRecorder();
 
     /**
+     * Called if the addPointButton pressed. Switch to the AddPointActivity, to
+     * insert Meta-Tags for the last Node.
      * 
+     * @param view
+     *            not used
      */
-    GenericAdapter adapter;
+    public void addPointBtn(View view) {
+        int nodeId = 0;
+
+        try {
+            nodeId = ServiceConnector.getLoggerService().createPOI(false);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        final Intent intent = new Intent(this, AddPointActivity.class);
+        intent.putExtra("DataNodeId", nodeId);
+        startActivity(intent);
+    }
+
+    /**
+     * @param view
+     *            not used
+     */
+    public void editCommentBtn(View view) {
+        final DataTrack track = DataStorage.getInstance().getCurrentTrack();
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        input.setText(track.getComment());
+        alert.setView(input);
+        alert.setTitle(getResources().getString(
+                R.string.alert_newtrackActivity_addTrackNotice));
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
+
+                        track.setComment(value);
+
+                    }
+                });
+
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+        alert.show();
+    }
+
+    /**
+     * @param view
+     *            unused
+     */
+    public void makeMemoBtn(View view) {
+        final Intent intent = new Intent(this, AddMemoActivity.class);
+        intent.putExtra("DataNodeId", DataStorage.getInstance()
+                .getCurrentTrack().getCurrentWay().getId());
+        startActivity(intent);
+    }
+
+    /**
+     * @param view
+     *            unused
+     */
+    public void makeNoticeBtn(View view) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText input = new EditText(this);
+        alert.setView(input);
+        alert.setTitle(getResources()
+                .getString(R.string.alert_global_addNotice));
+        alert.setPositiveButton(
+                getResources().getString(R.string.alert_global_ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString().trim();
+
+                        DataStorage
+                                .getInstance()
+                                .getCurrentTrack()
+                                .getCurrentWay()
+                                .addMedia(
+                                        DataStorage.getInstance()
+                                                .getCurrentTrack()
+                                                .saveText(value));
+                        LogIt.popup(getApplicationContext(), getResources()
+                                .getString(R.string.alert_global_addedNotice));
+                    }
+                });
+
+        alert.setNegativeButton(
+                getResources().getString(R.string.alert_global_cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.cancel();
+                    }
+                });
+        alert.show();
+
+    }
+
+    /**
+     * @param view
+     *            not used
+     */
+    public void makePictureBtn(View view) {
+        pictureRecorder.startIntent(this);
+    }
+
+    /**
+     * @param view
+     *            not used
+     */
+    public void makeVideoBtn(View view) {
+        final Intent intent = new Intent(this, RecordVideoActivity.class);
+        intent.putExtra("DataNodeId", DataStorage.getInstance()
+                .getCurrentTrack().getCurrentWay().getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+                .getMenuInfo();
+
+        GenericAdapterData data = adapter.getItem((int) info.id);
+
+        int nodeId = Integer.parseInt(data.getText("NodeId"));
+
+        switch (item.getItemId()) {
+        case R.id.cm_editmapobjects_delete:
+            DataStorage.getInstance().getCurrentTrack().deleteNode(nodeId);
+            DataStorage.getInstance().getCurrentTrack().deleteWay(nodeId);
+            initListView();
+            return true;
+        case R.id.cm_editmapobjects_edit:
+            final Intent intent = new Intent(this, AddPointActivity.class);
+            intent.putExtra("DataNodeId", nodeId);
+            startActivity(intent);
+            return true;
+        default:
+            return super.onContextItemSelected(item);
+        }
+    }
 
     /**
      * Create activity.
@@ -149,52 +299,115 @@ public class NewTrackActivity extends TabActivity {
         setGpsStatus();
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    /**
+     * Method is called if startArea-ToggleButton pressed. Start and stop area
+     * tracking.
+     * 
+     * @param view
+     *            not used
+     */
+    public void startAreaTbtn(View view) {
+        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
+        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
+        String check = areaToggle.getText().toString();
+        if (check.equals(areaToggle.getTextOn().toString())) {
+            streetToggle.setClickable(false);
+            setButtonList(true, 2);
+            try {
+                ServiceConnector.getLoggerService().beginArea(false);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            streetToggle.setClickable(true);
+            setButtonList(false, 0);
+            try {
+                ServiceConnector.getLoggerService().endWay();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-                .getMenuInfo();
+        }
 
-        GenericAdapterData data = adapter.getItem((int) info.id);
+    }
 
-        int nodeId = Integer.parseInt(data.getText("NodeId"));
+    /**
+     * Method is called if startWay-ToggleButton pressed. Start and stop way
+     * tracking.
+     * 
+     * @param view
+     *            not used
+     */
+    public void startWayTbtn(View view) {
+        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
+        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
+        String check = streetToggle.getText().toString();
+        if (check.equals(streetToggle.getTextOn().toString())) {
+            areaToggle.setClickable(false);
+            setButtonList(true, 1);
+            try {
+                ServiceConnector.getLoggerService().beginWay(false);
 
-        switch (item.getItemId()) {
-        case R.id.cm_editmapobjects_delete:
-            DataStorage.getInstance().getCurrentTrack().deleteNode(nodeId);
-            DataStorage.getInstance().getCurrentTrack().deleteWay(nodeId);
-            initListView();
-            return true;
-        case R.id.cm_editmapobjects_edit:
-            final Intent intent = new Intent(this, AddPointActivity.class);
-            intent.putExtra("DataNodeId", nodeId);
-            startActivity(intent);
-            return true;
-        default:
-            return super.onContextItemSelected(item);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            areaToggle.setClickable(true);
+            setButtonList(false, 0);
+            try {
+                ServiceConnector.getLoggerService().endWay();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void setGpsStatus() {
-        LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        GpsStatus gps = loc.getGpsStatus(null);
-        Iterator<GpsSatellite> it = gps.getSatellites().iterator();
-        int i = 0;
-        float sum = 0;
-        while (it.hasNext()) {
-            GpsSatellite sat = it.next();
-            i++;
-            sum += sat.getSnr();
-        }
+    /**
+     * 
+     * Called if the stopTrackButton pressed. Stop the actual tracking and
+     * returns to the main activity.
+     * 
+     * @param view
+     *            not used
+     */
+    public void stopTrackBtn(View view) {
 
-        TextView tv = (TextView) findViewById(R.id.tv_newtrackActivity_gpsStatus);
-        tv.setText(getResources().getString(
-                R.string.tv_newtrackactivity_signalstrength_strength)
-                + sum
-                + getResources().getString(
-                        R.string.tv_newtrackactivity_signalstrength_count)
-                + i
-                + " " + it.toString());
+        Helper.alertStopTracking(this);
+
+    }
+
+    /**
+     * Initialization the TabHost with all three tabs: 1. mapView (MapsForge) 2.
+     * NewTab 3. EditTab
+     */
+    private void initTabHost() {
+        // Initialize TabHost
+        TabHost tabHost = getTabHost();
+
+        // Initialize TabHost
+        tabHost.addTab(tabHost
+                .newTabSpec("map_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_map))
+                .setContent(new Intent(this, MapsForgeActivity.class)));
+        // new Intent(this, MapsForgeActivity.class))
+        tabHost.addTab(tabHost
+                .newTabSpec("new_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_new))
+                .setContent(R.id.tab_newtrackActivity_new));
+        tabHost.addTab(tabHost
+                .newTabSpec("edit_tab")
+                .setIndicator(
+                        getResources().getString(
+                                R.string.tab_newtrackActivity_edit))
+                .setContent(R.id.tab_newtrackactivity_edit));
+
+        // set the default tap to our MapTab
+        tabHost.setCurrentTab(1);
+
     }
 
     /**
@@ -238,6 +451,56 @@ public class NewTrackActivity extends TabActivity {
         Button makeNoticeBtn = (Button) layoutHolder
                 .findViewById(R.id.btn_addMetaMedia_makeNotice);
         makeNoticeBtn.setVisibility(visible);
+    }
+
+    private void setGpsStatus() {
+        LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        GpsStatus gps = loc.getGpsStatus(null);
+        Iterator<GpsSatellite> it = gps.getSatellites().iterator();
+        int i = 0;
+        float sum = 0;
+        while (it.hasNext()) {
+            GpsSatellite sat = it.next();
+            i++;
+            sum += sat.getSnr();
+        }
+
+        TextView tv = (TextView) findViewById(R.id.tv_newtrackActivity_gpsStatus);
+        tv.setText(getResources().getString(
+                R.string.tv_newtrackactivity_signalstrength_strength)
+                + sum
+                + getResources().getString(
+                        R.string.tv_newtrackactivity_signalstrength_count)
+                + i
+                + " " + it.toString());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        DataTrack dt = DataStorage.getInstance().getCurrentTrack();
+
+        switch (requestCode) {
+        case Recorder.TAKE_PHOTO_CODE:
+            if (resultCode == Activity.RESULT_OK) {
+                pictureRecorder.appendFileToObject(dt.getCurrentWay());
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initListView();
+        setGpsStatus();
+        /* setGpsStatus(); */
     }
 
     /**
@@ -358,268 +621,5 @@ public class NewTrackActivity extends TabActivity {
             }
         });
 
-    }
-
-    /**
-     * Initialization the TabHost with all three tabs: 1. mapView (MapsForge) 2.
-     * NewTab 3. EditTab
-     */
-    private void initTabHost() {
-        // Initialize TabHost
-        TabHost tabHost = getTabHost();
-
-        // Initialize TabHost
-        tabHost.addTab(tabHost
-                .newTabSpec("map_tab")
-                .setIndicator(
-                        getResources().getString(
-                                R.string.tab_newtrackActivity_map))
-                .setContent(new Intent(this, MapsForgeActivity.class)));
-        // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost
-                .newTabSpec("new_tab")
-                .setIndicator(
-                        getResources().getString(
-                                R.string.tab_newtrackActivity_new))
-                .setContent(R.id.tab_newtrackActivity_new));
-        tabHost.addTab(tabHost
-                .newTabSpec("edit_tab")
-                .setIndicator(
-                        getResources().getString(
-                                R.string.tab_newtrackActivity_edit))
-                .setContent(R.id.tab_newtrackactivity_edit));
-
-        // set the default tap to our MapTab
-        tabHost.setCurrentTab(1);
-
-    }
-
-    /**
-     * Method is called if startWay-ToggleButton pressed. Start and stop way
-     * tracking.
-     * 
-     * @param view
-     *            not used
-     */
-    public void startWayTbtn(View view) {
-        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
-        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
-        String check = streetToggle.getText().toString();
-        if (check.equals(streetToggle.getTextOn().toString())) {
-            areaToggle.setClickable(false);
-            setButtonList(true, 1);
-            try {
-                ServiceConnector.getLoggerService().beginWay(false);
-
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        } else {
-            areaToggle.setClickable(true);
-            setButtonList(false, 0);
-            try {
-                ServiceConnector.getLoggerService().endWay();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Method is called if startArea-ToggleButton pressed. Start and stop area
-     * tracking.
-     * 
-     * @param view
-     *            not used
-     */
-    public void startAreaTbtn(View view) {
-        ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
-        ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
-        String check = areaToggle.getText().toString();
-        if (check.equals(areaToggle.getTextOn().toString())) {
-            streetToggle.setClickable(false);
-            setButtonList(true, 2);
-            try {
-                ServiceConnector.getLoggerService().beginArea(false);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        } else {
-            streetToggle.setClickable(true);
-            setButtonList(false, 0);
-            try {
-                ServiceConnector.getLoggerService().endWay();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-    }
-
-    /**
-     * Called if the addPointButton pressed. Switch to the AddPointActivity, to
-     * insert Meta-Tags for the last Node.
-     * 
-     * @param view
-     *            not used
-     */
-    public void addPointBtn(View view) {
-        int nodeId = 0;
-
-        try {
-            nodeId = ServiceConnector.getLoggerService().createPOI(false);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-        final Intent intent = new Intent(this, AddPointActivity.class);
-        intent.putExtra("DataNodeId", nodeId);
-        startActivity(intent);
-    }
-
-    /**
-     * 
-     * Called if the stopTrackButton pressed. Stop the actual tracking and
-     * returns to the main activity.
-     * 
-     * @param view
-     *            not used
-     */
-    public void stopTrackBtn(View view) {
-
-        Helper.alertStopTracking(this);
-
-    }
-
-    /**
-     * @param view
-     *            not used
-     */
-    public void editCommentBtn(View view) {
-        final DataTrack track = DataStorage.getInstance().getCurrentTrack();
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final EditText input = new EditText(this);
-        input.setText(track.getComment());
-        alert.setView(input);
-        alert.setTitle(getResources().getString(
-                R.string.alert_newtrackActivity_addTrackNotice));
-        alert.setPositiveButton(
-                getResources().getString(R.string.alert_global_ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String value = input.getText().toString().trim();
-
-                        track.setComment(value);
-
-                    }
-                });
-
-        alert.setNegativeButton(
-                getResources().getString(R.string.alert_global_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();
-                    }
-                });
-        alert.show();
-    }
-
-    /**
-     * @param view
-     *            not used
-     */
-    public void makePictureBtn(View view) {
-        pictureRecorder.startIntent(this);
-    }
-
-    /**
-     * @param view
-     *            not used
-     */
-    public void makeVideoBtn(View view) {
-        final Intent intent = new Intent(this, RecordVideoActivity.class);
-        intent.putExtra("DataNodeId", DataStorage.getInstance()
-                .getCurrentTrack().getCurrentWay().getId());
-        startActivity(intent);
-    }
-
-    /**
-     * @param view
-     *            unused
-     */
-    public void makeMemoBtn(View view) {
-        final Intent intent = new Intent(this, AddMemoActivity.class);
-        intent.putExtra("DataNodeId", DataStorage.getInstance()
-                .getCurrentTrack().getCurrentWay().getId());
-        startActivity(intent);
-    }
-
-    /**
-     * @param view
-     *            unused
-     */
-    public void makeNoticeBtn(View view) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final EditText input = new EditText(this);
-        alert.setView(input);
-        alert.setTitle(getResources()
-                .getString(R.string.alert_global_addNotice));
-        alert.setPositiveButton(
-                getResources().getString(R.string.alert_global_ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        String value = input.getText().toString().trim();
-
-                        DataStorage
-                                .getInstance()
-                                .getCurrentTrack()
-                                .getCurrentWay()
-                                .addMedia(
-                                        DataStorage.getInstance()
-                                                .getCurrentTrack()
-                                                .saveText(value));
-                        LogIt.popup(getApplicationContext(), getResources()
-                                .getString(R.string.alert_global_addedNotice));
-                    }
-                });
-
-        alert.setNegativeButton(
-                getResources().getString(R.string.alert_global_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.cancel();
-                    }
-                });
-        alert.show();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initListView();
-        setGpsStatus();
-        /* setGpsStatus(); */
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        DataTrack dt = DataStorage.getInstance().getCurrentTrack();
-
-        switch (requestCode) {
-        case Recorder.TAKE_PHOTO_CODE:
-            if (resultCode == Activity.RESULT_OK) {
-                pictureRecorder.appendFileToObject(dt.getCurrentWay());
-            }
-            break;
-        default:
-            break;
-        }
     }
 }

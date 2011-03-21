@@ -15,6 +15,16 @@ import android.location.Location;
 public class GpsMessage {
 
     /**
+     * Type of the Intent that signals a way was closed.
+     */
+    public static final int END_WAY = 2;
+
+    /**
+     * Tag of the Intent that signals the start of editing a points location.
+     */
+    public static final int MOVE_POINT = 3;
+
+    /**
      * Tag of the Intent send by this class.
      */
     public static final String TAG = "de.fu-berlin.inf.tracebook.UPDATE";
@@ -30,19 +40,9 @@ public class GpsMessage {
      */
     public static final int UPDATE_OBJECT = 1;
 
-    /**
-     * Type of the Intent that signals a way was closed.
-     */
-    public static final int END_WAY = 2;
-
-    /**
-     * Tag of the Intent that signals the start of editing a points location.
-     */
-    public static final int MOVE_POINT = 3;
+    private Context ctx;
 
     private Intent intent;
-
-    private Context ctx;
 
     // private boolean one_shot = false;
 
@@ -74,32 +74,6 @@ public class GpsMessage {
     }
 
     /**
-     * Signal an update of the way, so that it can be redrawn.
-     * 
-     * @param id
-     *            id of the way that was changed
-     */
-    public void sendWayUpdate(int id) {
-        intent.putExtra("type", UPDATE_OBJECT);
-        intent.putExtra("point_id", -1);
-        intent.putExtra("way_id", id);
-        ctx.sendBroadcast(intent);
-    }
-
-    /**
-     * Signal an update or creation of a POI, so that it can be displayed.
-     * 
-     * @param id
-     *            the id of the POI that was changed or created.
-     */
-    public void sendPOIUpdate(int id) {
-        intent.putExtra("type", UPDATE_OBJECT);
-        intent.putExtra("point_id", id);
-        intent.putExtra("way_id", -1);
-        ctx.sendBroadcast(intent);
-    }
-
-    /**
      * Signal the end of a way, so that e.g. it will be redrawn in a different
      * color.
      * 
@@ -121,6 +95,32 @@ public class GpsMessage {
     public void sendMovePoint(int id) {
         intent.putExtra("type", MOVE_POINT);
         intent.putExtra("point_id", id);
+        ctx.sendBroadcast(intent);
+    }
+
+    /**
+     * Signal an update or creation of a POI, so that it can be displayed.
+     * 
+     * @param id
+     *            the id of the POI that was changed or created.
+     */
+    public void sendPOIUpdate(int id) {
+        intent.putExtra("type", UPDATE_OBJECT);
+        intent.putExtra("point_id", id);
+        intent.putExtra("way_id", -1);
+        ctx.sendBroadcast(intent);
+    }
+
+    /**
+     * Signal an update of the way, so that it can be redrawn.
+     * 
+     * @param id
+     *            id of the way that was changed
+     */
+    public void sendWayUpdate(int id) {
+        intent.putExtra("type", UPDATE_OBJECT);
+        intent.putExtra("point_id", -1);
+        intent.putExtra("way_id", id);
         ctx.sendBroadcast(intent);
     }
 }

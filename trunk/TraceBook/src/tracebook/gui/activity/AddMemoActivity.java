@@ -16,15 +16,15 @@ import android.view.View;
  */
 public class AddMemoActivity extends Activity {
     /**
+     * Here we save a reference to the current DataMapObject which is in use.
+     */
+    DataMapObject node;
+
+    /**
      * The object that is responsible for recording (and attaching) the audio
      * file to our data structure.
      */
     AudioRecorder recorder = new AudioRecorder();
-
-    /**
-     * Here we save a reference to the current DataMapObject which is in use.
-     */
-    DataMapObject node;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,17 @@ public class AddMemoActivity extends Activity {
         setContentView(R.layout.activity_addmemoactivity);
         setTitle(R.string.string_addmemoActivity_title);
         startMemo();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopMemo();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+        stopMemo();
     }
 
     /**
@@ -89,16 +100,5 @@ public class AddMemoActivity extends Activity {
             recorder.stop();
             recorder.appendFileToObject(node);
         }
-    }
-
-    @Override
-    public void onStop() {
-        stopMemo();
-    }
-
-    @Override
-    public void onDestroy() {
-        stopMemo();
-        super.onDestroy();
     }
 }

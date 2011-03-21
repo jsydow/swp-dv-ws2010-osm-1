@@ -32,38 +32,6 @@ public abstract class DataMapObject extends DataMediaHolder implements
     protected Map<String, String> tags;
 
     /**
-     * Getter-method.
-     * 
-     * @return The id of the object.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Method to set the id. Do not use! If some MapObjects have the same id
-     * errors might occur. It is intended to use to initialize a DataMapObject
-     * from an old id which is unique.
-     * 
-     * @param id
-     *            The new id.
-     */
-    void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * Getter-method for a all tags stored as a Map of String. Tags that are no
-     * tags in OSM are: name, lat, lon, timestamp. Mind that changes in the
-     * returned Map change this object in the same way.
-     * 
-     * @return Map of all tags. (Not null)
-     */
-    public Map<String, String> getTags() {
-        return tags;
-    }
-
-    /**
      * Default constructor.
      */
     public DataMapObject() {
@@ -81,6 +49,46 @@ public abstract class DataMapObject extends DataMediaHolder implements
         if (id > other.intValue())
             return 1;
         return 0;
+    }
+
+    /**
+     * "a_node" is a Node which has <tag>-children. This method retrieves the
+     * tags out of these <tag>s
+     * 
+     * @param aNode
+     *            An XML-node.
+     */
+    public void deserializeTags(Node aNode) {
+        NodeList metanodes = aNode.getChildNodes();
+        for (int i = 0; i < metanodes.getLength(); ++i) {
+            if (metanodes.item(i).getNodeName().equals("tag")) {
+
+                NamedNodeMap attributes = metanodes.item(i).getAttributes();
+                Node key = attributes.getNamedItem("k");
+                Node value = attributes.getNamedItem("v");
+                getTags().put(key.getNodeValue(), value.getNodeValue());
+            }
+        }
+    }
+
+    /**
+     * Getter-method.
+     * 
+     * @return The id of the object.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Getter-method for a all tags stored as a Map of String. Tags that are no
+     * tags in OSM are: name, lat, lon, timestamp. Mind that changes in the
+     * returned Map change this object in the same way.
+     * 
+     * @return Map of all tags. (Not null)
+     */
+    public Map<String, String> getTags() {
+        return tags;
     }
 
     /**
@@ -120,22 +128,14 @@ public abstract class DataMapObject extends DataMediaHolder implements
     }
 
     /**
-     * "a_node" is a Node which has <tag>-children. This method retrieves the
-     * tags out of these <tag>s
+     * Method to set the id. Do not use! If some MapObjects have the same id
+     * errors might occur. It is intended to use to initialize a DataMapObject
+     * from an old id which is unique.
      * 
-     * @param aNode
-     *            An XML-node.
+     * @param id
+     *            The new id.
      */
-    public void deserializeTags(Node aNode) {
-        NodeList metanodes = aNode.getChildNodes();
-        for (int i = 0; i < metanodes.getLength(); ++i) {
-            if (metanodes.item(i).getNodeName().equals("tag")) {
-
-                NamedNodeMap attributes = metanodes.item(i).getAttributes();
-                Node key = attributes.getNamedItem("k");
-                Node value = attributes.getNamedItem("v");
-                getTags().put(key.getNodeValue(), value.getNodeValue());
-            }
-        }
+    void setId(int id) {
+        this.id = id;
     }
 }

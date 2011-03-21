@@ -17,40 +17,6 @@ import android.widget.Toast;
  * equivalent to verbose in logcat.
  */
 public final class LogIt {
-    private LogIt instance;
-    private int method;
-    private int minLogLevel;
-    private int maxLogLevel;
-
-    private LogIt() {
-        setLogMethod(LOGMETHOD_ANDROID);
-        setMaxLogLevel(1000);
-        setMinLogLevel(-1000);
-    }
-
-    /**
-     * Gets an instance of this Singleton.
-     * 
-     * @return A LogIt instance.
-     */
-    public synchronized LogIt getInstance() {
-        if (instance == null) {
-            instance = new LogIt();
-        }
-        return instance;
-    }
-
-    /**
-     * Gets an instance of this Singleton. Shortcut for getInstance().
-     * 
-     * @return A LogIt instance.
-     */
-    public synchronized LogIt get() {
-        return getInstance();
-    }
-
-    private static final String LOG_PREFIX = "TraceBook";
-
     /**
      * Log using the Android logging method.
      */
@@ -59,55 +25,16 @@ public final class LogIt {
      * Log to file.
      */
     public static final int LOGMETHOD_FILE = 2;
-
-    /**
-     * Minimum value for a logging level.
-     */
-    public static final int MIN_LOG_LEVEL = 1;
     /**
      * Maximum value for a logging level.
      */
     public static final int MAX_LOG_LEVEL = 5;
-
     /**
-     * Sets the method of logging. Use the constants above.
-     * 
-     * @param newMethod
-     *            the new logging method.
+     * Minimum value for a logging level.
      */
-    public synchronized void setLogMethod(int newMethod) {
-        this.method = newMethod;
-    }
+    public static final int MIN_LOG_LEVEL = 1;
 
-    /**
-     * If you want to log only less important messages set the maximum log level
-     * lower.
-     * 
-     * @param logLevel
-     *            the new maximum logging level.
-     */
-    public synchronized void setMaxLogLevel(int logLevel) {
-        if (logLevel > MAX_LOG_LEVEL) {
-            this.maxLogLevel = MAX_LOG_LEVEL;
-        } else {
-            this.maxLogLevel = logLevel;
-        }
-    }
-
-    /**
-     * If you want to log only more important messages set minimum log level
-     * higher.
-     * 
-     * @param logLevel
-     *            The new minimum logging level.
-     */
-    public synchronized void setMinLogLevel(int logLevel) {
-        if (logLevel < MIN_LOG_LEVEL) {
-            this.minLogLevel = MIN_LOG_LEVEL;
-        } else {
-            this.minLogLevel = logLevel;
-        }
-    }
+    private static final String LOG_PREFIX = "TraceBook";
 
     /**
      * Shows a toast with a given message.
@@ -120,6 +47,39 @@ public final class LogIt {
     public static void popup(Context app, String msg) {
         Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    private LogIt instance;
+
+    private int maxLogLevel;
+
+    private int method;
+    private int minLogLevel;
+
+    private LogIt() {
+        setLogMethod(LOGMETHOD_ANDROID);
+        setMaxLogLevel(1000);
+        setMinLogLevel(-1000);
+    }
+    /**
+     * Gets an instance of this Singleton. Shortcut for getInstance().
+     * 
+     * @return A LogIt instance.
+     */
+    public synchronized LogIt get() {
+        return getInstance();
+    }
+
+    /**
+     * Gets an instance of this Singleton.
+     * 
+     * @return A LogIt instance.
+     */
+    public synchronized LogIt getInstance() {
+        if (instance == null) {
+            instance = new LogIt();
+        }
+        return instance;
     }
 
     /**
@@ -170,6 +130,46 @@ public final class LogIt {
             default:
                 break;
             }
+        }
+    }
+
+    /**
+     * Sets the method of logging. Use the constants above.
+     * 
+     * @param newMethod
+     *            the new logging method.
+     */
+    public synchronized void setLogMethod(int newMethod) {
+        this.method = newMethod;
+    }
+
+    /**
+     * If you want to log only less important messages set the maximum log level
+     * lower.
+     * 
+     * @param logLevel
+     *            the new maximum logging level.
+     */
+    public synchronized void setMaxLogLevel(int logLevel) {
+        if (logLevel > MAX_LOG_LEVEL) {
+            this.maxLogLevel = MAX_LOG_LEVEL;
+        } else {
+            this.maxLogLevel = logLevel;
+        }
+    }
+
+    /**
+     * If you want to log only more important messages set minimum log level
+     * higher.
+     * 
+     * @param logLevel
+     *            The new minimum logging level.
+     */
+    public synchronized void setMinLogLevel(int logLevel) {
+        if (logLevel < MIN_LOG_LEVEL) {
+            this.minLogLevel = MIN_LOG_LEVEL;
+        } else {
+            this.minLogLevel = logLevel;
         }
     }
 }

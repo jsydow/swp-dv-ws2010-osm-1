@@ -27,102 +27,6 @@ public class DataTrackInfo {
     private static final String LOG_TAG = "DataTrackInfo";
 
     /**
-     * An initializing constructor.
-     * 
-     * @param timestamp
-     *            The time stamp of a track.
-     * @param name
-     *            The name of a track (Its directory name).
-     * @param comment
-     *            The comment of a track.
-     * @param numberOfPOIs
-     *            The number of points of interest a track has.
-     * @param numberOfWays
-     *            The number of ways a track has.
-     * @param numberOfMedia
-     *            The total number of media a track has.
-     */
-    DataTrackInfo(String name, String timestamp, String comment,
-            int numberOfPOIs, int numberOfWays, int numberOfMedia) {
-        this.timestamp = timestamp;
-        this.name = name;
-        this.comment = comment;
-        this.numberOfPOIs = numberOfPOIs;
-        this.numberOfWays = numberOfWays;
-        this.numberOfMedia = numberOfMedia;
-    }
-
-    private DataTrackInfo() {
-        timestamp = "";
-        comment = "";
-        name = "";
-        numberOfPOIs = -1;
-        numberOfWays = -1;
-        numberOfMedia = -1;
-    }
-
-    private String timestamp;
-    private String name;
-    private String comment;
-    private int numberOfPOIs;
-    private int numberOfWays;
-    private int numberOfMedia;
-
-    /**
-     * Getter-method for the time stamp of a track.
-     * 
-     * @return The time stamp as String.
-     */
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * Getter-method for the name of a track.
-     * 
-     * @return The name as String.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Getter-method for the comment of a track.
-     * 
-     * @return The comment as String.
-     */
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * Getter-method for the number of POIs of a track.
-     * 
-     * @return The number of POIs.
-     */
-    public int getNumberOfPOIs() {
-        return numberOfPOIs;
-    }
-
-    /**
-     * Getter-method for the number of ways of a track.
-     * 
-     * @return The number of ways.
-     */
-    public int getNumberOfWays() {
-        return numberOfWays;
-    }
-
-    /**
-     * Getter-method for the number of media of a track.
-     * 
-     * @return The number of media.
-     */
-    public int getNumberOfMedia() {
-        return numberOfMedia;
-    }
-
-    /**
      * Deserializes a DataTrackInfo from an info.xml file of a track.
      * 
      * @param trackname
@@ -193,6 +97,102 @@ public class DataTrackInfo {
             info.comment = "";
         }
         return info;
+    }
+
+    private String comment;
+
+    private String name;
+    private int numberOfMedia;
+    private int numberOfPOIs;
+    private int numberOfWays;
+    private String timestamp;
+    private DataTrackInfo() {
+        timestamp = "";
+        comment = "";
+        name = "";
+        numberOfPOIs = -1;
+        numberOfWays = -1;
+        numberOfMedia = -1;
+    }
+
+    /**
+     * An initializing constructor.
+     * 
+     * @param timestamp
+     *            The time stamp of a track.
+     * @param name
+     *            The name of a track (Its directory name).
+     * @param comment
+     *            The comment of a track.
+     * @param numberOfPOIs
+     *            The number of points of interest a track has.
+     * @param numberOfWays
+     *            The number of ways a track has.
+     * @param numberOfMedia
+     *            The total number of media a track has.
+     */
+    DataTrackInfo(String name, String timestamp, String comment,
+            int numberOfPOIs, int numberOfWays, int numberOfMedia) {
+        this.timestamp = timestamp;
+        this.name = name;
+        this.comment = comment;
+        this.numberOfPOIs = numberOfPOIs;
+        this.numberOfWays = numberOfWays;
+        this.numberOfMedia = numberOfMedia;
+    }
+
+    /**
+     * Getter-method for the comment of a track.
+     * 
+     * @return The comment as String.
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Getter-method for the name of a track.
+     * 
+     * @return The name as String.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Getter-method for the number of media of a track.
+     * 
+     * @return The number of media.
+     */
+    public int getNumberOfMedia() {
+        return numberOfMedia;
+    }
+
+    /**
+     * Getter-method for the number of POIs of a track.
+     * 
+     * @return The number of POIs.
+     */
+    public int getNumberOfPOIs() {
+        return numberOfPOIs;
+    }
+
+    /**
+     * Getter-method for the number of ways of a track.
+     * 
+     * @return The number of ways.
+     */
+    public int getNumberOfWays() {
+        return numberOfWays;
+    }
+
+    /**
+     * Getter-method for the time stamp of a track.
+     * 
+     * @return The time stamp as String.
+     */
+    public String getTimestamp() {
+        return timestamp;
     }
 
     /**
