@@ -1,6 +1,5 @@
 package tracebook.util;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.mapsforge.android.maps.OverlayRoute;
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
 import tracebook.gui.activity.MapsForgeActivity;
-
 import Trace.Book.R;
 import android.app.Activity;
 import android.graphics.Color;
@@ -29,7 +27,8 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      * List of possible colors for ways and areas the first color in the list is
      * always used for the current way.
      */
-    private List<Pair<Paint, Paint>> colors;
+    private List<Pair<Paint, Paint>> wayColors;
+    private List<Pair<Paint, Paint>> areaColors;
 
     /**
      * Show a knob for every waypoint.
@@ -58,23 +57,36 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         this.context = context;
 
         // create paint list
-        colors = new ArrayList<Pair<Paint, Paint>>();
-        colors.add(getPaintPair(Color.rgb(0, 255, 0)));
-        colors.add(getPaintPair(Color.rgb(0, 0, 230)));
-        colors.add(getPaintPair(Color.rgb(0, 0, 200)));
-        colors.add(getPaintPair(Color.rgb(0, 0, 170)));
+        wayColors = new ArrayList<Pair<Paint, Paint>>();
+        wayColors.add(getPaintPair(Color.rgb(0, 255, 0), false));
+        wayColors.add(getPaintPair(Color.rgb(0, 0, 230), false));
+        wayColors.add(getPaintPair(Color.rgb(0, 0, 200), false));
+        wayColors.add(getPaintPair(Color.rgb(0, 0, 170), false));
+
+        areaColors = new ArrayList<Pair<Paint, Paint>>();
+        areaColors.add(getPaintPair(Color.rgb(0, 255, 0), true));
+        areaColors.add(getPaintPair(Color.rgb(230, 0, 0), true));
+        areaColors.add(getPaintPair(Color.rgb(200, 0, 0), true));
+        areaColors.add(getPaintPair(Color.rgb(170, 0, 0), true));
     }
 
     /**
      * Gets a color from the rotating color array.
      * 
+     * @param editing
+     *            true if the track is currently edited and the color pair for
+     *            the current way should be used
+     * @param area
+     *            true if the color should be used for an area
+     * 
      * @return a {@link Pair} of {@link Paint} where the first element is the
      *         FillPaint and the second one the OutlinePaint
      */
-    Pair<Paint, Paint> getColor() {
+    Pair<Paint, Paint> getColor(boolean editing, boolean area) {
+        List<Pair<Paint, Paint>> colors = area ? areaColors : wayColors;
         // the first color is used for the current track, so rotate over the
         // remaining array fields.
-        colorID = colorID % (colors.size() - 1) + 1;
+        colorID = editing ? 0 : colorID % (colors.size() - 1) + 1;
         return colors.get(colorID);
     }
 
@@ -82,7 +94,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
      * generates a pair of paint objects with the same color, but different
      * levels of transparency.
      */
-    private static Pair<Paint, Paint> getPaintPair(int color) {
+    private static Pair<Paint, Paint> getPaintPair(int color, boolean area) {
         Paint paintOutline = new Paint();
         paintOutline.setAntiAlias(true);
         paintOutline.setStyle(Paint.Style.STROKE);
@@ -93,7 +105,8 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         paintOutline.setAlpha(96);
 
         Paint paintFill = new Paint(paintOutline);
-        // paintFill.setStyle(Paint.Style.FILL);
+        if (area)
+            paintFill.setStyle(Paint.Style.FILL);
         paintFill.setAlpha(160);
 
         return new Pair<Paint, Paint>(paintFill, paintOutline);
@@ -111,7 +124,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
             if (l.getNodes().size() == 0) // skip empty ways
                 continue;
             if (l.getOverlayRoute() == null) {
-                Pair<Paint, Paint> col = getColor();
+                Pair<Paint, Paint> col = getColor(false, l.isArea());
                 l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
                         col.first, col.second));
             }
@@ -138,7 +151,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
             return;
 
         removeOverlay(way.getOverlayRoute());
-        final Pair<Paint, Paint> color = editing ? colors.get(0) : getColor();
+        final Pair<Paint, Paint> color = getColor(editing, way.isArea());
         way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(additional),
                 color.first, color.second));
         addRoute(way.getOverlayRoute());

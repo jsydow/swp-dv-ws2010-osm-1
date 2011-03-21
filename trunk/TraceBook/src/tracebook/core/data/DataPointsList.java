@@ -107,7 +107,7 @@ public class DataPointsList extends DataMapObject {
      * @return The array of GeoPoints. (not null)
      */
     public GeoPoint[] toGeoPointArray(GeoPoint additional) {
-        GeoPoint[] tmp = new GeoPoint[nodes.size() + (isArea ? 1 : 0)
+        GeoPoint[] tmp = new GeoPoint[nodes.size()
                 + (additional != null ? 1 : 0)];
         GeoPoint first = null;
 
@@ -121,9 +121,6 @@ public class DataPointsList extends DataMapObject {
 
         if (additional != null)
             tmp[i++] = additional;
-
-        if (isArea)
-            tmp[i++] = first;
 
         return tmp;
     }
