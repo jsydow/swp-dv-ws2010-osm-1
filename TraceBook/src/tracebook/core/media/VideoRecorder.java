@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.view.Surface;
 
@@ -19,24 +18,17 @@ public class VideoRecorder extends Recorder {
     /**
      * Because of the nature of recording a video with MediaRecorder, we have to
      * make sure a few certain properties have been set. Furthermore, we require
-     * knowledge of the Surface object to show the preview in, as well as an
-     * explicit object of the camera to use. All those necessary steps are taken
-     * care of during preparation.
+     * knowledge of the Surface object to show the recording preview in. All
+     * those necessary steps are taken care of during preparation.
      * 
-     * @param camera
-     *            An object to the camera object we are going to use.
      * @param surface
      *            The surface object we are going to display our video preview
      *            in.
      * @throws IOException
      *             not used
      */
-    public void prepare(final Camera camera, final Surface surface)
-            throws IOException {
+    public void prepare(final Surface surface) throws IOException {
         filename = getNewFilename();
-
-        // Set camera to be used for recording.
-        recorder.setCamera(camera);
 
         // Set media sources.
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
