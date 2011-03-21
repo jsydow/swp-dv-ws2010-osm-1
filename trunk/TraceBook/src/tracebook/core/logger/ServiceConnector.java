@@ -8,22 +8,25 @@ import android.util.Log;
 /**
  * This class provides methods for controlling the {@link WaypointLogService}.
  */
-public class ServiceConnector {
+public final class ServiceConnector {
     private static final String LOG_TAG = "LOGSERVICECLIENT";
     private static volatile LoggerServiceConnection conn = null;
     private static boolean started = false;
     private static Activity activity = null;
 
+    private ServiceConnector() {
+        // Empty constructor, yo.
+    }
+
     /**
      * Bind the logger service to this activity.
      */
     public static synchronized void initService() {
-
         if (conn == null) {
             conn = new LoggerServiceConnection();
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(),
-                    WaypointLogService.class.getName());
+            i.setClassName(activity.getPackageName(), WaypointLogService.class
+                    .getName());
             activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
             Log.d(LOG_TAG, "bindService()");
         } else
@@ -55,8 +58,8 @@ public class ServiceConnector {
             Log.d(LOG_TAG, "Service already started");
         } else {
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(),
-                    WaypointLogService.class.getName());
+            i.setClassName(activity.getPackageName(), WaypointLogService.class
+                    .getName());
             activity.startService(i);
             Log.d(LOG_TAG, "startService()");
             started = true;
@@ -71,8 +74,8 @@ public class ServiceConnector {
             Log.d(LOG_TAG, "Service not yet started");
         } else {
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(),
-                    WaypointLogService.class.getName());
+            i.setClassName(activity.getPackageName(), WaypointLogService.class
+                    .getName());
             activity.stopService(i);
             Log.d(LOG_TAG, "stopService()");
         }
