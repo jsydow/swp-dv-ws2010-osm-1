@@ -7,9 +7,8 @@ import tracebook.core.data.DataStorage;
 import tracebook.core.media.VideoRecorder;
 import Trace.Book.R;
 import android.app.Activity;
-import android.graphics.PixelFormat;
-import android.hardware.Camera;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {
 
-    private Camera camera;
     private SurfaceHolder surfaceHolder;
     private VideoRecorder recorder = new VideoRecorder();
     private DataMapObject node;
@@ -70,50 +68,17 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordBtn(View view) {
-        if (recorder.isRecording()) {
-            camera.unlock();
-        }
-
-        try {
-            recorder.prepare(camera, surfaceHolder.getSurface());
+        if (!recorder.isRecording()) {
             recorder.start();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
-
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,
-            int height) {
-        Camera.Parameters p = camera.getParameters();
-        p.setPreviewSize(320, 240);
-        p.setPreviewFormat(PixelFormat.JPEG);
-        camera.setParameters(p);
-
-        try {
-            camera.setPreviewDisplay(holder);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        camera.startPreview();
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
-        camera = Camera.open();
-        if (camera != null) {
-            Camera.Parameters params = camera.getParameters();
-            camera.setParameters(params);
-        } else {
-            finish();
+        try {
+            recorder.prepare(holder.getSurface());
+        } catch (IOException e) {
+            Log.e("TraceBook", e.toString());
         }
-    }
-
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        camera.lock();
-        camera.stopPreview();
-        camera.release();
     }
 
     private void stopRecording() {
@@ -136,5 +101,14 @@ public class RecordVideoActivity extends Activity implements
     public void onDestroy() {
         stopRecording();
         super.onDestroy();
+    }
+
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+            int height) {
+        // Does nothing. Literally.
+    }
+
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // Does nothing. Literally.
     }
 }
