@@ -10,11 +10,11 @@
   * Map file to be used (for !MapsForge) (EditText)
   * Trackfilter, with some SeekBar 
   * Default map from SDCard or online (Array)
-  * Enable/Disable local tile cache (Checkbox)
-  * Online tile style (select between OSMARENDER, MAPNIK and OPENCYCLEMAP)
+  * Enable/Disable local tile cache (Checkbox) - android:key="check_activateLocalTitleMapCache" , android:defaultValue="false" , getBool();
+  * Online tile style (select between OSMARENDER, MAPNIK and OPENCYCLEMAP) - android:key="lst_setOnlineTitleStyle" , android:defaultValue="OSMA" , getString();
 
 = MetaTags =
-  * The max. history size. (Array)
+  * The max. history size. (Array)- android:key="lst_setHistorySize" , android:defaultValue="30" , getInt();
 
 = OSM Account =
   * Accountname (Edittext) - android:key="et_OSMNickname" , android:defaultValue="" , getString();
