@@ -82,7 +82,7 @@ public class HistoryDb {
     }
 
     /**
-     * Selfexplaining. Fills a given tag list with tag that are retrieved from
+     * Self-explaining. Fills a given tag list with tag that are retrieved from
      * the database.
      * 
      * @param tags
@@ -109,12 +109,15 @@ public class HistoryDb {
         if (result.moveToFirst()) {
             while (!result.isAfterLast()) {
                 // insert row to tags list
-                tags.add(new TagSearchResult(
-                        result.getString(result
-                                .getColumnIndex(TagDbOpenHelper.HISTORY_COLUMN_KEY)),
-                        result.getString(result
-                                .getColumnIndex(TagDbOpenHelper.HISTORY_COLUMN_VALUE)),
-                        null, null, null, null, null, null));
+                tags
+                        .add(new TagSearchResult(
+                                result
+                                        .getString(result
+                                                .getColumnIndex(TagDbOpenHelper.HISTORY_COLUMN_KEY)),
+                                result
+                                        .getString(result
+                                                .getColumnIndex(TagDbOpenHelper.HISTORY_COLUMN_VALUE)),
+                                null, null, null, null, null, null));
 
                 result.moveToNext();
             }
@@ -185,12 +188,12 @@ public class HistoryDb {
             SQLiteDatabase wdb = helper.getWritableDatabase();
             if (wdb != null && wdb.isOpen()) {
                 ContentValues values = new ContentValues();
-                values.put(TagDbOpenHelper.HISTORY_COLUMN_LAST_USE,
-                        Long.valueOf(System.currentTimeMillis()));
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_LAST_USE, Long
+                        .valueOf(System.currentTimeMillis()));
                 values.put(TagDbOpenHelper.HISTORY_COLUMN_KEY, key);
                 values.put(TagDbOpenHelper.HISTORY_COLUMN_VALUE, value);
-                values.put(TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT,
-                        Integer.valueOf(1));
+                values.put(TagDbOpenHelper.HISTORY_COLUMN_USE_COUNT, Integer
+                        .valueOf(1));
                 wdb.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
                 wdb.close();
             } else {

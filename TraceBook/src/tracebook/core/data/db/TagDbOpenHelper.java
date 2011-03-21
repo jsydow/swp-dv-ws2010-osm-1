@@ -44,7 +44,7 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      */
     static final String DICT_COLUMN_DESC = "description";
     /**
-     * The wikilink column of the table "dictionary".
+     * The wiki link column of the table "dictionary".
      */
     static final String DICT_COLUMN_LINK = "wikilink";
     /**
@@ -149,7 +149,7 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * Creates a TagSearchResult object out of a cursor position.
      * 
      * @param result
-     *            The initialised cursor.
+     *            The initialized cursor.
      * @return The result object of the row.
      */
     static TagSearchResult getResultFromCursor(Cursor result) {
