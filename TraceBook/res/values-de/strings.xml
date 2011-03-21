@@ -102,6 +102,7 @@
 
 	<!-- Toast values -->
 	<string name="toast_noTrackFound">Der zu ladende Track wurde nicht gefunden.</string>
+	<string name="toast_loadingOnlineMap">.map-Datei nicht gefunden, lade Online-Karte</string>
 
 	<!-- AlertBox values -->
 	<string name="alert_global_cancel">Cancel</string>
