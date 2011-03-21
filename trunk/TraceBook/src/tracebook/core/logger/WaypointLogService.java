@@ -113,7 +113,7 @@ public class WaypointLogService extends Service implements LocationListener {
     }
 
     /**
-     * first tries to stop and than to start receiving GPS updates. This
+     * Tries to stop first and then to start receiving GPS updates. This
      * effectively reloads the settings for the {@link LocationManager}
      */
     void restartGPS() {
@@ -122,9 +122,9 @@ public class WaypointLogService extends Service implements LocationListener {
     }
 
     /**
-     * The status of the GPS logging.
+     * Returns the status of the GPS logging.
      * 
-     * @return true if gps is on.
+     * @return true if GPS is on.
      */
     public boolean gpsEnabled() {
         return gps_on;
@@ -259,7 +259,7 @@ public class WaypointLogService extends Service implements LocationListener {
         sender.sendCurrentPosition(loc, one_shot);
 
         if (current_node != null) { // one_shot or POI mode
-            current_node.setLocation(loc); // update node with proper gps fix
+            current_node.setLocation(loc); // update node with proper GPS fix
 
             if (currentWay() == null) // not one_shot mode
                 // inform the MapActivity about the new POI
@@ -267,7 +267,7 @@ public class WaypointLogService extends Service implements LocationListener {
             else
                 sender.sendWayUpdate(currentWay().getId()); // one_shot update
 
-            current_node = null; // no node waiting for gps pos any more
+            current_node = null; // no node waiting for GPS position any more
         } else if (currentWay() != null && !one_shot) { // Continuous mode
             currentWay().newNode(loc); // poi in track was already added before
             sender.sendWayUpdate(currentWay().getId()); // call for an update of
