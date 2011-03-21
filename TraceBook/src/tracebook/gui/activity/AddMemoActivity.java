@@ -92,6 +92,11 @@ public class AddMemoActivity extends Activity {
     }
 
     @Override
+    public void onStop() {
+        stopMemo();
+    }
+
+    @Override
     public void onDestroy() {
         stopMemo();
         super.onDestroy();
