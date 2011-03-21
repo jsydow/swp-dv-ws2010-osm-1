@@ -2,8 +2,8 @@
 
 = GPS =
   * requestLocationUpdates parameters (minimum distance/time until next location) (Array)
-  * Check GPS by start (Checkbox) - android:key="check_GPSbyStartTracking" , android:defaultValue="true"
-  * Stop GPS signal while inactiv after seconds/minutes (Array) -  android:key="lst_stopGPSafterSeconds" , android:defaultValue="10"
+  * Check GPS by start (Checkbox) - android:key="check_GPSbyStartTracking" , android:defaultValue="true" , getBool();
+  * Stop GPS signal while inactiv after seconds/minutes (Array) -  android:key="lst_stopGPSafterSeconds" , android:defaultValue="10" , getInt();
 
 = Map view =
   * Colors for several item groups (ways, areas, POIs) (Colorpicker)
@@ -17,14 +17,14 @@
   * The max. history size. (Array)
 
 = OSM Account =
-  * Accountname (Edittext)
-  * Accountpassword (Edittext)
+  * Accountname (Edittext) - android:key="et_OSMNickname" , android:defaultValue="" , getString();
+  * Accountpassword (Edittext) - android:key="et-OSMPassword" , android:defaultValue="" , getString();
 
 = UI =
-  * Statusbar Visible / Invisible (Checkbox) - android:key="check_visbilityStatusbar" , android:defaultValue="false"
-  * Themes (Array)
-  * Display always on (Checkbox) - android:key="check_displayAlwaysOn" , android:defaultValue="false" 
-  * Show GPS signal quality (Checkbox) - android:key="check_showGPSsignalQuality" , android:defaultValue="true"
+  * Statusbar Visible / Invisible (Checkbox) - android:key="check_visbilityStatusbar" , android:defaultValue="false" , getBool();
+  * Themes (Array) - android:key="lst_switchTheme" , android:defaultValue="0" , getInt();
+  * Display always on (Checkbox) - android:key="check_displayAlwaysOn" , android:defaultValue="false" , getBool(); 
+  * Show GPS signal quality (Checkbox) - android:key="check_showGPSsignalQuality" , android:defaultValue="true" getBool();
 
 = Track =
   * Default dataname for tracks (TT.MM.JJJJ or JJJJ.MM.TT etc.) (Array)
