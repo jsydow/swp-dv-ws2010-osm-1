@@ -138,9 +138,10 @@ public class TagDb {
 
         openDb();
         if (db != null && db.isOpen()) {
-            Cursor crs = db.query("dictionary", new String[] { "COUNT(*)" },
-                    "language LIKE ?", new String[] { language }, null, null,
-                    null);
+            Cursor crs = db.query(TagDbOpenHelper.getDictTableName(),
+                    new String[] { "COUNT(*)" },
+                    TagDbOpenHelper.DICT_COLUMN_LANG + " LIKE ?",
+                    new String[] { language }, null, null, null);
             if (crs.getCount() > 0) {
                 crs.moveToFirst();
                 rowCount = crs.getInt(0);
@@ -228,15 +229,19 @@ public class TagDb {
 
                             } else if (lname.equals("value")) {
                                 ContentValues row = new ContentValues();
-                                row.put("key", key);
-                                row.put("language", language);
-                                row.put("value", value);
-                                row.put("wikilink", link);
-                                row.put("description", description);
-                                row.put("value_type", type);
-                                row.put("name", name);
-                                row.put("keywords", keywords);
-                                row.put("image", imgUrl);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_KEY, key);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_LANG,
+                                        language);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_VALUE,
+                                        value);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_LINK, link);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_DESC,
+                                        description);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_TYPE, type);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_NAME, name);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_KEYWORDS,
+                                        keywords);
+                                row.put(TagDbOpenHelper.DICT_COLUMN_IMG, imgUrl);
                                 writeDb.insert(
                                         TagDbOpenHelper.getDictTableName(), "",
                                         row);
@@ -301,8 +306,8 @@ public class TagDb {
         }
 
         openDb();
-        Cursor crs = db.query("dictionary", new String[] { "COUNT(*)" }, null,
-                null, null, null, null);
+        Cursor crs = db.query(TagDbOpenHelper.getDictTableName(),
+                new String[] { "COUNT(*)" }, null, null, null, null, null);
         if (crs.getCount() > 0) {
             crs.moveToFirst();
             Log.d("InitDbWithFile", "inserted " + crs.getString(0) + " rows.");

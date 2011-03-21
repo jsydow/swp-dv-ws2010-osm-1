@@ -28,11 +28,50 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      */
     private static final String HISTORY_TABLE_NAME = "history";
     /**
+     * The name column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_NAME = "name";
+    /**
+     * The key column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_KEY = "key";
+    /**
+     * The value column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_VALUE = "value";
+    /**
+     * The description column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_DESC = "description";
+    /**
+     * The wikilink column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_LINK = "wikilink";
+    /**
+     * The image column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_IMG = "image";
+    /**
+     * The language column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_LANG = "language";
+    /**
+     * The keywords column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_KEYWORDS = "keywords";
+    /**
+     * The value_type column of the table "dictionary".
+     */
+    static final String DICT_COLUMN_TYPE = "value_type";
+    /**
      * String to create table.
      */
     private static final String DICT_TABLE_CREATE = "CREATE TABLE "
-            + DICT_TABLE_NAME
-            + " (key TEXT, value TEXT, name TEXT, description TEXT, wikilink TEXT, image TEXT, language TEXT, keywords TEXT, value_type TEXT);";
+            + DICT_TABLE_NAME + " (" + DICT_COLUMN_KEY + " TEXT, "
+            + DICT_COLUMN_VALUE + " TEXT, " + DICT_COLUMN_NAME + " TEXT, "
+            + DICT_COLUMN_DESC + " TEXT, " + DICT_COLUMN_LINK + " TEXT, "
+            + DICT_COLUMN_IMG + " TEXT, " + DICT_COLUMN_LANG + " TEXT, "
+            + DICT_COLUMN_KEYWORDS + " TEXT, " + DICT_COLUMN_TYPE + " TEXT);";
     /**
      * String to create table.
      */
@@ -74,8 +113,9 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * @return all columns
      */
     static String[] getDictColumns() {
-        return new String[] { "key", "value", "name", "description",
-                "wikilink", "image", "language", "value_type" };
+        return new String[] { DICT_COLUMN_KEY, DICT_COLUMN_VALUE,
+                DICT_COLUMN_NAME, DICT_COLUMN_DESC, DICT_COLUMN_LINK,
+                DICT_COLUMN_IMG, DICT_COLUMN_LANG, DICT_COLUMN_TYPE };
     }
 
     /**
@@ -84,7 +124,7 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * @return key and value
      */
     static String[] getTagColumns() {
-        return new String[] { "key", "value" };
+        return new String[] { DICT_COLUMN_KEY, DICT_COLUMN_VALUE };
     }
 
     /**
@@ -95,16 +135,19 @@ public class TagDbOpenHelper extends SQLiteOpenHelper {
      * @return The result object of the row.
      */
     static TagSearchResult getResultFromCursor(Cursor result) {
-        String name = result.getString(result.getColumnIndex("name"));
-        String key = result.getString(result.getColumnIndex("key"));
-        String value = result.getString(result.getColumnIndex("value"));
+        String name = result.getString(result.getColumnIndex(DICT_COLUMN_NAME));
+        String key = result.getString(result.getColumnIndex(DICT_COLUMN_KEY));
+        String value = result.getString(result
+                .getColumnIndex(DICT_COLUMN_VALUE));
         String description = result.getString(result
-                .getColumnIndex("description"));
-        String wikilink = result.getString(result.getColumnIndex("wikilink"));
-        String image = result.getString(result.getColumnIndex("image"));
-        String language = result.getString(result.getColumnIndex("language"));
-        String valueType = result
-                .getString(result.getColumnIndex("value_type"));
+                .getColumnIndex(DICT_COLUMN_DESC));
+        String wikilink = result.getString(result
+                .getColumnIndex(DICT_COLUMN_LINK));
+        String image = result.getString(result.getColumnIndex(DICT_COLUMN_IMG));
+        String language = result.getString(result
+                .getColumnIndex(DICT_COLUMN_LANG));
+        String valueType = result.getString(result
+                .getColumnIndex(DICT_COLUMN_TYPE));
 
         return new TagSearchResult(key, value, name, description, wikilink,
                 image, language, valueType);
