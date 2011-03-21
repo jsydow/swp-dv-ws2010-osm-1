@@ -17,7 +17,7 @@ module OsmMapFeatures
         /^\*$/
     ]
 
-    @flags = %w{ Node Way Area }
+    @flags = %w{ node way area }
 
     @data = Hash.new
     @language = 'EN'
@@ -175,7 +175,7 @@ module OsmMapFeatures
                 @data[key][v]['attributes'] ||= { :v => v }
                 @data[key][v]['attributes']['type'] ||= get_value_type(v)
                 @flags.each do |item|
-                    @data[key][v]['attributes']["is#{item}"] = (flags.match(/title="#{item}"/) ? 'true' : 'false')
+                    @data[key][v]['attributes'][item] = (flags.match(/title="#{item}"/) ? 'true' : 'false')
                 end
 
                 @data[key][v]['description'] ||= description
