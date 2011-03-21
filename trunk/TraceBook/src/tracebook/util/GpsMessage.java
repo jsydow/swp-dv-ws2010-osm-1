@@ -61,7 +61,7 @@ public class GpsMessage {
      * Send the current position to the MapsView.
      * 
      * @param loc
-     *            current gps position
+     *            current GPS position
      * @param oneShot
      *            true if currently a way is recorded in one_shot mode
      */

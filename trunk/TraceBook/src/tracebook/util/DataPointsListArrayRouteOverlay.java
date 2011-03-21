@@ -31,7 +31,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     private List<Pair<Paint, Paint>> areaColors;
 
     /**
-     * Show a knob for every waypoint.
+     * Show a knob for every way point.
      */
     boolean showWaypoints = false;
 
@@ -190,7 +190,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     }
 
     /**
-     * enable/disable the drawing of waypoint markers.
+     * enable/disable the drawing of way point markers.
      */
     public void toggleWaypoints() {
         showWaypoints = !showWaypoints;

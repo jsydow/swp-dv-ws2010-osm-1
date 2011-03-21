@@ -1,4 +1,4 @@
 /**
- * This package contains misc helper classes.
+ * This package contains miscellaneous helper classes.
  */
 package tracebook.util;

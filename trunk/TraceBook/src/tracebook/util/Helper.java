@@ -47,7 +47,7 @@ public final class Helper {
      */
     final static int TRACKING_NOTIFY_ID = 1;
 
-    private Helper() { // do nothing - why checkstyle, why?!
+    private Helper() { // do nothing - why Checkstyle, why?!
     }
 
     /**
@@ -116,7 +116,7 @@ public final class Helper {
     }
 
     /**
-     * gets the current way in the current {@link DataTrack}.
+     * Gets the current way in the current {@link DataTrack}.
      * 
      * @return the current {@link DataPointsList} ways
      */
@@ -128,7 +128,7 @@ public final class Helper {
     }
 
     /**
-     * gets the list of Nodes in current {@link DataTrack}.
+     * Gets the list of Nodes in current {@link DataTrack}.
      * 
      * @return the current list of {@link DataNode}s
      */
@@ -152,15 +152,16 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        Toast.makeText(
-                context,
-                "An error occured. Please restart the application and try again.",
-                Toast.LENGTH_LONG).show();
+        Toast
+                .makeText(
+                        context,
+                        "An error occured. Please restart the application and try again.",
+                        Toast.LENGTH_LONG).show();
         Log.e(logTag, ex.getMessage());
     }
 
     /**
-     * smoothen the {@link DataNode}s by calculating the mean of 3 consecutive
+     * Smoothen the {@link DataNode}s by calculating the mean of 3 consecutive
      * points.
      * 
      * @param nodes
@@ -177,7 +178,7 @@ public final class Helper {
     }
 
     /**
-     * smoothen the {@link DataNode}s by calculating the mean of 3 consecutive
+     * Smoothen the {@link DataNode}s by calculating the mean of 3 consecutive
      * points.
      * 
      * @param nodes
@@ -217,7 +218,7 @@ public final class Helper {
                     lonsum += nr.getLon();
                 }
 
-            // the ringbuffer is an element smaller now
+            // the ring buffer is an element smaller now
             ringbuffer.poll().setLocation(
                     new GeoPoint(
                             latsum / ((double) ringbuffer.size() + weight),
@@ -300,13 +301,13 @@ public final class Helper {
     }
 
     /**
-     * removes all insignificant points from the way, a threshold is calculated
+     * Removes all insignificant points from the way, a threshold is calculated
      * automatically by the average derivation of the points.
      * 
      * @param nodes
      *            List of {@link DataNode}s representing the way or area
      * @param weight
-     *            weight with which the average derivation of points is
+     *            Weight with which the average derivation of points is
      *            multiplied to form the threshold
      */
     public static void filterPoints(List<DataNode> nodes, double weight) {
@@ -342,9 +343,8 @@ public final class Helper {
                     if (calibrate) {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
-                    } else if (calculateArea(firstNode.toGeoPoint(),
-                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
-                            * weight
+                    } else if (calculateArea(firstNode.toGeoPoint(), pending
+                            .toGeoPoint(), n.toGeoPoint()) < threshold * weight
                             && !n.hasAdditionalInfo() && iter.hasNext())
                         iter.remove();
                     firstNode = pending;
@@ -377,8 +377,7 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -393,16 +392,20 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                Toast.makeText(
-                                        activity.getApplicationContext(),
-                                        activity.getResources()
-                                                .getString(
-                                                        R.string.alert_global_trackName)
-                                                + " "
-                                                + DataStorage.getInstance()
-                                                        .getCurrentTrack()
-                                                        .getName(),
-                                        Toast.LENGTH_SHORT).show();
+                                Toast
+                                        .makeText(
+                                                activity
+                                                        .getApplicationContext(),
+                                                activity
+                                                        .getResources()
+                                                        .getString(
+                                                                R.string.alert_global_trackName)
+                                                        + " "
+                                                        + DataStorage
+                                                                .getInstance()
+                                                                .getCurrentTrack()
+                                                                .getName(),
+                                                Toast.LENGTH_SHORT).show();
 
                                 // stop logging
                                 try {
@@ -415,8 +418,7 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        })
-                .setNegativeButton(
+                        }).setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {

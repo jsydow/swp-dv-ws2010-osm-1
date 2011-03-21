@@ -5,17 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import tracebook.core.data.DataStorage;
-
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 /**
  * This a general logging class and should be used for all logging action. It
- * can make popups that are visible to the user and logs that create a log file
- * or log to logcat. There is a log level which is an integer from 1 to 5. 5 is
- * the highest level and is equivalent to error in logcat. 1 is equivalent to
- * verbose in logcat.
+ * can make pop-up toasts that are visible to the user and logs that create a
+ * log file or log to logcat. There is a log level which is an integer from 1 to
+ * 5. 5 is the highest level and is equivalent to error in logcat. 1 is
+ * equivalent to verbose in logcat.
  */
 public final class LogIt {
     private LogIt instance;
