@@ -19,12 +19,12 @@
 
 		<Button android:id="@+id/btn_addpointActivity_addMeta"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:minWidth="50dip" android:text="@string/btn_addpointActivity_addMeta"
+			android:minWidth="100dp" android:text="@string/btn_addpointActivity_addMeta"
 			android:onClick="addPointMetaBtn" />
 
 		<Button android:id="@+id/btn_addpointActivity_cancel2"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:minWidth="50dip" android:text="@string/btn_addpointActivity_back"
+			android:minWidth="100dp" android:text="@string/btn_addpointActivity_back"
 			android:onClick="cancelBtn" />
 
 	</LinearLayout>
