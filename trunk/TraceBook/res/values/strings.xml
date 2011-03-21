@@ -39,13 +39,42 @@
 	<string name="string_preferences_catTrackTag">Trackoptionen</string>
 	<string name="string_preferences_checkGPS">Check GPS Status</string>
 	<string name="string_preferences_descGPS">Beschreibung für CheckGPS</string>
-	<string name="string_preferences_StopGPSsummary">2 Minuten, 5 Minuten, 10 Minuten, Nie</string>
-	<string name="string_preferences_stopGPS">Stoppe GPS nach wieviel Minuten Inaktivität
+	<string name="string_preferences_descStopGPS">2 Minuten, 5 Minuten, 10 Minuten, Nie</string>
+	<string name="string_preferences_stopGPS">Stoppe GPS nach x Minuten inaktivität.
 	</string>
 	<string name="string_preferences_descShowStatusbar">Zeigt Statusleiste mit Beschreibung - Link zu
-		Einstellung - Suchfenster und weiteren nützlichen Informationen
+		Einstellung - Suchfenster und weiteren nützlichen Informationen.
 	</string>
 	<string name="string_preferences_showStatusbar">Zeige Statusbar</string>
+	<string name="string_preferences_displayOn">Displayaktivität</string>
+	<string name="string_preferences_descDisplayOn">Wenn aktiv, wird Display niemals ausgeschaltet.
+	</string>
+	<string name="string_preferences_showGPSsiginalQuality">Zeige GPS-Signalstärke</string>
+	<string name="string_preferences_descShowGPSsiginalQuality">Wenn aktiviert, wird die GPS-Signalstärke in der
+		Statusbar angezeigt.</string>
+	<string name="string_preferences_switchTheme">Erscheinungsbild</string>
+	<string name="string_preferences_descSwitchTheme">Bitte wählen Sie ein Erscheinungsbild, wie sich
+		TraceBook Ihnen präsentieren soll.
+		1. Androidstandart - hell 2.
+		Androidstandart - dunkel 3. TraceBook -
+		hell 4. TraceBook - dunkel
+	</string>
+	<string name="string_preferences_localTitleMapCache">Local title Cache</string>
+	<string name="string_preferences_descLocalTitleMapCache">Wenn aktiviert dann .... </string>
+	<string name="string_preferences_onlineTitleStyle">Online title style</string>
+	<string name="string_preferences_descOnlineTitleStyle">Wählen Sie zwischen, OSMARenderer, MAPNIK und
+		OpenCycleMap.</string>
+	<string name="string_preferences_maxHistorySize">Maximale Historygröße</string>
+	<string name="string_preferences_descMaxHistorySize">Setzen Sie die größer der maximal angezeigten
+		Einträge für die Suchhistory der MetaTag suche.</string>
+	<string name="string_preferences_exportMail">Email an die die Trackdaten gesendet werden sollen.
+	</string>
+	<string name="string_preferences_osmPassword">OSM Password</string>
+	<string name="string_preferences_osmNickname">OSM Nickname</string>
+	<string name="string_preferences_setMaxVideoRecordingTime">Maximale Aufnahmezeit für Videos.</string>
+	<string name="string_preferences_descSetMaxVideoRecordingTime">1 Minute, 2 Minuten, 5 Minuten, 10 Minuten, keine Grenze</string>
+	<string name="string_preferences_setMaxAudioRecordingTime">Maximale Aufnahmezeit für Sprachnotizen.</string>
+	<string name="string_preferences_descSetMaxAudioRecordingTime">1 Minute, 2 Minuten, 5 Minuten, 10 Minuten, keine Grenze</string>
 
 	<!-- App values -->
 	<string name="app_name">TraceBook</string>
