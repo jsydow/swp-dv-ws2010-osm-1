@@ -142,7 +142,7 @@ public class FullTextSearchActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_fulltextsearchactivity);
+        setContentView(R.layout.activity_fulltextsearchactivity);
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar

@@ -24,13 +24,13 @@ public class AboutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_aboutactivity);
+        setContentView(R.layout.activity_aboutactivity);
         setTitle(R.string.string_aboutActivity_title);
         setTextViews();
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_aboutTitle), getResources().getString(
-                R.string.tv_statusbar_aboutDesc),
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_aboutTitle),
+                getResources().getString(R.string.tv_statusbar_aboutDesc),
                 R.id.ly_aboutActivity_statusbar, false);
 
     }
@@ -126,8 +126,8 @@ public class AboutActivity extends Activity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_aboutTitle), getResources().getString(
-                R.string.tv_statusbar_aboutDesc));
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_aboutTitle),
+                getResources().getString(R.string.tv_statusbar_aboutDesc));
     }
 }

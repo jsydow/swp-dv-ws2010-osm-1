@@ -16,7 +16,7 @@ public class HelpWebView extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         String language = "de";
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_webviewactivity);
+        setContentView(R.layout.activity_webviewactivity);
 
         WebView webview;
         webview = (WebView) findViewById(R.id.wv_helpwebviewActivity_webview);

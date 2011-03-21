@@ -24,16 +24,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
@@ -81,7 +81,7 @@ public class AddPointActivity extends ListActivity {
             finish();
 
         setTitle(R.string.string_addpointActivity_title);
-        setContentView(R.layout.layout_addpointactivity);
+        setContentView(R.layout.activity_addpointactivity);
 
         LayoutInflater bInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout layoutHolder = (LinearLayout) findViewById(R.id.ly_addpointaAtivity_metaMediaBtnPoint);
@@ -95,9 +95,9 @@ public class AddPointActivity extends ListActivity {
         setNodeInformation();
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_addpointTitle), getResources().getString(
-                R.string.tv_statusbar_addpointDesc),
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_addpointTitle),
+                getResources().getString(R.string.tv_statusbar_addpointDesc),
                 R.id.ly_addpointActivity_statusbar, false);
 
         initAdapter();
@@ -325,9 +325,9 @@ public class AddPointActivity extends ListActivity {
      *            note used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_addpointTitle), getResources().getString(
-                R.string.tv_statusbar_addpointDesc));
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_addpointTitle),
+                getResources().getString(R.string.tv_statusbar_addpointDesc));
     }
 
     /**
