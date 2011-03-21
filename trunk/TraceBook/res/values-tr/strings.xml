@@ -68,10 +68,7 @@
 	<string name="tv_aboutActivity_usedResources"></string>
 	<string name="tv_aboutActivity_projectPage">https://code.google.com/p/swp-dv-ws2010-osm-1/
 	</string>
-	<string name="tv_searchInfoDialog_categorieTitle">Kategorie:</string>
 	<string name="tv_searchInfoDialog_noInformation">keine Informationen vorhanden...</string>
-	<string name="tv_searchInfoDialog_valueTitle">Wert:</string>
-	<string name="tv_searchInfoDialog_descriptionTitle">Beschreibung:</string>
 	<string name="tv_searchInfoDialog_urlTitle">Wikipedia Link:</string>
 
 	<!-- Edit Text values -->
@@ -92,8 +89,6 @@
 	<string name="alert_mapsforgeActivity_pause">Möchten Sie die aktuelle Session pausieren?
 	</string>
 	<string name="alert_newtrackActivity_rename">Node umbenennen</string>
-	<string name="alert_newtrackActivity_setTrackName">Bitte Tracknamen vergeben</string>
-	<string name="alert_newtrackActivity_trackName">Ihr Track heißt:</string>
 	<string name="alert_newtrackActivity_addTrackNotice">Tracknotiz hinzufügen</string>
 	<string name="alert_loadtrackActivity_rename">Track umbenennen</string>
 	<string name="alert_loadtrackActivity_deleteTrack">Track löschen?</string>
