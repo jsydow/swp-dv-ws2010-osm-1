@@ -31,6 +31,10 @@
 
 = Media =
   * Maximum seconds/minutes for video and audio recording (Array)
+android:key="lst_maxVideoRecording" android:defaultValue="2" , getInt();
+android:key="lst_maxAudioRecording" android:defaultValue="2" , getInt();
 
 = Export =
   * Mailexport, only GPX file or whole folder of the track(?) (Array)
+  * Export Email (EditText) - android:title="@string/string_preferences_exportMail" , 
+			android:defaultValue="" , getString(); 
