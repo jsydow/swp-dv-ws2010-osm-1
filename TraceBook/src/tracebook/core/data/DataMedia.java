@@ -113,7 +113,7 @@ public class DataMedia {
     }
 
     /**
-     * Constructor that initialises the medium.
+     * Constructor that initializes the medium.
      * 
      * @param path
      *            Path to the file (basename).
@@ -200,8 +200,8 @@ public class DataMedia {
     }
 
     /**
-     * Setter-method. Changing the name may have no impact on serialisation. On
-     * next deserialisation the old name may appear again.
+     * Setter-method. Changing the name may have no impact on serialization. On
+     * next deserialization the old name may appear again.
      * 
      * @param newname
      *            The new name for the medium.
@@ -222,7 +222,7 @@ public class DataMedia {
      * 
      * @param path
      *            The complete path to the medium.
-     * @return The deserialised DataMedia object or null if medium doesn't
+     * @return The deserialized DataMedia object or null if medium doesn't
      *         exist.
      */
     public static DataMedia deserialise(String path) {
@@ -278,7 +278,7 @@ public class DataMedia {
      * Generates a <link>-tag for this medium.
      * 
      * @param serializer
-     *            The initialised XmlSerialiser.
+     *            The initialized XmlSerialiser.
      */
     public void serialise(XmlSerializer serializer) {
         try {

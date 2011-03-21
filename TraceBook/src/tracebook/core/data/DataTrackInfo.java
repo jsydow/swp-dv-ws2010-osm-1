@@ -27,7 +27,7 @@ public class DataTrackInfo {
     private static final String LOG_TAG = "DataTrackInfo";
 
     /**
-     * An initialising constructor.
+     * An initializing constructor.
      * 
      * @param timestamp
      *            The time stamp of a track.
@@ -123,7 +123,7 @@ public class DataTrackInfo {
     }
 
     /**
-     * Deserialises a DataTrackInfo from an info.xml file of a track.
+     * Deserializes a DataTrackInfo from an info.xml file of a track.
      * 
      * @param trackname
      *            Name of a track as String.
@@ -175,8 +175,9 @@ public class DataTrackInfo {
                             info.numberOfMedia = Integer.parseInt(value);
                         }
                     } else {
-                        Log.w("DeserialisingDataTrackInfo",
-                                "XML-file is invalid. A data-node has no key-attribute.");
+                        Log
+                                .w("DeserialisingDataTrackInfo",
+                                        "XML-file is invalid. A data-node has no key-attribute.");
                     }
                 }
 
@@ -195,7 +196,7 @@ public class DataTrackInfo {
     }
 
     /**
-     * Serialises the track info. Creates a info.xml file in the directory of
+     * Serializes the track info. Creates a info.xml file in the directory of
      * the track.
      */
     public void serialise() {

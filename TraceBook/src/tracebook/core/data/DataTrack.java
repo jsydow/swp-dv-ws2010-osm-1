@@ -53,7 +53,7 @@ public class DataTrack extends DataMediaHolder {
 
     /**
      * Display name of the Track. Serves as id and should therefore be unique.
-     * Is initialised with the DateTime of the first creation of this object.
+     * Is initialized with the DateTime of the first creation of this object.
      */
     private String name;
 
@@ -63,7 +63,7 @@ public class DataTrack extends DataMediaHolder {
     private String comment;
 
     /**
-     * Constructor which initialises the Track, each Track must have a Date
+     * Constructor which initializes the Track, each Track must have a Date
      * time.
      */
     public DataTrack() {
@@ -86,7 +86,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Initialising constructor.
+     * Initializing constructor.
      * 
      * @param name
      *            The display and folder name of the Track.
@@ -97,10 +97,10 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Initialising constructor. Note: comment is not implemented yet.
+     * Initializing constructor. Note: comment is not implemented yet.
      * 
      * @param name
-     *            See constructor DataTrack(Datetime,Name).
+     *            See constructor DataTrack(Datetime, Name).
      * @param comment
      *            Comment that may be displayed for this Track.
      */
@@ -154,7 +154,9 @@ public class DataTrack extends DataMediaHolder {
                     return -3;
                 }
             } else {
-                Log.w("RenamingTrack", "Track of new trackname already exists.");
+                Log
+                        .w("RenamingTrack",
+                                "Track of new trackname already exists.");
                 return -2;
             }
         } else {
@@ -317,11 +319,11 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Serialises a track to a XML-file stored on the SD-card in folder
+     * Serializes a track to a XML-file stored on the SD-card in folder
      * TraceBook/<track name>.
      * 
      * @param shouldSerialiseMedia
-     *            Should media also be serialised? Adding media means that the
+     *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
     public void serialise(boolean shouldSerialiseMedia) {
@@ -382,8 +384,8 @@ public class DataTrack extends DataMediaHolder {
             }
         }
 
-        (new DataTrackInfo(name, getDatetime(), comment, nodes.size(),
-                ways.size(), totalMedia)).serialise();
+        (new DataTrackInfo(name, getDatetime(), comment, nodes.size(), ways
+                .size(), totalMedia)).serialise();
 
     }
 
@@ -441,7 +443,7 @@ public class DataTrack extends DataMediaHolder {
     /**
      * Getter-method. The currently edited Way.
      * 
-     * @return The current Way. Current Way can be null if not initialised.
+     * @return The current Way. Current Way can be null if not initialized.
      */
     public DataPointsList getCurrentWay() {
         return currentWay;
@@ -467,7 +469,7 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param name
      *            The name of the Track as stored on the memory.
-     * @return The deserialised DataTrack object or null if such a Track does
+     * @return The deserialized DataTrack object or null if such a Track does
      *         not exist.
      */
     public static DataTrack deserialise(String name) {
@@ -476,7 +478,7 @@ public class DataTrack extends DataMediaHolder {
         List<DataNode> allnodes = new LinkedList<DataNode>();
         // XML-file
         File track = new File(getPathOfTrackTbTFile(name));
-        // Track that should be filled/initialised
+        // Track that should be filled/initialized
         DataTrack ret = new DataTrack(track.getParentFile().getName());
         DataTrackInfo info = DataTrackInfo.deserialise(name);
         if (info != null) {
@@ -512,8 +514,8 @@ public class DataTrack extends DataMediaHolder {
                     throw new SAXException();
                 for (int i = 0; i < wayelements.getLength(); ++i) {
                     // generate ways
-                    DataPointsList dpl = DataPointsList.deserialise(
-                            wayelements.item(i), allnodes);
+                    DataPointsList dpl = DataPointsList.deserialise(wayelements
+                            .item(i), allnodes);
                     // add them
                     ret.addWay(dpl);
                 }
@@ -557,8 +559,8 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * Serialises a track to a XML-file stored on the SD-card in folder
-     * TraceBook/<track name>. Also serialises all Media. The XML-file is
+     * Serializes a track to a XML-file stored on the SD-card in folder
+     * TraceBook/<track name>. Also serializes all Media. The XML-file is
      * therefore not OSM compatible.
      */
     public void serialise() {
@@ -567,7 +569,7 @@ public class DataTrack extends DataMediaHolder {
 
     /**
      * Creates new folder in .../TraceBook for this Track. Such a directory must
-     * exist when track is serialised.
+     * exist when track is serialized.
      */
     public void createNewTrackFolder() {
         File dir = new File(DataStorage.getTraceBookDirPath() + File.separator
@@ -689,7 +691,7 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
-     * This method saves a String to a .txt-file and generates a
+     * This method saves a String to a .txt file and generates a
      * DataMedia-object which can be added to any DataMediaHolder.
      * 
      * @param text

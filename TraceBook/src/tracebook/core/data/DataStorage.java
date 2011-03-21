@@ -18,7 +18,7 @@ import android.util.Log;
  * In the implementation u see there is a difference between the track names and
  * the tracks themselves. The names-list contains all the names of the tracks
  * that are in the working memory and on the devices memory. It may not be
- * perfectly synchronised with the actual tracks available as it is updated only
+ * perfectly synchronized with the actual tracks available as it is updated only
  * when needed. These names can be used to actually load a Track completely into
  * memory. The primary reason for the names is the list of all Tracks without
  * loading them all.
@@ -137,15 +137,15 @@ public final class DataStorage {
             for (File f : files) {
                 if (f.isFile()) {
                     if (!f.delete()) {
-                        Log.e("DeleteDirectory",
-                                "Could not delete file " + f.getName()
-                                        + " in directory " + dir.getPath());
+                        Log.e("DeleteDirectory", "Could not delete file "
+                                + f.getName() + " in directory "
+                                + dir.getPath());
                     }
                 }
             }
             if (!dir.delete()) {
-                Log.e("DeleteDirectory",
-                        "Could not delete directory " + dir.getName());
+                Log.e("DeleteDirectory", "Could not delete directory "
+                        + dir.getName());
 
             }
         }
@@ -190,7 +190,7 @@ public final class DataStorage {
     }
 
     /**
-     * Create a new Track in working memory. Don't forget to serialise it!
+     * Create a new Track in working memory. Don't forget to serialize it!
      * 
      * @return The newly created Track.
      */
@@ -238,7 +238,7 @@ public final class DataStorage {
      * 
      * @param name
      *            The name of the Track.
-     * @return The deserialised Track or null if track does not exist.
+     * @return The deserialized Track or null if track does not exist.
      */
     public DataTrack deserialiseTrack(String name) {
         DataTrack dt = DataTrack.deserialise(name);
@@ -275,8 +275,9 @@ public final class DataStorage {
             }
 
         } else {
-            Log.w("TraceBookDirectory",
-                    "The TraceBook directory path doesn't point to a directory! wtf?");
+            Log
+                    .w("TraceBookDirectory",
+                            "The TraceBook directory path doesn't point to a directory! wtf?");
         }
     }
 
@@ -296,7 +297,7 @@ public final class DataStorage {
     }
 
     /**
-     * Will serialise all tracks that are currently stored in this DataStorage.
+     * Will serialize all tracks that are currently stored in this DataStorage.
      */
     public void serialise() {
         for (DataTrack dt : tracks)

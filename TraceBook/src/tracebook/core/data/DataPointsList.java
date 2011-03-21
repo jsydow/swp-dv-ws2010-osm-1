@@ -45,7 +45,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Constructor which initialises the Object as an Area.
+     * Constructor which initializes the Object as an Area.
      * 
      * @param isArea
      *            Whether object is an Area.
@@ -160,7 +160,7 @@ public class DataPointsList extends DataMapObject {
      * DataNode is called.
      * 
      * @param location
-     *            The Location of this node. Node is initialised with this
+     *            The Location of this node. Node is initialized with this
      *            location.
      * @return The newly created DataNode.
      */
@@ -204,7 +204,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Sets the OverlayRoute, an object used by MapsForge for visualisation.
+     * Sets the OverlayRoute, an object used by MapsForge for visualization.
      * 
      * @param overlayRoute
      *            The new OverlayRoute.
@@ -214,12 +214,12 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Serialises all nodes sequentially.
+     * Serializes all nodes sequentially.
      * 
      * @param serializer
-     *            An XmlSerializer that is initialised.
+     *            An XmlSerializer that is initialized.
      * @param shouldSerialiseMedia
-     *            Should the media be also serialised? If yes then the resulting
+     *            Should the media be also serialized? If yes then the resulting
      *            XML-file is not conform to OSM.
      */
     public void serialiseNodes(XmlSerializer serializer,
@@ -231,13 +231,13 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Serialises a way as way-tag. The nodes are referenced like in OSM using a
-     * nd-tag with an ref-attribute.
+     * Serializes a way as way-tag. The nodes are referenced like in OSM using a
+     * nd tag with a ref attribute.
      * 
      * @param serializer
-     *            An XmlSerializer that is initialised.
+     *            An XmlSerializer that is initialized.
      * @param shouldSerialiseMedia
-     *            Should media also be serialised? Adding media means that the
+     *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
     public void serialiseWay(XmlSerializer serializer,
@@ -252,16 +252,16 @@ public class DataPointsList extends DataMapObject {
                 for (DataNode dn : nodes) {
                     serializer.startTag(null, "nd");
 
-                    serializer.attribute(null, "ref",
-                            Integer.toString(dn.getId()));
+                    serializer.attribute(null, "ref", Integer.toString(dn
+                            .getId()));
 
                     serializer.endTag(null, "nd");
                 }
                 if (this.isArea && nodes.size() > 0) {
                     DataNode lastNode = nodes.getFirst();
                     serializer.startTag(null, "nd");
-                    serializer.attribute(null, "ref",
-                            Integer.toString(lastNode.getId()));
+                    serializer.attribute(null, "ref", Integer.toString(lastNode
+                            .getId()));
                     serializer.endTag(null, "nd");
 
                     serializer.startTag(null, "tag");
@@ -288,7 +288,7 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Waynode is a XML-node labelled "way". This method restores a
+     * Way node is a XML-node labeled "way". This method restores a
      * DataPointsList from such a XML-Node.
      * 
      * @param waynode
@@ -305,7 +305,9 @@ public class DataPointsList extends DataMapObject {
         // get all attributes
         NamedNodeMap nodeattributes = waynode.getAttributes();
         // get time stamp
-        ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+        ret
+                .setDatetime(nodeattributes.getNamedItem("timestamp")
+                        .getNodeValue());
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));

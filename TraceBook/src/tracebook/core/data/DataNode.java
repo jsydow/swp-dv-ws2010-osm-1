@@ -20,11 +20,11 @@ import android.util.Log;
 public class DataNode extends DataMapObject {
 
     /**
-     * This constructor initialises the Latitude and Longitude with data from a
+     * This constructor initializes the Latitude and Longitude with data from a
      * Location object, as well as the DataPointsList that contains this node.
      * 
      * @param loc
-     *            The {@link Location} of the new node. Initialises latitude and
+     *            The {@link Location} of the new node. Initializes latitude and
      *            longitude.
      * @param way
      *            The {@link DataPointsList} this node is belongs to
@@ -50,11 +50,11 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * This constructor initialises the Latitude and Longitude with data from a
+     * This constructor initializes the Latitude and Longitude with data from a
      * Location object.
      * 
      * @param location
-     *            The Location of the new node. Initialises latitude and
+     *            The Location of the new node. Initializes latitude and
      *            longitude.
      */
     public DataNode(Location location) {
@@ -63,11 +63,11 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * This constructor initialises the Latitude and Longitude with data from a
+     * This constructor initializes the Latitude and Longitude with data from a
      * {@link GeoPoint} object.
      * 
      * @param coordinates
-     *            The {@link GeoPoint} of the new node. Initialises latitude and
+     *            The {@link GeoPoint} of the new node. Initializes latitude and
      *            longitude.
      */
     public DataNode(GeoPoint coordinates) {
@@ -110,8 +110,8 @@ public class DataNode extends DataMapObject {
         if (location == null)
             this.coordinates = null;
         else
-            this.coordinates = new GeoPoint(location.getLatitude(),
-                    location.getLongitude());
+            this.coordinates = new GeoPoint(location.getLatitude(), location
+                    .getLongitude());
     }
 
     /**
@@ -168,7 +168,7 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * A Point may have been added uninitialised, in this case it does not
+     * A Point may have been added uninitialized, in this case it does not
      * contain any valid positional data - this may be added later once a GPS
      * fix is obtained.
      * 
@@ -179,12 +179,12 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * Serialises a node using a XmlSerializer. It generates a <node>-tag.
+     * Serializes a node using a XmlSerializer. It generates a <node>-tag.
      * 
      * @param serializer
-     *            An XmlSerializer that is initialised.
+     *            An XmlSerializer that is initialized.
      * @param shouldSerialiseMedia
-     *            Should media also be serialised? Adding media means that the
+     *            Should media also be serialized? Adding media means that the
      *            resulting XML-file is not valid to OSM.
      */
     public void serialise(XmlSerializer serializer, boolean shouldSerialiseMedia) {
@@ -264,7 +264,7 @@ public class DataNode extends DataMapObject {
      * @return The new DataNode-object
      */
     public static DataNode deserialise(Node nodenode) {
-        // the returned DataNode, must be initialised
+        // the returned DataNode, must be initialized
         DataNode ret = new DataNode();
 
         // get all attributes
@@ -277,7 +277,9 @@ public class DataNode extends DataMapObject {
                 .getNamedItem("lon").getNodeValue());
         ret.setLocation(new GeoPoint(lat, lon));
         // get time stamp
-        ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
+        ret
+                .setDatetime(nodeattributes.getNamedItem("timestamp")
+                        .getNodeValue());
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
