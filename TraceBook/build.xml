@@ -17,6 +17,9 @@
 	        </fileset>
 	    	<link href="http://download.oracle.com/javase/6/docs/api/"/>
 	    	<link href="http://code.google.com/p/mapsforge/source/browse/tags/0.2.1/javadoc/"/>
+	    	<link href="http://developer.android.com/reference"
+	    	                              offline="true"
+	    	                              packagelistloc="${basedir}/../../Android/docs/reference" />
 
 
 	    </javadoc>
