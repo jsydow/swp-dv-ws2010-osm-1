@@ -57,12 +57,7 @@ public class RecordVideoActivity extends Activity implements
      */
     public void onRecordStop(View view) {
         if (recorder.isRecording()) {
-            recorder.stop();
-            recorder.appendFileToObject(node);
-
-            // TODO: l10n!
-            Toast.makeText(this, "Video recorded successfully.",
-                    Toast.LENGTH_SHORT).show();
+            stopRecording();
         }
 
         finish();
@@ -119,5 +114,27 @@ public class RecordVideoActivity extends Activity implements
         camera.lock();
         camera.stopPreview();
         camera.release();
+    }
+
+    private void stopRecording() {
+        if (recorder.isRecording()) {
+            recorder.stop();
+            recorder.appendFileToObject(node);
+
+            // TODO: l10n!
+            Toast.makeText(this, "Video recorded successfully.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        stopRecording();
+    }
+
+    @Override
+    public void onDestroy() {
+        stopRecording();
+        super.onDestroy();
     }
 }
