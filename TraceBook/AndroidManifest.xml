@@ -29,7 +29,7 @@
 			android:screenOrientation="portrait"></activity>
 		<activity android:name="tracebook.gui.activity.EditPointActivity"
 			android:screenOrientation="portrait"></activity>
-		<service android:name="core.logger.WaypointLogService" />
+		<service android:name="tracebook.core.logger.WaypointLogService" />
 		<activity android:name="tracebook.gui.activity.MapsForgeActivity"></activity>
 		<activity android:name="tracebook.gui.activity.AddPointMetaActivity"></activity>
 		<activity android:name="tracebook.gui.activity.AddMemoActivity"
