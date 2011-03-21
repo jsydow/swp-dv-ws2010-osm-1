@@ -82,9 +82,8 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt
-                        .popup(this,
-                                "Unable to open map file, fetching tiles from Internet.");
+                LogIt.popup(this, getResources().getString(
+                        R.string.toast_loadingOnlineMap));
                 modeLocal = onlineRenderer;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
