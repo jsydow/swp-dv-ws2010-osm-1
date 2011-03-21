@@ -525,7 +525,7 @@ public class DataTrack extends DataMediaHolder {
                 if (medianodes == null)
                     throw new SAXException();
                 for (int i = 0; i < medianodes.getLength(); ++i) {
-                    // get attributes of <link>-node
+                    // get attributes of "link"-node
                     NamedNodeMap attributes = medianodes.item(i)
                             .getAttributes();
                     // path to medium is value of href-attribute

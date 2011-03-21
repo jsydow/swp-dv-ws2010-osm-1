@@ -89,11 +89,11 @@ public abstract class DataMediaHolder {
     }
 
     /**
-     * This method generates the media-tags (<link>) for a
+     * This method generates the media-tags ("link") for a
      * DataMediaHolder-object. The enclosing tag must be opened.
      * 
      * @param serializer
-     *            An XmlSerializer that is initialised.
+     *            An XmlSerializer that is initialized.
      */
     public void serializeMedia(XmlSerializer serializer) {
         for (DataMedia m : media) {
@@ -123,8 +123,8 @@ public abstract class DataMediaHolder {
     }
 
     /**
-     * a_node is a node which has <link>-nodes. This method restores the
-     * DataMedia-objects from these <link>-nodes.
+     * a_node is a node which has "link" nodes. This method restores the
+     * DataMedia-objects from these "link" nodes.
      * 
      * @param aNode
      *            An XML-node.
