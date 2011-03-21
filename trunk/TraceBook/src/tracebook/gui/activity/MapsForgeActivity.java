@@ -82,8 +82,10 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt.popup(this, getResources().getString(
-                        R.string.toast_loadingOnlineMap));
+                LogIt.popup(
+                        this,
+                        getResources().getString(
+                                R.string.toast_loadingOnlineMap));
                 modeLocal = onlineRenderer;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
@@ -130,6 +132,7 @@ public class MapsForgeActivity extends MapActivity {
         mapView = new MapView(this);
         mapView.setClickable(true);
         mapView.setBuiltInZoomControls(true);
+        mapView.setScaleBar(true);
 
         mapView.getOverlays().add(routesOverlay);
         mapView.getOverlays().add(pointsOverlay);
@@ -183,8 +186,8 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.updateItem(projection, editNode.getId(), 0);
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                Log.d(LOG_TAG, "Exiting edit mode for point "
-                        + editNode.getId());
+                Log.d(LOG_TAG,
+                        "Exiting edit mode for point " + editNode.getId());
                 editNode = null;
             }
 
@@ -225,10 +228,9 @@ public class MapsForgeActivity extends MapActivity {
                         R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item
-                        .setTitle(getResources()
-                                .getString(
-                                        R.string.opt_mapsforgeActivity_deactivateMobileInternet));
+                item.setTitle(getResources()
+                        .getString(
+                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(onlineRenderer, null);
             }
             useInternet = !useInternet;
@@ -322,8 +324,9 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng); // we also need this
                 // to center the map
-                Log.d(LOG_TAG, "Location update received "
-                        + currentGeoPoint.toString());
+                Log.d(LOG_TAG,
+                        "Location update received "
+                                + currentGeoPoint.toString());
 
                 pointsOverlay.setCurrentPosition(currentGeoPoint);
 
@@ -347,9 +350,8 @@ public class MapsForgeActivity extends MapActivity {
             // Receive an update of a way and update the overlay accordingly
             case GpsMessage.UPDATE_OBJECT:
                 if (Helper.currentTrack() == null) {
-                    Log
-                            .e(LOG_TAG,
-                                    "Received UPDATE_OBJECT with no current track present.");
+                    Log.e(LOG_TAG,
+                            "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 
