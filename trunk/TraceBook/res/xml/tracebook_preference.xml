@@ -38,7 +38,7 @@
 
 		<EditTextPreference android:title="Wegpunkt Anzahl"
 			android:defaultValue="3" android:key="wegpunktanzahl" />
-		<EditTextPreference android:title="Wegpunkt glättung"
+		<EditTextPreference android:title="Wegpunktglättung"
 			android:defaultValue="4" android:key="wegpunktglättung" />
 	</PreferenceCategory>
 </PreferenceScreen>
