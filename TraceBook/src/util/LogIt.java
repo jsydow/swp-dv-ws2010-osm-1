@@ -10,7 +10,11 @@ import android.widget.Toast;
 import core.data.DataStorage;
 
 /**
- * 
+ * This a general logging class and should be used for all logging action. It
+ * can make popups that are visible to the user and logs that create a log file
+ * or log to logcat. There is a log level which is an integer from 1 to 5. 5 is
+ * the highest level and is equivalent to error in logcat. 1 is equivalent to
+ * verbose in logcat.
  */
 public final class LogIt {
     private LogIt instance;
