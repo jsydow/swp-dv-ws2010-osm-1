@@ -166,7 +166,7 @@ public class LoadTrackActivity extends ListActivity {
 
         switch (item.getItemId()) {
         case R.id.cm_loadtrackActivity_load:
-            DataTrack track = DataStorage.getInstance().deserialiseTrack(
+            DataTrack track = DataStorage.getInstance().deserializeTrack(
                     trackname);
             if (track != null) {
                 DataStorage.getInstance().setCurrentTrack(track);
@@ -233,7 +233,7 @@ public class LoadTrackActivity extends ListActivity {
             return true;
 
         case R.id.cm_loadtrackActivity_info:
-            DataTrackInfo trackinfo = DataTrackInfo.deserialise(trackname);
+            DataTrackInfo trackinfo = DataTrackInfo.deserialize(trackname);
 
             final Dialog infoDialog = new Dialog(this);
             // dialog.getWindow().setGravity(Gravity.FILL);
@@ -414,7 +414,7 @@ public class LoadTrackActivity extends ListActivity {
                 List<String> names = new ArrayList<String>(DataStorage
                         .getInstance().getAllTracks());
                 for (String name : names) {
-                    DataTrackInfo trackinfo = DataTrackInfo.deserialise(name);
+                    DataTrackInfo trackinfo = DataTrackInfo.deserialize(name);
                     if (trackinfo != null) {
                         trackInfos.add(trackinfo);
                     }
@@ -492,7 +492,7 @@ public class LoadTrackActivity extends ListActivity {
 
         GenericAdapterData datum = adapter.getItem(position);
         final String trackname = datum.getText("TrackName");
-        DataTrack track = DataStorage.getInstance().deserialiseTrack(trackname);
+        DataTrack track = DataStorage.getInstance().deserializeTrack(trackname);
         if (track != null) {
             DataStorage.getInstance().setCurrentTrack(track);
             final Intent intent = new Intent(this, NewTrackActivity.class);
