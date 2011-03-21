@@ -50,7 +50,7 @@ interface ILoggerService {
 	int beginWayA(boolean oneShotMode, boolean isArea);
 	
 	/**
-	 * starts a new way 
+	 * Starts a new way 
 	 */
 	int beginWay(boolean oneShotMode);
 	
@@ -66,22 +66,22 @@ interface ILoggerService {
 	boolean isWayLogging();
 	
 	/**
-	*@return true if area loggin is in progress
+	* @return true if area loggin is in progress
 	*/
 	boolean isAreaLogging();
 	
 	/**
-	 * stops GPS logging.
+	 * Stops GPS logging.
 	 */
 	void pauseLogging();
 	
 	/**
-	 * resumes GPS logging.
+	 * Resumes GPS logging.
 	 */
 	void resumeLogging();
 	
 	/**
-	 * returns the state of the GPS logging.
+	 * Returns the state of the GPS logging.
 	 * @return true if gps logging is running
 	 */
 	boolean isLogging();
