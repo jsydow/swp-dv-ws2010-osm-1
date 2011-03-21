@@ -45,9 +45,9 @@ public final class Helper {
     /**
      * Notification ID for the tracking notification.
      */
-    final static int TRACKING_NOTIFY_ID = 1;
+    static final int TRACKING_NOTIFY_ID = 1;
 
-    private Helper() { // do nothing - why Checkstyle, why?!
+    private Helper() { // Do nothing - why Checkstyle, why?!
     }
 
     /**
