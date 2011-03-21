@@ -23,8 +23,8 @@
 = UI =
   * Statusbar Visible / Invisible (Checkbox) - android:key="check_visbilityStatusbar" , android:defaultValue="false"
   * Themes (Array)
-  * Display always on (Checkbox)
-  * Show GPS signal quality (Checkbox)
+  * Display always on (Checkbox) - android:key="check_displayAlwaysOn" , android:defaultValue="false" 
+  * Show GPS signal quality (Checkbox) - android:key="check_showGPSsignalQuality" , android:defaultValue="true"
 
 = Track =
   * Default dataname for tracks (TT.MM.JJJJ or JJJJ.MM.TT etc.) (Array)
