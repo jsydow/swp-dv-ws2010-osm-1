@@ -77,8 +77,6 @@
 	<string name="alert_global_exit">Zakończyć i zapisać aktualną sesję?</string>
 	<string name="alert_mapsforgeActivity_pause">Zatrzymać aktualną sesję?</string>
 	<string name="alert_newtrackActivity_rename">Zmień nazwe węzła</string>
-	<string name="alert_newtrackActivity_setTrackName">Proszę nadać nazwę drogi</string>
-	<string name="alert_newtrackActivity_trackName">Nazwa twojej drogi:</string>
 	<string name="alert_newtrackActivity_addTrackNotice">Dodać notatkę o drodze</string>
 	<string name="alert_loadtrackActivity_rename">Zmień nazwe drogi</string>
 	<string name="alert_loadtrackActivity_deleteTrack">Usunąć drogę?</string>
