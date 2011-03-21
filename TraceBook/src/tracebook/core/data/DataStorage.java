@@ -44,7 +44,7 @@ public final class DataStorage {
     private List<String> names;
 
     /**
-     * last given ID for a MapObject.
+     * Last given ID for a MapObject.
      */
     private int lastID;
 

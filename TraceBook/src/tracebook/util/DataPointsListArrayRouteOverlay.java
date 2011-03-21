@@ -40,7 +40,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     private DataNodeArrayItemizedOverlay pointsOverlay;
 
     /**
-     * sets overlays and generates color array.
+     * Sets overlays and generates color array.
      * 
      * @param context
      *            a reference to the MapActivity
@@ -91,7 +91,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     }
 
     /**
-     * generates a pair of paint objects with the same color, but different
+     * Generates a pair of paint objects with the same color, but different
      * levels of transparency.
      */
     private static Pair<Paint, Paint> getPaintPair(int color, boolean area) {
@@ -190,7 +190,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
     }
 
     /**
-     * enable/disable the drawing of way point markers.
+     * Enable/disable the drawing of way point markers.
      */
     public void toggleWaypoints() {
         showWaypoints = !showWaypoints;

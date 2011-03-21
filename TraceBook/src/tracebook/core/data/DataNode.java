@@ -256,7 +256,7 @@ public class DataNode extends DataMapObject {
     }
 
     /**
-     * nodenode is a XML-node labeled "node". This method restores a DataNode
+     * 'nodenode" is a XML-node labeled "node". This method restores a DataNode
      * from such a XML-Node.
      * 
      * @param nodenode

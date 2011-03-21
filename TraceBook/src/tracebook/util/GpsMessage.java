@@ -20,18 +20,18 @@ public class GpsMessage {
     public static final String TAG = "de.fu-berlin.inf.tracebook.UPDATE";
 
     /**
-     * type of the Intent that signals a change of the current position.
+     * Type of the Intent that signals a change of the current position.
      */
     public static final int UPDATE_GPS_POS = 0;
 
     /**
-     * type of the Intent that signals an update to an object in
+     * Type of the Intent that signals an update to an object in
      * {@link DataStorage}.
      */
     public static final int UPDATE_OBJECT = 1;
 
     /**
-     * type of the Intent that signals a way was closed.
+     * Type of the Intent that signals a way was closed.
      */
     public static final int END_WAY = 2;
 

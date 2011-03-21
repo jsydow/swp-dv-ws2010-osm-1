@@ -38,7 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * general helper class to feature some useful functions.
+ * General helper class to feature some useful functions.
  */
 public final class Helper {
 
@@ -228,7 +228,7 @@ public final class Helper {
     }
 
     /**
-     * smoothen the {@link DataNode}s by calculating the mean of multiple
+     * Smoothen the {@link DataNode}s by calculating the mean of multiple
      * consecutive points.
      * 
      * @param nodes
@@ -281,7 +281,7 @@ public final class Helper {
     }
 
     /**
-     * calculates the area spanned by the parallelogram defined by the points a,
+     * Calculates the area spanned by the parallelogram defined by the points a,
      * b and c.
      * 
      * @param a
