@@ -1,6 +1,5 @@
 package tracebook.gui.activity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,20 +112,20 @@ public class FullTextSearchActivity extends ListActivity {
             this.act = act;
         }
 
-        public void afterTextChanged(Editable arg0) {
+        public void afterTextChanged(Editable s) {
             // TODO Auto-generated method stub
 
         }
 
-        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                int arg3) {
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                int after) {
             // TODO Auto-generated method stub
 
         }
 
-        public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                int arg3) {
-            final String searchText = arg0.toString();
+        public void onTextChanged(CharSequence s, int start, int before,
+                int count) {
+            final String searchText = s.toString();
             new SearchThread(act, act.increaseIndex(), searchText).start();
         }
     }

@@ -424,20 +424,20 @@ public class LoadTrackActivity extends ListActivity {
                 if (sortByName) {
                     Collections.sort(trackInfos,
                             new Comparator<DataTrackInfo>() {
-                                public int compare(DataTrackInfo arg0,
-                                        DataTrackInfo arg1) {
-                                    return arg0.getName().compareToIgnoreCase(
-                                            arg1.getName());
+                                public int compare(DataTrackInfo info1,
+                                        DataTrackInfo info2) {
+                                    return info1.getName().compareToIgnoreCase(
+                                            info2.getName());
                                 }
                             });
                 } else {
                     Collections.sort(trackInfos,
                             new Comparator<DataTrackInfo>() {
-                                public int compare(DataTrackInfo arg0,
-                                        DataTrackInfo arg1) {
-                                    return arg0.getTimestamp()
+                                public int compare(DataTrackInfo info1,
+                                        DataTrackInfo info2) {
+                                    return info1.getTimestamp()
                                             .compareToIgnoreCase(
-                                                    arg1.getTimestamp());
+                                                    info2.getTimestamp());
                                 }
                             });
                 }

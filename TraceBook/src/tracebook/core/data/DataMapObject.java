@@ -75,10 +75,10 @@ public abstract class DataMapObject extends DataMediaHolder implements
     /**
      * Comparable-implementation.
      */
-    public int compareTo(Integer arg0) {
-        if (id < arg0.intValue())
+    public int compareTo(Integer other) {
+        if (id < other.intValue())
             return -1;
-        if (id > arg0.intValue())
+        if (id > other.intValue())
             return 1;
         return 0;
     }

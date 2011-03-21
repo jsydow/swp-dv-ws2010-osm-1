@@ -275,15 +275,15 @@ public class WaypointLogService extends Service implements LocationListener {
         }
     }
 
-    public void onProviderDisabled(String arg0) {
-        Log.d(LOG_TAG, "GPS Provider Disabled: " + arg0);
+    public void onProviderDisabled(String provider) {
+        Log.d(LOG_TAG, "GPS Provider Disabled: " + provider);
     }
 
-    public void onProviderEnabled(String arg0) {
-        Log.d(LOG_TAG, "GPS Provider Enabled: " + arg0);
+    public void onProviderEnabled(String provider) {
+        Log.d(LOG_TAG, "GPS Provider Enabled: " + provider);
     }
 
-    public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-        Log.d(LOG_TAG, "GPS Status Changed: " + arg0);
+    public void onStatusChanged(String provider, int status, Bundle extra) {
+        Log.d(LOG_TAG, "GPS Status Changed: " + provider);
     }
 }
