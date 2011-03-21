@@ -123,7 +123,7 @@ public abstract class DataMediaHolder {
     }
 
     /**
-     * a_node is a node which has "link" nodes. This method restores the
+     * "a_node" is a node which has "link" nodes. This method restores the
      * DataMedia-objects from these "link" nodes.
      * 
      * @param aNode

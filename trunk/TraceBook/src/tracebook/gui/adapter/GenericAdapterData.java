@@ -171,11 +171,11 @@ public class GenericAdapterData {
     }
 
     /**
-     * reference to a description object. See @GenericItemDescription
+     * Reference to a description object. See @GenericItemDescription
      */
     GenericItemDescription description;
     /**
-     * map items to string tags.
+     * Map items to string tags.
      */
     Map<String, GenericItem> items = new HashMap<String, GenericItem>();
 

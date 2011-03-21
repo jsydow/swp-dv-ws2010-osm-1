@@ -25,7 +25,7 @@ public abstract class DataMapObject extends DataMediaHolder implements
     protected int id;
 
     /**
-     * tags stores all meta information of this object. These may be the name,
+     * Tags stores all meta information of this object. These may be the name,
      * time stamp, latitude, longitude and OSM-tags. tags is not equivalent to
      * OSM-tags as these tags also store the time stamp and GPS coordinates etc.
      */
@@ -120,8 +120,8 @@ public abstract class DataMapObject extends DataMediaHolder implements
     }
 
     /**
-     * a_node is a Node which has <tag>-children. This method retrieves the tags
-     * out of these <tag>s
+     * "a_node" is a Node which has <tag>-children. This method retrieves the
+     * tags out of these <tag>s
      * 
      * @param aNode
      *            An XML-node.
