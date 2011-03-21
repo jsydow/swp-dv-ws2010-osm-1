@@ -147,13 +147,7 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     private final ILoggerService.Stub binder = new ILoggerService.Stub() {
 
-        public void addTrackWithGpsParams(int dTime, int dDistance) {
-            deltaTime = dTime;
-            deltaDistance = dDistance;
-            addTrack();
-        }
-
-        public void addTrack() {
+        public void startTrack() {
             restartGPS();
             storage.setCurrentTrack(storage.newTrack());
         }
@@ -179,9 +173,9 @@ public class WaypointLogService extends Service implements LocationListener {
             return current_node.getId();
         }
 
-        public int beginWayA(boolean doOneShot, boolean isArea) {
+        public int beginArea(boolean doOneShot) {
             int ret = beginWay(doOneShot);
-            currentWay().setArea(isArea);
+            currentWay().setArea(true);
             return ret;
         }
 
