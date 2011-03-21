@@ -19,8 +19,6 @@ import android.widget.Toast;
  * Activity that starts recording a video and stops recording it upon hitting a
  * button each. This activity is closed automatically once recording the video
  * has been stopped.
- * 
- * 
  */
 public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {

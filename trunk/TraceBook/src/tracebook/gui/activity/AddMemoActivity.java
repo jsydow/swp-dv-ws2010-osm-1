@@ -11,7 +11,7 @@ import android.view.View;
 
 /**
  * The Class AddMemoActivity, start the recording of the notice. The user can
- * talk after a 2 seconds progressbar dialog.
+ * talk after a 2 seconds progress bar dialog.
  * 
  */
 public class AddMemoActivity extends Activity {

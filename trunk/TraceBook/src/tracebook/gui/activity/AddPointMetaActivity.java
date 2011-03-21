@@ -1,6 +1,5 @@
 package tracebook.gui.activity;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +28,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 /**
- * In this Activty you can choose your Tags via an AutoComplete feature. Tags
+ * In this Activity you can choose your Tags via an AutoComplete feature. Tags
  * and values are grouped together. So the AutoComplete feature for values are
  * depended by their key values. For example when you choose "highway" only
  * highway related values will be given as a list for AutoComplete.
- * 
  */
 public class AddPointMetaActivity extends ListActivity {
 
     /**
-     * A simple enum class for tags.
+     * A simple enumeration class for tags.
      */
     enum Tags {
         /**
@@ -117,12 +115,9 @@ public class AddPointMetaActivity extends ListActivity {
         fillListView();
 
         // Set status bar
-        Helper.setStatusBar(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_addpointmetaTitle),
-                getResources()
-                        .getString(R.string.tv_statusbar_addpointmetaDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_addpointmetaTitle), getResources()
+                .getString(R.string.tv_statusbar_addpointmetaDesc),
                 R.id.ly_addpointMetaAtivity_statusbar, false);
 
     }
@@ -160,7 +155,7 @@ public class AddPointMetaActivity extends ListActivity {
      * @return a string array containing the category's
      */
     public String[] getCategoryTags() {
-        // Testarray
+        // Test array
         String[] firstGroupTags = parseTags(Tags.KEY, "");
         return firstGroupTags;
     }
@@ -243,12 +238,9 @@ public class AddPointMetaActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_addpointmetaTitle),
-                getResources()
-                        .getString(R.string.tv_statusbar_addpointmetaDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_addpointmetaTitle), getResources()
+                .getString(R.string.tv_statusbar_addpointmetaDesc));
     }
 
     @Override

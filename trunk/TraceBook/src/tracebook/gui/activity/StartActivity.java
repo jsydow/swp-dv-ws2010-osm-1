@@ -63,7 +63,7 @@ public class StartActivity extends Activity {
             }
         }).start();
 
-        // Init ServiceConnector
+        // Initialize ServiceConnector
         ServiceConnector.startService(this);
         ServiceConnector.initService();
 
