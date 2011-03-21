@@ -8,8 +8,10 @@
 = Map view =
   * Colors for several item groups (ways, areas, POIs) (Colorpicker)
   * Map file to be used (for !MapsForge) (EditText)
-  * Trackfilter, with some options 
+  * Trackfilter, with some SeekBar 
   * Default map from SDCard or online (Array)
+  * Enable/Disable local tile cache (Checkbox)
+  * Online tile style (select between OSMARENDER, MAPNIK and OPENCYCLEMAP)
 
 = MetaTags =
   * The max. history size. (Array)
