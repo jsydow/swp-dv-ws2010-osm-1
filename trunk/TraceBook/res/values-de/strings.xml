@@ -62,10 +62,13 @@
 	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
 	<string name="tv_aboutActivity_creditsTeam">\n
 		David Beyer - anubis@cstilch.de\n
-		Huy Dinh - mail@huydinh.eu\n
+		Huy Dinh -
+		mail@huydinh.eu\n
 		Marc Sperling - greenTraxas@googlemail.com\n
-		Jan Sydow - js.schrifterz@googlemail.com\n
-		Benjamin Valentin - benpicco@googlemail.com\n
+		Jan Sydow
+		- js.schrifterz@googlemail.com\n
+		Benjamin Valentin -
+		benpicco@googlemail.com\n
 		Şahin Vardar - sakirsoft@gmail.com 	
 	</string>
 	<string name="tv_aboutActivity_licenseTitle">Lizenz:</string>
@@ -94,7 +97,8 @@
 	<string name="tv_statusbar_loadtrackTitle">Track laden</string>
 	<string name="tv_statusbar_loadtrackDesc">Hier können Sie einen gespeicherten Track laden
 		oder durch
-		langes drücken mehr Informationen zu diesem erhalten.</string>
+		langes drücken mehr Informationen zu diesem erhalten.
+	</string>
 
 
 	<!-- Edit Text values -->

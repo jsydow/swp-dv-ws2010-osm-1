@@ -14,13 +14,16 @@ import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
 import tracebook.core.data.DataTrack;
 import tracebook.core.logger.ServiceConnector;
-
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
@@ -38,6 +41,12 @@ import android.widget.Toast;
  * general helper class to feature some useful functions.
  */
 public final class Helper {
+
+    /**
+     * Notification ID for the tracking notification.
+     */
+    final static int TRACKING_NOTIFY_ID = 1;
+
     private Helper() { // do nothing - why checkstyle, why?!
     }
 
@@ -143,11 +152,10 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        Toast
-                .makeText(
-                        context,
-                        "An error occured. Please restart the application and try again.",
-                        Toast.LENGTH_LONG).show();
+        Toast.makeText(
+                context,
+                "An error occured. Please restart the application and try again.",
+                Toast.LENGTH_LONG).show();
         Log.e(logTag, ex.getMessage());
     }
 
@@ -334,8 +342,9 @@ public final class Helper {
                     if (calibrate) {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
-                    } else if (calculateArea(firstNode.toGeoPoint(), pending
-                            .toGeoPoint(), n.toGeoPoint()) < threshold * weight
+                    } else if (calculateArea(firstNode.toGeoPoint(),
+                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
+                            * weight
                             && !n.hasAdditionalInfo() && iter.hasNext())
                         iter.remove();
                     firstNode = pending;
@@ -368,7 +377,8 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -383,20 +393,16 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                Toast
-                                        .makeText(
-                                                activity
-                                                        .getApplicationContext(),
-                                                activity
-                                                        .getResources()
-                                                        .getString(
-                                                                R.string.alert_global_trackName)
-                                                        + " "
-                                                        + DataStorage
-                                                                .getInstance()
-                                                                .getCurrentTrack()
-                                                                .getName(),
-                                                Toast.LENGTH_SHORT).show();
+                                Toast.makeText(
+                                        activity.getApplicationContext(),
+                                        activity.getResources()
+                                                .getString(
+                                                        R.string.alert_global_trackName)
+                                                + " "
+                                                + DataStorage.getInstance()
+                                                        .getCurrentTrack()
+                                                        .getName(),
+                                        Toast.LENGTH_SHORT).show();
 
                                 // stop logging
                                 try {
@@ -409,7 +415,8 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        }).setNegativeButton(
+                        })
+                .setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
@@ -534,5 +541,61 @@ public final class Helper {
                 R.string.string_global_descriptionTitle)
                 + "\n" + desc);
         activityInfoDialog.show();
+    }
+
+    /**
+     * 
+     * This method start the tracking notification for the user.
+     * 
+     * @param activity
+     *            The activity from which the method called.
+     * @param icon
+     *            The icon id which will show in the notification bar.
+     * @param cls
+     *            The class which will be called for the intent, if the user
+     *            click at the notification.
+     */
+    public static void startUserNotification(Activity activity, int icon,
+            Class<?> cls) {
+
+        // User notification
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) activity
+                .getSystemService(ns);
+        CharSequence tickerText = activity.getResources().getString(
+                R.string.not_startActivity_tickerText);
+        long when = System.currentTimeMillis();
+
+        Notification notification = new Notification(icon, tickerText, when);
+
+        Context context = activity.getApplicationContext();
+        CharSequence contentTitle = activity.getResources().getString(
+                R.string.not_startActivity_contentTitle);
+        CharSequence contentText = activity.getResources().getString(
+                R.string.not_startActivity_contentText);
+
+        Context con = activity.getApplicationContext();
+        Intent notificationIntent = new Intent(con, cls);
+        PendingIntent contentIntent = PendingIntent.getActivity(con, 0,
+                notificationIntent, 0);
+
+        notification.setLatestEventInfo(context, contentTitle, contentText,
+                contentIntent);
+
+        mNotificationManager.notify(TRACKING_NOTIFY_ID, notification);
+    }
+
+    /**
+     * This method start the tracking notification for the user.
+     * 
+     * @param activity
+     *            The activity from which the method called.
+     */
+    public static void stopUserNotification(Activity activity) {
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) activity
+                .getSystemService(ns);
+        mNotificationManager.cancel(TRACKING_NOTIFY_ID);
+
     }
 }
