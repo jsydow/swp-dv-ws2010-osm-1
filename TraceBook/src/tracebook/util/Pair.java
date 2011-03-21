@@ -10,16 +10,16 @@ package tracebook.util;
  */
 public class Pair<A, B> {
     /**
-     * first value stored in the Pair.
+     * First value stored in the Pair.
      */
     A first;
 
     /**
-     * second value stored in the Pair.
+     * Second value stored in the Pair.
      */
     B second;
 
-    // I hate you, checkstyle, I hate you.
+    // I hate you, Checkstyle, I hate you.
 
     /**
      * Gets the first element.
@@ -31,7 +31,7 @@ public class Pair<A, B> {
     }
 
     /**
-     * set the first element.
+     * Sets the first element.
      * 
      * @param first
      *            the first element
@@ -50,7 +50,7 @@ public class Pair<A, B> {
     }
 
     /**
-     * set the second element.
+     * Sets the second element.
      * 
      * @param second
      *            the first element
@@ -60,7 +60,7 @@ public class Pair<A, B> {
     }
 
     /**
-     * Create a new Pair.
+     * Creates a new Pair.
      * 
      * @param first
      *            first element
@@ -71,5 +71,4 @@ public class Pair<A, B> {
         this.first = first;
         this.second = second;
     }
-
 }

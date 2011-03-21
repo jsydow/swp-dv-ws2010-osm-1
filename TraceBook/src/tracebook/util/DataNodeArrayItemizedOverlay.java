@@ -1,6 +1,5 @@
 package tracebook.util;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +15,6 @@ import tracebook.core.data.DataStorage;
 import tracebook.core.data.DataTrack;
 import tracebook.core.logger.ServiceConnector;
 import tracebook.gui.activity.AddPointActivity;
-
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -124,12 +122,12 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         synchronized (this.overlayItems) {
             for (int i = 0; i < overlayItems.size(); ++i)
                 if (overlayItems.get(i).second.intValue() == id) {
-                    OverlayItem oi = Helper.getOverlayItem(pos,
-                            overlayItems.get(i).first.getMarker());
+                    OverlayItem oi = Helper.getOverlayItem(pos, overlayItems
+                            .get(i).first.getMarker());
                     overlayItems.get(i).first = oi; // update the OverlayItem
-                                                    // (not
-                                                    // necessarily has a
-                                                    // DataNode)
+                    // (not
+                    // necessarily has a
+                    // DataNode)
 
                     if (id > 0) { // redraw way when point was moved
                         DataNode node = Helper.currentTrack().getNodeById(id);
@@ -156,7 +154,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * the DataNodeArrayItemizedOverlay.
      * 
      * @param node
-     *            the node whichs position or OverlayItem has changed
+     *            the node whose position or OverlayItem has changed
      */
     public void updateItem(DataNode node) {
         boolean found = false;
@@ -422,7 +420,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                     Helper.handleNastyException(context, e, LOG_TAG);
                 }
                 break;
-            case 2: // add waypoint
+            case 2: // add way point
                 try {
                     ServiceConnector.getLoggerService().beginWay(true);
                 } catch (RemoteException e) {
@@ -436,7 +434,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     }
 
     /**
-     * we need to set the RoutesOverlay as the class will be created after this
+     * We need to set the RoutesOverlay as the class will be created after this
      * one.
      * 
      * @param routesOverlay
