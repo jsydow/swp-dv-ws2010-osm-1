@@ -6,7 +6,7 @@
 
 	<LinearLayout android:id="@+id/ly_addpointActivity_statusbar"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:orientation="horizontal" android:gravity="center_horizontal" >
+		android:orientation="horizontal" android:gravity="center_horizontal">
 	</LinearLayout>
 
 	<TextView android:id="@+id/tv_addpointActivity_nodeId"
