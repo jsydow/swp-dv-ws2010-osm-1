@@ -526,8 +526,12 @@ public final class Helper {
                 .findViewById(R.id.tv_dialogactivityinfo_activityTitle);
         TextView dialogDesc = (TextView) activityInfoDialog
                 .findViewById(R.id.tv_dialogactivityinfo_activityDescription);
-        dialogTitle.setText("Sie befinden sich hier: " + title);
-        dialogDesc.setText("Beschreibung: \n" + desc);
+        dialogTitle.setText(activity.getResources().getString(
+                R.string.string_statusDialog_here)
+                + ": " + title);
+        dialogDesc.setText(activity.getResources().getString(
+                R.string.string_global_descriptionTitle)
+                + "\n" + desc);
         activityInfoDialog.show();
     }
 }

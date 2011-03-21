@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  @author greenTraxas -->
+<!-- @author greenTraxas -->
 <resources>
-    <!-- String values -->
-    <string name="string_global_poi">POI</string>
-    <string name="string_global_way">Way</string>
-    <string name="string_global_area">Area</string>
-    <string name="string_trackInfoDialog_title">Informacje o drodze</string>
-    <string name="string_licenseDialog_title">Licencja GLP3</string>
-    <string name="string_aboutActivity_title">O programie</string>
-    <string name="string_addmemoActivity_title">Notatka dzwiękowa</string>
-    <string name="string_addpointActivity_title">Dodaj punkt</string>
-    <string name="string_addpointmetaActivity_title">Dodaj metadane</string>
-    <string name="string_fulltextsearchActivity_title">Szukaj</string>
-    <string name="string_loadtrackActivity_title">Ładuj drogę</string>
-    <string name="string_newtrackActivity_title">Nowa droga</string>
-    <string name="string_preferencesActivity_title">Ustawienia</string>
-    <string name="string_startActivity_title">Tracebook</string>
-    <string name="string_recordvideoActivity_title">Nagraj film</string>
-    
-    <!--  App values -->
-    <string name="app_name">TraceBook</string>
+	<!-- String values -->
+	<string name="string_global_poi">POI</string>
+	<string name="string_global_way">Way</string>
+	<string name="string_global_area">Area</string>
+	<string name="string_trackInfoDialog_title">Informacje o drodze</string>
+	<string name="string_licenseDialog_title">Licencja GLP3</string>
+	<string name="string_aboutActivity_title">O programie</string>
+	<string name="string_addmemoActivity_title">Notatka dzwiękowa</string>
+	<string name="string_addpointActivity_title">Dodaj punkt</string>
+	<string name="string_addpointmetaActivity_title">Dodaj metadane</string>
+	<string name="string_fulltextsearchActivity_title">Szukaj</string>
+	<string name="string_loadtrackActivity_title">Ładuj drogę</string>
+	<string name="string_newtrackActivity_title">Nowa droga</string>
+	<string name="string_preferencesActivity_title">Ustawienia</string>
+	<string name="string_startActivity_title">Tracebook</string>
+	<string name="string_recordvideoActivity_title">Nagraj film</string>
 
-	<!--  TextViews values -->
+	<!-- App values -->
+	<string name="app_name">TraceBook</string>
+
+	<!-- TextViews values -->
 	<string name="tv_startActivity_welcome">Witaj w TraceBooku</string>
 	<string name="tv_addpointActivity_nodeId">ID punktu:</string>
 	<string name="tv_addpointmetaActivity_insertTag">Dodaj Tag</string>
-    <string name="tv_addpointmetaActivity_insertValue">Dodaj wartość</string>
-    <string name="tv_addpointActivity_editMeta">Edituj metadane </string>
-    <string name="tv_addpointActivity_noMetaData">Nie ma żadnych metadanych</string>
-    <string name="tv_addpointActivity_MetaData">Węzeł ma następujące metadane</string>
-    <string name="tv_newtrackActivity_setButtonList1">Dodać do aktualnej ulicy metadane</string>
-    <string name="tv_newtrackActivity_setButtonList2">Dodać do aktualnej powierzchni metadane</string>
-    <string name="tv_addpointActivity_titleListViewCat">Klucz</string>
-    <string name="tv_addpointActivity_titleListViewVal">Wartość</string>
-    <string name="tv_trackInfoDialog_name">Nazwa drogi:</string>
+	<string name="tv_addpointmetaActivity_insertValue">Dodaj wartość</string>
+	<string name="tv_addpointActivity_editMeta">Edituj metadane </string>
+	<string name="tv_addpointActivity_noMetaData">Nie ma żadnych metadanych</string>
+	<string name="tv_addpointActivity_MetaData">Węzeł ma następujące metadane</string>
+	<string name="tv_newtrackActivity_setButtonList1">Dodać do aktualnej ulicy metadane</string>
+	<string name="tv_newtrackActivity_setButtonList2">Dodać do aktualnej powierzchni metadane</string>
+	<string name="tv_addpointActivity_titleListViewCat">Klucz</string>
+	<string name="tv_addpointActivity_titleListViewVal">Wartość</string>
+	<string name="tv_trackInfoDialog_name">Nazwa drogi:</string>
 	<string name="tv_trackInfoDialog_comment">Komentarz:</string>
 	<string name="tv_trackInfoDialog_timestamp">Datownik:</string>
 	<string name="tv_trackInfoDialog_pois">Ilość Points of Interest:</string>
@@ -51,57 +51,57 @@
 	<string name="tv_addmemoActivity_record"> Trwa nagrywanie dzwiękowe...</string>
 	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
 	<string name="tv_aboutActivity_creditsTeam">\n
-	David Beyer - anubis@cstilch.de\n
-	Huj Dink - mail@hujdink.eu\n
-	Marc Sperling - greenTraxas@googlemail.com\n
-	Jan Sydow - js.schrifterz@googlemail.com\n
-	Benjamin Valentin - benpicco@googlemail.com\n
-	Şahin Vardar - sakirsoft@gmail.com 	
+		David Beyer - anubis@cstilch.de\n
+		Huj Dink - mail@hujdink.eu\n
+		Marc Sperling - greenTraxas@googlemail.com\n
+		Jan Sydow - js.schrifterz@googlemail.com\n
+		Benjamin Valentin - benpicco@googlemail.com\n
+		Şahin Vardar - sakirsoft@gmail.com 	
 	</string>
 	<string name="tv_aboutActivity_licenseTitle">Licencja:</string>
 	<string name="tv_aboutActivity_license">Oprogramowanie podlega licencji GNU - GPL3</string>
 	<string name="tv_aboutActivity_versionTitle">Wersja:</string>
 	<string name="tv_aboutActivity_version">0.90 Beta</string>
 	<string name="tv_listviewedit_idTitle">ID: </string>
-	
-	<!--  Edit Text values-->
+
+	<!-- Edit Text values -->
 	<string name="et_fulltextsearchActivity_search">Trwa szukanie...</string>
-	
-	<!--  AlertBox values -->
+
+	<!-- AlertBox values -->
 	<string name="alert_global_cancel">Anuluj</string>
 	<string name="alert_global_ok">Ok</string>
 	<string name="alert_global_yes">Tak</string>
-    <string name="alert_global_no">Nie</string>
-    <string name="alert_global_addNotice">Dodaj notatkę</string>
-    <string name="alert_global_addedNotice">Notatka dodana:</string>
-    <string name="alert_global_exit">Zakończyć i zapisać aktualną sesję?</string>
-    <string name="alert_mapsforgeActivity_pause">Zatrzymać aktualną sesję?</string>
-    <string name="alert_newtrackActivity_rename">Zmień nazwe węzła</string>
-    <string name="alert_newtrackActivity_setTrackName">Proszę nadać nazwę drogi</string>
-    <string name="alert_newtrackActivity_trackName">Nazwa twojej drogi:</string>
-    <string name="alert_newtrackActivity_addTrackNotice">Dodać notatkę o drodze</string>
-    <string name="alert_loadtrackActivity_rename">Zmień nazwe drogi</string>
-    <string name="alert_loadtrackActivity_deleteTrack">Usunąć drogę?</string>
-    <string name="alert_aboutActivity_pleaseWait">Proszę czekać....</string>
-    <string name="alert_aboutActivity_loadingLicense">Trwa ładowanie licencji.</string>
-    
-  	<!--  Optionmenu values -->
-    <string name="opt_startActivity_preferences">Ustawienia</string>
-    <string name="opt_startActivity_close">Zakończ</string>
-    <string name="opt_mapsforgeActivity_centerAtOwnPosition">Nastawić</string>
-    <string name="opt_mapsforgeActivity_activateMobileInternet">Mapa online</string>
-    <string name="opt_mapsforgeActivity_deactivateMobileInternet">Mapa offline</string>
-    <string name="opt_mapsforgeActivity_stopTrack">Zatrzymaj nagrywanie</string>
-    <string name="opt_mapsforgeActivity_resumeTrack">Kontynuuj nagrywanie</string>
-    <string name="opt_mapsforgeActivity_help">Pomoc</string>
-    <string name="opt_mapsforgeActivity_export">Eksportować</string>
-    <string name="opt_mapsforgeActivity_pause">Pauza</string>
-    <string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
-    <string name="opt_mapsforgeActivity_showToggleWayPoints">Przełączaj węzły drogi</string>
-    <string name="opt_startActivity_about">O programie</string>
-    <string name="opt_startActivity_help">Pomoc</string>
-    
-    <!--  Contextmenu values -->
+	<string name="alert_global_no">Nie</string>
+	<string name="alert_global_addNotice">Dodaj notatkę</string>
+	<string name="alert_global_addedNotice">Notatka dodana:</string>
+	<string name="alert_global_exit">Zakończyć i zapisać aktualną sesję?</string>
+	<string name="alert_mapsforgeActivity_pause">Zatrzymać aktualną sesję?</string>
+	<string name="alert_newtrackActivity_rename">Zmień nazwe węzła</string>
+	<string name="alert_newtrackActivity_setTrackName">Proszę nadać nazwę drogi</string>
+	<string name="alert_newtrackActivity_trackName">Nazwa twojej drogi:</string>
+	<string name="alert_newtrackActivity_addTrackNotice">Dodać notatkę o drodze</string>
+	<string name="alert_loadtrackActivity_rename">Zmień nazwe drogi</string>
+	<string name="alert_loadtrackActivity_deleteTrack">Usunąć drogę?</string>
+	<string name="alert_aboutActivity_pleaseWait">Proszę czekać....</string>
+	<string name="alert_aboutActivity_loadingLicense">Trwa ładowanie licencji.</string>
+
+	<!-- Optionmenu values -->
+	<string name="opt_startActivity_preferences">Ustawienia</string>
+	<string name="opt_startActivity_close">Zakończ</string>
+	<string name="opt_mapsforgeActivity_centerAtOwnPosition">Nastawić</string>
+	<string name="opt_mapsforgeActivity_activateMobileInternet">Mapa online</string>
+	<string name="opt_mapsforgeActivity_deactivateMobileInternet">Mapa offline</string>
+	<string name="opt_mapsforgeActivity_stopTrack">Zatrzymaj nagrywanie</string>
+	<string name="opt_mapsforgeActivity_resumeTrack">Kontynuuj nagrywanie</string>
+	<string name="opt_mapsforgeActivity_help">Pomoc</string>
+	<string name="opt_mapsforgeActivity_export">Eksportować</string>
+	<string name="opt_mapsforgeActivity_pause">Pauza</string>
+	<string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
+	<string name="opt_mapsforgeActivity_showToggleWayPoints">Przełączaj węzły drogi</string>
+	<string name="opt_startActivity_about">O programie</string>
+	<string name="opt_startActivity_help">Pomoc</string>
+
+	<!-- Contextmenu values -->
 	<string name="cm_addpointActivity_deleteTag">Usuń Tag</string>
 	<string name="cm_addpointActivity_renameTag">Zmień Tag</string>
 	<string name="cm_mapsforgeActivity_deletePoint">Usuń punkt</string>
@@ -121,33 +121,33 @@
 	<string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_add">Add waypoint</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_my_pos">Current Location</string>
-   
-   <!-- Tab values -->
-    <string name="tab_newtrackActivity_map">Mapa</string>
-    <string name="tab_newtrackActivity_new">Nowy</string>
-    <string name="tab_newtrackActivity_edit">Zmień</string>
-   
-   <!--  Button values -->
-    <string name="tbtn_newtrackActivity_streetOn">Początek ulicy</string>
-    <string name="tbtn_newtrackActivity_streetOff">Koniec ulicy</string>
-    <string name="tbtn_newtrackActivity_areaOn">Początek powierzchni</string>
-    <string name="tbtn_newtrackActivity_areaOff">Koniec powierzchni</string>
-    <string name="btn_startActivity_newTrack">Nowa droga</string>
-    <string name="btn_startActivity_loadTrack">Ładuj drogę</string>
-    <string name="btn_recordvideoActivity_startRec">Start</string>
-    <string name="btn_recordvideoActivity_stopRec">Stop</string>
-    <string name="btn_newtrackActivity_addPoint">Dodaj Point Of Interest</string>
-    <string name="btn_newtrackActivity_stopTrack">Zapisz i wyjdż</string>
-    <string name="btn_newtrackActivity_editComment">Edytuj komentarz</string>
-    <string name="btn_addpointmetaActivity_poi">Point of intrest</string>
-    <string name="btn_addpointmetaActivity_save">Zapisz</string>
-    <string name="btn_addpointmetaActivity_cancel">Anuluj</string>
-    <string name="btn_addpointActivity_addMeta">Dodaj</string>
-    <string name="btn_addpointActivity_back">Zapisz</string>
-    <string name="btn_addMetaMedia_makePicture">Zdjęcie</string>
-    <string name="btn_addMetaMedia_makeVideo">Film</string>
-    <string name="btn_addMetaMedia_makeMemo">Zapis dzwiękowy</string>
-    <string name="btn_addMetaMedia_makeNotice">Notatka</string>
+
+	<!-- Tab values -->
+	<string name="tab_newtrackActivity_map">Mapa</string>
+	<string name="tab_newtrackActivity_new">Nowy</string>
+	<string name="tab_newtrackActivity_edit">Zmień</string>
+
+	<!-- Button values -->
+	<string name="tbtn_newtrackActivity_streetOn">Początek ulicy</string>
+	<string name="tbtn_newtrackActivity_streetOff">Koniec ulicy</string>
+	<string name="tbtn_newtrackActivity_areaOn">Początek powierzchni</string>
+	<string name="tbtn_newtrackActivity_areaOff">Koniec powierzchni</string>
+	<string name="btn_startActivity_newTrack">Nowa droga</string>
+	<string name="btn_startActivity_loadTrack">Ładuj drogę</string>
+	<string name="btn_recordvideoActivity_startRec">Start</string>
+	<string name="btn_recordvideoActivity_stopRec">Stop</string>
+	<string name="btn_newtrackActivity_addPoint">Dodaj Point Of Interest</string>
+	<string name="btn_newtrackActivity_stopTrack">Zapisz i wyjdż</string>
+	<string name="btn_newtrackActivity_editComment">Edytuj komentarz</string>
+	<string name="btn_addpointmetaActivity_poi">Point of intrest</string>
+	<string name="btn_addpointmetaActivity_save">Zapisz</string>
+	<string name="btn_addpointmetaActivity_cancel">Anuluj</string>
+	<string name="btn_addpointActivity_addMeta">Dodaj</string>
+	<string name="btn_addpointActivity_back">Zapisz</string>
+	<string name="btn_addMetaMedia_makePicture">Zdjęcie</string>
+	<string name="btn_addMetaMedia_makeVideo">Film</string>
+	<string name="btn_addMetaMedia_makeMemo">Zapis dzwiękowy</string>
+	<string name="btn_addMetaMedia_makeNotice">Notatka</string>
 	<string name="btn_trackInfoDialog">OK</string>
 	<string name="btn_trackInfoDialog_back">Powrót</string>
 	<string name="btn_aboutActivity_license">Pokaż licencję</string>
