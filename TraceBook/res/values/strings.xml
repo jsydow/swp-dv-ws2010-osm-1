@@ -4,6 +4,11 @@
 	<string name="string_global_poi">POI</string>
 	<string name="string_global_way">Way</string>
 	<string name="string_global_area">Area</string>
+	<string name="string_global_categoryTitle">Category: </string>
+	<string name="string_global_valueTitle">Value: </string>
+	<string name="string_global_descriptionTitle">Description: </string>
+	<string name="string_loadtrackactivity_comment"></string>
+	<string name="string_loadtrackactivity_nocomment">No comment.</string>
 	<string name="string_trackInfoDialog_title">Track details</string>
 	<string name="string_licenseDialog_title">GPL3 License</string>
 	<string name="string_aboutActivity_title">About</string>
@@ -13,14 +18,26 @@
 	<string name="string_fulltextsearchActivity_title">Search</string>
 	<string name="string_loadtrackActivity_title">Load track</string>
 	<string name="string_newtrackActivity_title">New track</string>
+	<string name="string_newtrackactivity_list_lat">Lat: </string>
+	<string name="string_newtrackactivity_list_lon">Lon:</string>
+	<string name="string_newtrackactivity_list_media">Media files: </string>
+	<string name="string_newtrackactivity_list_pointcount">Number of nodes:</string>
+	<string name="string_newtrackactivity_list_start">Start</string>
+	<string name="string_newtrackactivity_list_end">End</string>
 	<string name="string_preferencesActivity_title">Preferences</string>
 	<string name="string_startActivity_title">TraceBook</string>
 	<string name="string_recordvideoActivity_title">Record video</string>
-        <string name="string_searchInfoDialog_title">Metadata information</string>
-        <string name="string_statusDialog_here">You are here</string>
+	<string name="string_searchInfoDialog_title">Meta data information</string>
+	<string name="string_statusDialog_here">You are here.</string>
+	
 
 	<!-- App values -->
 	<string name="app_name">TraceBook</string>
+	
+	<!-- Notification values -->
+	<string name="not_startActivity_tickerText">Tracking active</string>
+	<string name="not_startActivity_contentTitle">TraceBook</string>
+	<string name="not_startActivity_contentText">Tracking. Current position: </string>
 
 	<!-- TextViews values -->
 	<string name="tv_startActivity_welcome">Welcome to TraceBook</string>
@@ -59,13 +76,32 @@
 		Benjamin Valentin - benpicco@googlemail.com\n
 		Şahin Vardar - sakirsoft@gmail.com 	
 	</string>
+	<string name="tv_aboutActivity_usedResourcesTitle">Resources: </string>
+	<string name="tv_aboutActivity_usedResources"></string>
+	<string name="tv_aboutActivity_projectPage">https://code.google.com/p/swp-dv-ws2010-osm-1</string>
 	<string name="tv_aboutActivity_licenseTitle">License:</string>
 	<string name="tv_aboutActivity_license">This application is licensed under the GNU GPL3
 	</string>
 	<string name="tv_aboutActivity_versionTitle">Version:</string>
 	<string name="tv_aboutActivity_version">0.90 beta</string>
 	<string name="tv_listviewedit_idTitle">Id: </string>
-	<string name="btn_startActivity_reseumeTrack">Resume track</string>
+	<string name="tv_loadtrackActivity_filter">Filter:</string>
+	<string name="tv_newtrackactivity_signalstrength_strength">GPS reception: </string>
+	<string name="tv_newtrackactivity_signalstrength_count">Number of satellites: </string>
+	<string name="tv_searchInfoDialog_noInformation">No information available.</string>
+	<string name="tv_searchInfoDialog_urlTitle">URI to wiki:</string>
+	<string name="tv_statusbar_addpointTitle">Add point of interest</string>
+	<string name="tv_statusbar_addpointDesc">Add tags and media files here.
+	</string>
+	<string name="tv_statusbar_addpointmetaTitle">Add meta information</string>
+	<string name="tv_statusbar_addpointmetaDesc">Add tags and media files here.
+	</string>
+	<string name="tv_statusbar_fulltextsearchTitle">Search tags</string>
+	<string name="tv_statusbar_fulltextsearchDesc">Search for existing tags in OSM.</string>
+	<string name="tv_statusbar_aboutTitle">About TraceBook</string>
+	<string name="tv_statusbar_aboutDesc"></string>
+	<string name="tv_statusbar_loadtrackTitle">Load track</string>
+	<string name="tv_statusbar_loadtrackDesc">Resume your saved tracks here.</string>
 
 	<!-- Edit Text values -->
 	<string name="et_fulltextsearchActivity_search">Searching...</string>
@@ -74,19 +110,19 @@
 	<string name="toast_noTrackFound">Track could not be found.</string>
 
 	<!-- AlertBox values -->
+	<string name="alert_addmemoactivity_progressdialog">Please wait...\nRecording is starting soon...</string>
 	<string name="alert_global_cancel">Cancel</string>
 	<string name="alert_global_ok">Ok</string>
 	<string name="alert_global_yes">Yes</string>
 	<string name="alert_global_no">No</string>
 	<string name="alert_global_addNotice">Add note</string>
 	<string name="alert_global_addedNotice">Added note:</string>
-	<string name="alert_global_exit">Do you want to end the current session and save
-		your progress?</string>
+	<string name="alert_global_exit">Do you want to end the current session and save your progress?</string>
+	<string name="alert_global_trackName">Track:</string>
 	<string name="alert_mapsforgeActivity_pause">Do you want to pause the current session?</string>
 	<string name="alert_newtrackActivity_rename">Rename node</string>
-	<string name="alert_newtrackActivity_setTrackName">Please provide a name for the track</string>
-	<string name="alert_newtrackActivity_trackName">Your track:</string>
 	<string name="alert_newtrackActivity_addTrackNotice">Add note to track</string>
+	<string name="alert_newtrackActivity_saveSetTrack">Closing track</string>
 	<string name="alert_loadtrackActivity_rename">Rename track</string>
 	<string name="alert_loadtrackActivity_deleteTrack">Delete track?</string>
 	<string name="alert_aboutActivity_pleaseWait">Please wait...</string>
@@ -95,6 +131,8 @@
 	<!-- Optionmenu values -->
 	<string name="opt_startActivity_preferences">Preferences</string>
 	<string name="opt_startActivity_close">Close</string>
+	<string name="opt_loadtrack_sortByTimestamp">Sort by time</string>
+	<string name="opt_loadtrack_sortByName">Sort by name</string>
 	<string name="opt_mapsforgeActivity_centerAtOwnPosition">My location</string>
 	<string name="opt_mapsforgeActivity_activateMobileInternet">Online map</string>
 	<string name="opt_mapsforgeActivity_deactivateMobileInternet">Offline map</string>
@@ -111,7 +149,8 @@
 
 	<!-- Contextmenu values -->
 	<string name="cm_addpointActivity_deleteTag">Delete tag</string>
-	<string name="cm_addpointActivity_renameTag">Edit tag</string>
+	<string name="cm_addpointActivity_renameTag">Rename tag</string>
+	<string name="cm_addpointActivity_title">Edit tag</string>
 	<string name="cm_mapsforgeActivity_deletePoint">Delete point</string>
 	<string name="cm_mapsforgeActivity_editPoint">Edit point</string>
 	<string name="cm_mapsforgeActivity_movePoint">Move point</string>
@@ -119,8 +158,10 @@
 	<string name="cm_loadtrackActivity_rename">Rename track</string>
 	<string name="cm_loadtrackActivity_delete">Delete track</string>
 	<string name="cm_loadtrackActivity_info">Show details</string>
+	<string name="cm_loadtrackActivity_title">Track actions</string>
 	<string name="cm_editmapobjects_edit">Edit</string>
 	<string name="cm_editmapobjects_delete">Delete</string>
+	<string name="cm_editmapobjects_title">Edit map object</string>
 
 	<string name="cm_DataNodeArrayItemizedOverlay_tag">Tag this</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
@@ -160,4 +201,6 @@
 	<string name="btn_trackInfoDialog_back">Back</string>
 	<string name="btn_aboutActivity_license">Show license</string>
 	<string name="btn_addpointmetaActivity_search">Search</string>
+	<string name="btn_searchInfoDialog_save">Apply</string>
+	<string name="btn_startActivity_reseumeTrack">Resume track</string>
 </resources>
