@@ -40,7 +40,7 @@ do
         mksort "$NEWFILE" "$NEWTMP"
 
         echo "For $NEWFILE:"
-        diff -w -U 0 "$NEWTMP" "$BASETMP" | grep -v '\-\-\-' | grep -v '+++' | grep ^\[+-\]
+        diff -w -U 0 "$NEWTMP" "$BASETMP" | grep -v '\-\-\-' | grep -v '+++' | grep ^\[+-\] | sed -e 's/^-/OBSOLETE: /g' -e 's/^+/MISSING:  /g'
         echo
 
         rm -f $NEWTMP
