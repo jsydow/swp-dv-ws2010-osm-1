@@ -35,9 +35,9 @@ The DTD for our XML files looks like this:
                 v CDATA #REQUIRED>
         <!ELEMENT value (uri|img|description|useful)*>
         <!ATTLIST value
-                isArea CDATA #REQUIRED
-                isNode CDATA #REQUIRED
-                isWay CDATA #REQUIRED
+                area CDATA #REQUIRED
+                node CDATA #REQUIRED
+                way CDATA #REQUIRED
                 type CDATA #REQUIRED
                 v CDATA #REQUIRED>
         <!ELEMENT uri (#PCDATA)>
