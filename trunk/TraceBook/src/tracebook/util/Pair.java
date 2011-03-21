@@ -19,46 +19,6 @@ public class Pair<A, B> {
      */
     B second;
 
-    // I hate you, Checkstyle, I hate you.
-
-    /**
-     * Gets the first element.
-     * 
-     * @return the first element
-     */
-    public A getFirst() {
-        return first;
-    }
-
-    /**
-     * Sets the first element.
-     * 
-     * @param first
-     *            the first element
-     */
-    public void setFirst(A first) {
-        this.first = first;
-    }
-
-    /**
-     * Gets the second element.
-     * 
-     * @return the second element
-     */
-    public B getSecond() {
-        return second;
-    }
-
-    /**
-     * Sets the second element.
-     * 
-     * @param second
-     *            the first element
-     */
-    public void setSecond(B second) {
-        this.second = second;
-    }
-
     /**
      * Creates a new Pair.
      * 
