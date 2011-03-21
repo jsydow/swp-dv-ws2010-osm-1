@@ -242,7 +242,7 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.opt_mapsforgeActivity_showToggleWayPoints:
 
-            routesOverlay.toggleGnubbel();
+            routesOverlay.toggleWaypoints();
             return true;
         case R.id.opt_mapsforgeActivity_export:
             /*
