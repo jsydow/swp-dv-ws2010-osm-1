@@ -1,6 +1,5 @@
 package tracebook.gui.activity;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,17 +27,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 /**
  * The Class LoadTrackActivity list all saved Track in a list view. With a
@@ -50,16 +49,22 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 public class LoadTrackActivity extends ListActivity {
 
     /**
+     * List of loaded TrackInfo.
+     */
+    protected final List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
+
+    /**
      * GenericAdapter for our ListView which we use in this activity.
      */
     GenericAdapter adapter;
 
     /**
-     * 
+     * Should the list be sorted by name? If not then the list is sorted by
+     * time.
      */
     boolean sortByName = true;
     /**
-     * 
+     * The text that is in the search text box.
      */
     String searchText = "";
 
@@ -79,9 +84,9 @@ public class LoadTrackActivity extends ListActivity {
         setTextChangedListenerToSearchBox(checkEditText());
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_loadtrackTitle), getResources()
-                .getString(R.string.tv_statusbar_loadtrackDesc),
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
+                getResources().getString(R.string.tv_statusbar_loadtrackDesc),
                 R.id.ly_loadtrackActivity_statusbar, true);
 
     }
@@ -155,9 +160,9 @@ public class LoadTrackActivity extends ListActivity {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                 .getMenuInfo();
 
-        GenericAdapterData data = adapter.getItem((int) info.id);
+        GenericAdapterData datum = adapter.getItem((int) info.id);
 
-        final String trackname = data.getText("TrackName");
+        final String trackname = datum.getText("TrackName");
 
         switch (item.getItemId()) {
         case R.id.cm_loadtrackActivity_load:
@@ -170,9 +175,8 @@ public class LoadTrackActivity extends ListActivity {
             } else {
                 Log.e("RenameTrack",
                         "Track to load was not found or is corrupt.");
-                LogIt
-                        .popup(this,
-                                "Track to load could not be opened. Missing or corrupt.");
+                LogIt.popup(this,
+                        "Track to load could not be opened. Missing or corrupt.");
             }
 
             return true;
@@ -184,8 +188,8 @@ public class LoadTrackActivity extends ListActivity {
             alert.setView(input);
             alert.setTitle(getResources().getString(
                     R.string.alert_loadtrackActivity_rename));
-            alert.setPositiveButton(getResources().getString(
-                    R.string.alert_global_ok),
+            alert.setPositiveButton(
+                    getResources().getString(R.string.alert_global_ok),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                 int whichButton) {
@@ -196,14 +200,12 @@ public class LoadTrackActivity extends ListActivity {
                             case 0:
                                 break;
                             case -1:
-                                Log
-                                        .e("RenameTrack",
-                                                "Track to rename was not found or is corrupt.");
+                                Log.e("RenameTrack",
+                                        "Track to rename was not found or is corrupt.");
                                 break;
                             case -2:
-                                Log
-                                        .e("RenameTrack",
-                                                "There is already a track with this name.");
+                                Log.e("RenameTrack",
+                                        "There is already a track with this name.");
                                 break;
                             case -3:
                                 Log.e("RenameTrack",
@@ -218,8 +220,8 @@ public class LoadTrackActivity extends ListActivity {
                         }
                     });
 
-            alert.setNegativeButton(getResources().getString(
-                    R.string.alert_global_cancel),
+            alert.setNegativeButton(
+                    getResources().getString(R.string.alert_global_cancel),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                 int whichButton) {
@@ -283,11 +285,9 @@ public class LoadTrackActivity extends ListActivity {
             return true;
         case R.id.cm_loadtrackActivity_delete:
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder
-                    .setMessage(
-                            getResources()
-                                    .getString(
-                                            R.string.alert_loadtrackActivity_deleteTrack))
+            builder.setMessage(
+                    getResources().getString(
+                            R.string.alert_loadtrackActivity_deleteTrack))
                     .setCancelable(false)
                     .setPositiveButton(
                             getResources().getString(R.string.alert_global_yes),
@@ -299,7 +299,8 @@ public class LoadTrackActivity extends ListActivity {
                                     updateAdapter();
 
                                 }
-                            }).setNegativeButton(
+                            })
+                    .setNegativeButton(
                             getResources().getString(R.string.alert_global_no),
                             new DialogInterface.OnClickListener() {
 
@@ -369,7 +370,8 @@ public class LoadTrackActivity extends ListActivity {
         builder.setMessage(
                 getResources().getString(
                         R.string.alert_loadtrackActivity_deleteTrack))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         getResources().getString(R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -377,7 +379,8 @@ public class LoadTrackActivity extends ListActivity {
                                 Log.d("DEBUG", "delete " + trname);
                                 // updateAdapter();
                             }
-                        }).setNegativeButton(
+                        })
+                .setNegativeButton(
                         getResources().getString(R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
 
@@ -390,7 +393,7 @@ public class LoadTrackActivity extends ListActivity {
     }
 
     /**
-     * 
+     * Updates the list.
      */
     void updateAdapter() {
         final Activity thisActivity = this;
@@ -399,14 +402,11 @@ public class LoadTrackActivity extends ListActivity {
             public void run() {
                 GenericItemDescription desc = new GenericItemDescription();
 
-                desc
-                        .addResourceId("TrackName",
-                                R.id.tv_listviewloadtrack_track);
+                desc.addResourceId("TrackName", R.id.tv_listviewloadtrack_track);
                 desc.addResourceId("TrackComment",
                         R.id.tv_listviewloadtrack_comment);
                 desc.setNameTag("TrackName");
                 String comment = null;
-                final List<GenericAdapterData> data = new ArrayList<GenericAdapterData>();
                 DataStorage.getInstance().unloadAllTracks();
 
                 // get all TrackInfo-objects
@@ -490,8 +490,8 @@ public class LoadTrackActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
-        GenericAdapterData data = adapter.getItem(position);
-        final String trackname = data.getText("TrackName");
+        GenericAdapterData datum = adapter.getItem(position);
+        final String trackname = datum.getText("TrackName");
         DataTrack track = DataStorage.getInstance().deserialiseTrack(trackname);
         if (track != null) {
             DataStorage.getInstance().setCurrentTrack(track);
@@ -523,9 +523,9 @@ public class LoadTrackActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_loadtrackTitle), getResources()
-                .getString(R.string.tv_statusbar_loadtrackDesc));
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
+                getResources().getString(R.string.tv_statusbar_loadtrackDesc));
     }
 
     /**
