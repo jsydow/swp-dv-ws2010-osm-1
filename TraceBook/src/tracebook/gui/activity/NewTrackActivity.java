@@ -605,8 +605,6 @@ public class NewTrackActivity extends TabActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Helper.startUserNotification(this, R.drawable.ic_notification,
-                NewTrackActivity.class);
         initListView();
         setGpsStatus();
         /* setGpsStatus(); */
