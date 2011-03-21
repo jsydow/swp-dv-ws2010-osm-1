@@ -128,9 +128,7 @@ public class LoadTrackActivity extends ListActivity {
                     int count) {
                 if (s.toString() != null) {
                     searchText = s.toString();
-                    if (adapter != null) {
-                        adapter.getFilter().filter(searchText);
-                    }
+                    textSearchUpdate();
                 }
             }
 
@@ -396,7 +394,7 @@ public class LoadTrackActivity extends ListActivity {
      * Updates the list.
      */
     void updateAdapter() {
-        final Activity thisActivity = this;
+        final LoadTrackActivity thisActivity = this;
         (new Thread() {
             @Override
             public void run() {
@@ -467,21 +465,46 @@ public class LoadTrackActivity extends ListActivity {
 
                 }
 
-                thisActivity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        adapter = new GenericAdapter(thisActivity,
-                                R.layout.listview_loadtrack, R.id.list, data);
-                        adapter.getFilter().filter(searchText);
-
-                        setListAdapter(adapter);
-
-                        getListView().setTextFilterEnabled(true);
-
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+                thisActivity.fillAdapter(data);
             }
         }).start();
+    }
+
+    /**
+     * Fills the adapter with the data that are stored in datalist.
+     * 
+     * @param datalist
+     *            The data used for filling the adapter.
+     */
+    protected void fillAdapter(final List<GenericAdapterData> datalist) {
+        final Activity thisActivity = this;
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                adapter = new GenericAdapter(thisActivity,
+                        R.layout.listview_loadtrack, R.id.list, datalist);
+
+                setListAdapter(adapter);
+
+                getListView().setTextFilterEnabled(true);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * If search text changes this method updates the list.
+     */
+    protected void textSearchUpdate() {
+        if (searchText != null && searchText.length() > 0) {
+            List<GenericAdapterData> datalist = new ArrayList<GenericAdapterData>();
+            for (GenericAdapterData gda : data) {
+                if (gda.getText("TrackName").contains(searchText)) {
+                    datalist.add(gda);
+                }
+            }
+            fillAdapter(datalist);
+        }
     }
 
     /**

@@ -59,7 +59,7 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
         }
 
         GenericAdapterData data = super.getItem(position);
-        data.fillView(convertView);
+        data.fillView(inflatedView);
 
         return inflatedView;
     }
