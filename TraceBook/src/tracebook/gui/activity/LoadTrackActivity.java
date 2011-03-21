@@ -441,6 +441,7 @@ public class LoadTrackActivity extends ListActivity {
                 }
 
                 // fill adapter
+                data.clear();
                 for (DataTrackInfo trackinfo : trackInfos) {
                     GenericAdapterData dataItem = new GenericAdapterData(desc);
                     dataItem.setText("TrackName", trackinfo.getName());
