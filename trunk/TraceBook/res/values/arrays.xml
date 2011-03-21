@@ -17,10 +17,10 @@
 		<item>60</item>
 	</string-array>
 	<string-array name="stopTrackingAfter">
-		<item>2 Minuten</item>
-		<item>5 Minuten</item>
-		<item>10 Minuten</item>
-		<item>Nie</item>
+		<item>2 minutes</item>
+		<item>5 minutes</item>
+		<item>10 minutes</item>
+		<item>Never</item>
 	</string-array>
 	<string-array name="stopTrackingAfter_values">
 		<item>2</item>
@@ -55,7 +55,7 @@
 		<item>30</item>
 		<item>40</item>
 		<item>50</item>
-		<item>keine Grenze</item>
+		<item>Unlimited</item>
 	</string-array>
 	<string-array name="maxHistorySize_values">
 		<item>20</item>
@@ -65,11 +65,11 @@
 		<item>0</item>
 	</string-array>
 	<string-array name="setMaxAudioRecordingTime">
-		<item>1 Minute</item>
-		<item>2 Minute</item>
-		<item>5 Minute</item>
-		<item>10 Minute</item>
-		<item>keine Grenze</item>
+		<item>1 minute</item>
+		<item>2 minutes</item>
+		<item>5 minutes</item>
+		<item>10 minutes</item>
+		<item>Unlimited</item>
 	</string-array>
 	<string-array name="setMaxAudioRecordingTime_values">
 		<item>1</item>
@@ -79,11 +79,11 @@
 		<item>0</item>
 	</string-array>
 	<string-array name="setMaxVideoRecordingTime">
-		<item>1 Minute</item>
-		<item>2 Minute</item>
-		<item>5 Minute</item>
-		<item>10 Minute</item>
-		<item>keine Grenze</item>
+		<item>1 minute</item>
+		<item>2 minutes</item>
+		<item>5 minutes</item>
+		<item>10 minutes</item>
+		<item>Unlimited</item>
 	</string-array>
 	<string-array name="setMaxVideoRecordingTime_values">
 		<item>1</item>
@@ -92,6 +92,4 @@
 		<item>10</item>
 		<item>0</item>
 	</string-array>
-
-
 </resources>
