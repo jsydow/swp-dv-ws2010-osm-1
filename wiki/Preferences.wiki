@@ -3,7 +3,7 @@
 = GPS =
   * requestLocationUpdates parameters (minimum distance/time until next location) (Array)
   * Check GPS by start (Checkbox) - android:key="check_GPSbyStartTracking" , android:defaultValue="true"
-  * Stop GPS signal while inactiv after seconds/minutes (Array) android:key="lst_stopGPSafterSeconds" , android:defaultValue="10"
+  * Stop GPS signal while inactiv after seconds/minutes (Array) -  android:key="lst_stopGPSafterSeconds" , android:defaultValue="10"
 
 = Map view =
   * Colors for several item groups (ways, areas, POIs) (Colorpicker)
@@ -19,7 +19,7 @@
   * Accountpassword (Edittext)
 
 = UI =
-  * Statusbar Visible / Invisible (Checkbox) android:key="check_visbilityStatusbar" , android:defaultValue="false"
+  * Statusbar Visible / Invisible (Checkbox) - android:key="check_visbilityStatusbar" , android:defaultValue="false"
   * Themes (Array)
   * Display always on (Checkbox)
   * Show GPS signal quality (Checkbox)
