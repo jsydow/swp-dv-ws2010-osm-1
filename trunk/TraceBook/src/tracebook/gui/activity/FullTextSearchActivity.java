@@ -26,7 +26,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * TODO: Javadoc.
+ * The FullTextSearchActivity deals with a full text search on the description
+ * of tags. You will get a list of tags and their description and can choose it
+ * and the tag and key will set in the previous activity.
+ * 
+ * The activity set a custom TextWatcher class to listen on input changes. As
+ * soon as the user is tipping something it will be recognized and a new
+ * SearchThread will be started. Right now threads are careering sequencenumbers
+ * for their search result to avoid older threads form overwriting result of new
+ * threads.
+ * 
+ * @author sahin
+ * 
  */
 public class FullTextSearchActivity extends ListActivity {
 
@@ -62,7 +73,7 @@ public class FullTextSearchActivity extends ListActivity {
         /**
          * 
          * The constructor takes different references to perform the search task
-         * and to tell the GUI to update its content.
+         * and to tell the gui to update its content.
          * 
          * @param act
          *            Reference to the FullTextSearchActivity
@@ -110,20 +121,20 @@ public class FullTextSearchActivity extends ListActivity {
             this.act = act;
         }
 
-        public void afterTextChanged(Editable s) {
+        public void afterTextChanged(Editable arg0) {
             // TODO Auto-generated method stub
 
         }
 
-        public void beforeTextChanged(CharSequence s, int start, int count,
-                int after) {
+        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                int arg3) {
             // TODO Auto-generated method stub
 
         }
 
-        public void onTextChanged(CharSequence s, int start, int before,
-                int count) {
-            final String searchText = s.toString();
+        public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                int arg3) {
+            final String searchText = arg0.toString();
             new SearchThread(act, act.increaseIndex(), searchText).start();
         }
     }
@@ -135,9 +146,12 @@ public class FullTextSearchActivity extends ListActivity {
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_fulltextsearchTitle), getResources()
-                .getString(R.string.tv_statusbar_fulltextsearchDesc),
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
@@ -310,9 +324,12 @@ public class FullTextSearchActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_fulltextsearchTitle), getResources()
-                .getString(R.string.tv_statusbar_fulltextsearchDesc));
+        Helper.setActivityInfoDialog(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc));
     }
 
     /**
