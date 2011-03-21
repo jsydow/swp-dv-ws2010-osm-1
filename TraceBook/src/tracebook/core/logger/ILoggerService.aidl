@@ -3,24 +3,9 @@ package tracebook.core.logger;
 interface ILoggerService {
 
 	/**
-	 * @param param GPS parameters
-	 * @param do_one_shot start the track in one_shot mode/add current point
-	 * @return ID of the new track
-	 * 
-	 * This will start logging of a new GPS track. In one_shot mode
-	 * logging is disabled after recording one point, each call to
-	 * this function will add the current position to the track, in
-	 * continuous (default) mode, gps data will be logged in the interval
-	 * specified in param and all so obtained points are automatically added
-	 * to the track.
+	 * Starts a new {@link DataTrack}. 
 	 */
-	void addTrackWithGpsParams(int dTime, int dDistance);
-	
-	/**
-	*
-	*
-	*/
-	void addTrack(); 
+	void startTrack(); 
 	
 	/**
 	* @return id of the track
@@ -45,17 +30,29 @@ interface ILoggerService {
 	int createPOI(boolean on_way);
 	
 	/**
-	* Tells the service to begin a new way and to add way points to it.
-	*/	
-	int beginWayA(boolean oneShotMode, boolean isArea);
+	 * Starts a new area.
+	 * If oneShotMode is true, points are only added when calling beginArea() again, otherwise all gps fixes
+	 * will be added to the way automatically.
+	 * 
+	 *  @param oneShotMode Start a way in oneShotMode or add a Point to the way when there is already a way started
+	 *  
+	 *  @return the ID of the new area
+	 */
+	int beginArea(boolean oneShotMode);
 	
 	/**
-	 * Starts a new way 
+	 * Starts a new way.
+	 * If oneShotMode is true, points are only added when calling beginWay() again, otherwise all gps fixes
+	 * will be added to the way automatically.
+	 * 
+	 *  @param oneShotMode Start a way in oneShotMode or add a Point to the way when there is already a way started
+	 *  
+	 *  @return the ID of the new way
 	 */
 	int beginWay(boolean oneShotMode);
 	
 	/**
-	* Tells the service to end way point adding the a way 
+	* Stops the current way or area.
 	*/
 	int endWay();
 	

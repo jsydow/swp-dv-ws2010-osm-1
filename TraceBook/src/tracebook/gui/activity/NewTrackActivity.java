@@ -442,7 +442,7 @@ public class NewTrackActivity extends TabActivity {
             streetToggle.setClickable(false);
             setButtonList(true, 2);
             try {
-                ServiceConnector.getLoggerService().beginWayA(false, true);
+                ServiceConnector.getLoggerService().beginArea(false);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

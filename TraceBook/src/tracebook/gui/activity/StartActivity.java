@@ -1,6 +1,5 @@
 package tracebook.gui.activity;
 
-
 import java.io.File;
 
 import tracebook.core.data.db.TagDb;
@@ -90,7 +89,7 @@ public class StartActivity extends Activity {
 
         if (Helper.currentTrack() == null)
             try {
-                ServiceConnector.getLoggerService().addTrack();
+                ServiceConnector.getLoggerService().startTrack();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
