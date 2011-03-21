@@ -108,6 +108,7 @@
 
 	<!-- Toast values -->
 	<string name="toast_noTrackFound">Track could not be found.</string>
+	<string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from Internet.</string>
 
 	<!-- AlertBox values -->
 	<string name="alert_addmemoactivity_progressdialog">Please wait...\nRecording is starting soon...</string>
