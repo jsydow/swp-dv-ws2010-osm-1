@@ -13,9 +13,6 @@ import android.widget.ArrayAdapter;
  * ArrayAdapter classes. You can use it for all of you custom ListView layouts.
  * It needs a layoutInflater and a reference to a list of GenericAdapterData.
  * Each element in the list describes one element in a list view.
- * 
- * 
- * 
  */
 public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
 
@@ -28,7 +25,6 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
     /**
      * A reference to a layoutInflater which will be used to inflate the custom
      * view for an item in the list view.
-     * 
      */
     LayoutInflater layoutInflater;
 

@@ -35,9 +35,6 @@ import core.logger.ServiceConnector;
 
 /**
  * general helper class to feature some useful functions.
- * 
- * 
- * 
  */
 public final class Helper {
     private Helper() { // do nothing - why checkstyle, why?!
@@ -145,10 +142,11 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        Toast.makeText(
-                context,
-                "An error occured. Please restart the application and try again.",
-                Toast.LENGTH_LONG).show();
+        Toast
+                .makeText(
+                        context,
+                        "An error occured. Please restart the application and try again.",
+                        Toast.LENGTH_LONG).show();
         Log.e(logTag, ex.getMessage());
     }
 
@@ -335,9 +333,8 @@ public final class Helper {
                     if (calibrate) {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
-                    } else if (calculateArea(firstNode.toGeoPoint(),
-                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
-                            * weight
+                    } else if (calculateArea(firstNode.toGeoPoint(), pending
+                            .toGeoPoint(), n.toGeoPoint()) < threshold * weight
                             && !n.hasAdditionalInfo() && iter.hasNext())
                         iter.remove();
                     firstNode = pending;
@@ -370,8 +367,7 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -386,16 +382,20 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                Toast.makeText(
-                                        activity.getApplicationContext(),
-                                        activity.getResources()
-                                                .getString(
-                                                        R.string.alert_global_trackName)
-                                                + " "
-                                                + DataStorage.getInstance()
-                                                        .getCurrentTrack()
-                                                        .getName(),
-                                        Toast.LENGTH_SHORT).show();
+                                Toast
+                                        .makeText(
+                                                activity
+                                                        .getApplicationContext(),
+                                                activity
+                                                        .getResources()
+                                                        .getString(
+                                                                R.string.alert_global_trackName)
+                                                        + " "
+                                                        + DataStorage
+                                                                .getInstance()
+                                                                .getCurrentTrack()
+                                                                .getName(),
+                                                Toast.LENGTH_SHORT).show();
 
                                 // stop logging
                                 try {
@@ -408,8 +408,7 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        })
-                .setNegativeButton(
+                        }).setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {

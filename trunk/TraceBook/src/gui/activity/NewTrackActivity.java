@@ -24,22 +24,22 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TabHost.OnTabChangeListener;
 import core.data.DataNode;
 import core.data.DataPointsList;
 import core.data.DataStorage;
@@ -55,10 +55,6 @@ import core.media.Recorder;
  * way. The second one is the main tab where you can set the your POI's, ways
  * and areas. In the third one you can choose your collected, add new tags,
  * remove tags remove POIs etc.
- * 
- * 
- * 
- * 
  */
 public class NewTrackActivity extends TabActivity {
 
@@ -280,21 +276,17 @@ public class NewTrackActivity extends TabActivity {
             GenericAdapterData item = new GenericAdapterData(desc);
 
             item.setText("NodeId", "" + dn.getId());
-            item.setText(
-                    "NodeCoord",
-                    getResources().getString(
-                            R.string.string_newtrackactivity_list_lat)
-                            + nf.format(dn.getLat())
-                            + getResources().getString(
-                                    R.string.string_newtrackactivity_list_lon)
-                            + nf.format(dn.getLon()));
+            item.setText("NodeCoord", getResources().getString(
+                    R.string.string_newtrackactivity_list_lat)
+                    + nf.format(dn.getLat())
+                    + getResources().getString(
+                            R.string.string_newtrackactivity_list_lon)
+                    + nf.format(dn.getLon()));
 
             item.setImage("NodeImg", R.drawable.node_icon);
-            item.setText(
-                    "NodeStats",
-                    getResources().getString(
-                            R.string.string_newtrackactivity_list_media)
-                            + dn.getMedia().size());
+            item.setText("NodeStats", getResources().getString(
+                    R.string.string_newtrackactivity_list_media)
+                    + dn.getMedia().size());
 
             listData.add(item);
         }
@@ -317,33 +309,25 @@ public class NewTrackActivity extends TabActivity {
                                 R.string.string_newtrackactivity_list_lon) + nf
                         .format(end.getLon()));
 
-                item.setText(
-                        "NodeCoord",
-                        getResources().getString(
-                                R.string.string_newtrackactivity_list_start)
-                                + getResources()
-                                        .getString(
-                                                R.string.string_newtrackactivity_list_lat)
-                                + nf.format(start.getLat())
-                                + " "
-                                + getResources()
-                                        .getString(
-                                                R.string.string_newtrackactivity_list_lon)
-                                + nf.format(start.getLon()) + endCoord);
+                item.setText("NodeCoord", getResources().getString(
+                        R.string.string_newtrackactivity_list_start)
+                        + getResources().getString(
+                                R.string.string_newtrackactivity_list_lat)
+                        + nf.format(start.getLat())
+                        + " "
+                        + getResources().getString(
+                                R.string.string_newtrackactivity_list_lon)
+                        + nf.format(start.getLon()) + endCoord);
             }
 
             item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
                     : R.drawable.way_icon);
-            item.setText(
-                    "NodeStats",
-                    getResources().getString(
-                            R.string.string_newtrackactivity_list_media)
-                            + dn.getMedia().size());
-            item.setText(
-                    "WayPOIs",
-                    getResources().getString(
-                            R.string.string_newtrackactivity_list_media)
-                            + dn.getNodes().size());
+            item.setText("NodeStats", getResources().getString(
+                    R.string.string_newtrackactivity_list_media)
+                    + dn.getMedia().size());
+            item.setText("WayPOIs", getResources().getString(
+                    R.string.string_newtrackactivity_list_media)
+                    + dn.getNodes().size());
             listData.add(item);
 
         }
@@ -376,24 +360,15 @@ public class NewTrackActivity extends TabActivity {
         TabHost tabHost = getTabHost();
 
         // Init TabHost
-        tabHost.addTab(tabHost
-                .newTabSpec("map_tab")
-                .setIndicator(
-                        getResources().getString(
-                                R.string.tab_newtrackActivity_map))
+        tabHost.addTab(tabHost.newTabSpec("map_tab").setIndicator(
+                getResources().getString(R.string.tab_newtrackActivity_map))
                 .setContent(new Intent(this, MapsForgeActivity.class)));
         // new Intent(this, MapsForgeActivity.class))
-        tabHost.addTab(tabHost
-                .newTabSpec("new_tab")
-                .setIndicator(
-                        getResources().getString(
-                                R.string.tab_newtrackActivity_new))
+        tabHost.addTab(tabHost.newTabSpec("new_tab").setIndicator(
+                getResources().getString(R.string.tab_newtrackActivity_new))
                 .setContent(R.id.tab_newtrackActivity_new));
-        tabHost.addTab(tabHost
-                .newTabSpec("edit_tab")
-                .setIndicator(
-                        getResources().getString(
-                                R.string.tab_newtrackActivity_edit))
+        tabHost.addTab(tabHost.newTabSpec("edit_tab").setIndicator(
+                getResources().getString(R.string.tab_newtrackActivity_edit))
                 .setContent(R.id.tab_newtrackactivity_edit));
 
         // set the default tap to our MapTab
@@ -511,8 +486,8 @@ public class NewTrackActivity extends TabActivity {
         alert.setView(input);
         alert.setTitle(getResources().getString(
                 R.string.alert_newtrackActivity_addTrackNotice));
-        alert.setPositiveButton(
-                getResources().getString(R.string.alert_global_ok),
+        alert.setPositiveButton(getResources().getString(
+                R.string.alert_global_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString().trim();
@@ -522,8 +497,8 @@ public class NewTrackActivity extends TabActivity {
                     }
                 });
 
-        alert.setNegativeButton(
-                getResources().getString(R.string.alert_global_cancel),
+        alert.setNegativeButton(getResources().getString(
+                R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();
@@ -572,27 +547,24 @@ public class NewTrackActivity extends TabActivity {
         alert.setView(input);
         alert.setTitle(getResources()
                 .getString(R.string.alert_global_addNotice));
-        alert.setPositiveButton(
-                getResources().getString(R.string.alert_global_ok),
+        alert.setPositiveButton(getResources().getString(
+                R.string.alert_global_ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString().trim();
 
-                        DataStorage
-                                .getInstance()
-                                .getCurrentTrack()
-                                .getCurrentWay()
-                                .addMedia(
+                        DataStorage.getInstance().getCurrentTrack()
+                                .getCurrentWay().addMedia(
                                         DataStorage.getInstance()
-                                                .getCurrentTrack()
-                                                .saveText(value));
+                                                .getCurrentTrack().saveText(
+                                                        value));
                         LogIt.popup(getApplicationContext(), getResources()
                                 .getString(R.string.alert_global_addedNotice));
                     }
                 });
 
-        alert.setNegativeButton(
-                getResources().getString(R.string.alert_global_cancel),
+        alert.setNegativeButton(getResources().getString(
+                R.string.alert_global_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.cancel();

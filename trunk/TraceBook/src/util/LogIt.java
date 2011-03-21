@@ -11,9 +11,6 @@ import core.data.DataStorage;
 
 /**
  * 
- * 
- * @author js
- * 
  */
 public final class LogIt {
     private LogIt instance;

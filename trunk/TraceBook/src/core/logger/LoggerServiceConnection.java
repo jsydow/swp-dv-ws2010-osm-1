@@ -6,9 +6,6 @@ import android.os.IBinder;
 
 /**
  * Stub for RPC communication with the logger Service.
- * 
- *
- * 
  */
 public class LoggerServiceConnection implements ServiceConnection {
 
