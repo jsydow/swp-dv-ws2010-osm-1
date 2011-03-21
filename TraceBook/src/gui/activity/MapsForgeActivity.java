@@ -35,7 +35,6 @@ import core.logger.ServiceConnector;
  * This class implements a MapsForge Map activity and draws ways and nodes as
  * overlays on it. In the future it will also be possible to modify said nodes
  * and ways.
- * 
  */
 public class MapsForgeActivity extends MapActivity {
     private static final String LOG_TAG = "MapsForgeActivity";
@@ -83,8 +82,9 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt.popup(this,
-                        "Unable to open map file, fetching tiles from Internet.");
+                LogIt
+                        .popup(this,
+                                "Unable to open map file, fetching tiles from Internet.");
                 modeLocal = onlineRenderer;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
@@ -184,8 +184,8 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.updateItem(projection, editNode.getId(), 0);
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                Log.d(LOG_TAG,
-                        "Exiting edit mode for point " + editNode.getId());
+                Log.d(LOG_TAG, "Exiting edit mode for point "
+                        + editNode.getId());
                 editNode = null;
             }
 
@@ -196,7 +196,6 @@ public class MapsForgeActivity extends MapActivity {
 
     /**
      * This method inflate the options menu for this activity.
-     * 
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -227,9 +226,10 @@ public class MapsForgeActivity extends MapActivity {
                         R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item.setTitle(getResources()
-                        .getString(
-                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
+                item
+                        .setTitle(getResources()
+                                .getString(
+                                        R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(onlineRenderer, null);
             }
             useInternet = !useInternet;
@@ -280,9 +280,6 @@ public class MapsForgeActivity extends MapActivity {
      * This class receives Broadcast Messages from the WaypointLogService in
      * order to update the current location and overlays if position or overlay
      * data has changed.
-     * 
-     * 
-     * 
      */
     private class GPSReceiver extends BroadcastReceiver {
 
@@ -325,10 +322,9 @@ public class MapsForgeActivity extends MapActivity {
                 final double lat = intend.getExtras().getDouble("lat");
 
                 currentGeoPoint = new GeoPoint(lat, lng); // we also need this
-                                                          // to center the map
-                Log.d(LOG_TAG,
-                        "Location update received "
-                                + currentGeoPoint.toString());
+                // to center the map
+                Log.d(LOG_TAG, "Location update received "
+                        + currentGeoPoint.toString());
 
                 pointsOverlay.setCurrentPosition(currentGeoPoint);
 
@@ -352,8 +348,9 @@ public class MapsForgeActivity extends MapActivity {
             // Receive an update of a way and update the overlay accordingly
             case GpsMessage.UPDATE_OBJECT:
                 if (Helper.currentTrack() == null) {
-                    Log.e(LOG_TAG,
-                            "Received UPDATE_OBJECT with no current track present.");
+                    Log
+                            .e(LOG_TAG,
+                                    "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 

@@ -25,17 +25,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import core.data.DataStorage;
 import core.data.DataTrack;
 import core.data.DataTrackInfo;
@@ -46,7 +46,6 @@ import core.data.DataTrackInfo;
  * 
  * 1. delete a track 2. rename a track 3. show all track information 4. load a
  * track
- * 
  */
 public class LoadTrackActivity extends ListActivity {
 
@@ -80,17 +79,13 @@ public class LoadTrackActivity extends ListActivity {
         setTextChangedListenerToSearchBox(checkEditText());
 
         // Set status bar
-        Helper.setStatusBar(this,
-                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
-                getResources().getString(R.string.tv_statusbar_loadtrackDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_loadtrackTitle), getResources()
+                .getString(R.string.tv_statusbar_loadtrackDesc),
                 R.id.ly_loadtrackActivity_statusbar, true);
 
     }
 
-    /**
-     * 
-     * 
-     */
     private EditText checkEditText() {
 
         // Get the app's shared preferences
@@ -175,8 +170,9 @@ public class LoadTrackActivity extends ListActivity {
             } else {
                 Log.e("RenameTrack",
                         "Track to load was not found or is corrupt.");
-                LogIt.popup(this,
-                        "Track to load could not be opened. Missing or corrupt.");
+                LogIt
+                        .popup(this,
+                                "Track to load could not be opened. Missing or corrupt.");
             }
 
             return true;
@@ -188,8 +184,8 @@ public class LoadTrackActivity extends ListActivity {
             alert.setView(input);
             alert.setTitle(getResources().getString(
                     R.string.alert_loadtrackActivity_rename));
-            alert.setPositiveButton(
-                    getResources().getString(R.string.alert_global_ok),
+            alert.setPositiveButton(getResources().getString(
+                    R.string.alert_global_ok),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                 int whichButton) {
@@ -200,12 +196,14 @@ public class LoadTrackActivity extends ListActivity {
                             case 0:
                                 break;
                             case -1:
-                                Log.e("RenameTrack",
-                                        "Track to rename was not found or is corrupt.");
+                                Log
+                                        .e("RenameTrack",
+                                                "Track to rename was not found or is corrupt.");
                                 break;
                             case -2:
-                                Log.e("RenameTrack",
-                                        "There is already a track with this name.");
+                                Log
+                                        .e("RenameTrack",
+                                                "There is already a track with this name.");
                                 break;
                             case -3:
                                 Log.e("RenameTrack",
@@ -220,8 +218,8 @@ public class LoadTrackActivity extends ListActivity {
                         }
                     });
 
-            alert.setNegativeButton(
-                    getResources().getString(R.string.alert_global_cancel),
+            alert.setNegativeButton(getResources().getString(
+                    R.string.alert_global_cancel),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                 int whichButton) {
@@ -285,9 +283,11 @@ public class LoadTrackActivity extends ListActivity {
             return true;
         case R.id.cm_loadtrackActivity_delete:
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(
-                    getResources().getString(
-                            R.string.alert_loadtrackActivity_deleteTrack))
+            builder
+                    .setMessage(
+                            getResources()
+                                    .getString(
+                                            R.string.alert_loadtrackActivity_deleteTrack))
                     .setCancelable(false)
                     .setPositiveButton(
                             getResources().getString(R.string.alert_global_yes),
@@ -299,8 +299,7 @@ public class LoadTrackActivity extends ListActivity {
                                     updateAdapter();
 
                                 }
-                            })
-                    .setNegativeButton(
+                            }).setNegativeButton(
                             getResources().getString(R.string.alert_global_no),
                             new DialogInterface.OnClickListener() {
 
@@ -318,7 +317,6 @@ public class LoadTrackActivity extends ListActivity {
 
     /**
      * This method inflate the options menu for this activity.
-     * 
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -371,8 +369,7 @@ public class LoadTrackActivity extends ListActivity {
         builder.setMessage(
                 getResources().getString(
                         R.string.alert_loadtrackActivity_deleteTrack))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         getResources().getString(R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -380,8 +377,7 @@ public class LoadTrackActivity extends ListActivity {
                                 Log.d("DEBUG", "delete " + trname);
                                 // updateAdapter();
                             }
-                        })
-                .setNegativeButton(
+                        }).setNegativeButton(
                         getResources().getString(R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
 
@@ -403,7 +399,9 @@ public class LoadTrackActivity extends ListActivity {
             public void run() {
                 GenericItemDescription desc = new GenericItemDescription();
 
-                desc.addResourceId("TrackName", R.id.tv_listviewloadtrack_track);
+                desc
+                        .addResourceId("TrackName",
+                                R.id.tv_listviewloadtrack_track);
                 desc.addResourceId("TrackComment",
                         R.id.tv_listviewloadtrack_comment);
                 desc.setNameTag("TrackName");
@@ -525,9 +523,9 @@ public class LoadTrackActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this,
-                getResources().getString(R.string.tv_statusbar_loadtrackTitle),
-                getResources().getString(R.string.tv_statusbar_loadtrackDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_loadtrackTitle), getResources()
+                .getString(R.string.tv_statusbar_loadtrackDesc));
     }
 
     /**

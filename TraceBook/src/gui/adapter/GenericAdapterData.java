@@ -19,7 +19,6 @@ import android.widget.TextView;
  * with String tags via the GenericItemDesciption class.
  * 
  * This class provides you easy access to fill your views with the right data.
- * 
  */
 public class GenericAdapterData {
 
@@ -44,8 +43,6 @@ public class GenericAdapterData {
 
     /**
      * An enum to define the three different types of views in a item.
-     * 
-     * 
      */
     enum ItemTypes {
         /**
@@ -69,8 +66,6 @@ public class GenericAdapterData {
 
     /**
      * The class representation to handle TextView data.
-     * 
-     * 
      */
     static class TextItem implements GenericItem {
 
@@ -114,8 +109,6 @@ public class GenericAdapterData {
 
     /**
      * The class representation to handle ImageView data.
-     * 
-     * 
      */
     static class ImageItem implements GenericItem {
 
@@ -147,9 +140,6 @@ public class GenericAdapterData {
 
     /**
      * The class representation to handle Button data.
-     * 
-     * 
-     * 
      */
     static class ButtonItem implements GenericItem {
 
@@ -190,7 +180,6 @@ public class GenericAdapterData {
     Map<String, GenericItem> items = new HashMap<String, GenericItem>();
 
     /**
-     * 
      * @param desc
      *            reference to a GenericItemDescription object which will handle
      *            the mapping of tags to view objects.
@@ -231,7 +220,6 @@ public class GenericAdapterData {
      *            tag which is associated with a given ImageView.
      * @param image
      *            resource id of an image
-     * 
      */
     public void setImage(String tag, int image) {
         items.put(tag, new ImageItem(image));
@@ -243,7 +231,6 @@ public class GenericAdapterData {
      * @param onClickListener
      *            reference to a onClickListener which will be called when the
      *            given button is clicked.
-     * 
      */
     public void setButtonCallback(String tag,
             View.OnClickListener onClickListener) {

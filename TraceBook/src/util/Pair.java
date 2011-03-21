@@ -3,8 +3,6 @@ package util;
 /**
  * a generic Tuple element to store two values.
  * 
- *
- * 
  * @param <A>
  *            first element type
  * @param <B>
