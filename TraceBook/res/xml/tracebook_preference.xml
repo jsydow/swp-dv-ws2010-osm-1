@@ -25,6 +25,10 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/string_preferences_catMetaTag">
+		<CheckBoxPreference android:title="@string/string_preferences_showMostRecentTagsInHistory"
+			android:defaultValue="true" android:summary="@string/string_preferences_descShowMostRecentTagsInHistory"
+			android:key="check_showMostRecentTagsInHistory" />
+			
 		<ListPreference android:title="@string/string_preferences_maxHistorySize"
 			android:key="lst_setHistorySize" android:defaultValue="30"
 			android:entries="@array/maxHistorySize" android:entryValues="@array/maxHistorySize_values"
