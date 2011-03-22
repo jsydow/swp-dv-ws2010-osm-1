@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * The Class AddMemoActivity, start the recording of the notice. The user can
@@ -100,6 +101,10 @@ public class AddMemoActivity extends Activity {
         if (recorder.isRecording()) {
             recorder.stop();
             recorder.appendFileToObject(node);
+
+            // TODO: l10n!
+            Toast.makeText(this, "Recording successfully.", Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 }

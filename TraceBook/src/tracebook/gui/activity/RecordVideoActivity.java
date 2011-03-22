@@ -108,8 +108,8 @@ public class RecordVideoActivity extends Activity implements
             recorder.appendFileToObject(node);
 
             // TODO: l10n!
-            Toast.makeText(this, "Video recorded successfully.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Recording successfully.", Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 }
