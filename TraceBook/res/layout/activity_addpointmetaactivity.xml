@@ -26,14 +26,14 @@
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
 
+		<Button android:id="@+id/btn_addpointmetaActivity_save"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:text="@string/btn_addpointmetaActivity_save" android:onClick="saveBtn" />
+
 		<Button android:id="@+id/btn_addpointmetaActivity_search"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/btn_addpointmetaActivity_search"
 			android:onClick="searchBtn" />
-
-		<Button android:id="@+id/btn_addpointmetaActivity_save"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="@string/btn_addpointmetaActivity_save" android:onClick="saveBtn" />
 
 		<Button android:id="@+id/btn_addpointmetaActivity_cancel"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
