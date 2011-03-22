@@ -36,7 +36,6 @@ import android.widget.Toast;
  * equivalent to verbose in logcat.
  */
 public final class LogIt {
-
     /**
      * Log using the Android logging method.
      */
@@ -203,5 +202,9 @@ public final class LogIt {
      */
     public static synchronized void w(String tag, String message) {
         log(tag, message, 4);
+    }
+
+    private LogIt() {
+        // Empty constructor. Does nothing.
     }
 }

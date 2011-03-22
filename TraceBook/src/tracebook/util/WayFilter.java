@@ -33,7 +33,7 @@ import tracebook.core.data.DataNode;
  * intended to first smoothen the way to eliminate outliners, and then to filter
  * the points of the way to remove redundant data.
  */
-public class WayFilter {
+public final class WayFilter {
     /**
      * Removes all insignificant points from the way, a threshold is calculated
      * automatically by the average derivation of the points.
@@ -77,9 +77,8 @@ public class WayFilter {
                     if (calibrate) {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
-                    } else if (calculateArea(firstNode.toGeoPoint(),
-                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
-                            * weight
+                    } else if (calculateArea(firstNode.toGeoPoint(), pending
+                            .toGeoPoint(), n.toGeoPoint()) < threshold * weight
                             && !n.hasAdditionalInfo() && iter.hasNext())
                         iter.remove();
                     firstNode = pending;
@@ -230,5 +229,9 @@ public class WayFilter {
                 * (b.getLatitude() - a.getLatitude())
                 - (a.getLongitude() - b.getLongitude())
                 * (c.getLatitude() - a.getLatitude()));
+    }
+
+    private WayFilter() {
+        // Empty constructor. Does nothing.
     }
 }

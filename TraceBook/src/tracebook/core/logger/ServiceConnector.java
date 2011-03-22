@@ -19,10 +19,10 @@
 
 package tracebook.core.logger;
 
+import tracebook.util.LogIt;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import tracebook.util.LogIt;
 
 /**
  * This class provides methods for controlling the {@link WaypointLogService}.
@@ -103,5 +103,9 @@ public final class ServiceConnector {
             activity.stopService(intent);
             LogIt.d(LOG_TAG, "stopService()");
         }
+    }
+
+    private ServiceConnector() {
+        // Empty constructor. Does nothing.
     }
 }
