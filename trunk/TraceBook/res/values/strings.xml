@@ -248,4 +248,6 @@
 	<string name="btn_searchInfoDialog_save">Apply</string>
 	<string name="btn_startActivity_reseumeTrack">Resume track</string>
 <string name="popup_mapsforgeactivity_saved">Track has been saved!</string>
+<string name="opt_addpointmetaactivity_lastUsed">Last used tag first</string>
+<string name="opt_addpointmetaactivity_mostUsed">Most used tag first</string>
 </resources>
