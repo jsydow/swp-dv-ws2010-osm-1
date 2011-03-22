@@ -222,8 +222,14 @@ public class AddPointMetaActivity extends ListActivity {
      *            not used
      */
     public void searchBtn(View view) {
+
+        final AutoCompleteTextView autoComplCat = (AutoCompleteTextView) findViewById(R.id.ac_addpointmetaActivity_categorie);
+        String tag = autoComplCat.getText().toString();
+
         final Intent intent = new Intent(AddPointMetaActivity.this,
                 FullTextSearchActivity.class);
+
+        intent.putExtra("TagValue", tag);
         // It is important to use a number > -1 to get the
         // startActivityForResult working right
         startActivityForResult(intent, 0);

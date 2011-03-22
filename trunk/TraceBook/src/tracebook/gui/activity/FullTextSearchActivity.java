@@ -226,8 +226,19 @@ public class FullTextSearchActivity extends ListActivity {
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
-        if (editBox != null)
+
+        final Bundle extras = getIntent().getExtras();
+
+        if (editBox != null) {
             editBox.addTextChangedListener(new MyTextWatcher(this));
+
+            String tagValue = extras.getString("TagValue");
+
+            if (extras != null && tagValue != null) {
+                editBox.setText(tagValue);
+            }
+
+        }
 
     }
 
