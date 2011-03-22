@@ -313,12 +313,6 @@ public final class DataStorage {
      */
     public void updateNames() {
         retrieveTrackNames();
-        synchronized (tracks) {
-            for (DataTrack dt : tracks) {
-                names.add(dt.getName());
-            }
-        }
-
         removeDuplicatesInStringList(names);
     }
 

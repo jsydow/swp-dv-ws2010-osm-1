@@ -478,12 +478,13 @@ public class LoadTrackActivity extends ListActivity {
 
     @Override
     protected void onResume() {
+        super.onResume();
         if (searchText == null) {
             searchText = "";
         }
 
         updateAdapter();
-        super.onResume();
+
     }
 
     /**
@@ -516,7 +517,6 @@ public class LoadTrackActivity extends ListActivity {
                         R.id.tv_listviewloadtrack_comment);
                 desc.setNameTag("TrackName");
                 String comment = null;
-                DataStorage.getInstance().unloadAllTracks();
 
                 // get all TrackInfo-objects
                 List<DataTrackInfo> trackInfos = new ArrayList<DataTrackInfo>();
