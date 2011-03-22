@@ -82,6 +82,7 @@ public class RecordVideoActivity extends Activity implements
     @Override
     public void onStop() {
         stopRecording();
+        super.onStop();
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
