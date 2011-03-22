@@ -2,7 +2,7 @@
 <manifest package="Trace.Book" android:versionCode="1"
 	android:versionName="1.0" xmlns:android="http://schemas.android.com/apk/res/android"
 	android:installLocation="preferExternal">
-	<uses-sdk android:minSdkVersion="4" />
+	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="10"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
@@ -28,7 +28,7 @@
 		<activity android:name="tracebook.gui.activity.MapsForgeActivity"/>
 		<activity android:name="tracebook.gui.activity.AddPointMetaActivity"/>
 		<activity android:name="tracebook.gui.activity.AddMemoActivity" android:screenOrientation="portrait"/>
-		<activity android:name="tracebook.gui.activity.RecordVideoActivity" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" />
+		<activity android:name="tracebook.gui.activity.RecordVideoActivity" android:screenOrientation="portrait"/>
 		<activity android:name="tracebook.gui.activity.AboutActivity"/>
 		<activity android:name="tracebook.gui.activity.FullTextSearchActivity"/>
 		<activity android:name="tracebook.gui.view.HelpWebView"/>

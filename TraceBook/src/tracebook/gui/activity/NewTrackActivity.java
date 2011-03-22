@@ -29,6 +29,7 @@ import android.location.GpsStatus;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -615,6 +616,8 @@ public class NewTrackActivity extends TabActivity {
                     int position, long id) {
 
                 GenericAdapterData data = adapter.getItem(position);
+                Log.d(ACTIVITY_SERVICE, data.getText("NodeId") );
+                
                 int nodeId = Integer.parseInt(data.getText("NodeId"));
                 intent.putExtra("DataNodeId", nodeId);
                 startActivity(intent);
