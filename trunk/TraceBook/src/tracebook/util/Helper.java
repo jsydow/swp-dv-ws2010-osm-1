@@ -165,9 +165,9 @@ public final class Helper {
      */
     public static String cutString(String toCut, int maxChar) {
         if (toCut.length() > maxChar)
-            return toCut.trim().subSequence(0, maxChar) + "...";
+            return toCut.trim().subSequence(0, maxChar) + "…";
         else if (toCut.length() > 0)
-            return toCut + "...";
+            return toCut + "…";
         else
             return toCut;
     }
@@ -226,7 +226,7 @@ public final class Helper {
                 pending = n;
             }
             threshold /= nodes.size();
-            Log.d("Helper", "Average: " + threshold);
+            LogIt.getInstance().log("filterPoints", "Average: " + threshold, 1);
         }
     }
 
@@ -243,7 +243,7 @@ public final class Helper {
     }
 
     /**
-     * Creates a new OverlayItem.
+     * Creates a new {@link OverlayItem}.
      * 
      * @param pos
      *            position of the marker
