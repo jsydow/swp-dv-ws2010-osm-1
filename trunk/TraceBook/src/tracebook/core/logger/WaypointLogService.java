@@ -7,8 +7,8 @@ import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
 import tracebook.util.GpsMessage;
-import tracebook.util.Helper;
 import tracebook.util.LogIt;
+import tracebook.util.WayFilter;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -75,8 +75,8 @@ public class WaypointLogService extends Service implements LocationListener {
                 else {
                     if (!one_shot) { // TODO: user configurable and less
                         // arbitrary weight
-                        Helper.smoothenPoints(tmp.getNodes(), 3, 3);
-                        Helper.filterPoints(tmp.getNodes(), 2);
+                        WayFilter.smoothenPoints(tmp.getNodes(), 3, 3);
+                        WayFilter.filterPoints(tmp.getNodes(), 2);
                     }
                     getSender().sendEndWay(tmp.getId());
                     return tmp.getId();

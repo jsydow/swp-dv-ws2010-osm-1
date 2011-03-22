@@ -8,7 +8,6 @@ import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.MapViewMode;
-import org.mapsforge.android.maps.OverlayItem;
 
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
@@ -55,9 +54,6 @@ public class MapsForgeActivity extends MapActivity {
          * The last known {@link GeoPoint}.
          */
         GeoPoint currentGeoPoint = null;
-
-        public GPSReceiver() { /* nothing to do here */
-        }
 
         @Override
         public void onReceive(Context ctx, Intent intend) {
@@ -141,8 +137,9 @@ public class MapsForgeActivity extends MapActivity {
                 pointsOverlay.removeOverlay(pointId);
             } else {
                 if (point.getOverlayItem() == null)
-                    point.setOverlayItem(new OverlayItem(point.toGeoPoint(),
-                            point.getId() + "", ""));
+                    point.setOverlayItem(Helper.getOverlayItem(
+                            point.toGeoPoint(), R.drawable.marker_red,
+                            MapsForgeActivity.this));
                 pointsOverlay.addOverlay(point);
                 if (point.getDataPointsList() != null)
                     routesOverlay.reDrawWay(point.getDataPointsList(), false,
@@ -200,10 +197,7 @@ public class MapsForgeActivity extends MapActivity {
             GeoPoint projection = mapView.getProjection().fromPixels(
                     (int) ev.getX(), (int) ev.getY());
 
-            // We will never need to specify a icon as the OverlayItem already
-            // must have had one, otherwise we couldn't have grabbed it in the
-            // first place.
-            pointsOverlay.updateItem(projection, editNode.getId(), 0);
+            pointsOverlay.updateItem(projection, editNode.getId(), null);
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
                 LogIt.d(LOG_TAG,
@@ -319,9 +313,8 @@ public class MapsForgeActivity extends MapActivity {
 
         LogIt.d(LOG_TAG, "Creating MapActivity");
 
-        pointsOverlay = new DataNodeArrayItemizedOverlay(this, routesOverlay);
+        pointsOverlay = new DataNodeArrayItemizedOverlay(this);
         routesOverlay = new DataPointsListArrayRouteOverlay(this, pointsOverlay);
-        pointsOverlay.setRoutesOverlay(routesOverlay);
 
         // as this activity is destroyed when adding a POI, we get all POIs here
         fillOverlays();
