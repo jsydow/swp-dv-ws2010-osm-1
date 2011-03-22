@@ -4,20 +4,22 @@ import java.io.File;
 import java.util.List;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.MapViewMode;
+import org.mapsforge.android.maps.OverlayItem;
 
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
 import tracebook.core.logger.ServiceConnector;
-import tracebook.util.DataNodeArrayItemizedOverlay;
 import tracebook.util.DataPointsListArrayRouteOverlay;
 import tracebook.util.GpsMessage;
 import tracebook.util.Helper;
 import tracebook.util.LogIt;
+import tracebook.util.NewDataNodeArrayItemizedOverlay;
 import Trace.Book.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -55,6 +57,12 @@ public class MapsForgeActivity extends MapActivity {
          */
         GeoPoint currentGeoPoint = null;
 
+        OverlayItem currentPosOI = null;
+
+        public GPSReceiver() {
+            // Do nothing
+        }
+
         @Override
         public void onReceive(Context ctx, Intent intend) {
             final int wayId = intend.getExtras().getInt("way_id");
@@ -69,11 +77,15 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng); // we also need this
                 // to center the map
-                LogIt.d(LOG_TAG,
-                        "Location update received "
-                                + currentGeoPoint.toString());
 
-                pointsOverlay.setCurrentPosition(currentGeoPoint);
+                if (currentPosOI == null) {
+                    currentPosOI = Helper.getOverlayItem(currentGeoPoint,
+                            R.drawable.marker_green, MapsForgeActivity.this);
+                    pointsOverlay.addItem(currentPosOI);
+                } else
+                    currentPosOI.setPoint(currentGeoPoint);
+
+                pointsOverlay.requestRedraw();
 
                 /*
                  * In one_shot mode, we add the current point to the
@@ -105,8 +117,19 @@ public class MapsForgeActivity extends MapActivity {
 
                 if (wayId > 0)
                     routesOverlay.reDrawWay(wayId);
-                else if (pointId > 0)
-                    updatePoint(pointId);
+                else if (pointId > 0) { // New POI
+                    DataNode node = Helper.currentTrack().getNodeById(pointId);
+                    if (node != null) {
+                        if (node.getOverlayItem() == null)
+                            node.setOverlayItem(Helper.getOverlayItem(
+                                    node.toGeoPoint(),
+                                    ItemizedOverlay
+                                            .boundCenterBottom(getResources()
+                                                    .getDrawable(
+                                                            R.drawable.marker_red))));
+                        pointsOverlay.addItem(node.getOverlayItem());
+                    }
+                }
 
                 break;
             case GpsMessage.MOVE_POINT:
@@ -118,32 +141,9 @@ public class MapsForgeActivity extends MapActivity {
                 break;
             case GpsMessage.END_WAY:
                 routesOverlay.reDrawWay(intend.getExtras().getInt("way_id"));
-                pointsOverlay.removeOrphans();
 
                 break;
             default:
-            }
-        }
-
-        private void updatePoint(int pointId) {
-            LogIt.d(LOG_TAG, "Received node update, id=" + pointId);
-
-            DataNode point = null;
-            if (Helper.currentTrack() != null) {
-                point = Helper.currentTrack().getNodeById(pointId);
-            }
-            if (point == null) {
-                LogIt.e(LOG_TAG, "Node with ID " + pointId + " does not exist.");
-                pointsOverlay.removeOverlay(pointId);
-            } else {
-                if (point.getOverlayItem() == null)
-                    point.setOverlayItem(Helper.getOverlayItem(
-                            point.toGeoPoint(), R.drawable.marker_red,
-                            MapsForgeActivity.this));
-                pointsOverlay.addOverlay(point);
-                if (point.getDataPointsList() != null)
-                    routesOverlay.reDrawWay(point.getDataPointsList(), false,
-                            null);
             }
         }
 
@@ -182,7 +182,7 @@ public class MapsForgeActivity extends MapActivity {
     /**
      * Overlay containing all POIs.
      */
-    DataNodeArrayItemizedOverlay pointsOverlay;
+    NewDataNodeArrayItemizedOverlay pointsOverlay;
 
     /**
      * Overlay containing all areas and ways.
@@ -197,7 +197,11 @@ public class MapsForgeActivity extends MapActivity {
             GeoPoint projection = mapView.getProjection().fromPixels(
                     (int) ev.getX(), (int) ev.getY());
 
-            pointsOverlay.updateItem(projection, editNode.getId(), null);
+            editNode.setLocation(projection);
+            if (editNode.getDataPointsList() != null)
+                routesOverlay.reDrawWay(editNode.getDataPointsList().getId());
+
+            pointsOverlay.requestRedraw();
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
                 LogIt.d(LOG_TAG,
@@ -297,12 +301,13 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     private void fillOverlays() {
-        List<DataNode> nodes = Helper.currentTrack().getNodes();
-        if (nodes != null) {
-            pointsOverlay.addPoints(nodes);
-        }
+        for (DataNode n : Helper.currentTrack().getNodes())
+            if (n.getOverlayItem() != null) {
+                pointsOverlay.addItem(n.getOverlayItem());
+            }
+
         List<DataPointsList> ways = Helper.currentTrack().getWays();
-        if (nodes != null) {
+        if (ways != null) {
             routesOverlay.addWays(ways);
         }
     }
@@ -313,7 +318,7 @@ public class MapsForgeActivity extends MapActivity {
 
         LogIt.d(LOG_TAG, "Creating MapActivity");
 
-        pointsOverlay = new DataNodeArrayItemizedOverlay(this);
+        pointsOverlay = new NewDataNodeArrayItemizedOverlay(this);
         routesOverlay = new DataPointsListArrayRouteOverlay(this, pointsOverlay);
 
         // as this activity is destroyed when adding a POI, we get all POIs here
