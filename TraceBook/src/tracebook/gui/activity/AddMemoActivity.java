@@ -123,7 +123,7 @@ public class AddMemoActivity extends Activity {
             recorder.appendFileToObject(node);
 
             // TODO: l10n!
-            Toast.makeText(this, "Recording successfully.", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "Recording finished.", Toast.LENGTH_SHORT)
                     .show();
         }
     }
