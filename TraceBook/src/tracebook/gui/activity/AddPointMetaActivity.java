@@ -15,12 +15,12 @@ import tracebook.gui.adapter.GenericAdapter;
 import tracebook.gui.adapter.GenericAdapterData;
 import tracebook.gui.adapter.GenericItemDescription;
 import tracebook.util.Helper;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
-import tracebook.util.LogIt;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
@@ -39,18 +39,7 @@ public class AddPointMetaActivity extends ListActivity {
      * A simple enumeration class for tags.
      */
     enum Tags {
-        /**
-         * 
-         */
-        KEY,
-        /**
-         * 
-         */
-        USEFUL,
-        /**
-         * 
-         */
-        VALUE
+        KEY, USEFUL, VALUE
     }
 
     private GenericAdapter adapter;
@@ -61,6 +50,7 @@ public class AddPointMetaActivity extends ListActivity {
     DataMapObject node;
 
     /**
+     * Cancel Button clicked.
      * 
      * @param view
      *            not used

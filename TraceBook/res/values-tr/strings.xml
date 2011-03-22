@@ -153,7 +153,7 @@
 	<string name="btn_addpointmetaActivity_save">Speichern</string>
 	<string name="btn_addpointmetaActivity_cancel">Abbrechen</string>
 	<string name="btn_addpointActivity_addMeta">Hinzufügen</string>
-	<string name="btn_addpointActivity_back">Speichern</string>
+	<string name="btn_addpointActivity_back">Schließen</string>
 	<string name="btn_addMetaMedia_makePicture">Foto</string>
 	<string name="btn_addMetaMedia_makeVideo">Video</string>
 	<string name="btn_addMetaMedia_makeMemo">Sprachnotiz</string>
