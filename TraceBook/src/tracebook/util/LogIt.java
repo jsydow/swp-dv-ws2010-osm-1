@@ -17,18 +17,22 @@ import android.widget.Toast;
  * equivalent to verbose in logcat.
  */
 public final class LogIt {
+
     /**
      * Log using the Android logging method.
      */
     public static final int LOGMETHOD_ANDROID = 1;
+
     /**
      * Log to file.
      */
     public static final int LOGMETHOD_FILE = 2;
+
     /**
      * Maximum value for a logging level.
      */
     public static final int MAX_LOG_LEVEL = 5;
+
     /**
      * Minimum value for a logging level.
      */
@@ -36,50 +40,34 @@ public final class LogIt {
 
     private static final String LOG_PREFIX = "TraceBook";
 
+    private static int maxLogLevel = 1000;
+
+    private static int method = LOGMETHOD_ANDROID;
+
+    private static int minLogLevel = -1000;
+
     /**
-     * Shows a toast with a given message.
+     * Logs message with debug priority.
      * 
-     * @param app
-     *            The activity that shows the toast.
-     * @param msg
-     *            The message to display.
+     * @param tag
+     *            prefix of the log message
+     * @param message
+     *            The message to be logged
      */
-    public static void popup(Context app, String msg) {
-        Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    private LogIt instance;
-
-    private int maxLogLevel;
-
-    private int method;
-    private int minLogLevel;
-
-    private LogIt() {
-        setLogMethod(LOGMETHOD_ANDROID);
-        setMaxLogLevel(1000);
-        setMinLogLevel(-1000);
-    }
-    /**
-     * Gets an instance of this Singleton. Shortcut for getInstance().
-     * 
-     * @return A LogIt instance.
-     */
-    public synchronized LogIt get() {
-        return getInstance();
+    public static synchronized void d(String tag, String message) {
+        log(tag, message, 2);
     }
 
     /**
-     * Gets an instance of this Singleton.
+     * Logs message with error priority.
      * 
-     * @return A LogIt instance.
+     * @param tag
+     *            prefix of the log message
+     * @param message
+     *            The message to be logged
      */
-    public synchronized LogIt getInstance() {
-        if (instance == null) {
-            instance = new LogIt();
-        }
-        return instance;
+    public static synchronized void e(String tag, String message) {
+        log(tag, message, 5);
     }
 
     /**
@@ -92,7 +80,8 @@ public final class LogIt {
      * @param logLevel
      *            The importance of the log message. 0-5
      */
-    public synchronized void log(String prefix, String message, int logLevel) {
+    public static synchronized void log(String prefix, String message,
+            int logLevel) {
         if ((logLevel <= maxLogLevel) || (logLevel <= minLogLevel)) {
             switch (method) {
             case LOGMETHOD_FILE:
@@ -134,13 +123,26 @@ public final class LogIt {
     }
 
     /**
+     * Shows a toast with a given message.
+     * 
+     * @param app
+     *            The activity that shows the toast.
+     * @param msg
+     *            The message to display.
+     */
+    public static void popup(Context app, String msg) {
+        Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    /**
      * Sets the method of logging. Use the constants above.
      * 
      * @param newMethod
      *            the new logging method.
      */
-    public synchronized void setLogMethod(int newMethod) {
-        this.method = newMethod;
+    public static synchronized void setLogMethod(int newMethod) {
+        method = newMethod;
     }
 
     /**
@@ -150,12 +152,11 @@ public final class LogIt {
      * @param logLevel
      *            the new maximum logging level.
      */
-    public synchronized void setMaxLogLevel(int logLevel) {
-        if (logLevel > MAX_LOG_LEVEL) {
-            this.maxLogLevel = MAX_LOG_LEVEL;
-        } else {
-            this.maxLogLevel = logLevel;
-        }
+    public static synchronized void setMaxLogLevel(int logLevel) {
+        if (logLevel > MAX_LOG_LEVEL)
+            maxLogLevel = MAX_LOG_LEVEL;
+        else
+            maxLogLevel = logLevel;
     }
 
     /**
@@ -165,11 +166,10 @@ public final class LogIt {
      * @param logLevel
      *            The new minimum logging level.
      */
-    public synchronized void setMinLogLevel(int logLevel) {
-        if (logLevel < MIN_LOG_LEVEL) {
-            this.minLogLevel = MIN_LOG_LEVEL;
-        } else {
-            this.minLogLevel = logLevel;
-        }
+    public static synchronized void setMinLogLevel(int logLevel) {
+        if (logLevel < MIN_LOG_LEVEL)
+            minLogLevel = MIN_LOG_LEVEL;
+        else
+            minLogLevel = logLevel;
     }
 }

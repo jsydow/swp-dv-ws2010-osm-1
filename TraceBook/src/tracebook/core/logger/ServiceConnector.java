@@ -62,10 +62,10 @@ public final class ServiceConnector {
         if (started) {
             Log.d(LOG_TAG, "Service already started");
         } else {
-            Intent i = new Intent();
-            i.setClassName(activity.getPackageName(),
+            Intent intent = new Intent();
+            intent.setClassName(activity.getPackageName(),
                     WaypointLogService.class.getName());
-            activity.startService(i);
+            activity.startService(intent);
             Log.d(LOG_TAG, "startService()");
             started = true;
         }
@@ -78,10 +78,10 @@ public final class ServiceConnector {
         if (!started) {
             Log.d(LOG_TAG, "Service not yet started");
         } else {
-            Intent i = new Intent();
-            i.setClassName(activity.getPackageName(),
+            Intent intent = new Intent();
+            intent.setClassName(activity.getPackageName(),
                     WaypointLogService.class.getName());
-            activity.stopService(i);
+            activity.stopService(intent);
             Log.d(LOG_TAG, "stopService()");
         }
     }
