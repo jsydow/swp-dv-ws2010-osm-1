@@ -20,8 +20,5 @@
 		android:title="@string/opt_mapsforgeActivity_export" android:icon="@android:drawable/ic_menu_upload" />
 
 	<item android:id="@+id/opt_mapsforgeActivity_showToggleWayPoints"
-		android:title="@string/opt_mapsforgeActivity_showToggleWayPoints" />
-
-	<item android:id="@+id/opt_mapsforgeActivity_setMapLocation"
-		android:title="@string/opt_mapsforgeActivity_setMapLocation" />
+		android:title="@string/opt_mapsforgeActivity_showToggleWayPoints" android:icon="@android:drawable/ic_menu_edit" />
 </menu>
