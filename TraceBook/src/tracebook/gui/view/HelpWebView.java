@@ -83,36 +83,35 @@ public class HelpWebView extends Activity {
                     .getDefaultSharedPreferences(this);
             switch (Integer.parseInt(appPreferences.getString(
                     "lst_switchTheme", "1"))) {
-            case (1):
+            case 1:
                 webview.loadUrl("file:///android_asset/about/about-dark-"
                         + language + ".html");
                 break;
-            case (0):
+            case 0:
                 webview.loadUrl("file:///android_asset/about/about-light-"
                         + language + ".html");
                 break;
-            case (2):
+            case 2:
                 webview.loadUrl("file:///android_asset/about/about-dark-"
                         + language + ".html");
                 break;
             /**
              * TODO set TraceBook light theme
              */
-            case (3):
+            case 3:
                 webview.loadUrl("file:///android_asset/about/about-light-"
                         + language + ".html");
                 break;
             /**
              * TODO set TraceBook dark theme
              */
-            case (4):
+            case 4:
                 webview.loadUrl("file:///android_asset/about/about-light-"
                         + language + ".html");
                 break;
             default:
 
             }
-
         } else if (help) {
             webview.loadUrl("file:///android_asset/help/help-" + language
                     + ".html");
