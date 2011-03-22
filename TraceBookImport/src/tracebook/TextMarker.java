@@ -1,3 +1,22 @@
+/*======================================================================
+ *
+ * This file is part of TraceBook.
+ *
+ * TraceBook is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * TraceBook is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with TraceBook. If not, see <http://www.gnu.org/licenses/>.
+ *
+ =====================================================================*/
+
 package tracebook;
 
 import java.awt.Desktop;
@@ -89,7 +108,8 @@ public class TextMarker extends ButtonMarker {
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
         } else {
-            Main.debug("Failed to get a Desktop to determine the file handler!");
+            Main
+                    .debug("Failed to get a Desktop to determine the file handler!");
             return;
         }
 
@@ -104,8 +124,9 @@ public class TextMarker extends ButtonMarker {
                     + texturl.toString());
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            Main.debug("IllegalArgumentException while trying to open textlink: "
-                    + texturl.toString());
+            Main
+                    .debug("IllegalArgumentException while trying to open textlink: "
+                            + texturl.toString());
             e.printStackTrace();
         }
 
