@@ -28,7 +28,7 @@
 		<activity android:name="tracebook.gui.activity.MapsForgeActivity"/>
 		<activity android:name="tracebook.gui.activity.AddPointMetaActivity"/>
 		<activity android:name="tracebook.gui.activity.AddMemoActivity" android:screenOrientation="portrait"/>
-		<activity android:name="tracebook.gui.activity.RecordVideoActivity" android:screenOrientation="portrait"/>
+		<activity android:name="tracebook.gui.activity.RecordVideoActivity" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation" />
 		<activity android:name="tracebook.gui.activity.AboutActivity"/>
 		<activity android:name="tracebook.gui.activity.FullTextSearchActivity"/>
 		<activity android:name="tracebook.gui.view.HelpWebView"/>
