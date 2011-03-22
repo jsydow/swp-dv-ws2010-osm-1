@@ -51,6 +51,7 @@ public class AddMemoActivity extends Activity {
     @Override
     public void onStop() {
         stopMemo();
+        super.onStop();
     }
 
     /**
