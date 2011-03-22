@@ -650,7 +650,7 @@ public class NewTrackActivity extends TabActivity {
 
         listView.setAdapter(adapter);
 
-        // Get selected item and send toast
+        // Get selected item
         listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {

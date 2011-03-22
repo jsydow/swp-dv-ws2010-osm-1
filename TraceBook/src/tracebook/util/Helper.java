@@ -35,7 +35,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * General helper class to feature some useful functions.
@@ -83,16 +82,15 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                Toast.makeText(
-                                        activity.getApplicationContext(),
+                                LogIt.popup(
+                                        activity,
                                         activity.getResources()
                                                 .getString(
                                                         R.string.alert_global_trackName)
                                                 + " "
                                                 + DataStorage.getInstance()
                                                         .getCurrentTrack()
-                                                        .getName(),
-                                        Toast.LENGTH_SHORT).show();
+                                                        .getName());
 
                                 // stop logging
                                 try {
@@ -321,10 +319,9 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        Toast.makeText(
-                context,
-                "An error occured. Please restart the application and try again.",
-                Toast.LENGTH_LONG).show();
+        // TODO: unhardcode
+        LogIt.popup(context,
+                "An error occured. Please restart the application and try again.");
         LogIt.e(logTag, ex.getMessage());
     }
 
