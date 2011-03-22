@@ -24,9 +24,16 @@ public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {
 
     private DataMapObject node;
-    private SharedPreferences preferences;
-    private VideoRecorder recorder = new VideoRecorder();
     private SurfaceHolder surfaceHolder;
+
+    /**
+     * Preferences for this activity.
+     */
+    SharedPreferences preferences;
+    /**
+     * Recorder for this activity.
+     */
+    VideoRecorder recorder = new VideoRecorder();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,8 +71,31 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordBtn(View view) {
+        final int maxDuration = 60 * Integer.parseInt(preferences.getString(
+                "lst_maxVideoRecording", "0"));
+
         if (!recorder.isRecording()) {
-            recorder.start();
+            // TODO: l10n!
+            LogIt.popup(this, "Recording started.");
+
+            if (maxDuration > 0) {
+                (new Thread() {
+                    @Override
+                    public void run() {
+                        recorder.start();
+
+                        try {
+                            Thread.sleep(maxDuration * 1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        stopRecording();
+                    }
+                }).start();
+            } else {
+                recorder.start();
+            }
         }
     }
 
@@ -78,14 +108,18 @@ public class RecordVideoActivity extends Activity implements
     public void onRecordStop(View view) {
         if (recorder.isRecording()) {
             stopRecording();
-        } else {
-            finish();
         }
+
+        finish();
     }
 
     @Override
     public void onStop() {
         stopRecording();
+
+        // TODO: l10n!
+        LogIt.popup(this, "Recording finished.");
+
         super.onStop();
     }
 
@@ -109,15 +143,14 @@ public class RecordVideoActivity extends Activity implements
         // Does nothing. Literally.
     }
 
-    private void stopRecording() {
+    /**
+     * Stops recording the video and appends the new media object to our node,
+     * if we were recording, at all.
+     */
+    void stopRecording() {
         if (recorder.isRecording()) {
             recorder.stop();
             recorder.appendFileToObject(node);
-
-            // TODO: l10n!
-            LogIt.popup(this, "Recording finished.");
-
-            finish();
         }
     }
 }
