@@ -145,7 +145,8 @@ public class StartActivity extends Activity {
             finish();
             return true;
         case R.id.opt_startActivity_about:
-            intent = new Intent(this, AboutActivity.class);
+            intent = new Intent(this, HelpWebView.class);
+            intent.putExtra("About", "de");
             startActivity(intent);
             return true;
         case R.id.opt_startActivity_preferences:
@@ -154,6 +155,7 @@ public class StartActivity extends Activity {
             return true;
         case R.id.opt_startActivity_help:
             intent = new Intent(this, HelpWebView.class);
+            intent.putExtra("Help", "de");
             startActivity(intent);
             return true;
         default:

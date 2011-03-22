@@ -462,6 +462,9 @@ public class LoadTrackActivity extends ListActivity {
         final String trackname = datum.getText("TrackName");
         DataTrack track = DataStorage.getInstance().deserializeTrack(trackname);
         if (track != null) {
+            if (DataStorage.getInstance().getCurrentTrack() != null) {
+
+            }
             DataStorage.getInstance().setCurrentTrack(track);
             final Intent intent = new Intent(this, NewTrackActivity.class);
             startActivity(intent);
