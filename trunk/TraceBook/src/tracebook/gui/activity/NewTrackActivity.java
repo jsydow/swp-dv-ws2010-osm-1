@@ -243,7 +243,7 @@ public class NewTrackActivity extends TabActivity {
 
         GenericAdapterData data = adapter.getItem((int) info.id);
 
-        int nodeId = Integer.parseInt(data.getText("NodeId"));
+        int nodeId = Integer.parseInt(data.getText("NodeId").trim());
 
         switch (item.getItemId()) {
         case R.id.cm_editmapobjects_delete:
@@ -488,11 +488,6 @@ public class NewTrackActivity extends TabActivity {
         default:
             break;
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
