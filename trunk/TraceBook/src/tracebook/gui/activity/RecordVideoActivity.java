@@ -24,6 +24,7 @@ import java.io.IOException;
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.VideoRecorder;
+import tracebook.util.Helper;
 import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
@@ -56,6 +57,7 @@ public class RecordVideoActivity extends Activity implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
         final Bundle extras = getIntent().getExtras();
 

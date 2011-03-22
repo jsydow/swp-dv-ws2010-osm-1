@@ -58,7 +58,7 @@ public class AddMemoActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
         // If status bar visible remove the activity title bar.
         if (Helper.checkStatusbarVisibility(this))

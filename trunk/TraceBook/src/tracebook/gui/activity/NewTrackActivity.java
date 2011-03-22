@@ -288,7 +288,7 @@ public class NewTrackActivity extends TabActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newtrackactivity);
         setTitle(R.string.string_newtrackActivity_title);

@@ -172,7 +172,6 @@ public final class Helper {
         SharedPreferences appPreferences = PreferenceManager
                 .getDefaultSharedPreferences(activity);
         return appPreferences.getBoolean("check_visbilityStatusbar", false);
-
     }
 
     /**
@@ -395,6 +394,45 @@ public final class Helper {
             desc.setText(cutString(activityDesc, 40));
         }
 
+    }
+
+    /**
+     * This method check the selected theme from the preferences menu and set
+     * the theme for the activity
+     * 
+     * @param activity
+     *            context of the application
+     */
+    public static void setTheme(Activity activity) {
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(activity);
+        int theme = Integer.parseInt(appPreferences.getString(
+                "lst_switchTheme", "1"));
+        switch (theme) {
+        case (1):
+            activity.setTheme(android.R.style.Theme_Black);
+            break;
+        case (0):
+            activity.setTheme(android.R.style.Theme_Light);
+            break;
+        case (2):
+            activity.setTheme(android.R.style.Theme_Wallpaper);
+            break;
+        /**
+         * TODO set TraceBook light theme
+         */
+        case (3):
+            activity.setTheme(android.R.style.Theme_Light);
+            break;
+        /**
+         * TODO set TraceBook dark theme
+         */
+        case (4):
+            activity.setTheme(android.R.style.Theme_Light);
+            break;
+        default:
+            activity.setTheme(android.R.style.Theme_Black);
+        }
     }
 
     /**

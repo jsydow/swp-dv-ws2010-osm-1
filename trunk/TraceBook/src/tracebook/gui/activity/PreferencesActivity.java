@@ -19,17 +19,19 @@
 
 package tracebook.gui.activity;
 
+import tracebook.util.Helper;
 import Trace.Book.R;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 /**
- * TODO: Javadoc.
+ * This Activity show our preference menu for the application.
  */
 public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
 
         this.addPreferencesFromResource(R.xml.tracebook_preference);

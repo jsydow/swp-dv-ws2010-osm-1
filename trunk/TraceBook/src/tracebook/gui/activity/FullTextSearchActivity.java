@@ -55,14 +55,12 @@ import android.widget.TextView;
  * The FullTextSearchActivity deals with a full text search on the description
  * of tags. You will get a list of tags and their description and can choose it
  * and the tag and key will set in the previous activity.
- * 
+ * <p>
  * The activity set a custom TextWatcher class to listen on input changes. As
  * soon as the user is tipping something it will be recognized and a new
  * SearchThread will be started. Right now threads are careering sequencenumbers
  * for their search result to avoid older threads form overwriting result of new
  * threads.
- * 
- * @author sahin
  * 
  */
 public class FullTextSearchActivity extends ListActivity {
@@ -232,6 +230,7 @@ public class FullTextSearchActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
         // If status bar visible remove the activity title bar.
         if (Helper.checkStatusbarVisibility(this))

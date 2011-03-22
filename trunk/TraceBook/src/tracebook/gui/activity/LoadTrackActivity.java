@@ -61,9 +61,13 @@ import android.widget.TextView;
 /**
  * The Class LoadTrackActivity list all saved Track in a list view. With a
  * context menu the user have following options:
- * 
- * 1. delete a track 2. rename a track 3. show all track information 4. load a
- * track
+ * <p>
+ * <ul>
+ * <li>delete a track</li>
+ * <li>rename a track</li>
+ * <li>show all track information</li>
+ * <li>load a track</li>
+ * </ul>
  */
 public class LoadTrackActivity extends ListActivity {
 
@@ -278,6 +282,7 @@ public class LoadTrackActivity extends ListActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
 
         // If status bar visible remove the activity title bar.
