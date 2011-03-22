@@ -15,9 +15,10 @@
 		<Button android:id="@+id/btn_recordvideoActivity_startRec"
 			android:text="@string/btn_recordvideoActivity_startRec"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:onClick="onRecordBtn"></Button>
+			android:onClick="onRecordBtn" android:minWidth="100dp" />
 		<Button android:text="@string/btn_recordvideoActivity_stopRec"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:id="@+id/btn_recordvideoActivity_stopRec" android:onClick="onRecordStop"></Button>
+			android:id="@+id/btn_recordvideoActivity_stopRec" android:onClick="onRecordStop"
+			android:minWidth="100dp" />
 	</LinearLayout>
 </LinearLayout>

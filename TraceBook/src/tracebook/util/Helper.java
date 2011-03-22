@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -410,6 +411,10 @@ public final class Helper {
                 final ImageButton searchBtn = (ImageButton) activity
                         .findViewById(R.id.ib_statusbar_searchBtn);
                 searchBtn.setVisibility(8);
+                final ImageView seperator = (ImageView) activity
+                        .findViewById(R.id.ib_statusbar_seperator);
+                seperator.setVisibility(8);
+
             }
 
             Button title = (Button) activity
@@ -417,7 +422,7 @@ public final class Helper {
             Button desc = (Button) activity
                     .findViewById(R.id.btn_statusbar_activityDescription);
             title.setText(activityTitle);
-            desc.setText(cutString(activityDesc, 50));
+            desc.setText(cutString(activityDesc, 40));
         }
 
     }

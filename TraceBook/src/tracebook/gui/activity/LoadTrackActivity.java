@@ -258,6 +258,8 @@ public class LoadTrackActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getApplicationContext()
+                .setTheme(android.R.style.Theme_Black_NoTitleBar);
         updateAdapter();
         setTitle(R.string.string_loadtrackActivity_title);
         setContentView(R.layout.activity_loadtrackactivity);

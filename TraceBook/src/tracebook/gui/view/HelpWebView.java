@@ -12,8 +12,10 @@ import android.webkit.WebView;
  * @author greenTraxas
  */
 public class HelpWebView extends Activity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         String language = "de";
         boolean about = false;
         boolean help = false;
