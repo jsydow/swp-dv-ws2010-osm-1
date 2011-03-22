@@ -167,7 +167,8 @@
 	<string name="alert_loadtrackActivity_deleteTrack">Delete track?</string>
 	<string name="alert_aboutActivity_pleaseWait">Please wait...</string>
 	<string name="alert_aboutActivity_loadingLicense">License text is being loaded...</string>
-
+	<string name="alert_global_notSaveAndClose">Beenden</string>
+	
 	<!-- Option menu values -->
 	<string name="opt_startActivity_preferences">Preferences</string>
 	<string name="opt_startActivity_close">Close</string>
