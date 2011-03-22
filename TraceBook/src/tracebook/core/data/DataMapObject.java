@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * Basic class for any object that is stored in OSM. All objects have an id and
@@ -118,11 +118,11 @@ public abstract class DataMapObject extends DataMediaHolder implements
                 serializer.endTag(null, "tag");
             }
         } catch (IllegalArgumentException e) {
-            Log.e("TagSerialisation", "Should not happen");
+            LogIt.e("TagSerialisation", "Should not happen");
         } catch (IllegalStateException e) {
-            Log.e("TagSerialisation", "Illegal state");
+            LogIt.e("TagSerialisation", "Illegal state");
         } catch (IOException e) {
-            Log.e("TagSerialisation", "Could not serialize tags");
+            LogIt.e("TagSerialisation", "Could not serialize tags");
         }
         return;
     }

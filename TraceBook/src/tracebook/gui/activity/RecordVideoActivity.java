@@ -8,7 +8,7 @@ import tracebook.core.media.VideoRecorder;
 import Trace.Book.R;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import tracebook.util.LogIt;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -94,7 +94,7 @@ public class RecordVideoActivity extends Activity implements
         try {
             recorder.prepare(holder.getSurface());
         } catch (IOException e) {
-            Log.e("TraceBook", e.toString());
+            LogIt.e("TraceBook", e.toString());
         }
     }
 

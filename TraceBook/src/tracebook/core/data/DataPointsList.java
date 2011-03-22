@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * WayPointList objects are any objects that consist of a series of nodes like
@@ -284,11 +284,11 @@ public class DataPointsList extends DataMapObject {
                 serializer.endTag(null, "way");
 
             } catch (IllegalArgumentException e) {
-                Log.e("WaySerialisation", "Should not happen");
+                LogIt.e("WaySerialisation", "Should not happen");
             } catch (IllegalStateException e) {
-                Log.e("WaySerialisation", "Illegal state");
+                LogIt.e("WaySerialisation", "Illegal state");
             } catch (IOException e) {
-                Log.e("WaySerialisation", "Could not serialize way");
+                LogIt.e("WaySerialisation", "Could not serialize way");
             }
         }
     }

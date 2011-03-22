@@ -92,7 +92,8 @@ public final class LogIt {
                     fw.append(prefix + " : " + message);
                     fw.close();
                 } catch (IOException e) {
-                    Log.e(LOG_PREFIX, "Logging error : Could not log to file!");
+                    LogIt.e(LOG_PREFIX,
+                            "Logging error : Could not log to file!");
                 }
                 break;
             case LOGMETHOD_ANDROID:
@@ -171,5 +172,17 @@ public final class LogIt {
             minLogLevel = MIN_LOG_LEVEL;
         else
             minLogLevel = logLevel;
+    }
+
+    /**
+     * Logs message with error priority.
+     * 
+     * @param tag
+     *            prefix of the log message
+     * @param message
+     *            The message to be logged
+     */
+    public static synchronized void w(String tag, String message) {
+        log(tag, message, 4);
     }
 }

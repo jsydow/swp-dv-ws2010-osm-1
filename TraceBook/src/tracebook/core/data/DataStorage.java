@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import tracebook.util.LogIt;
 import android.os.Environment;
-import android.util.Log;
 
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
@@ -68,15 +68,15 @@ public final class DataStorage {
             for (File f : files) {
                 if (f.isFile()) {
                     if (!f.delete()) {
-                        Log.e("DeleteDirectory", "Could not delete file "
-                                + f.getName() + " in directory "
-                                + dir.getPath());
+                        LogIt.e("DeleteDirectory",
+                                "Could not delete file " + f.getName()
+                                        + " in directory " + dir.getPath());
                     }
                 }
             }
             if (!dir.delete()) {
-                Log.e("DeleteDirectory", "Could not delete directory "
-                        + dir.getName());
+                LogIt.e("DeleteDirectory",
+                        "Could not delete directory " + dir.getName());
 
             }
         }
@@ -273,9 +273,8 @@ public final class DataStorage {
             }
 
         } else {
-            Log
-                    .w("TraceBookDirectory",
-                            "The TraceBook directory path doesn't point to a directory! wtf?");
+            LogIt.w("TraceBookDirectory",
+                    "The TraceBook directory path doesn't point to a directory! wtf?");
         }
     }
 

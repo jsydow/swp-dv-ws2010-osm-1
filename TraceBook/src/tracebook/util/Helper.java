@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
@@ -325,7 +324,7 @@ public final class Helper {
                 context,
                 "An error occured. Please restart the application and try again.",
                 Toast.LENGTH_LONG).show();
-        Log.e(logTag, ex.getMessage());
+        LogIt.e(logTag, ex.getMessage());
     }
 
     /**

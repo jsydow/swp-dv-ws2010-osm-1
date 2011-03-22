@@ -20,7 +20,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
-import android.util.Log;
+import tracebook.util.LogIt;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
@@ -312,11 +312,11 @@ public class AddPointMetaActivity extends ListActivity {
 
         } catch (XmlPullParserException xe) {
             parser.close();
-            Log.e("PARSE_TAGS", "Couldn't parse tags from xml");
+            LogIt.e("PARSE_TAGS", "Couldn't parse tags from xml");
             return new String[0];
         } catch (IOException e) {
             parser.close();
-            Log.e("PARSE_TAGS", "Couldn't parse tags from xml");
+            LogIt.e("PARSE_TAGS", "Couldn't parse tags from xml");
             return new String[0];
         } finally {
             parser.close();

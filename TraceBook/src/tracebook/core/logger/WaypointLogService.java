@@ -16,7 +16,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * This background service logs GPS data and stores it in the
@@ -205,14 +205,14 @@ public class WaypointLogService extends Service implements LocationListener {
     @Override
     public synchronized void onCreate() {
         super.onCreate();
-        Log.d(LOG_TAG, "onCreate");
+        LogIt.d(LOG_TAG, "onCreate");
         sender = new GpsMessage(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "onDestroy");
+        LogIt.d(LOG_TAG, "onDestroy");
         stopGPS();
     }
 
@@ -241,21 +241,21 @@ public class WaypointLogService extends Service implements LocationListener {
     }
 
     public void onProviderDisabled(String provider) {
-        Log.d(LOG_TAG, "GPS Provider Disabled: " + provider);
+        LogIt.d(LOG_TAG, "GPS Provider Disabled: " + provider);
     }
 
     public void onProviderEnabled(String provider) {
-        Log.d(LOG_TAG, "GPS Provider Enabled: " + provider);
+        LogIt.d(LOG_TAG, "GPS Provider Enabled: " + provider);
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
-        Log.d(LOG_TAG, "onStart");
+        LogIt.d(LOG_TAG, "onStart");
     }
 
     public void onStatusChanged(String provider, int status, Bundle extra) {
-        Log.d(LOG_TAG, "GPS Status Changed: " + provider);
+        LogIt.d(LOG_TAG, "GPS Status Changed: " + provider);
     }
 
     /**
