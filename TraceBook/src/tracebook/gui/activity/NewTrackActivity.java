@@ -24,11 +24,14 @@ import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -376,6 +379,49 @@ public class NewTrackActivity extends TabActivity {
 
     }
 
+    private void checkGpsStatus() {
+        LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // Get the app's shared preferences
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        if (!loc.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                && appPreferences.getBoolean("check_GPSbyStartTracking", true)) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setTitle(this.getResources().getString(
+                    R.string.alert_NewTrackActivity_NoGpsTitle));
+            builder.setMessage(this.getResources().getString(
+                    R.string.alert_NewTrackActivity_NoGpsMessage));
+
+            builder.setPositiveButton(
+                    this.getResources().getString(R.string.alert_global_yes),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Intent intent = new Intent(
+                                    Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(intent);
+                            dialog.cancel();
+                        }
+                    });
+
+            builder.setNegativeButton(
+                    this.getResources().getString(R.string.alert_global_no),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            builder.show();
+
+        }
+
+    }
+
     /**
      * Initialization the TabHost with all three tabs: 1. mapView (MapsForge) 2.
      * NewTab 3. EditTab
@@ -494,8 +540,8 @@ public class NewTrackActivity extends TabActivity {
     protected void onResume() {
         super.onResume();
         initListView();
+        checkGpsStatus();
         setGpsStatus();
-        /* setGpsStatus(); */
     }
 
     /**
