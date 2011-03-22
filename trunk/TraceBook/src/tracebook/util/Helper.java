@@ -226,7 +226,7 @@ public final class Helper {
                 pending = n;
             }
             threshold /= nodes.size();
-            LogIt.getInstance().log("filterPoints", "Average: " + threshold, 1);
+            LogIt.log("filterPoints", "Average: " + threshold, 1);
         }
     }
 
