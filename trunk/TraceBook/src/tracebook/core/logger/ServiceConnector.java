@@ -3,7 +3,7 @@ package tracebook.core.logger;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * This class provides methods for controlling the {@link WaypointLogService}.
@@ -33,9 +33,9 @@ public final class ServiceConnector {
             intent.setClassName(activity.getPackageName(),
                     WaypointLogService.class.getName());
             activity.bindService(intent, conn, Context.BIND_AUTO_CREATE);
-            Log.d(LOG_TAG, "bindService()");
+            LogIt.d(LOG_TAG, "bindService()");
         } else
-            Log.d(LOG_TAG, "Cannot bind - service already bound");
+            LogIt.d(LOG_TAG, "Cannot bind - service already bound");
     }
 
     /**
@@ -45,9 +45,9 @@ public final class ServiceConnector {
         if (conn != null) {
             activity.unbindService(conn);
             conn = null;
-            Log.d(LOG_TAG, "unbindService()");
+            LogIt.d(LOG_TAG, "unbindService()");
         } else
-            Log.d(LOG_TAG, "Cannot unbind - service not bound");
+            LogIt.d(LOG_TAG, "Cannot unbind - service not bound");
     }
 
     /**
@@ -60,13 +60,13 @@ public final class ServiceConnector {
     public static void startService(Activity act) {
         activity = act;
         if (started) {
-            Log.d(LOG_TAG, "Service already started");
+            LogIt.d(LOG_TAG, "Service already started");
         } else {
             Intent intent = new Intent();
             intent.setClassName(activity.getPackageName(),
                     WaypointLogService.class.getName());
             activity.startService(intent);
-            Log.d(LOG_TAG, "startService()");
+            LogIt.d(LOG_TAG, "startService()");
             started = true;
         }
     }
@@ -76,13 +76,13 @@ public final class ServiceConnector {
      */
     public static void stopService() {
         if (!started) {
-            Log.d(LOG_TAG, "Service not yet started");
+            LogIt.d(LOG_TAG, "Service not yet started");
         } else {
             Intent intent = new Intent();
             intent.setClassName(activity.getPackageName(),
                     WaypointLogService.class.getName());
             activity.stopService(intent);
-            Log.d(LOG_TAG, "stopService()");
+            LogIt.d(LOG_TAG, "stopService()");
         }
     }
 }

@@ -23,11 +23,11 @@ public class LoggerServiceConnection implements ServiceConnection {
 
     public void onServiceConnected(ComponentName className, IBinder boundService) {
         loggerService = ILoggerService.Stub.asInterface(boundService);
-        // Log.d(LOG_TAG, "onServiceConnected");
+        // LogIt.d(LOG_TAG, "onServiceConnected");
     }
 
     public void onServiceDisconnected(ComponentName className) {
         loggerService = null;
-        // Log.d(LOG_TAG, "onServiceDisconnected");
+        // LogIt.d(LOG_TAG, "onServiceDisconnected");
     }
 }

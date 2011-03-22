@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -73,7 +72,7 @@ public class MapsForgeActivity extends MapActivity {
 
                 currentGeoPoint = new GeoPoint(lat, lng); // we also need this
                 // to center the map
-                Log.d(LOG_TAG,
+                LogIt.d(LOG_TAG,
                         "Location update received "
                                 + currentGeoPoint.toString());
 
@@ -99,12 +98,12 @@ public class MapsForgeActivity extends MapActivity {
             // Receive an update of a way and update the overlay accordingly
             case GpsMessage.UPDATE_OBJECT:
                 if (Helper.currentTrack() == null) {
-                    Log.e(LOG_TAG,
+                    LogIt.e(LOG_TAG,
                             "Received UPDATE_OBJECT with no current track present.");
                     return;
                 }
 
-                Log.d(LOG_TAG, "UPDATE_OBJECT received, way: " + wayId
+                LogIt.d(LOG_TAG, "UPDATE_OBJECT received, way: " + wayId
                         + " node: " + pointId);
 
                 if (wayId > 0)
@@ -116,7 +115,7 @@ public class MapsForgeActivity extends MapActivity {
             case GpsMessage.MOVE_POINT:
                 if (Helper.currentTrack() != null) {
                     editNode = Helper.currentTrack().getNodeById(pointId);
-                    Log.d(LOG_TAG, "Enter edit mode for Point " + pointId);
+                    LogIt.d(LOG_TAG, "Enter edit mode for Point " + pointId);
                 }
 
                 break;
@@ -130,14 +129,14 @@ public class MapsForgeActivity extends MapActivity {
         }
 
         private void updatePoint(int pointId) {
-            Log.d(LOG_TAG, "Received node update, id=" + pointId);
+            LogIt.d(LOG_TAG, "Received node update, id=" + pointId);
 
             DataNode point = null;
             if (Helper.currentTrack() != null) {
                 point = Helper.currentTrack().getNodeById(pointId);
             }
             if (point == null)
-                Log.e(LOG_TAG, "Node with ID " + pointId + " does not exist.");
+                LogIt.e(LOG_TAG, "Node with ID " + pointId + " does not exist.");
             else {
                 if (point.getOverlayItem() == null)
                     point.setOverlayItem(new OverlayItem(point.toGeoPoint(),
@@ -160,6 +159,7 @@ public class MapsForgeActivity extends MapActivity {
                 centerMap = true;
         }
     }
+
     private static final String LOG_TAG = "MapsForgeActivity";
     // TODO: user configurable
     private String defaultMap = "/sdcard/default.map";
@@ -204,7 +204,7 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.updateItem(projection, editNode.getId(), 0);
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                Log.d(LOG_TAG,
+                LogIt.d(LOG_TAG,
                         "Exiting edit mode for point " + editNode.getId());
                 editNode = null;
             }
@@ -315,7 +315,7 @@ public class MapsForgeActivity extends MapActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d(LOG_TAG, "Creating MapActivity");
+        LogIt.d(LOG_TAG, "Creating MapActivity");
 
         pointsOverlay = new DataNodeArrayItemizedOverlay(this, routesOverlay);
         routesOverlay = new DataPointsListArrayRouteOverlay(this, pointsOverlay);
@@ -344,20 +344,20 @@ public class MapsForgeActivity extends MapActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(LOG_TAG, "Destroying map activity");
+        LogIt.d(LOG_TAG, "Destroying map activity");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(LOG_TAG, "Pausing MapActivity");
+        LogIt.d(LOG_TAG, "Pausing MapActivity");
         unregisterReceiver(gpsReceiver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(LOG_TAG, "Resuming MapActivity");
+        LogIt.d(LOG_TAG, "Resuming MapActivity");
 
         // redraw all overlays to account for the events we've missed paused
         routesOverlay.clear();

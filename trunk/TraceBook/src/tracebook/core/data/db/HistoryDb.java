@@ -7,7 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * Provide comfortable access to the history database.
@@ -49,7 +49,7 @@ public class HistoryDb {
             closeDb();
             return tags;
         } else {
-            Log.e("TagDataBase", "Could not open Database.");
+            LogIt.e("TagDataBase", "Could not open Database.");
             return null;
         }
     }
@@ -78,7 +78,7 @@ public class HistoryDb {
                         + "='" + value + "'");
                 wdb.close();
             } else {
-                Log.e("HistoryDb", "Could not open database to write.");
+                LogIt.e("HistoryDb", "Could not open database to write.");
             }
         } else {
             SQLiteDatabase wdb = helper.getWritableDatabase();
@@ -93,7 +93,7 @@ public class HistoryDb {
                 wdb.insert(TagDbOpenHelper.getHistoryTableName(), null, values);
                 wdb.close();
             } else {
-                Log.e("HistoryDb", "Could not open database to write.");
+                LogIt.e("HistoryDb", "Could not open database to write.");
             }
         }
         return;
@@ -189,7 +189,7 @@ public class HistoryDb {
             crs.close();
             closeDb();
         } else {
-            Log.e("TagDataBase", "Could not open Database.");
+            LogIt.e("TagDataBase", "Could not open Database.");
         }
         return rowCount;
     }

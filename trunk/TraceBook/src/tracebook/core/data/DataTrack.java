@@ -25,8 +25,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
+import tracebook.util.LogIt;
 import android.location.Location;
-import android.util.Log;
 import android.util.Xml;
 
 /**
@@ -46,6 +46,7 @@ public class DataTrack extends DataMediaHolder {
     public static void delete(String trackname) {
         DataStorage.deleteDirectory(new File(getTrackDirPath(trackname)));
     }
+
     /**
      * This method loads a Track from the devices memory. It uses the
      * appropriate ContentProvider. Note: Currently a stub. Note: The parameter
@@ -99,8 +100,8 @@ public class DataTrack extends DataMediaHolder {
                     throw new SAXException();
                 for (int i = 0; i < wayelements.getLength(); ++i) {
                     // generate ways
-                    DataPointsList dpl = DataPointsList.deserialize(wayelements
-                            .item(i), allnodes);
+                    DataPointsList dpl = DataPointsList.deserialize(
+                            wayelements.item(i), allnodes);
                     // add them
                     ret.addWay(dpl);
                 }
@@ -125,17 +126,17 @@ public class DataTrack extends DataMediaHolder {
                 ret.getNodes().addAll(allnodes);
 
             } catch (IOException e) {
-                Log.e("TrackDeserialisation", "Error while reading XML file.");
+                LogIt.e("TrackDeserialisation", "Error while reading XML file.");
                 return null;
             } catch (ParserConfigurationException e) {
-                Log.e("TrackDeserialisation", "XML parser doesn't work.");
+                LogIt.e("TrackDeserialisation", "XML parser doesn't work.");
                 return null;
             } catch (SAXException e) {
-                Log.e("TrackDeserialisation", "Error while parsing XML file.");
+                LogIt.e("TrackDeserialisation", "Error while parsing XML file.");
                 return null;
             }
         } else {
-            Log.e("TrackDeserialisation",
+            LogIt.e("TrackDeserialisation",
                     "Track was not found. Path should be " + track.getPath());
             return null;
         }
@@ -203,25 +204,25 @@ public class DataTrack extends DataMediaHolder {
         try {
             if (file.exists()) {
                 if (!file.delete()) {
-                    Log.e("OpenFile", "Deleting old file " + file.getName()
+                    LogIt.e("OpenFile", "Deleting old file " + file.getName()
                             + " failed");
                     return null;
                 }
             }
             if (!file.createNewFile()) {
-                Log.e("OpenFile", "Creating new file " + file.getName()
+                LogIt.e("OpenFile", "Creating new file " + file.getName()
                         + " failed");
                 return null;
             }
 
         } catch (IOException e) {
-            Log.e("OpenFile", "Could not create new file " + file.getPath());
+            LogIt.e("OpenFile", "Could not create new file " + file.getPath());
         }
         FileOutputStream fileos = null;
         try {
             fileos = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
-            Log.e("OpenFile", "Could not open new file " + file.getPath());
+            LogIt.e("OpenFile", "Could not open new file " + file.getPath());
         }
         return fileos;
     }
@@ -298,7 +299,7 @@ public class DataTrack extends DataMediaHolder {
                 + name);
         if (!dir.isDirectory()) {
             if (!dir.mkdir()) {
-                Log.e("DataStorage", "Could not create new track folder "
+                LogIt.e("DataStorage", "Could not create new track folder "
                         + name);
             }
         }
@@ -547,11 +548,11 @@ public class DataTrack extends DataMediaHolder {
                 buf.write(text);
                 buf.close();
             } else {
-                Log.w("MediaSavingText",
+                LogIt.w("MediaSavingText",
                         "Text file with this timestamp already exists.");
             }
         } catch (IOException e) {
-            Log.e("MediaSavingText", "Error while writing text file.");
+            LogIt.e("MediaSavingText", "Error while writing text file.");
             return null;
         }
         return new DataMedia(txtfile.getParent(), txtfile.getName());
@@ -577,7 +578,7 @@ public class DataTrack extends DataMediaHolder {
     public void serialize(boolean shouldSerialiseMedia) {
         int totalMedia = media.size();
 
-        Log.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
+        LogIt.d("DataTrack", "Ways: " + ways.size() + ", POIs: " + nodes.size());
 
         if (!(new File(getTrackDirPath()).isDirectory())) {
             createNewTrackFolder();
@@ -617,23 +618,23 @@ public class DataTrack extends DataMediaHolder {
             serializer.endTag(null, "osm");
             serializer.flush();
         } catch (IllegalArgumentException e) {
-            Log.e("DataTrackSerialisation",
+            LogIt.e("DataTrackSerialisation",
                     "Should not happen. Internal error.");
         } catch (IllegalStateException e) {
-            Log.e("DataTrackSerialisation",
+            LogIt.e("DataTrackSerialisation",
                     "Should not happen. Internal error.");
         } catch (IOException e) {
-            Log.e("DataTrackSerialisation", "Error while reading file.");
+            LogIt.e("DataTrackSerialisation", "Error while reading file.");
         } finally {
             try {
                 fileos.close();
             } catch (IOException e) {
-                Log.e("TrackInfo", "Error closing file: " + e.getMessage());
+                LogIt.e("TrackInfo", "Error closing file: " + e.getMessage());
             }
         }
 
-        (new DataTrackInfo(name, getDatetime(), comment, nodes.size(), ways
-                .size(), totalMedia)).serialize();
+        (new DataTrackInfo(name, getDatetime(), comment, nodes.size(),
+                ways.size(), totalMedia)).serialize();
 
     }
 
@@ -701,17 +702,16 @@ public class DataTrack extends DataMediaHolder {
             File newtrackdir = new File(getTrackDirPath(newname));
             if (!newtrackdir.isDirectory()) {
                 if (!trackdir.renameTo(newtrackdir)) {
-                    Log.w("RenamingTrack", "Could not rename Track.");
+                    LogIt.w("RenamingTrack", "Could not rename Track.");
                     return -3;
                 }
             } else {
-                Log
-                        .w("RenamingTrack",
-                                "Track of new trackname already exists.");
+                LogIt.w("RenamingTrack",
+                        "Track of new trackname already exists.");
                 return -2;
             }
         } else {
-            Log.w("RenamingTrack", "Could not find Track " + getName());
+            LogIt.w("RenamingTrack", "Could not find Track " + getName());
             return -1;
         }
         return 0;

@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -75,14 +74,14 @@ public class LoadTrackActivity extends ListActivity {
      */
     public void deleteTrackBtn(View v) {
         if (v == null) {
-            Log.w("BUTTON", "view is null");
+            LogIt.w("BUTTON", "view is null");
             return;
         }
         if (v.getTag() == null) {
-            Log.w("BUTTON", "tag is null");
+            LogIt.w("BUTTON", "tag is null");
             return;
         }
-        Log.w("BUTTON", (String) v.getTag());
+        LogIt.w("BUTTON", (String) v.getTag());
         deleteTrack((String) v.getTag());
     }
 
@@ -108,7 +107,7 @@ public class LoadTrackActivity extends ListActivity {
                 final Intent intent = new Intent(this, NewTrackActivity.class);
                 startActivity(intent);
             } else {
-                Log.e("RenameTrack",
+                LogIt.e("RenameTrack",
                         "Track to load was not found or is corrupt.");
                 LogIt.popup(this,
                         "Track to load could not be opened. Missing or corrupt.");
@@ -135,15 +134,15 @@ public class LoadTrackActivity extends ListActivity {
                             case 0:
                                 break;
                             case -1:
-                                Log.e("RenameTrack",
+                                LogIt.e("RenameTrack",
                                         "Track to rename was not found or is corrupt.");
                                 break;
                             case -2:
-                                Log.e("RenameTrack",
+                                LogIt.e("RenameTrack",
                                         "There is already a track with this name.");
                                 break;
                             case -3:
-                                Log.e("RenameTrack",
+                                LogIt.e("RenameTrack",
                                         "Track could not be renamed.");
                                 break;
                             default:
@@ -388,7 +387,7 @@ public class LoadTrackActivity extends ListActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 DataTrack.delete(trname);
-                                Log.d("DEBUG", "delete " + trname);
+                                LogIt.d("DEBUG", "delete " + trname);
                                 // updateAdapter();
                             }
                         })
@@ -467,7 +466,7 @@ public class LoadTrackActivity extends ListActivity {
             final Intent intent = new Intent(this, NewTrackActivity.class);
             startActivity(intent);
         } else {
-            Log.e("RenameTrack", "Track to load was not found or is corrupt.");
+            LogIt.e("RenameTrack", "Track to load was not found or is corrupt.");
             LogIt.popup(this,
                     "Track to load could not be opened. Missing or corrupt.");
         }

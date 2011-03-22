@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.util.Log;
+import tracebook.util.LogIt;
 import android.util.Xml;
 
 /**
@@ -79,18 +79,17 @@ public class DataTrackInfo {
                             info.numberOfMedia = Integer.parseInt(value);
                         }
                     } else {
-                        Log
-                                .w("DeserialisingDataTrackInfo",
-                                        "XML-file is invalid. A data-node has no key-attribute.");
+                        LogIt.w("DeserialisingDataTrackInfo",
+                                "XML-file is invalid. A data-node has no key-attribute.");
                     }
                 }
 
             } catch (ParserConfigurationException e) {
-                Log.e("DeserialisingDataTrackInfo", "This should not happen!");
+                LogIt.e("DeserialisingDataTrackInfo", "This should not happen!");
             } catch (SAXException e) {
-                Log.e("DeserialisingDataTrackInfo", "XML-file is not valid.!");
+                LogIt.e("DeserialisingDataTrackInfo", "XML-file is not valid.!");
             } catch (IOException e) {
-                Log.e("DeserialisingDataTrackInfo",
+                LogIt.e("DeserialisingDataTrackInfo",
                         "Error while reading XML file!");
             }
         } else {
@@ -106,6 +105,7 @@ public class DataTrackInfo {
     private int numberOfPOIs;
     private int numberOfWays;
     private String timestamp;
+
     private DataTrackInfo() {
         timestamp = "";
         comment = "";
@@ -242,16 +242,16 @@ public class DataTrackInfo {
             serializer.endTag(null, "info");
             serializer.flush();
         } catch (IllegalArgumentException e) {
-            Log.e(LOG_TAG, e.getMessage());
+            LogIt.e(LOG_TAG, e.getMessage());
         } catch (IllegalStateException e) {
-            Log.e(LOG_TAG, e.getMessage());
+            LogIt.e(LOG_TAG, e.getMessage());
         } catch (IOException e) {
-            Log.e(LOG_TAG, e.getMessage());
+            LogIt.e(LOG_TAG, e.getMessage());
         } finally {
             try {
                 fileos.close();
             } catch (IOException e) {
-                Log.e(LOG_TAG, "Unable to read file: " + e.getMessage());
+                LogIt.e(LOG_TAG, "Unable to read file: " + e.getMessage());
             }
         }
 

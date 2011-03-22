@@ -13,7 +13,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+import tracebook.util.LogIt;
 import android.util.Xml;
 
 /**
@@ -84,7 +84,7 @@ public class TagDb {
             closeDb();
             return tags;
         } else {
-            Log.e("TagDataBase", "Could not open Database.");
+            LogIt.e("TagDataBase", "Could not open Database.");
             return null;
         }
     }
@@ -234,12 +234,12 @@ public class TagDb {
                     });
         } catch (SAXException e) {
             e.printStackTrace();
-            Log.e("XMLFileParsing", "XML parsing error.");
+            LogIt.e("XMLFileParsing", "XML parsing error.");
         } catch (FileNotFoundException e) {
-            Log.e("XMLFileParsing", "XML file not found.");
+            LogIt.e("XMLFileParsing", "XML file not found.");
             e.printStackTrace();
         } catch (IOException e) {
-            Log.e("XMLFileParsing", "Error while reading XML file");
+            LogIt.e("XMLFileParsing", "Error while reading XML file");
             e.printStackTrace();
         }
 
@@ -248,7 +248,7 @@ public class TagDb {
                 new String[] { "COUNT(*)" }, null, null, null, null, null);
         if (crs.getCount() > 0) {
             crs.moveToFirst();
-            Log.d("InitDbWithFile", "inserted " + crs.getString(0) + " rows.");
+            LogIt.d("InitDbWithFile", "inserted " + crs.getString(0) + " rows.");
         }
         crs.close();
         closeDb();

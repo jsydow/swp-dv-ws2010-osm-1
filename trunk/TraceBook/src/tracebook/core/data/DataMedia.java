@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * This is an object that refers to a medium. The medium itself is stored on the
@@ -50,7 +50,7 @@ public class DataMedia {
         if (medium.exists()) {
             return new DataMedia(medium.getParent(), medium.getName());
         }
-        Log.w("Media", "Medium was not found. Was trying to load a medium.");
+        LogIt.w("Media", "Medium was not found. Was trying to load a medium.");
         return null;
     }
 
@@ -153,7 +153,7 @@ public class DataMedia {
         File medium = new File(getFullPath());
         if (medium.isFile()) {
             if (!medium.delete()) {
-                Log.w("Media", "Could not delete medium");
+                LogIt.w("Media", "Could not delete medium");
             }
         }
     }
@@ -227,7 +227,7 @@ public class DataMedia {
                 }
             }
         } else {
-            Log.w("Media", "Given pathname is no diretory.");
+            LogIt.w("Media", "Given pathname is no diretory.");
         }
 
         return ret;
@@ -246,11 +246,11 @@ public class DataMedia {
             serializer.attribute(null, "href", name);
             serializer.endTag(null, "link");
         } catch (IllegalArgumentException e) {
-            Log.e("MediaSerialisation", "Should not happen");
+            LogIt.e("MediaSerialisation", "Should not happen");
         } catch (IllegalStateException e) {
-            Log.e("MediaSerialisation", "Illegal state");
+            LogIt.e("MediaSerialisation", "Illegal state");
         } catch (IOException e) {
-            Log.e("MediaSerialisation", "Could not serialize medium " + name);
+            LogIt.e("MediaSerialisation", "Could not serialize medium " + name);
         }
     }
 
@@ -266,7 +266,7 @@ public class DataMedia {
         File newfile = new File(getPath() + newname);
         boolean success = oldfile.renameTo(newfile);
         if (!success) {
-            Log.e("MediaRenaming", "Could not rename medium.");
+            LogIt.e("MediaRenaming", "Could not rename medium.");
         } else {
             this.name = newname;
         }

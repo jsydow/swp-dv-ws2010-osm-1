@@ -12,7 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.RemoteException;
-import android.util.Log;
+import tracebook.util.LogIt;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -104,7 +104,7 @@ public class StartActivity extends Activity {
                 + File.separator + "TraceBook");
         if (!dir.isDirectory()) {
             if (!dir.mkdir()) {
-                Log.e("TraceBookMainActiviy",
+                LogIt.e("TraceBookMainActiviy",
                         "Could not create TraceBook-directory");
             }
         }
@@ -170,7 +170,7 @@ public class StartActivity extends Activity {
         try {
             ServiceConnector.releaseService();
         } catch (IllegalArgumentException e) {
-            Log.e("TraceBook", "Service not connected.");
+            LogIt.e("TraceBook", "Service not connected.");
         }
     }
 

@@ -11,7 +11,7 @@ import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.location.Location;
-import android.util.Log;
+import tracebook.util.LogIt;
 
 /**
  * A node. A node can be a POI or an element of a list of way points that belong
@@ -218,11 +218,11 @@ public class DataNode extends DataMapObject {
             serializer.endTag(null, "node");
 
         } catch (IllegalArgumentException e) {
-            Log.e("NodeSerialisation", "Should not happen");
+            LogIt.e("NodeSerialisation", "Should not happen");
         } catch (IllegalStateException e) {
-            Log.e("NodeSerialisation", "Illegal state");
+            LogIt.e("NodeSerialisation", "Illegal state");
         } catch (IOException e) {
-            Log.e("NodeSerialisation", "Could not serialize node");
+            LogIt.e("NodeSerialisation", "Could not serialize node");
         }
     }
 
