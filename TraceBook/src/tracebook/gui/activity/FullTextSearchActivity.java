@@ -1,5 +1,9 @@
 package tracebook.gui.activity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -22,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -80,6 +86,7 @@ public class FullTextSearchActivity extends ListActivity {
             new SearchThread(act, act.increaseIndex(), searchText).start();
         }
     }
+
     /**
      * A simple thread class which deals with search jobs in our database.
      */
@@ -311,6 +318,20 @@ public class FullTextSearchActivity extends ListActivity {
         infoDialog.setTitle(R.string.string_searchInfoDialog_title);
         infoDialog.setCancelable(true);
 
+        ImageView img = (ImageView) infoDialog
+                .findViewById(R.id.iv_searchInfoDialog_wikiImage);
+
+        try {
+            URL url = new URL(ts.getImage());
+            InputStream is = (InputStream) url.getContent();
+            Drawable d = Drawable.createFromStream(is, "src");
+            img.setImageDrawable(d);
+        } catch (MalformedURLException e) {
+            // TODO define fallback image
+        } catch (IOException e) {
+            // TODO define fallback image
+        }
+
         TextView cat = (TextView) infoDialog
                 .findViewById(R.id.tv_searchInfoDialog_category);
         cat.setText(ts.getKey());
@@ -346,5 +367,4 @@ public class FullTextSearchActivity extends ListActivity {
         infoDialog.show();
 
     }
-
 }
