@@ -8,8 +8,7 @@
 		android:orientation="vertical" android:background="#fff">
 
 		<ImageView android:id="@+id/iv_searchInfoDialog_wikiImage"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:src="@drawable/icon" />
+			android:src="@drawable/icon" android:layout_height="wrap_content" android:layout_width="fill_parent" android:scaleType="fitCenter"/>
 
 		<TextView android:text="@string/string_global_categoryTitle"
 			android:id="@+id/tv_searchInfoDialog_categoryTitle"
