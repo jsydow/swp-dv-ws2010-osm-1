@@ -12,8 +12,12 @@ import android.widget.TextView;
 
 /**
  * The GenericAdapterData helps you to define content for currently tree types
- * of different views. 1. TextView 2. ImageView 3. Button.
- * 
+ * of different views.
+ * <ul>
+ * <li>1. TextView
+ * <li>2. ImageView
+ * <li>3. Button.
+ * </ul>
  * One instance of a GenericAdapterData represents the date for one item in the
  * list view. Where one item can hold one or more views. You can associate views
  * with String tags via the GenericItemDesciption class.
