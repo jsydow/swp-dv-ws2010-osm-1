@@ -1,12 +1,17 @@
 package tracebook.gui.activity;
 
+import java.io.IOException;
+
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.AudioRecorder;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +26,10 @@ public class AddMemoActivity extends Activity {
      */
     DataMapObject node;
 
+    /**
+     * Preferences for this activity.
+     */
+    SharedPreferences preferences;
     /**
      * The object that is responsible for recording (and attaching) the audio
      * file to our data structure.
@@ -38,6 +47,8 @@ public class AddMemoActivity extends Activity {
                     .getDataMapObjectById(nodeId);
         }
 
+        preferences = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
         setContentView(R.layout.activity_addmemoactivity);
         setTitle(R.string.string_addmemoActivity_title);
         startMemo();
@@ -47,6 +58,20 @@ public class AddMemoActivity extends Activity {
     public void onDestroy() {
         stopMemo();
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        int maxDuration = 60 * Integer.parseInt(preferences.getString(
+                "lst_maxAudioRecording", "0"));
+
+        try {
+            recorder.prepare(maxDuration);
+        } catch (IOException e) {
+            LogIt.e("TraceBook", e.toString());
+        }
+
+        super.onResume();
     }
 
     @Override
@@ -60,6 +85,9 @@ public class AddMemoActivity extends Activity {
      * recording will be start.
      */
     public void startMemo() {
+        final int maxDuration = 60 * Integer.parseInt(preferences.getString(
+                "lst_maxVideoRecording", "0"));
+
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         dialog.setMessage(getResources().getString(
@@ -71,6 +99,7 @@ public class AddMemoActivity extends Activity {
             public void run() {
                 try {
                     int step = 0;
+
                     while (step < 50) {
                         Thread.sleep(2000 / 50);
                         step++;
@@ -80,7 +109,13 @@ public class AddMemoActivity extends Activity {
                     e.printStackTrace();
                 }
                 dialog.dismiss();
-                recorder.start();
+
+                try {
+                    recorder.prepare(maxDuration);
+                    recorder.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }

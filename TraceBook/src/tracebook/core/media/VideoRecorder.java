@@ -13,7 +13,7 @@ import android.view.Surface;
  */
 public class VideoRecorder extends Recorder {
     private boolean isReady = false;
-    private MediaRecorder recorder = new MediaRecorder();
+    private MediaRecorder recorder;
 
     /**
      * Because of the nature of recording a video with MediaRecorder, we have to
@@ -21,14 +21,18 @@ public class VideoRecorder extends Recorder {
      * knowledge of the Surface object to show the recording preview in. All
      * those necessary steps are taken care of during preparation.
      * 
+     * @param maxDuration
+     *            Maximum duration of the video to be recorded in seconds.
      * @param surface
      *            The surface object we are going to display our video preview
      *            in.
      * @throws IOException
-     *             not used
+     *             Not used.
      */
-    public void prepare(final Surface surface) throws IOException {
+    public void prepare(final int maxDuration, final Surface surface)
+            throws IOException {
         filename = getNewFilename();
+        recorder = new MediaRecorder();
 
         // Set media sources.
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -46,6 +50,10 @@ public class VideoRecorder extends Recorder {
 
         recorder.setPreviewDisplay(surface);
 
+        if (maxDuration > 0) {
+            recorder.setMaxDuration(maxDuration * 1000);
+        }
+
         recorder.prepare();
 
         isReady = true;
@@ -59,7 +67,7 @@ public class VideoRecorder extends Recorder {
      */
     @Override
     public String start() {
-        if (isReady) {
+        if (isReady && !isRecording) {
             recorder.start();
             isRecording = true;
 
