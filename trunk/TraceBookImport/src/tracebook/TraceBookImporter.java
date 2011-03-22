@@ -48,16 +48,17 @@ import org.xml.sax.SAXException;
  */
 public class TraceBookImporter extends FileImporter {
     /**
-     * 
+     * Static file extension key for TraceBook files.
      */
     public static final String TRACEBOOK_FILE_EXT = "tbt";
     /**
-     * 
+     * Static file extension separator for TraceBook files.
      */
     public static final String TRACEBOOK_FILE_EXT_DOT = ".";
 
     /**
-     * 
+     * The empty standard constructor. Defines the default
+     * {@link ExtensionFileFilter} for TraceBookTrack files
      */
     public TraceBookImporter() {
         this(new ExtensionFileFilter(TRACEBOOK_FILE_EXT, TRACEBOOK_FILE_EXT,
@@ -66,12 +67,13 @@ public class TraceBookImporter extends FileImporter {
     }
 
     /**
+     * The standard constructor.
      * 
      * @param filter
+     *            The {@link ExtensionFileFilter} for TraceBookTrack files.
      */
     public TraceBookImporter(ExtensionFileFilter filter) {
         super(filter);
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -98,27 +100,17 @@ public class TraceBookImporter extends FileImporter {
             myProgressMonitor = progressMonitor;
         }
 
-        // TODO: Count a little bit more exactly than up to 4.
-        myProgressMonitor.beginTask(String.format("Importing TBT file %s...",
-                file.getName(), 4));
-        myProgressMonitor.setTicksCount(1);
-
         if (fn.toLowerCase().endsWith(TRACEBOOK_FILE_EXT)) {
             try {
-                // ColumbusCSVReader r = new ColumbusCSVReader();
-                //
-                // // transform CSV into GPX
-
                 DataSet osmdata = new DataSet();
 
-                GpxData gpxData = new GpxData(); // r.transformColumbusCSV(fn);
+                GpxData gpxData = new GpxData();
                 GpxLayer gpxLayer = new GpxLayer(gpxData, file.getName());
                 Main.main.addLayer(gpxLayer);
                 MarkerLayer ml = null;
-                ml = new MarkerLayer(gpxData, tr("Markers from {0}", file
-                        .getName()), file, gpxLayer);
+                ml = new MarkerLayer(gpxData, tr("Markers from {0}",
+                        file.getName()), file, gpxLayer);
 
-                myProgressMonitor.setTicksCount(3);
                 DocumentBuilderFactory fac = DocumentBuilderFactory
                         .newInstance();
                 DocumentBuilder dom = fac.newDocumentBuilder();
@@ -129,8 +121,14 @@ public class TraceBookImporter extends FileImporter {
 
                 DecimalFormat decform = new DecimalFormat("0.0000000", decsymb);
                 HashMap<String, org.openstreetmap.josm.data.osm.Node> nodesMap = new HashMap<String, org.openstreetmap.josm.data.osm.Node>();
+                myProgressMonitor.beginTask(String.format(
+                        "Importing nodes %s...", file.getName(), 4), nl
+                        .getLength());
+                myProgressMonitor.setCustomText(String.format(
+                        "Importing nodes %s...", file.getName(), 4));
+                // myProgressMonitor.setTicksCount(nl.getLength());
                 for (int i = 0; i < nl.getLength(); i++) {
-
+                    myProgressMonitor.setTicks(i);
                     NamedNodeMap attributes = nl.item(i).getAttributes();
                     Node lat = attributes.getNamedItem("lat");
                     Node lon = attributes.getNamedItem("lon");
@@ -139,14 +137,11 @@ public class TraceBookImporter extends FileImporter {
                             .parse(lon.getNodeValue()).doubleValue());
 
                     org.openstreetmap.josm.data.osm.Node newosmnode = new org.openstreetmap.josm.data.osm.Node();
-                    newosmnode.setOsmId(Long.parseLong(((Attr) nl.item(i)
-                            .getAttributes().getNamedItem("id")).getValue()),
+                    newosmnode.setOsmId(
+                            Long.parseLong(((Attr) nl.item(i).getAttributes()
+                                    .getNamedItem("id")).getValue()),
                             Integer.parseInt(((Attr) nl.item(i).getAttributes()
                                     .getNamedItem("version")).getValue()));
-                    // new org.openstreetmap.josm.data.osm.Node(Long
-                    // .parseLong(((Attr) attributes.getNamedItem("id"))
-                    // .getValue()));
-                    // newosmnode.setVisible(true);
                     newosmnode.setCoor(latlon);
                     Main.debug("created new node: "
                             + Long.toString(newosmnode.getId()));
@@ -164,8 +159,8 @@ public class TraceBookImporter extends FileImporter {
                                             .getNamedItem("v")).getValue());
                         }
 
-                        if (childs.item(a).getNodeName().equalsIgnoreCase(
-                                "link")) {
+                        if (childs.item(a).getNodeName()
+                                .equalsIgnoreCase("link")) {
                             Main.debug("child: "
                                     + childs.item(a).getNodeName()
                                     + " : "
@@ -224,25 +219,18 @@ public class TraceBookImporter extends FileImporter {
                             .item(i).getAttributes().getNamedItem("timestamp"))
                             .getValue()));
                     osmdata.addPrimitive(newosmnode);
-                    Main
-                            .debug("new nodes id: "
-                                    + ((Attr) attributes.getNamedItem("id"))
-                                            .getValue());
-                    nodesMap.put(((Attr) attributes.getNamedItem("id"))
-                            .getValue(), newosmnode);
+                    Main.debug("new nodes id: "
+                            + ((Attr) attributes.getNamedItem("id")).getValue());
+                    nodesMap.put(
+                            ((Attr) attributes.getNamedItem("id")).getValue(),
+                            newosmnode);
                 }
                 NodeList nlw = doc.getElementsByTagName("way");
+                myProgressMonitor.setCustomText(String.format(
+                        "Importing ways  %s...", file.getName(), 4));
+                myProgressMonitor.setTicksCount(nlw.getLength());
                 for (int i = 0; i < nlw.getLength(); i++) {
-
-                    // WayData wd = new WayData();
-                    // readCommon(atts, wd);
-                    // Way w = new Way(wd.getId(), wd.getVersion());
-                    // w.setVisible(wd.isVisible());
-                    // w.load(wd);
-                    // externalIdMap.put(wd.getPrimitiveId(), w);
-                    // ways.put(wd.getUniqueId(), new ArrayList<Long>());
-                    // currentPrimitive = w;
-                    // currentExternalId = wd.getUniqueId();
+                    myProgressMonitor.setTicks(i);
                     WayData wd = new WayData();
                     wd.setVersion(Integer.parseInt(((Attr) nlw.item(i)
                             .getAttributes().getNamedItem("version"))
@@ -260,11 +248,9 @@ public class TraceBookImporter extends FileImporter {
                             String key = ((Attr) childs.item(a).getAttributes()
                                     .getNamedItem("ref")).getValue();
                             if (nodesMap.get(key) == null)
-                                Main
-                                        .debug("Hey we got a null node, impossible to add it to a way!");
+                                Main.debug("Hey we got a null node, impossible to add it to a way!");
                             else {
                                 waynodes.add(nodesMap.get(key));
-                                // newway.addNode(NodesMap.get(Key));
                                 Main.debug("Adding node " + key + " (" + ""
                                         + ") to way " + newway.getId());
                             }
@@ -281,8 +267,8 @@ public class TraceBookImporter extends FileImporter {
                     }
                     if (nlw.item(i).getAttributes().getNamedItem("timestamp") != null)
                         newway.setTimestamp(DateUtils.fromString(((Attr) nlw
-                                .item(i).getAttributes().getNamedItem(
-                                        "timestamp")).getValue()));
+                                .item(i).getAttributes()
+                                .getNamedItem("timestamp")).getValue()));
                     newway.setVisible(true);
                     newway.setNodes(waynodes);
                     if (tags != null) {
@@ -292,28 +278,19 @@ public class TraceBookImporter extends FileImporter {
 
                 }
 
-                // doc.getDocumentElement().normalize();
                 Main.debug("Items in the GpxLayer: "
                         + gpxLayer.data.waypoints.size());
-                myProgressMonitor.setTicksCount(1);
-                //
-                // r.dropBufferLists();
-                //
-                myProgressMonitor.setTicksCount(2);
+
                 OsmDataLayer osmdatalayer = new OsmDataLayer(osmdata, fn, file);
 
-                // add layer to show way points
-                // Main.main.addLayer(gpxLayer);
                 Main.main.addLayer(osmdatalayer);
                 Main.main.removeLayer(gpxLayer);
                 // Dirty hack to avoid
-                // nullpointer exception in
-                // markerlayer
+                // {@link NullPointerException} in
+                // {@link MarkerLayer}
                 //
 
                 //
-                // // ... and scale view appropriately - if wished by user
-                // if (!ColumbusCSVPreferences.dontZoom())
 
                 AutoScaleAction action = new AutoScaleAction("data");
                 action.autoScale();
@@ -323,7 +300,6 @@ public class TraceBookImporter extends FileImporter {
                 if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
                     Main.debug("makeautomarkers was true");
 
-                    // Main.main.addLayer(ml);
                     if (ml.data.size() > 0) {
                         Main.debug("There were markers in the GPXDATA");
                         for (Marker m : ml.data) {
@@ -359,8 +335,7 @@ public class TraceBookImporter extends FileImporter {
         } else {
             throw new IOException(
                     tr(String
-                            .format(
-                                    "Unsupported file extension (file '%s' does not end with '%s')!",
+                            .format("Unsupported file extension (file '%s' does not end with '%s')!",
                                     file.getName(), TRACEBOOK_FILE_EXT)));
         }
     }
