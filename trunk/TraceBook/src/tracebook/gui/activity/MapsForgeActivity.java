@@ -226,8 +226,6 @@ public class MapsForgeActivity extends MapActivity {
         return true;
     }
 
-    /* MapActivity methods */
-
     /**
      * Catches the selected MenuItem from the options menu and 1. activate the
      * Internet to get more map data 2. Center the Map to the actual own
