@@ -114,13 +114,14 @@ public class GenericAdapterData {
     static class TextItem implements GenericItem {
 
         /**
+         * Reference to a textView to which this item is connect with.
+         */
+        private TextView textView;
+
+        /**
          * Reference to a string which will be used to fill a text view.
          */
         String text;
-        /**
-         * Reference to a textView to which this item is connect with.
-         */
-        TextView textView;
 
         /**
          * @param text
@@ -133,7 +134,6 @@ public class GenericAdapterData {
         public void fillItem(View view, int id) {
             textView = (TextView) view.findViewById(id);
             textView.setText(text);
-
         }
 
         /**
@@ -141,7 +141,7 @@ public class GenericAdapterData {
          *         with this item.
          */
         public String getCurrentText() {
-            return textView.getText().toString();
+            return text;
         }
 
         @Override
@@ -160,6 +160,7 @@ public class GenericAdapterData {
      * Map items to string tags.
      */
     Map<String, GenericItem> items = new HashMap<String, GenericItem>();
+
     /**
      * @param desc
      *            reference to a GenericItemDescription object which will handle
