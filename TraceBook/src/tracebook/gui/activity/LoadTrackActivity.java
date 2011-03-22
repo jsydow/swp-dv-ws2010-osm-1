@@ -32,6 +32,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,6 +92,7 @@ public class LoadTrackActivity extends ListActivity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                 .getMenuInfo();
 
@@ -258,6 +260,11 @@ public class LoadTrackActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // If status bar visible remove the activity title bar.
+        if (Helper.checkStatusbarVisibility(this))
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         getApplicationContext()
                 .setTheme(android.R.style.Theme_Black_NoTitleBar);
         updateAdapter();

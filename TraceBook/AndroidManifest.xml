@@ -21,8 +21,7 @@
 		<activity android:name="tracebook.gui.activity.NewTrackActivity"
 			android:theme="@android:style/Theme.NoTitleBar"/>
 		<activity android:name="tracebook.gui.activity.LoadTrackActivity"/>
-		<activity android:name="tracebook.gui.activity.AddPointActivity"
-			android:theme="@android:style/Theme.NoTitleBar"/>
+		<activity android:name="tracebook.gui.activity.AddPointActivity"/>
 		<activity android:name="tracebook.gui.activity.PreferencesActivity"/>
 		<service android:name="tracebook.core.logger.WaypointLogService" />
 		<activity android:name="tracebook.gui.activity.MapsForgeActivity"/>
