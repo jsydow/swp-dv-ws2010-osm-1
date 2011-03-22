@@ -71,13 +71,10 @@ public class RecordVideoActivity extends Activity implements
      *            Not used.
      */
     public void onRecordBtn(View view) {
-        final int maxDuration = 60 * Integer.parseInt(preferences.getString(
-                "lst_maxVideoRecording", "0"));
+        final int maxDuration = 1000 * 60 * Integer.parseInt(preferences
+                .getString("lst_maxVideoRecording", "0"));
 
         if (!recorder.isRecording()) {
-            // TODO: l10n!
-            LogIt.popup(this, "Recording started.");
-
             if (maxDuration > 0) {
                 (new Thread() {
                     @Override
@@ -85,12 +82,13 @@ public class RecordVideoActivity extends Activity implements
                         recorder.start();
 
                         try {
-                            Thread.sleep(maxDuration * 1000);
+                            Thread.sleep(maxDuration);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
 
                         stopRecording();
+                        finish();
                     }
                 }).start();
             } else {
