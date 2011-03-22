@@ -100,6 +100,7 @@
 	<string name="tv_trackInfoDialog_nameText">Name:</string>
 	<string name="tv_trackInfoDialog_mediaText">Media files:</string>
 	<string name="tv_addmemoActivity_stopRecord">Stop voice recording</string>
+	<string name="tv_addmemoActivity_startRecord">Start voice recording</string>
 	<string name="tv_addmemoActivity_record">Recording...</string>
 	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
 	<string name="tv_aboutActivity_creditsTeam">\n
