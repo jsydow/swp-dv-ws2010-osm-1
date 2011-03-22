@@ -7,6 +7,7 @@ import java.util.List;
 import org.mapsforge.android.maps.ArrayItemizedOverlay;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.ItemizedOverlay;
+import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.OverlayItem;
 
 import tracebook.core.data.DataNode;
@@ -16,10 +17,10 @@ import tracebook.core.data.DataTrack;
 import tracebook.core.logger.ServiceConnector;
 import tracebook.gui.activity.AddPointActivity;
 import Trace.Book.R;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 
 /**
@@ -95,6 +96,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
             return Helper.currentTrack().getCurrentWay() != null;
         }
     }
+
     private class DefaultListener implements DialogInterface.OnClickListener {
         private final CharSequence[] items = {
                 context.getResources().getString(
@@ -148,6 +150,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
             nodeId = id;
         }
     }
+
     private static final int ARRAY_LIST_INITIAL_CAPACITY = 8;
     private static final String LOG_TAG = "DNAIO";
 
@@ -159,12 +162,10 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
     private final ArrayList<Pair<OverlayItem, Integer>> overlayItems;
 
-    private DataPointsListArrayRouteOverlay routesOverlay;
-
     /**
      * Context of the MapActivity.
      */
-    final Activity context;
+    final MapActivity context;
 
     /**
      * Reference to the current DataTrack.
@@ -176,15 +177,11 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * 
      * @param context
      *            a reference to the MapActivity.
-     * @param routesOverlay
-     *            reference to the routesOverlay associated with the MapActivity
      */
-    public DataNodeArrayItemizedOverlay(Activity context,
-            DataPointsListArrayRouteOverlay routesOverlay) {
+    public DataNodeArrayItemizedOverlay(MapActivity context) {
         super(boundCenterBottom(context.getResources().getDrawable(
-                R.drawable.marker_red)));
+                R.drawable.marker_green)));
         this.context = context;
-        this.routesOverlay = routesOverlay;
         this.overlayItems = new ArrayList<Pair<OverlayItem, Integer>>(
                 ARRAY_LIST_INITIAL_CAPACITY);
         this.currentTrack = DataStorage.getInstance().getCurrentTrack();
@@ -302,18 +299,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      *            current position, marker will be set there
      */
     public void setCurrentPosition(GeoPoint currentPos) {
-        updateItem(currentPos, -1, R.drawable.marker_green);
-    }
-
-    /**
-     * We need to set the RoutesOverlay as the class will be created after this
-     * one.
-     * 
-     * @param routesOverlay
-     *            the routesOverlay also on the MapActivity
-     */
-    public void setRoutesOverlay(DataPointsListArrayRouteOverlay routesOverlay) {
-        this.routesOverlay = routesOverlay;
+        updateItem(currentPos, -1, null);
     }
 
     @Override
@@ -322,6 +308,7 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
             return this.overlayItems.size();
         }
     }
+
     /**
      * When a {@link DataNode} has been changed, update it's visualization on
      * the DataNodeArrayItemizedOverlay.
@@ -349,41 +336,28 @@ public class DataNodeArrayItemizedOverlay extends ItemizedOverlay<OverlayItem> {
      * Update the Item with the given id (change it's position or icon).
      * 
      * @param pos
-     *            new position
+     *            new position (may be null if only the marker should be
+     *            updated)
      * @param id
      *            id of the {@link DataNode}
-     * @param icon
-     *            (new) icon of the marker
+     * @param marker
+     *            new marker (may be null if only the position should be
+     *            updated)
      */
-    public void updateItem(GeoPoint pos, int id, int icon) {
+    public void updateItem(GeoPoint pos, int id, Drawable marker) {
         synchronized (this.overlayItems) {
-            for (int i = 0; i < overlayItems.size(); ++i)
-                if (overlayItems.get(i).second.intValue() == id) {
-                    OverlayItem oi = Helper.getOverlayItem(pos, overlayItems
-                            .get(i).first.getMarker());
-                    overlayItems.get(i).first = oi; // update the OverlayItem
-                    // (not
-                    // necessarily has a
-                    // DataNode)
+            for (Pair<OverlayItem, Integer> oip : overlayItems)
+                if (oip.second.intValue() == id) {
+                    if (pos != null)
+                        oip.first.setPoint(pos);
+                    if (marker != null)
+                        oip.first.setMarker(marker);
 
-                    if (id > 0) { // redraw way when point was moved
-                        DataNode node = Helper.currentTrack().getNodeById(id);
-                        if (node != null) {
-                            node.setLocation(pos); // update the actual DataNode
-                            node.setOverlayItem(oi);
-
-                            if (node.getDataPointsList() != null)
-                                routesOverlay.reDrawWay(node
-                                        .getDataPointsList().getId());
-                        }
-                    }
                     populate();
                     return;
                 }
         }
-        // no OverlayItem was yet added
-        addOverlay(Helper.getOverlayItem(pos, icon, context), id);
-        populate();
+        addOverlay(new OverlayItem(pos, null, null, marker), id);
     }
 
     @Override
