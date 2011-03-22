@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * Activity that starts recording a video and stops recording it upon hitting a
@@ -116,8 +115,7 @@ public class RecordVideoActivity extends Activity implements
             recorder.appendFileToObject(node);
 
             // TODO: l10n!
-            Toast.makeText(this, "Recording finished.", Toast.LENGTH_SHORT)
-                    .show();
+            LogIt.popup(this, "Recording finished.");
 
             finish();
         }

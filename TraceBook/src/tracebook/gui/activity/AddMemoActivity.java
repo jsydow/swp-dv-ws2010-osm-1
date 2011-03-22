@@ -5,6 +5,7 @@ import java.io.IOException;
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.AudioRecorder;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,7 +13,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Toast;
 
 /**
  * The Class AddMemoActivity, start the recording of the notice. The user can
@@ -123,8 +123,7 @@ public class AddMemoActivity extends Activity {
             recorder.appendFileToObject(node);
 
             // TODO: l10n!
-            Toast.makeText(this, "Recording finished.", Toast.LENGTH_SHORT)
-                    .show();
+            LogIt.popup(this, "Recording finished.");
         }
     }
 }
