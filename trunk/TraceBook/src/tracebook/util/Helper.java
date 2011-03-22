@@ -82,8 +82,7 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -98,15 +97,18 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt.popup(
-                                        activity,
-                                        activity.getResources()
-                                                .getString(
-                                                        R.string.alert_global_trackName)
-                                                + " "
-                                                + DataStorage.getInstance()
-                                                        .getCurrentTrack()
-                                                        .getName());
+                                LogIt
+                                        .popup(
+                                                activity,
+                                                activity
+                                                        .getResources()
+                                                        .getString(
+                                                                R.string.alert_global_trackName)
+                                                        + " "
+                                                        + DataStorage
+                                                                .getInstance()
+                                                                .getCurrentTrack()
+                                                                .getName());
 
                                 // stop logging
                                 try {
@@ -119,8 +121,7 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        })
-                .setNegativeButton(
+                        }).setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
@@ -129,8 +130,7 @@ public final class Helper {
                                     int which) {
                                 dialog.cancel();
                             }
-                        })
-                .setNeutralButton(
+                        }).setNeutralButton(
                         activity.getResources().getString(
                                 R.string.alert_global_notSaveAndClose),
                         new DialogInterface.OnClickListener() {
@@ -148,8 +148,8 @@ public final class Helper {
                                     e.printStackTrace();
                                 }
 
-                                DataStorage.getInstance()
-                                        .deserializeTrack(trackname).delete();
+                                DataStorage.getInstance().deserializeTrack(
+                                        trackname).delete();
 
                                 activity.finish();
                             }
@@ -293,8 +293,9 @@ public final class Helper {
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
         // TODO: unhardcode
-        LogIt.popup(context,
-                "An error occured. Please restart the application and try again.");
+        LogIt
+                .popup(context,
+                        "An error occured. Please restart the application and try again.");
         LogIt.e(logTag, ex.getMessage());
     }
 
@@ -398,7 +399,7 @@ public final class Helper {
 
     /**
      * This method check the selected theme from the preferences menu and set
-     * the theme for the activity
+     * the theme for the activity.
      * 
      * @param activity
      *            context of the application
@@ -409,25 +410,25 @@ public final class Helper {
         int theme = Integer.parseInt(appPreferences.getString(
                 "lst_switchTheme", "1"));
         switch (theme) {
-        case (1):
+        case 1:
             activity.setTheme(android.R.style.Theme_Black);
             break;
-        case (0):
+        case 0:
             activity.setTheme(android.R.style.Theme_Light);
             break;
-        case (2):
+        case 2:
             activity.setTheme(android.R.style.Theme_Wallpaper);
             break;
         /**
          * TODO set TraceBook light theme
          */
-        case (3):
+        case 3:
             activity.setTheme(android.R.style.Theme_Light);
             break;
         /**
          * TODO set TraceBook dark theme
          */
-        case (4):
+        case 4:
             activity.setTheme(android.R.style.Theme_Light);
             break;
         default:
