@@ -115,21 +115,24 @@ public class TraceBookImporter extends FileImporter {
                         .newInstance();
                 DocumentBuilder dom = fac.newDocumentBuilder();
                 Document doc = dom.parse(new File(fn));
+                // getting nodes and ways to determine overall progress
                 NodeList nl = doc.getElementsByTagName("node");
+                NodeList nlw = doc.getElementsByTagName("way");
                 DecimalFormatSymbols decsymb = new DecimalFormatSymbols();
                 decsymb.setDecimalSeparator('.');
 
                 DecimalFormat decform = new DecimalFormat("0.0000000", decsymb);
                 HashMap<String, org.openstreetmap.josm.data.osm.Node> nodesMap = new HashMap<String, org.openstreetmap.josm.data.osm.Node>();
-                myProgressMonitor.beginTask(String.format(
-                        "Importing nodes %s...", file.getName(), 4), nl
-                        .getLength());
-                myProgressMonitor.setCustomText(String.format(
-                        "Importing nodes %s...", file.getName(), 4));
-                // myProgressMonitor.setTicksCount(nl.getLength());
+                myProgressMonitor.beginTask(
+                        String.format("Importing Track data %s...",
+                                file.getName(), nl.getLength()), nl.getLength()
+                                + nlw.getLength());
+                myProgressMonitor.subTask("nodes...");
                 for (int i = 0; i < nl.getLength(); i++) {
                     myProgressMonitor.setTicks(i);
                     NamedNodeMap attributes = nl.item(i).getAttributes();
+                    myProgressMonitor.setExtraText(((Attr) nl.item(i)
+                            .getAttributes().getNamedItem("id")).getValue());
                     Node lat = attributes.getNamedItem("lat");
                     Node lon = attributes.getNamedItem("lon");
                     LatLon latlon = new LatLon(decform
@@ -225,12 +228,12 @@ public class TraceBookImporter extends FileImporter {
                             ((Attr) attributes.getNamedItem("id")).getValue(),
                             newosmnode);
                 }
-                NodeList nlw = doc.getElementsByTagName("way");
-                myProgressMonitor.setCustomText(String.format(
-                        "Importing ways  %s...", file.getName(), 4));
-                myProgressMonitor.setTicksCount(nlw.getLength());
+
+                myProgressMonitor.subTask("ways...");
                 for (int i = 0; i < nlw.getLength(); i++) {
-                    myProgressMonitor.setTicks(i);
+                    myProgressMonitor.setTicks(nl.getLength() + i + 1);
+                    myProgressMonitor.setExtraText(((Attr) nlw.item(i)
+                            .getAttributes().getNamedItem("id")).getValue());
                     WayData wd = new WayData();
                     wd.setVersion(Integer.parseInt(((Attr) nlw.item(i)
                             .getAttributes().getNamedItem("version"))
@@ -295,7 +298,7 @@ public class TraceBookImporter extends FileImporter {
                 AutoScaleAction action = new AutoScaleAction("data");
                 action.autoScale();
 
-                myProgressMonitor.setTicksCount(4);
+                // myProgressMonitor.setTicksCount(4);
 
                 if (Main.pref.getBoolean("marker.makeautomarkers", true)) {
                     Main.debug("makeautomarkers was true");
@@ -330,6 +333,12 @@ public class TraceBookImporter extends FileImporter {
                 // catch and forward exception
                 throw new IllegalDataException(e);
             } finally { // take care of monitor...
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    // we don't want to do anything with that exception
+                    e.printStackTrace();
+                }
                 myProgressMonitor.finishTask();
             }
         } else {
