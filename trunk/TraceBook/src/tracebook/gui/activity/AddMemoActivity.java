@@ -68,6 +68,10 @@ public class AddMemoActivity extends Activity {
     @Override
     public void onStop() {
         stopMemo();
+
+        // TODO: l10n!
+        LogIt.popup(this, "Recording finished.");
+
         super.onStop();
     }
 
@@ -76,8 +80,8 @@ public class AddMemoActivity extends Activity {
      * recording will be started.
      */
     public void startMemo() {
-        final int maxDuration = 60 * Integer.parseInt(preferences.getString(
-                "lst_maxVideoRecording", "0"));
+        final int maxDuration = 1000 * 60 * Integer.parseInt(preferences
+                .getString("lst_maxVideoRecording", "0"));
 
         final ProgressDialog dialog = new ProgressDialog(this);
         dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -103,7 +107,26 @@ public class AddMemoActivity extends Activity {
 
                 try {
                     recorder.prepare(maxDuration);
-                    recorder.start();
+
+                    if (maxDuration > 0) {
+                        (new Thread() {
+                            @Override
+                            public void run() {
+                                recorder.start();
+
+                                try {
+                                    Thread.sleep(maxDuration);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                stopMemo();
+                                finish();
+                            }
+                        }).start();
+                    } else {
+                        recorder.start();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -123,13 +146,14 @@ public class AddMemoActivity extends Activity {
         finish();
     }
 
-    private void stopMemo() {
+    /**
+     * Stops recording the audio file and appends the new media object to our
+     * node, if we were recording, at all.
+     */
+    void stopMemo() {
         if (recorder.isRecording()) {
             recorder.stop();
             recorder.appendFileToObject(node);
-
-            // TODO: l10n!
-            LogIt.popup(this, "Recording finished.");
         }
     }
 }
