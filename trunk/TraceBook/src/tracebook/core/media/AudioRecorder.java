@@ -11,7 +11,36 @@ import android.media.MediaRecorder;
  * in order to acquire an audio file.
  */
 public class AudioRecorder extends Recorder {
-    private MediaRecorder recorder = new MediaRecorder();
+    private boolean isReady = false;
+    private MediaRecorder recorder;
+
+    /**
+     * Prepares the recorder.
+     * 
+     * @param maxDuration
+     *            Maximum duration of the audio file to be recorded in seconds.
+     * @throws IOException
+     *             Not used.
+     */
+    public void prepare(int maxDuration) throws IOException {
+        filename = getNewFilename();
+        recorder = new MediaRecorder();
+
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+
+        // Possible output formats are 3gpp and MPEG4, e. g.
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setOutputFile(getPath());
+
+        if (maxDuration > 0) {
+            recorder.setMaxDuration(maxDuration * 1000);
+        }
+
+        recorder.prepare();
+
+        isReady = true;
+    }
 
     /*
      * (non-Javadoc)
@@ -20,27 +49,11 @@ public class AudioRecorder extends Recorder {
      */
     @Override
     public String start() {
-        if (isRecording) {
-            return null;
-        }
-
-        filename = getNewFilename();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        // Possible output formats are 3gpp and MPEG4, e. g.
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setOutputFile(getPath());
-
-        try {
-            recorder.prepare();
+        if (isReady && !isRecording) {
             recorder.start();
             isRecording = true;
 
             return filename;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         return null;

@@ -5,10 +5,12 @@ import java.io.IOException;
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.VideoRecorder;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import tracebook.util.LogIt;
+import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -23,6 +25,7 @@ public class RecordVideoActivity extends Activity implements
         SurfaceHolder.Callback {
 
     private DataMapObject node;
+    private SharedPreferences preferences;
     private VideoRecorder recorder = new VideoRecorder();
     private SurfaceHolder surfaceHolder;
 
@@ -37,6 +40,8 @@ public class RecordVideoActivity extends Activity implements
                     .getDataMapObjectById(nodeId);
         }
 
+        preferences = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
         setContentView(R.layout.activity_recordvideoactivity);
         setTitle(R.string.string_startActivity_title);
 
@@ -91,8 +96,11 @@ public class RecordVideoActivity extends Activity implements
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
+        int maxDuration = 60 * Integer.parseInt(preferences.getString(
+                "lst_maxVideoRecording", "0"));
+
         try {
-            recorder.prepare(holder.getSurface());
+            recorder.prepare(maxDuration, holder.getSurface());
         } catch (IOException e) {
             LogIt.e("TraceBook", e.toString());
         }
