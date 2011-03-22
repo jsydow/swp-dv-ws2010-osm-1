@@ -1,18 +1,19 @@
 package tracebook.gui.activity;
 
 import java.io.File;
+import java.util.Locale;
 
 import tracebook.core.data.db.TagDb;
 import tracebook.core.logger.ServiceConnector;
 import tracebook.gui.view.HelpWebView;
 import tracebook.util.Helper;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.RemoteException;
-import tracebook.util.LogIt;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -146,7 +147,7 @@ public class StartActivity extends Activity {
             return true;
         case R.id.opt_startActivity_about:
             intent = new Intent(this, HelpWebView.class);
-            intent.putExtra("About", "de");
+            intent.putExtra("About", Locale.getDefault().getLanguage());
             startActivity(intent);
             return true;
         case R.id.opt_startActivity_preferences:
@@ -155,7 +156,7 @@ public class StartActivity extends Activity {
             return true;
         case R.id.opt_startActivity_help:
             intent = new Intent(this, HelpWebView.class);
-            intent.putExtra("Help", "de");
+            intent.putExtra("Help", Locale.getDefault().getLanguage());
             startActivity(intent);
             return true;
         default:
