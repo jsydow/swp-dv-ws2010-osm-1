@@ -12,6 +12,7 @@ import org.mapsforge.android.maps.OverlayItem;
 
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
+import tracebook.core.data.DataStorage;
 import tracebook.core.logger.ServiceConnector;
 import tracebook.util.DataNodeArrayItemizedOverlay;
 import tracebook.util.DataPointsListArrayRouteOverlay;
@@ -265,9 +266,11 @@ public class MapsForgeActivity extends MapActivity {
             routesOverlay.toggleWaypoints();
             return true;
         case R.id.opt_mapsforgeActivity_export:
-            /*
-             * Do SOMETHING TODO
-             */
+            DataStorage.getInstance().serialize();
+            LogIt.popup(
+                    this,
+                    getResources().getString(
+                            R.string.popup_mapsforgeactivity_saved));
             return true;
 
         case R.id.opt_mapsforgeActivity_pause:
