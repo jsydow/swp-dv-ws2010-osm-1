@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.mapsforge.android.maps.GeoPoint;
-import org.mapsforge.android.maps.OverlayRoute;
+import org.mapsforge.android.maps.OverlayWay;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.location.Location;
 import tracebook.util.LogIt;
+import android.location.Location;
 
 /**
  * WayPointList objects are any objects that consist of a series of nodes like
@@ -38,9 +38,7 @@ public class DataPointsList extends DataMapObject {
         // get all attributes
         NamedNodeMap nodeattributes = waynode.getAttributes();
         // get time stamp
-        ret
-                .setDatetime(nodeattributes.getNamedItem("timestamp")
-                        .getNodeValue());
+        ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
@@ -89,7 +87,7 @@ public class DataPointsList extends DataMapObject {
     /**
      * Route Object for MapsForge.
      */
-    private OverlayRoute overlayRoute;
+    private OverlayWay overlayRoute;
 
     /**
      * Is this Object an Area?
@@ -175,9 +173,9 @@ public class DataPointsList extends DataMapObject {
     /**
      * Gets the route Object used by MapsForge to display this way.
      * 
-     * @return The OverlayRoute of this way. (can be null)
+     * @return The {@link OverlayWay} of this way. (can be null)
      */
-    public OverlayRoute getOverlayRoute() {
+    public OverlayWay getOverlayRoute() {
         return overlayRoute;
     }
 
@@ -258,16 +256,16 @@ public class DataPointsList extends DataMapObject {
                 for (DataNode dn : nodes) {
                     serializer.startTag(null, "nd");
 
-                    serializer.attribute(null, "ref", Integer.toString(dn
-                            .getId()));
+                    serializer.attribute(null, "ref",
+                            Integer.toString(dn.getId()));
 
                     serializer.endTag(null, "nd");
                 }
                 if (this.isArea && nodes.size() > 0) {
                     DataNode lastNode = nodes.getFirst();
                     serializer.startTag(null, "nd");
-                    serializer.attribute(null, "ref", Integer.toString(lastNode
-                            .getId()));
+                    serializer.attribute(null, "ref",
+                            Integer.toString(lastNode.getId()));
                     serializer.endTag(null, "nd");
 
                     serializer.startTag(null, "tag");
@@ -304,12 +302,13 @@ public class DataPointsList extends DataMapObject {
     }
 
     /**
-     * Sets the OverlayRoute, an object used by MapsForge for visualization.
+     * Sets the {@link OverlayWay}, an object used by MapsForge for
+     * visualization.
      * 
      * @param overlayRoute
-     *            The new OverlayRoute.
+     *            The new OverlayWay.
      */
-    public void setOverlayRoute(OverlayRoute overlayRoute) {
+    public void setOverlayRoute(OverlayWay overlayRoute) {
         this.overlayRoute = overlayRoute;
     }
 

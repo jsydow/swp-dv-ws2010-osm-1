@@ -3,9 +3,9 @@ package tracebook.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mapsforge.android.maps.ArrayRouteOverlay;
+import org.mapsforge.android.maps.ArrayWayOverlay;
 import org.mapsforge.android.maps.GeoPoint;
-import org.mapsforge.android.maps.OverlayRoute;
+import org.mapsforge.android.maps.OverlayWay;
 
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
@@ -16,12 +16,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * Class wrapping the ·{@link ArrayRouteOverlay} to get some methods out of
+ * Class wrapping the ·{@link ArrayWayOverlay} to get some methods out of
  * {@link MapsForgeActivity}.
  * 
  * 
  */
-public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
+public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
     /**
      * Generates a pair of paint objects with the same color, but different
      * levels of transparency.
@@ -43,6 +43,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
 
         return new Pair<Paint, Paint>(paintFill, paintOutline);
     }
+
     private List<Pair<Paint, Paint>> areaColors;
     private int colorID = 0;
 
@@ -105,10 +106,10 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
                 continue;
             if (l.getOverlayRoute() == null) {
                 Pair<Paint, Paint> col = getColor(false, l.isArea());
-                l.setOverlayRoute(new OverlayRoute(l.toGeoPointArray(),
+                l.setOverlayRoute(new OverlayWay(l.toGeoPointArray(),
                         col.first, col.second));
             }
-            addRoute(l.getOverlayRoute());
+            this.addWay(l.getOverlayRoute());
 
             if (showWaypoints)
                 addWaypoints(l);
@@ -130,11 +131,11 @@ public class DataPointsListArrayRouteOverlay extends ArrayRouteOverlay {
         if (way == null)
             return;
 
-        removeOverlay(way.getOverlayRoute());
+        this.removeWay(way.getOverlayRoute());
         final Pair<Paint, Paint> color = getColor(editing, way.isArea());
-        way.setOverlayRoute(new OverlayRoute(way.toGeoPointArray(additional),
+        way.setOverlayRoute(new OverlayWay(way.toGeoPointArray(additional),
                 color.first, color.second));
-        addRoute(way.getOverlayRoute());
+        this.addWay(way.getOverlayRoute());
 
         if (showWaypoints)
             for (DataNode n : way.getNodes()) {
