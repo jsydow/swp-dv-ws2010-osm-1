@@ -488,7 +488,7 @@ public class LoadTrackActivity extends ListActivity {
      * If search text changes this method updates the list.
      */
     protected void textSearchUpdate() {
-        if (searchText != null && searchText.length() > 0) {
+        if (searchText != null) {
             List<GenericAdapterData> datalist = new ArrayList<GenericAdapterData>();
             for (GenericAdapterData gda : data) {
                 if (gda.getText("TrackName").contains(searchText)) {
