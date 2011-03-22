@@ -12,6 +12,6 @@
 		android:layout_height="wrap_content" android:src="@drawable/microphone" />
 
 	<Button android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:onClick="stopMemoBtn"
+		android:layout_height="wrap_content" android:onClick="stopMemoBtn" android:minWidth="100dp"
 		android:text="@string/tv_addmemoActivity_stopRecord" android:gravity="center_horizontal" />
 </LinearLayout>

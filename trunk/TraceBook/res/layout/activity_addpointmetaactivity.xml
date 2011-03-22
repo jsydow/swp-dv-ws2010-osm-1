@@ -28,17 +28,18 @@
 
 		<Button android:id="@+id/btn_addpointmetaActivity_save"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:text="@string/btn_addpointmetaActivity_save" android:onClick="saveBtn" />
+			android:text="@string/btn_addpointmetaActivity_save" android:onClick="saveBtn"
+			android:minWidth="100dp" />
 
 		<Button android:id="@+id/btn_addpointmetaActivity_search"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/btn_addpointmetaActivity_search"
-			android:onClick="searchBtn" />
+			android:onClick="searchBtn" android:minWidth="100dp" />
 
 		<Button android:id="@+id/btn_addpointmetaActivity_cancel"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:text="@string/btn_addpointmetaActivity_cancel"
-			android:onClick="cancelBtn" />
+			android:onClick="cancelBtn" android:minWidth="100dp" />
 
 	</LinearLayout>
 

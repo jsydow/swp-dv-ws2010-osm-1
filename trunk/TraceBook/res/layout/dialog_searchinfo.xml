@@ -5,7 +5,7 @@
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:orientation="vertical" android:background="#fff">
+		android:orientation="vertical" android:background="#000">
 
 		<ImageView android:id="@+id/iv_searchInfoDialog_wikiImage"
 			android:src="@drawable/icon" android:layout_height="wrap_content" android:layout_width="fill_parent" android:scaleType="fitCenter"/>
