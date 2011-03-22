@@ -29,18 +29,23 @@
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textOn="@string/tbtn_newtrackActivity_streetOff"
 					android:textOff="@string/tbtn_newtrackActivity_streetOn"
-					android:drawableLeft="@drawable/way_icon" android:onClick="startWayTbtn" />
+					android:drawableLeft="@drawable/way_icon" android:padding="19dip"
+	android:onClick="startWayTbtn" />
 
 				<ToggleButton android:id="@+id/tbtn_newtrackActivity_startArea"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:textOn="@string/tbtn_newtrackActivity_areaOff"
 					android:textOff="@string/tbtn_newtrackActivity_areaOn"
-					android:drawableLeft="@drawable/area_icon" android:onClick="startAreaTbtn" />
+					android:drawableLeft="@drawable/area_icon" android:padding="19dip"
+				 android:onClick="startAreaTbtn" />
 
 				<Button android:id="@+id/btn_newtrackActivity_addPoint"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:text="@string/btn_newtrackActivity_addPoint"
-					android:onClick="addPointBtn" android:drawableLeft="@drawable/node_icon" />
+					android:drawableLeft="@drawable/node_icon" android:padding="19dip"
+
+
+					android:onClick="addPointBtn" />
 
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:scaleType="fitCenter"
