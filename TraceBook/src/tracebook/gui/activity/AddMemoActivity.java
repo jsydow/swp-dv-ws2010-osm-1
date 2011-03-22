@@ -141,7 +141,9 @@ public class AddMemoActivity extends Activity {
      *            no used
      */
     public void startMemoBtn(View view) {
-        startMemo();
+        if (!recorder.isRecording()) {
+            startMemo();
+        }
     }
 
     /**
