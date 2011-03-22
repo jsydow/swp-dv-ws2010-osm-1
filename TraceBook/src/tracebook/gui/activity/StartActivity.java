@@ -54,6 +54,8 @@ public class StartActivity extends Activity {
     public void loadTrackBtn(View view) {
         Intent intent = new Intent(this, LoadTrackActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+
     }
 
     /**
@@ -84,7 +86,9 @@ public class StartActivity extends Activity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_startactivity);
         setTitle(R.string.string_startActivity_title);
         final TagDb db = new TagDb(this);

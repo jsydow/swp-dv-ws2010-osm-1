@@ -21,16 +21,37 @@ package tracebook.gui.view;
 
 import Trace.Book.R;
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.webkit.WebView;
 
 /**
- * This class show the HTML help site in a web view in subject to the device
- * language.
- * 
- * @author greenTraxas
+ * This class show the HTML help and about site in a web view in subject to the
+ * device language.
  */
 public class HelpWebView extends Activity {
+
+    /**
+     * WebView for our WebView which we use in this activity.
+     */
+    WebView webview;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
+            webview.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +76,46 @@ public class HelpWebView extends Activity {
 
         setContentView(R.layout.activity_webviewactivity);
 
-        WebView webview;
         webview = (WebView) findViewById(R.id.wv_helpwebviewActivity_webview);
         webview.getSettings().setJavaScriptEnabled(true);
-        if (about)
-            webview.loadUrl("file:///android_asset/about/about-" + language
-                    + ".html");
-        else if (help)
+        if (about) {
+            SharedPreferences appPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(this);
+            switch (Integer.parseInt(appPreferences.getString(
+                    "lst_switchTheme", "1"))) {
+            case (1):
+                webview.loadUrl("file:///android_asset/about/about-dark-"
+                        + language + ".html");
+                break;
+            case (0):
+                webview.loadUrl("file:///android_asset/about/about-light-"
+                        + language + ".html");
+                break;
+            case (2):
+                webview.loadUrl("file:///android_asset/about/about-dark-"
+                        + language + ".html");
+                break;
+            /**
+             * TODO set TraceBook light theme
+             */
+            case (3):
+                webview.loadUrl("file:///android_asset/about/about-light-"
+                        + language + ".html");
+                break;
+            /**
+             * TODO set TraceBook dark theme
+             */
+            case (4):
+                webview.loadUrl("file:///android_asset/about/about-light-"
+                        + language + ".html");
+                break;
+            default:
+
+            }
+
+        } else if (help) {
             webview.loadUrl("file:///android_asset/help/help-" + language
                     + ".html");
-
+        }
     }
 }
