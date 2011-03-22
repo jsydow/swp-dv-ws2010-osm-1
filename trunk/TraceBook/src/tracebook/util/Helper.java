@@ -164,10 +164,8 @@ public final class Helper {
      * @return String which have only maxChar characters
      */
     public static String cutString(String toCut, int maxChar) {
-        if (toCut.length() > maxChar)
+        if (toCut != null && toCut.length() > maxChar)
             return toCut.trim().subSequence(0, maxChar) + "…";
-        else if (toCut.length() > 0)
-            return toCut + "…";
         else
             return toCut;
     }
