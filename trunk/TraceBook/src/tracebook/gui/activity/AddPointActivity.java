@@ -36,7 +36,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
@@ -203,8 +202,8 @@ public class AddPointActivity extends ListActivity {
                 node = DataStorage.getInstance().getCurrentTrack()
                         .getDataMapObjectById(nodeId);
                 if (node == null) {
-                    Toast.makeText(this, "Node does not exist!",
-                            Toast.LENGTH_LONG).show();
+                    // TODO: unhardcode
+                    LogIt.popup(this, "Node does not exist!");
                     finish();
                 }
             }
