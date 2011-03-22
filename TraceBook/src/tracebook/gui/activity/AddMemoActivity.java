@@ -5,7 +5,6 @@ import java.io.IOException;
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.AudioRecorder;
-import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -61,20 +60,6 @@ public class AddMemoActivity extends Activity {
     }
 
     @Override
-    public void onResume() {
-        int maxDuration = 60 * Integer.parseInt(preferences.getString(
-                "lst_maxAudioRecording", "0"));
-
-        try {
-            recorder.prepare(maxDuration);
-        } catch (IOException e) {
-            LogIt.e("TraceBook", e.toString());
-        }
-
-        super.onResume();
-    }
-
-    @Override
     public void onStop() {
         stopMemo();
         super.onStop();
@@ -82,7 +67,7 @@ public class AddMemoActivity extends Activity {
 
     /**
      * This method show for 2 seconds a progressDialog. After 2 Seconds the
-     * recording will be start.
+     * recording will be started.
      */
     public void startMemo() {
         final int maxDuration = 60 * Integer.parseInt(preferences.getString(
