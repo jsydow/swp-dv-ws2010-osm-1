@@ -8,6 +8,7 @@ import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
 import tracebook.util.GpsMessage;
 import tracebook.util.Helper;
+import tracebook.util.LogIt;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +17,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import tracebook.util.LogIt;
 
 /**
  * This background service logs GPS data and stores it in the
@@ -132,12 +132,11 @@ public class WaypointLogService extends Service implements LocationListener {
         }
     };
 
-    /**
-     * Current nodes, empty if no node with missing GPS location is present,
-     * otherwise it contains references to the {@link DataNode}s waiting for a
-     * GPS fix.
-     */
-    Queue<DataNode> current_nodes = new LinkedList<DataNode>();
+    private boolean gps_on = false;
+
+    private LocationListener ll = this;
+
+    private GpsMessage sender = null;
 
     /**
      * Parameters for GPS update intervals.
@@ -149,9 +148,12 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     protected int deltaTime = 0;
 
-    private boolean gps_on = false;
-
-    private LocationListener ll = this;
+    /**
+     * Current nodes, empty if no node with missing GPS location is present,
+     * otherwise it contains references to the {@link DataNode}s waiting for a
+     * GPS fix.
+     */
+    Queue<DataNode> current_nodes = new LinkedList<DataNode>();
 
     /**
      * One shot mode - no continuous tracking, points are only added to the way
@@ -159,33 +161,10 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     boolean one_shot = false;
 
-    private GpsMessage sender = null;
-
     /**
      * Reference to the {@link DataStorage} singleton.
      */
     DataStorage storage = DataStorage.getInstance();
-
-    /**
-     * Convenience function to get the current way out of the
-     * {@link DataStorage} object.
-     * 
-     * @return the current {@link DataPointsList} way
-     */
-    DataPointsList currentWay() {
-        if (storage == null || storage.getCurrentTrack() == null)
-            return null;
-        return storage.getCurrentTrack().getCurrentWay();
-    }
-
-    /**
-     * Returns the Intent sender helper.
-     * 
-     * @return a reference to the {@link GpsMessage} helper class
-     */
-    GpsMessage getSender() {
-        return sender;
-    }
 
     /**
      * Returns the status of the GPS logging.
@@ -232,7 +211,7 @@ public class WaypointLogService extends Service implements LocationListener {
                     sender.sendWayUpdate(currentWay().getId()); // one_shot
                                                                 // update
             }
-            current_nodes = null; // no node waiting for GPS position any more
+            current_nodes.clear(); // no node waiting for GPS position any more
         } else if (currentWay() != null && !one_shot) { // Continuous mode
             currentWay().newNode(loc); // POI in track was already added before
             sender.sendWayUpdate(currentWay().getId()); // call for an update of
@@ -256,6 +235,27 @@ public class WaypointLogService extends Service implements LocationListener {
 
     public void onStatusChanged(String provider, int status, Bundle extra) {
         LogIt.d(LOG_TAG, "GPS Status Changed: " + provider);
+    }
+
+    /**
+     * Convenience function to get the current way out of the
+     * {@link DataStorage} object.
+     * 
+     * @return the current {@link DataPointsList} way
+     */
+    DataPointsList currentWay() {
+        if (storage == null || storage.getCurrentTrack() == null)
+            return null;
+        return storage.getCurrentTrack().getCurrentWay();
+    }
+
+    /**
+     * Returns the Intent sender helper.
+     * 
+     * @return a reference to the {@link GpsMessage} helper class
+     */
+    GpsMessage getSender() {
+        return sender;
     }
 
     /**
