@@ -460,14 +460,51 @@ public class LoadTrackActivity extends ListActivity {
 
         GenericAdapterData datum = adapter.getItem(position);
         final String trackname = datum.getText("TrackName");
-        DataTrack track = DataStorage.getInstance().deserializeTrack(trackname);
+        final DataTrack track = DataStorage.getInstance().deserializeTrack(
+                trackname);
+        final Intent intent = new Intent(this, NewTrackActivity.class);
+
         if (track != null) {
             if (DataStorage.getInstance().getCurrentTrack() != null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getResources().getString(
+                        R.string.alert_loadtrackActivity_stopCurrentTrack));
+                builder.setMessage(
+                        getResources()
+                                .getString(
+                                        R.string.alert_loadtrackActivity_stopCurrentTrack))
+                        .setCancelable(false)
+                        .setPositiveButton(
+                                getResources().getString(
+                                        R.string.alert_global_yes),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                            int id1) {
 
+                                        DataStorage.getInstance()
+                                                .setCurrentTrack(track);
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+                                })
+                        .setNegativeButton(
+                                getResources().getString(
+                                        R.string.alert_global_no),
+                                new DialogInterface.OnClickListener() {
+
+                                    public void onClick(DialogInterface dialog,
+                                            int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                builder.show();
+
+            } else {
+                DataStorage.getInstance().setCurrentTrack(track);
+                startActivity(intent);
             }
-            DataStorage.getInstance().setCurrentTrack(track);
-            final Intent intent = new Intent(this, NewTrackActivity.class);
-            startActivity(intent);
+
         } else {
             LogIt.e("RenameTrack", "Track to load was not found or is corrupt.");
             LogIt.popup(this,
