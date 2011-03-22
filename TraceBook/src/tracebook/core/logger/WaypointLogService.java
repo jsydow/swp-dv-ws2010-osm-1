@@ -1,5 +1,8 @@
 package tracebook.core.logger;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
@@ -41,18 +44,20 @@ public class WaypointLogService extends Service implements LocationListener {
                         storage.getCurrentTrack().newWay());
 
             if (one_shot) // in one_shot mode, add a new point
-                current_node = currentWay().newNode();
+                current_nodes.add(currentWay().newNode());
 
             return currentWay().getId();
         }
 
         public int createPOI(boolean onWay) {
+            DataNode tmpnode = null;
             if (onWay && currentWay() != null)
-                current_node = currentWay().newNode();
+                tmpnode = currentWay().newNode();
             else
-                current_node = storage.getCurrentTrack().newNode();
+                tmpnode = storage.getCurrentTrack().newNode();
+            current_nodes.add(tmpnode);
 
-            return current_node.getId();
+            return tmpnode.getId();
         }
 
         public synchronized int endWay() {
@@ -127,11 +132,12 @@ public class WaypointLogService extends Service implements LocationListener {
         }
     };
 
-    private boolean gps_on = false;
-
-    private LocationListener ll = this;
-
-    private GpsMessage sender = null;
+    /**
+     * Current nodes, empty if no node with missing GPS location is present,
+     * otherwise it contains references to the {@link DataNode}s waiting for a
+     * GPS fix.
+     */
+    Queue<DataNode> current_nodes = new LinkedList<DataNode>();
 
     /**
      * Parameters for GPS update intervals.
@@ -143,12 +149,9 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     protected int deltaTime = 0;
 
-    /**
-     * Current node, null if no node with missing GPS location is present,
-     * otherwise it contains a reference to the {@link DataNode} waiting for a
-     * GPS fix.
-     */
-    DataNode current_node = null;
+    private boolean gps_on = false;
+
+    private LocationListener ll = this;
 
     /**
      * One shot mode - no continuous tracking, points are only added to the way
@@ -156,10 +159,33 @@ public class WaypointLogService extends Service implements LocationListener {
      */
     boolean one_shot = false;
 
+    private GpsMessage sender = null;
+
     /**
      * Reference to the {@link DataStorage} singleton.
      */
     DataStorage storage = DataStorage.getInstance();
+
+    /**
+     * Convenience function to get the current way out of the
+     * {@link DataStorage} object.
+     * 
+     * @return the current {@link DataPointsList} way
+     */
+    DataPointsList currentWay() {
+        if (storage == null || storage.getCurrentTrack() == null)
+            return null;
+        return storage.getCurrentTrack().getCurrentWay();
+    }
+
+    /**
+     * Returns the Intent sender helper.
+     * 
+     * @return a reference to the {@link GpsMessage} helper class
+     */
+    GpsMessage getSender() {
+        return sender;
+    }
 
     /**
      * Returns the status of the GPS logging.
@@ -195,18 +221,20 @@ public class WaypointLogService extends Service implements LocationListener {
     public synchronized void onLocationChanged(Location loc) {
         sender.sendCurrentPosition(loc, one_shot);
 
-        if (current_node != null) { // one_shot or POI mode
-            current_node.setLocation(loc); // update node with proper GPS fix
+        if (!current_nodes.isEmpty()) { // one_shot or POI mode
+            for (DataNode node : current_nodes) {
+                node.setLocation(loc); // update node with proper GPS fix
 
-            if (currentWay() == null) // not one_shot mode
-                // inform the MapActivity about the new POI
-                sender.sendPOIUpdate(current_node.getId());
-            else
-                sender.sendWayUpdate(currentWay().getId()); // one_shot update
-
-            current_node = null; // no node waiting for GPS position any more
+                if (currentWay() == null) // not one_shot mode
+                    // inform the MapActivity about the new POI
+                    sender.sendPOIUpdate(node.getId());
+                else
+                    sender.sendWayUpdate(currentWay().getId()); // one_shot
+                                                                // update
+            }
+            current_nodes = null; // no node waiting for GPS position any more
         } else if (currentWay() != null && !one_shot) { // Continuous mode
-            currentWay().newNode(loc); // poi in track was already added before
+            currentWay().newNode(loc); // POI in track was already added before
             sender.sendWayUpdate(currentWay().getId()); // call for an update of
             // the way
         }
@@ -228,27 +256,6 @@ public class WaypointLogService extends Service implements LocationListener {
 
     public void onStatusChanged(String provider, int status, Bundle extra) {
         Log.d(LOG_TAG, "GPS Status Changed: " + provider);
-    }
-
-    /**
-     * Convenience function to get the current way out of the
-     * {@link DataStorage} object.
-     * 
-     * @return the current {@link DataPointsList} way
-     */
-    DataPointsList currentWay() {
-        if (storage == null || storage.getCurrentTrack() == null)
-            return null;
-        return storage.getCurrentTrack().getCurrentWay();
-    }
-
-    /**
-     * Returns the Intent sender helper.
-     * 
-     * @return a reference to the {@link GpsMessage} helper class
-     */
-    GpsMessage getSender() {
-        return sender;
     }
 
     /**
