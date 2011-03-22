@@ -141,7 +141,7 @@
 	<string name="btn_addpointmetaActivity_save">Zapisz</string>
 	<string name="btn_addpointmetaActivity_cancel">Anuluj</string>
 	<string name="btn_addpointActivity_addMeta">Dodaj</string>
-	<string name="btn_addpointActivity_back">Zapisz</string>
+	<string name="btn_addpointActivity_back">Zamknij</string>
 	<string name="btn_addMetaMedia_makePicture">Zdjęcie</string>
 	<string name="btn_addMetaMedia_makeVideo">Film</string>
 	<string name="btn_addMetaMedia_makeMemo">Zapis dzwiękowy</string>

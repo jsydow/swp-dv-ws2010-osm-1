@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import tracebook.core.data.DataMapObject;
+import tracebook.core.data.DataNode;
 import tracebook.core.data.DataStorage;
 import tracebook.core.logger.ServiceConnector;
 import tracebook.core.media.PictureRecorder;
@@ -14,7 +15,9 @@ import tracebook.core.media.Recorder;
 import tracebook.gui.adapter.GenericAdapter;
 import tracebook.gui.adapter.GenericAdapterData;
 import tracebook.gui.adapter.GenericItemDescription;
+import tracebook.util.GpsMessage;
 import tracebook.util.Helper;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,7 +41,6 @@ import android.widget.Toast;
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
  * where an DataMapObject can be anything from POI to area.
- * 
  */
 public class AddPointActivity extends ListActivity {
 
@@ -244,6 +246,19 @@ public class AddPointActivity extends ListActivity {
         menu.setHeaderIcon(android.R.drawable.ic_menu_edit);
         menu.setHeaderTitle(getResources().getString(
                 R.string.cm_addpointActivity_title));
+    }
+
+    @Override
+    public void onDestroy() {
+        // We do do not want to store empty nodes
+        if (node != null && !node.hasAdditionalInfo()
+                && node instanceof DataNode) {
+            LogIt.d("AddPoint", "POI is empty, will not keep it");
+            Helper.currentTrack().deleteNode(node.getId());
+            (new GpsMessage(this)).sendPOIUpdate(node.getId());
+        }
+
+        super.onDestroy();
     }
 
     /**

@@ -136,9 +136,10 @@ public class MapsForgeActivity extends MapActivity {
             if (Helper.currentTrack() != null) {
                 point = Helper.currentTrack().getNodeById(pointId);
             }
-            if (point == null)
+            if (point == null) {
                 LogIt.e(LOG_TAG, "Node with ID " + pointId + " does not exist.");
-            else {
+                pointsOverlay.removeOverlay(pointId);
+            } else {
                 if (point.getOverlayItem() == null)
                     point.setOverlayItem(new OverlayItem(point.toGeoPoint(),
                             point.getId() + "", ""));
