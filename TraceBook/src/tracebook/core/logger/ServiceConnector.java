@@ -18,8 +18,9 @@ public final class ServiceConnector {
      * @return get a reference to the loggerService
      */
     public static ILoggerService getLoggerService() {
-        // danger - ?!
-        return conn.getLoggerService();
+        if (conn != null)
+            return conn.getLoggerService();
+        return null;
     }
 
     /**
@@ -28,10 +29,10 @@ public final class ServiceConnector {
     public static synchronized void initService() {
         if (conn == null) {
             conn = new LoggerServiceConnection();
-            Intent i = new Intent();
-            i.setClassName(activity.getPackageName(), WaypointLogService.class
-                    .getName());
-            activity.bindService(i, conn, Context.BIND_AUTO_CREATE);
+            Intent intent = new Intent();
+            intent.setClassName(activity.getPackageName(),
+                    WaypointLogService.class.getName());
+            activity.bindService(intent, conn, Context.BIND_AUTO_CREATE);
             Log.d(LOG_TAG, "bindService()");
         } else
             Log.d(LOG_TAG, "Cannot bind - service already bound");
@@ -62,8 +63,8 @@ public final class ServiceConnector {
             Log.d(LOG_TAG, "Service already started");
         } else {
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(), WaypointLogService.class
-                    .getName());
+            i.setClassName(activity.getPackageName(),
+                    WaypointLogService.class.getName());
             activity.startService(i);
             Log.d(LOG_TAG, "startService()");
             started = true;
@@ -78,15 +79,10 @@ public final class ServiceConnector {
             Log.d(LOG_TAG, "Service not yet started");
         } else {
             Intent i = new Intent();
-            i.setClassName(activity.getPackageName(), WaypointLogService.class
-                    .getName());
+            i.setClassName(activity.getPackageName(),
+                    WaypointLogService.class.getName());
             activity.stopService(i);
             Log.d(LOG_TAG, "stopService()");
         }
     }
-
-    private ServiceConnector() {
-        // Empty constructor, yo.
-    }
-
 }
