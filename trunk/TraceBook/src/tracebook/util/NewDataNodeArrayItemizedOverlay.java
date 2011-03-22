@@ -1,3 +1,22 @@
+/*======================================================================
+ *
+ * This file is part of TraceBook.
+ *
+ * TraceBook is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * TraceBook is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with TraceBook. If not, see <http://www.gnu.org/licenses/>.
+ *
+ =====================================================================*/
+
 package tracebook.util;
 
 import org.mapsforge.android.maps.ArrayItemizedOverlay;
@@ -17,8 +36,8 @@ import android.content.Intent;
 import android.os.RemoteException;
 
 /**
- * This class extends the {@link ArrayItemizedOverlay} in order to overwrite
- * it's {@link #onTap(int)} method.
+ * This class extends the {@link ArrayItemizedOverlay} in order to overwrite its
+ * {@link #onTap(int)} method.
  */
 public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
     private class CurrentPosListener implements DialogInterface.OnClickListener {
@@ -50,8 +69,8 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
             case 0: // Tag this
                 final Intent intent = new Intent(context,
                         AddPointActivity.class);
-                intent.putExtra("DataNodeId",
-                        Helper.currentTrack().newNode(point).getId());
+                intent.putExtra("DataNodeId", Helper.currentTrack().newNode(
+                        point).getId());
 
                 context.startActivity(intent);
                 break;
@@ -127,8 +146,8 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
                     if (way != null) // we have to redraw the way
                         sender.sendWayUpdate(way.getId());
                 } else
-                    LogIt.popup(context,
-                            "Can not delete Node id=" + node.getId());
+                    LogIt.popup(context, "Can not delete Node id="
+                            + node.getId());
                 break;
             default:
                 break;
@@ -151,7 +170,7 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
     Context context;
 
     /**
-     * The inherited constructor, sets context and default marker.
+     * Sets context and default marker.
      * 
      * @param context
      *            reference to the {@link MapActivity}
