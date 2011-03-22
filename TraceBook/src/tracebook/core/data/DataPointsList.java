@@ -126,21 +126,21 @@ public class DataPointsList extends DataMapObject {
      * @param nodeId
      *            The id of the node to be deleted. If this node does not exist
      *            nothing is done.
-     * @return True if the node was found and deleted, false if no node with the
-     *         id could be found
+     * @return A reference to the deleted DataNode object if it exists, null
+     *         otherwise.
      */
-    public boolean deleteNode(int nodeId) {
+    public DataNode deleteNode(int nodeId) {
         ListIterator<DataNode> lit = nodes.listIterator();
         DataNode dn;
         while (lit.hasNext()) {
             dn = lit.next();
             if (dn.getId() == nodeId) {
                 lit.remove();
-                return true;
+                return dn;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

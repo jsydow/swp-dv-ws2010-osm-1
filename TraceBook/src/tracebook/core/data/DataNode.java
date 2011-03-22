@@ -10,8 +10,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
 
-import android.location.Location;
+import tracebook.gui.activity.MapsForgeActivity;
 import tracebook.util.LogIt;
+import android.location.Location;
 
 /**
  * A node. A node can be a POI or an element of a list of way points that belong
@@ -41,9 +42,7 @@ public class DataNode extends DataMapObject {
                 .getNamedItem("lon").getNodeValue());
         ret.setLocation(new GeoPoint(lat, lon));
         // get time stamp
-        ret
-                .setDatetime(nodeattributes.getNamedItem("timestamp")
-                        .getNodeValue());
+        ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
         // get id
         ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
                 .getNodeValue()));
@@ -245,6 +244,9 @@ public class DataNode extends DataMapObject {
      */
     public void setLocation(GeoPoint gp) {
         this.coordinates = gp;
+
+        if (overlayItem != null)
+            overlayItem.setPoint(coordinates);
     }
 
     /**
@@ -258,18 +260,19 @@ public class DataNode extends DataMapObject {
         if (location == null)
             this.coordinates = null;
         else
-            this.coordinates = new GeoPoint(location.getLatitude(), location
-                    .getLongitude());
+            setLocation(new GeoPoint(location.getLatitude(),
+                    location.getLongitude()));
     }
 
     /**
-     * Set the OverlayItem, used by MapsForgeActivity.
+     * Set the {@link OverlayItem}, used by {@link MapsForgeActivity}.
      * 
      * @param overlayItem
-     *            The new Overlayitem.
+     *            The new OverlayItem.
      */
     public void setOverlayItem(OverlayItem overlayItem) {
         this.overlayItem = overlayItem;
+        this.overlayItem.setPoint(coordinates);
     }
 
     /**

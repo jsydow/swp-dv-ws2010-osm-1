@@ -17,6 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.mapsforge.android.maps.GeoPoint;
+import org.mapsforge.android.maps.OverlayItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -254,6 +255,12 @@ public class DataTrack extends DataMediaHolder {
     private List<DataPointsList> ways;
 
     /**
+     * this list stores all discarded OverlayItems, MapsActivity will poll and
+     * remove them.
+     */
+    List<OverlayItem> invalidItems;
+
+    /**
      * Constructor which initializes the Track, each Track must have a Date
      * time.
      */
@@ -291,6 +298,22 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
+     * Returns a list of {@link OverlayItem}s whose {@link DataNode} does no
+     * longer exist. For efficiency reasons they are stored in a list, so when
+     * e.g. a way is deleted, the Overlay will not be redrawn for every deleted
+     * waypoint, but receive a notification that invalid OverlayItems exist when
+     * the removal procedure has finished.
+     * 
+     * @return The list of invalid OverlayItems. It will be cleared by this
+     *         call.
+     */
+    public List<OverlayItem> clearInvalidItems() {
+        List<OverlayItem> tmp = invalidItems;
+        invalidItems = new LinkedList<OverlayItem>();
+        return tmp;
+    }
+
+    /**
      * Creates new folder in .../TraceBook for this Track. Such a directory must
      * exist when track is serialized.
      */
@@ -319,25 +342,31 @@ public class DataTrack extends DataMediaHolder {
      * 
      * @param id
      *            The id of the POI to delete.
-     * @return True if a node with the id was found and deleted, false if no
-     *         such node did exist.
+     * @return A reference to the deleted DataNode object if it exists, null
+     *         otherwise..
      */
-    public boolean deleteNode(int id) {
+    public DataNode deleteNode(int id) {
         ListIterator<DataNode> lit = nodes.listIterator();
         DataNode dn;
         while (lit.hasNext()) {
             dn = lit.next();
             if (dn.getId() == id) {
+                if (dn.getOverlayItem() != null)
+                    invalidItems.add(dn.getOverlayItem());
                 lit.remove();
-                return true;
+                return dn;
             }
         }
 
-        for (DataPointsList dpl : getWays())
-            if (dpl.deleteNode(id))
-                return true;
-
-        return false;
+        for (DataPointsList dpl : getWays()) {
+            DataNode dldn = dpl.deleteNode(id);
+            if (dldn != null) { // deleted
+                if (dldn.getOverlayItem() != null)
+                    invalidItems.add(dldn.getOverlayItem());
+                return dldn;
+            }
+        }
+        return null;
     }
 
     /**
@@ -432,6 +461,31 @@ public class DataTrack extends DataMediaHolder {
             if (dn != null)
                 return dn;
         }
+
+        return null;
+    }
+
+    /**
+     * Tries to find the {@link DataNode} containing the given
+     * {@link OverlayItem}.
+     * 
+     * @param item
+     *            The OverlayItem that should be searched for.
+     * @return The DataNode containing the OverlayItem, or null if no DataNode
+     *         with the OverlayItem was found
+     */
+    public DataNode getNodeByOverlayItem(OverlayItem item) {
+        if (item == null)
+            return null;
+
+        for (DataNode dn : nodes)
+            if (item.equals(dn.getOverlayItem()))
+                return dn;
+
+        for (DataPointsList dpl : ways)
+            for (DataNode dn : dpl.getNodes())
+                if (item.equals(dn.getOverlayItem()))
+                    return dn;
 
         return null;
     }

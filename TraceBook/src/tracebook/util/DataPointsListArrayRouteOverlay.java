@@ -3,6 +3,7 @@ package tracebook.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mapsforge.android.maps.ArrayItemizedOverlay;
 import org.mapsforge.android.maps.ArrayWayOverlay;
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.OverlayWay;
@@ -49,7 +50,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
 
     private Activity context;
 
-    private DataNodeArrayItemizedOverlay pointsOverlay;
+    private ArrayItemizedOverlay pointsOverlay;
 
     /**
      * List of possible colors for ways and areas the first color in the list is
@@ -73,7 +74,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
      * 
      */
     public DataPointsListArrayRouteOverlay(Activity context,
-            DataNodeArrayItemizedOverlay pointsOverlay) {
+            ArrayItemizedOverlay pointsOverlay) {
         super(null, null);
 
         this.pointsOverlay = pointsOverlay;
@@ -138,10 +139,9 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
         this.addWay(way.getOverlayRoute());
 
         if (showWaypoints)
-            for (DataNode n : way.getNodes()) {
+            for (DataNode n : way.getNodes())
                 putWaypoint(n);
-                pointsOverlay.updateItem(n);
-            }
+
     }
 
     /**
@@ -172,10 +172,8 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
     }
 
     private void addWaypoints(DataPointsList way) {
-        for (DataNode n : way.getNodes()) {
+        for (DataNode n : way.getNodes())
             putWaypoint(n);
-            pointsOverlay.addOverlay(n);
-        }
     }
 
     /**
@@ -188,11 +186,12 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
         if (n.getOverlayItem() == null)
             n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
                     R.drawable.dot_blue, context, true));
+        pointsOverlay.addItem(n.getOverlayItem());
     }
 
     private void removeWaypoints(DataPointsList way) {
         for (DataNode n : way.getNodes())
-            pointsOverlay.removeOverlay(n.getId());
+            pointsOverlay.removeItem(n.getOverlayItem());
     }
 
     /**
