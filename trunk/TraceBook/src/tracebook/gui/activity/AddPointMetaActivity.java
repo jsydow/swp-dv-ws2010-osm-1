@@ -19,8 +19,14 @@ import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
@@ -39,10 +45,23 @@ public class AddPointMetaActivity extends ListActivity {
      * A simple enumeration class for tags.
      */
     enum Tags {
-        KEY, USEFUL, VALUE
+        /**
+         * 
+         */
+        KEY,
+        /**
+         * 
+         */
+        USEFUL,
+        /**
+         * 
+         */
+        VALUE
     }
 
     private GenericAdapter adapter;
+
+    private boolean lastUsed = true;
 
     /**
      * Reference to the current DataMapObject in use.
@@ -149,6 +168,33 @@ public class AddPointMetaActivity extends ListActivity {
     }
 
     /**
+     * This method inflate the options menu for this activity.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.optionsmenu_addpointmetaactivity, menu);
+        setOptionsMenuItemTitle(lastUsed,
+                menu.findItem(R.id.opt_addpointmetaactivity_sort));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.opt_addpointmetaactivity_sort:
+            setLastUsed(!lastUsed);
+            setOptionsMenuItemTitle(!lastUsed, item);
+
+            fillListView();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
      * Save the MetaData to the Node-Meta and go back to the information
      * activity.
      * 
@@ -214,8 +260,15 @@ public class AddPointMetaActivity extends ListActivity {
 
     private void fillListView() {
         HistoryDb db = new HistoryDb(this);
-        // TODO user can change most used vs recently used
-        List<TagSearchResult> result = db.getHistory(false, 10);
+
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        lastUsed = getPreferenceLastUsed();
+        int historySize = Integer.parseInt(appPreferences.getString(
+                "lst_setHistorySize", "10"));
+
+        List<TagSearchResult> result = db.getHistory(!lastUsed, historySize);
 
         GenericItemDescription desc = new GenericItemDescription();
         desc.addResourceId("Key", R.id.tv_history_key);
@@ -237,6 +290,13 @@ public class AddPointMetaActivity extends ListActivity {
         setListAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+    }
+
+    private boolean getPreferenceLastUsed() {
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        return appPreferences.getBoolean("check_showMostRecentTagsInHistory",
+                true);
     }
 
     /**
@@ -313,6 +373,47 @@ public class AddPointMetaActivity extends ListActivity {
         }
         String[] tagStringsArray = new String[tagStrings.size()];
         return tagStrings.toArray(tagStringsArray);
+    }
+
+    /**
+     * 
+     * @param isLastUsedYes
+     *            From now on show the most recently used tag first?
+     */
+    private void setLastUsed(boolean isLastUsedYes) {
+        if (isLastUsedYes) {
+            lastUsed = true;
+            setPreferenceLastUsed(true);
+        } else {
+            lastUsed = false;
+            setPreferenceLastUsed(false);
+        }
+    }
+
+    /**
+     * Sets the title of the options menu item.
+     * 
+     * @param isLastUsedYes
+     *            From now on show the most recently used tag first?
+     * @param item
+     *            The menu item.
+     */
+    private void setOptionsMenuItemTitle(boolean isLastUsedYes, MenuItem item) {
+        if (!isLastUsedYes) {
+            item.setTitle(getResources().getString(
+                    R.string.opt_addpointmetaactivity_lastUsed));
+        } else {
+            item.setTitle(getResources().getString(
+                    R.string.opt_addpointmetaactivity_mostUsed));
+        }
+    }
+
+    private void setPreferenceLastUsed(boolean isLastUsedYes) {
+        Editor edit = PreferenceManager.getDefaultSharedPreferences(this)
+                .edit();
+        edit.putBoolean("check_showMostRecentTagsInHistory", isLastUsedYes);
+        edit.commit();
+        return;
     }
 
     @Override
