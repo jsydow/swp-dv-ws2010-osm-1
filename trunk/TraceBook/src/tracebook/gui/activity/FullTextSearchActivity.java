@@ -25,6 +25,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -213,6 +214,9 @@ public class FullTextSearchActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // If status bar visible remove the activity title bar.
+        if (Helper.checkStatusbarVisibility(this))
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_fulltextsearchactivity);
         setTitle(R.string.string_fulltextsearchActivity_title);
 

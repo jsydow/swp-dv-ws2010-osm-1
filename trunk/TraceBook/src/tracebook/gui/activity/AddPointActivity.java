@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -189,7 +190,11 @@ public class AddPointActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        // If status bar visible remove the activity title bar.
+        if (Helper.checkStatusbarVisibility(this))
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         final Bundle extras = getIntent().getExtras();
 
         /*

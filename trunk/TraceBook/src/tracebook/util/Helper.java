@@ -141,6 +141,22 @@ public final class Helper {
     }
 
     /**
+     * This method check's the status of the visibility status bar.
+     * 
+     * @param activity
+     *            context of the application
+     * @return Returns visibility of the status bar which was checked/unchecked
+     *         by the user at the preferences.
+     */
+    public static boolean checkStatusbarVisibility(Activity activity) {
+        // Get the app's shared preferences
+        SharedPreferences appPreferences = PreferenceManager
+                .getDefaultSharedPreferences(activity);
+        return appPreferences.getBoolean("check_visbilityStatusbar", false);
+
+    }
+
+    /**
      * Gets the current DataTrack for convenience.
      * 
      * @return the current DataTrack object
@@ -305,7 +321,7 @@ public final class Helper {
      * much information for the given activity. If you want to show the status
      * bar in your activity please notice that you have to implement following
      * methods:
-     * 
+     * <p>
      * public void statusBarTitle (View v), public void statusBarDescription
      * (View v), public void statusBarPrefBtn(View v), public void
      * statusBarSearchBtn(View v) - if boolean searchBox = true
@@ -341,7 +357,6 @@ public final class Helper {
                     .findViewById(layoutPosition);
             statusListInflater.inflate(R.layout.statusbar_global,
                     statuslayoutHolder);
-
             // Set visibility of the search button in the status bar.
             if (!searchBox) {
                 final ImageButton searchBtn = (ImageButton) activity

@@ -5,6 +5,7 @@ import java.io.IOException;
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.media.AudioRecorder;
+import tracebook.util.Helper;
 import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
 
 /**
  * The Class AddMemoActivity, start the recording of the notice. The user can
@@ -37,7 +39,11 @@ public class AddMemoActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        // If status bar visible remove the activity title bar.
+        if (Helper.checkStatusbarVisibility(this))
+            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         final Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
