@@ -11,3 +11,6 @@ TraceBook is an Android based Java application which has only one external depen
 
 = Core =
 The core of TraceBook consists of a main "WayLoggerService"  which is a service of TraceBook and is running continuously in background and a "DataStorage" engine which handles serialization, deserialization and handling of the collected date in main memory. The "WayLoggerService" is accessible from all parts of the code and is detached form the gui. It provides all core functionality to start and track routes.
+
+= Data Storage =
+The DataStorage architecture is based on the idea to handle a internal representation of the data structure we use in main memory and a xml based manifestation. We choose xml because it suits very well with it tree structure which a good mapping with our internal structure which is also a tree structure. 
