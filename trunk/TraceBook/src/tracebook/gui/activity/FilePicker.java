@@ -113,7 +113,8 @@ public class FilePicker extends ListActivity {
         }
 
         TextView tvPath = (TextView) this.findViewById(R.id.tv_filepicker_path);
-        tvPath.setText(currentFile.getAbsolutePath());
+        tvPath.setText(getResources().getString(R.string.tv_filepicker_currdir)
+                + "\n" + currentFile.getAbsolutePath());
 
         updateAdapter();
     }

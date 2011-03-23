@@ -261,4 +261,5 @@
 <string name="toast_noneExistentNode">Node does not exist!</string>
 <string name="string_filepicker_error_invalid_path">Invalid path</string>
 <string name="alert_filepicker_message">Do you want to pick this file?</string>
+<string name="tv_filepicker_currdir">Current directory:</string>
 </resources>
