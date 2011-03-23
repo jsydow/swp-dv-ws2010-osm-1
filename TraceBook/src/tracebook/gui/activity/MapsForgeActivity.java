@@ -53,7 +53,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 
 /**
- * This class implements a MapsForge Map activity and draws ways and nodes as
+ * This class implements a MapsForge map activity and draws ways and nodes as
  * overlays on it. In the future it will also be possible to modify said nodes
  * and ways.
  */
@@ -197,14 +197,13 @@ public class MapsForgeActivity extends MapActivity {
                     pointsOverlay.removeItem(oi);
                 break;
             default:
-                LogIt.e(LOG_TAG,
-                        "unhandled Message, ID="
-                                + intend.getIntExtra("type", -1));
+                LogIt.e(LOG_TAG, "unhandled Message, ID="
+                        + intend.getIntExtra("type", -1));
             }
         }
 
         /**
-         * Request the map to be centered to the current position.
+         * Requests the map to be centered to the current position.
          */
         void centerOnCurrentPosition() {
             if (currentGeoPoint != null) {
@@ -263,8 +262,8 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.requestRedraw();
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                LogIt.d(LOG_TAG,
-                        "Exiting edit mode for point " + editNode.getId());
+                LogIt.d(LOG_TAG, "Exiting edit mode for point "
+                        + editNode.getId());
                 editNode = null;
             }
 
@@ -274,7 +273,7 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * This method inflate the options menu for this activity.
+     * Inflates the options menu for this activity.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -284,10 +283,15 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     /**
-     * Catches the selected MenuItem from the options menu and 1. activate the
-     * Internet to get more map data 2. Center the Map to the actual own
-     * position 3. Stop tracking, show alert and go back to MainActivity 4.
-     * Pause tracking and show alert 5. Export actual session to...
+     * Catches the selected MenuItem from the options menu and
+     * 
+     * <ol>
+     * <li>Activate the internet connection to get more map data.</li>
+     * <li>Center the map to the current own position.</li>
+     * <li>Stop tracking, show alert and go back to MainActivity.</li>
+     * <li>Pause tracking and show alert</li>
+     * <li>5. Export current session to item.</li>
+     * </ol>
      * 
      * @param item
      *            the item
@@ -304,9 +308,10 @@ public class MapsForgeActivity extends MapActivity {
                         R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item.setTitle(getResources()
-                        .getString(
-                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
+                item
+                        .setTitle(getResources()
+                                .getString(
+                                        R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(onlineRenderer, null);
             }
             useInternet = !useInternet;
@@ -323,10 +328,8 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.opt_mapsforgeActivity_export:
             DataStorage.getInstance().serialize();
-            LogIt.popup(
-                    this,
-                    getResources().getString(
-                            R.string.popup_mapsforgeactivity_saved));
+            LogIt.popup(this, getResources().getString(
+                    R.string.popup_mapsforgeactivity_saved));
             return true;
 
         case R.id.opt_mapsforgeActivity_pause:
@@ -449,23 +452,19 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt.popup(
-                        this,
-                        getResources().getString(
-                                R.string.toast_loadingOnlineMap));
+                LogIt.popup(this, getResources().getString(
+                        R.string.toast_loadingOnlineMap));
                 modeLocal = onlineRenderer;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
-                // specify a mapsfile when in
+                // specify a maps file when in
                 // Online mode
                 mapView.setMapFile(file.getAbsolutePath());
             }
         } else {
             if (!isOnline()) {
-                LogIt.popup(
-                        this,
-                        getResources().getString(
-                                R.string.toast_noInternetAccess));
+                LogIt.popup(this, getResources().getString(
+                        R.string.toast_noInternetAccess));
             }
         }
         mapView.setMapViewMode(modeLocal);
