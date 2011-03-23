@@ -257,10 +257,11 @@ public class FullTextSearchActivity extends ListActivity {
         if (editBox != null) {
             editBox.addTextChangedListener(new MyTextWatcher(this));
 
-            String tagValue = extras.getString("TagValue");
-
-            if (extras != null && tagValue != null) {
-                editBox.setText(tagValue);
+            if (extras != null) {
+                String tagValue = extras.getString("TagValue");
+                if (tagValue != null) {
+                    editBox.setText(tagValue);
+                }
             }
 
         }

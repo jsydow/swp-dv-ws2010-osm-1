@@ -141,7 +141,8 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
                 DataPointsList way = null;
                 if (node != null)
                     way = node.getDataPointsList();
-                if (Helper.currentTrack().deleteNode(node.getId()) != null) {
+                if (Helper.currentTrack() != null
+                        && Helper.currentTrack().deleteNode(node.getId()) != null) {
                     removeItem(node.getOverlayItem());
                     if (way != null) // we have to redraw the way
                         sender.sendWayUpdate(way.getId(), -1);
