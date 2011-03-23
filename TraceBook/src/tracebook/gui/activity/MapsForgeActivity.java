@@ -47,6 +47,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -207,12 +208,8 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     private static final String LOG_TAG = "MapsForgeActivity";
-    // TODO: user configurable
-    private String defaultMap = "/sdcard/default.map";
     private GPSReceiver gpsReceiver;
     private MapView mapView;
-    // TODO: user configurable
-    private MapViewMode onlineRenderer = MapViewMode.OSMARENDER_TILE_DOWNLOAD;
 
     private boolean useInternet = false;
 
@@ -303,7 +300,7 @@ public class MapsForgeActivity extends MapActivity {
                 item.setTitle(getResources()
                         .getString(
                                 R.string.opt_mapsforgeActivity_deactivateMobileInternet));
-                changeMapViewMode(onlineRenderer, null);
+                changeMapViewMode(getOnlineTileStyle(), null);
             }
             useInternet = !useInternet;
 
@@ -352,7 +349,9 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     private void changeMapViewToOfflineRendering() {
-        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(defaultMap));
+        String mapFile = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("mapsforgeMapFilePath", "/mnt/sdcard/default.map");
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(mapFile));
     }
 
     private void fillOverlays() {
@@ -363,6 +362,23 @@ public class MapsForgeActivity extends MapActivity {
         }
 
         routesOverlay.addWays(Helper.currentTrack().getWays());
+    }
+
+    /**
+     * Gets the preferred Online Tile Style from the Preferences object.
+     */
+    private MapViewMode getOnlineTileStyle() {
+        String pref = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("lst_setOnlineTitleStyle", "OSMA");
+        if (pref.equals("OSMA"))
+            return MapViewMode.OSMARENDER_TILE_DOWNLOAD;
+        if (pref.equals("MAPNIK"))
+            return MapViewMode.MAPNIK_TILE_DOWNLOAD;
+        if (pref.equals("OPEN"))
+            return MapViewMode.OPENCYCLEMAP_TILE_DOWNLOAD;
+
+        // use osmarender as fallback
+        return MapViewMode.OSMARENDER_TILE_DOWNLOAD;
     }
 
     private boolean isOnline() {
@@ -390,6 +406,10 @@ public class MapsForgeActivity extends MapActivity {
         mapView.setClickable(true);
         mapView.setBuiltInZoomControls(true);
         mapView.setScaleBar(true);
+
+        mapView.setMemoryCardCachePersistence(PreferenceManager
+                .getDefaultSharedPreferences(this).getBoolean(
+                        "check_activateLocalTitleMapCache", false));
 
         mapView.getOverlays().add(routesOverlay);
         mapView.getOverlays().add(pointsOverlay);
@@ -449,7 +469,7 @@ public class MapsForgeActivity extends MapActivity {
                         this,
                         getResources().getString(
                                 R.string.toast_loadingOnlineMap));
-                modeLocal = onlineRenderer;
+                modeLocal = getOnlineTileStyle();
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
                 // specify a maps file when in
