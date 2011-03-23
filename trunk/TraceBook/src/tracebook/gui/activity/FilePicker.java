@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * @author js
@@ -99,6 +100,8 @@ public class FilePicker extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_filepicker);
+
         Bundle arguments = this.getIntent().getExtras();
         currentFile = Environment.getExternalStorageDirectory();
         if (arguments != null) {
@@ -108,6 +111,10 @@ public class FilePicker extends ListActivity {
                 setPath(path);
             }
         }
+
+        TextView tvPath = (TextView) this.findViewById(R.id.tv_filepicker_path);
+        tvPath.setText(currentFile.getAbsolutePath());
+
         updateAdapter();
     }
 
