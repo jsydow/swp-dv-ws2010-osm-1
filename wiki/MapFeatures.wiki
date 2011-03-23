@@ -1,4 +1,4 @@
-#summary OSM map features in an XML file.
+#summary OSM map features in an XML file and in a SQLite database.
 #labels Phase-Design
 
 <wiki:toc max_depth="2" />
