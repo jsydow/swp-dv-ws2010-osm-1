@@ -360,7 +360,7 @@ public class LoadTrackActivity extends ListActivity {
         final ProgressDialog dialog = ProgressDialog.show(
                 this,
                 getResources().getString(
-                        R.string.alert_aboutActivity_pleaseWait),
+                        R.string.alert_loadtrackActivity_pleaseWait),
                 getResources().getString(
                         R.string.alert_loadtrackActivity_loadingTracks), true,
                 false);
