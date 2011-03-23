@@ -26,10 +26,13 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -272,6 +275,12 @@ public class DataTrack extends DataMediaHolder {
     private DataPointsList currentWay;
 
     /**
+     * This list stores all discarded OverlayItems, MapsActivity will poll and
+     * remove them.
+     */
+    private Queue<OverlayItem> invalidItems;
+
+    /**
      * Display name of the Track. Serves as id and should therefore be unique.
      * Is initialized with the DateTime of the first creation of this object.
      */
@@ -288,12 +297,6 @@ public class DataTrack extends DataMediaHolder {
     private List<DataPointsList> ways;
 
     /**
-     * This list stores all discarded OverlayItems, MapsActivity will poll and
-     * remove them.
-     */
-    List<OverlayItem> invalidItems;
-
-    /**
      * Constructor which initializes the Track, each Track must have a Date
      * time.
      */
@@ -301,7 +304,7 @@ public class DataTrack extends DataMediaHolder {
         super();
         ways = new LinkedList<DataPointsList>();
         nodes = new LinkedList<DataNode>();
-        invalidItems = new LinkedList<OverlayItem>();
+        invalidItems = new ConcurrentLinkedQueue<OverlayItem>();
         this.name = getFilenameCompatibleTimeStamp();
         this.comment = "";
         createNewTrackFolder();
@@ -341,9 +344,9 @@ public class DataTrack extends DataMediaHolder {
      * @return The list of invalid OverlayItems. It will be cleared by this
      *         call.
      */
-    public List<OverlayItem> clearInvalidItems() {
-        List<OverlayItem> tmp = invalidItems;
-        invalidItems = new LinkedList<OverlayItem>();
+    public Collection<OverlayItem> clearInvalidItems() {
+        Collection<OverlayItem> tmp = invalidItems;
+        invalidItems = new ConcurrentLinkedQueue<OverlayItem>();
         return tmp;
     }
 
@@ -569,6 +572,18 @@ public class DataTrack extends DataMediaHolder {
      */
     public List<DataPointsList> getWays() {
         return ways;
+    }
+
+    /**
+     * Marks an {@link OverlayItem} as invalid so it can be removed later.
+     * 
+     * @param overlayItem
+     *            The outdated OverlayItem
+     */
+
+    public void invalidateOverlayItem(OverlayItem overlayItem) {
+        if (overlayItem != null)
+            invalidItems.add(overlayItem);
     }
 
     /**

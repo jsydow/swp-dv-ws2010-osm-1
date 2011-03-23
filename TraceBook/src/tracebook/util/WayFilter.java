@@ -77,10 +77,14 @@ public final class WayFilter {
                     if (calibrate) {
                         threshold += calculateArea(firstNode.toGeoPoint(),
                                 pending.toGeoPoint(), n.toGeoPoint());
-                    } else if (calculateArea(firstNode.toGeoPoint(), pending
-                            .toGeoPoint(), n.toGeoPoint()) < threshold * weight
-                            && !n.hasAdditionalInfo() && iter.hasNext())
+                    } else if (calculateArea(firstNode.toGeoPoint(),
+                            pending.toGeoPoint(), n.toGeoPoint()) < threshold
+                            * weight
+                            && !n.hasAdditionalInfo() && iter.hasNext()) {
+                        Helper.currentTrack().invalidateOverlayItem(
+                                n.getOverlayItem());
                         iter.remove();
+                    }
                     firstNode = pending;
                 }
 
