@@ -162,6 +162,13 @@ public class RecordVideoActivity extends Activity implements
         // Does nothing. Literally.
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Helper.startUserNotification(this, R.drawable.ic_notification,
+                RecordVideoActivity.class);
+    }
+
     /**
      * Stops recording the video and appends the new media object to our node,
      * if we were recording, at all.

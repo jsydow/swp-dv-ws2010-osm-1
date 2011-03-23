@@ -571,10 +571,10 @@ public final class Helper {
         CharSequence contentText = activity.getResources().getString(
                 R.string.not_startActivity_contentText);
 
-        Context con = activity.getApplicationContext();
-        Intent notificationIntent = new Intent(con, cls);
-        PendingIntent contentIntent = PendingIntent.getActivity(con, 0,
-                notificationIntent, 0);
+        Intent notificationIntent = new Intent(activity, cls);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                activity.getApplicationContext(), 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText,
                 contentIntent);

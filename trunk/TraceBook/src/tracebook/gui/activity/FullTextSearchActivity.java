@@ -19,6 +19,10 @@
 
 package tracebook.gui.activity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -29,19 +33,25 @@ import tracebook.gui.adapter.GenericAdapter;
 import tracebook.gui.adapter.GenericAdapterData;
 import tracebook.gui.adapter.GenericItemDescription;
 import tracebook.util.Helper;
+import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * The FullTextSearchActivity deals with a full text search on the description
@@ -232,9 +242,12 @@ public class FullTextSearchActivity extends ListActivity {
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_fulltextsearchTitle), getResources()
-                .getString(R.string.tv_statusbar_fulltextsearchDesc),
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
@@ -290,9 +303,12 @@ public class FullTextSearchActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_fulltextsearchTitle), getResources()
-                .getString(R.string.tv_statusbar_fulltextsearchDesc));
+        Helper.setActivityInfoDialog(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc));
     }
 
     /**
@@ -333,10 +349,67 @@ public class FullTextSearchActivity extends ListActivity {
 
         ts = currTagSearchResult.get(position);
 
-        final Dialog infoDialog = Helper.makeInfoDialog(this, this, ts, "Apply",
-                true);
+        final Dialog infoDialog = new Dialog(this);
+        infoDialog.setContentView(R.layout.dialog_searchinfo);
+        infoDialog.setTitle(R.string.string_searchInfoDialog_title);
+        infoDialog.setCancelable(true);
+
+        ImageView img = (ImageView) infoDialog
+                .findViewById(R.id.iv_searchInfoDialog_wikiImage);
+
+        try {
+            URL url = new URL(ts.getImage());
+            InputStream is = (InputStream) url.getContent();
+            Drawable d = Drawable.createFromStream(is, "src");
+            img.setImageDrawable(d);
+        } catch (MalformedURLException e) {
+            // TODO define fallback image
+            LogIt.e("FullTextSearch", e.toString());
+        } catch (IOException e) {
+            // TODO define fallback image
+            LogIt.e("FullTextSearch", e.toString());
+        }
+
+        TextView cat = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_category);
+        cat.setText(ts.getKey());
+
+        TextView val = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_value);
+        val.setText(ts.getValue());
+
+        TextView desc = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_description);
+        desc.setText(ts.getDescription());
+
+        TextView wiki = (TextView) infoDialog
+                .findViewById(R.id.tv_searchInfoDialog_url);
+        wiki.setText(ts.getLink());
+
+        final FullTextSearchActivity act = this;
+
+        Button button = (Button) infoDialog
+                .findViewById(R.id.btn_searchInfoDialog_save);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v1) {
+                final Intent intent = new Intent();
+                intent.putExtra("DataNodeKey", ts.getKey());
+                intent.putExtra("DataNodeValue", ts.getValue());
+                act.setResult(RESULT_OK, intent);
+                infoDialog.cancel();
+                act.finish();
+
+            }
+        });
 
         infoDialog.show();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Helper.startUserNotification(this, R.drawable.ic_notification,
+                FullTextSearchActivity.class);
     }
 }
