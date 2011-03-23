@@ -34,6 +34,8 @@ There are 4 operations that can be done on a datum:
   * query: if the parent object has a list of data, query (the parent) to find the specific datum.
 
 
+
+==  ==
 !DataStorage is the class that has all other data in it. It is therefore like a root-object. The whole data model is like a tree. Since all other parts of the application should only work on one "database" of the tracking data this class is modeled as Singleton. There is at most one instance of !DataStorage.
 
 The data in a !DataStorage object are tracks. Tracks are like tracking sessions. They contain all data that were recorded and edited in one (or multiple) application usage sessions.
