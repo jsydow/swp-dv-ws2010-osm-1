@@ -1,4 +1,4 @@
-#summary Some thoughts on the Tracking-Data and metadata / *outdated*
+#summary Some thoughts on the Tracking-Data and metadata
 
 = General =
 
