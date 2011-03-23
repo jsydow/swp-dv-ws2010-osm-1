@@ -45,8 +45,8 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -242,12 +242,9 @@ public class FullTextSearchActivity extends ListActivity {
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar
-        Helper.setStatusBar(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_fulltextsearchTitle), getResources()
+                .getString(R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
@@ -259,8 +256,8 @@ public class FullTextSearchActivity extends ListActivity {
 
             if (extras != null) {
                 String tagValue = extras.getString("TagValue");
-                if(tagValue != null) {
-                editBox.setText(tagValue);
+                if (tagValue != null) {
+                    editBox.setText(tagValue);
                 }
             }
 
@@ -303,12 +300,9 @@ public class FullTextSearchActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_fulltextsearchTitle), getResources()
+                .getString(R.string.tv_statusbar_fulltextsearchDesc));
     }
 
     /**
