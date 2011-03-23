@@ -45,3 +45,19 @@ As seen in the data model tree above a !DataTrack, !DataNode and !DataPointsList
 == !DataMapObject ==
 
 Also as seen in the data model tree above a !DataNode and !DataPointsList can have tags. See [http://wiki.openstreetmap.org/wiki/Tags OpenStreetMap-tags]. !DataMapObject provides the functionality to handle tags. All !DataMapObject are also !DataMediaHolder so that !DataMediaHolder is the super class of !DataMapObject.
+
+== !DataNode ==
+
+Every !DataNode has a location (GPS coordinates). This is the only type of data that has such a location. A location must not be existent the time the node is created because the application may still wait for a GPS fix.
+
+== !DataTrack ==
+
+This is the most complex class. It has to take care of the serialisation of the data it contains.
+
+At this point we should describe how the data are stored on the SD-card:
+
+=== Storing data on the SD-card ===
+
+In the root directory of the SD card there is a folder TraceBook. In it there folders for each track. Each track has exactly one folder. The name of the track is equal to the name of the folder.
+
+In the folder of the track all media files are stored (Saved after recording). The actual tracking data are stored in an .xml-file "track.tbt". It has the extension .tbt because the JOSM plugin can then easier differentiate between our XML-file and an XML-file of OpenStreetMap data
