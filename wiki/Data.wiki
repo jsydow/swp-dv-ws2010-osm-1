@@ -4,7 +4,7 @@
 
 We have following hierarchy:
  * a *Track* is a "session", it contains a set of POI's, Ways, Areas and Media the user collects in one or multiple app-uses.
- * *Media* are textmemos, photos, audiorecordings that help to remember things
+ * *Media* are textmemos, photos, audiorecordings and videos that help to remember things
  * *POI*'s are a gps-node with certain tags
  * *Ways* are a list of gps-nodes with certain tags. Mind that the list can have some specially tagged nodes like traffic lights and barriers.
  * *Areas* are closed Ways.
@@ -16,8 +16,7 @@ All data have a unique id.
 == Node ==
 
 In general every node we get from the gps has:
-  * latitude
-  * longitude
+  * location
   * timestamp
 
 These are the data every node has at a minimum.
