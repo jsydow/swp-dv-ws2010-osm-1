@@ -82,7 +82,8 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -97,18 +98,15 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt
-                                        .popup(
-                                                activity,
-                                                activity
-                                                        .getResources()
-                                                        .getString(
-                                                                R.string.alert_global_trackName)
-                                                        + " "
-                                                        + DataStorage
-                                                                .getInstance()
-                                                                .getCurrentTrack()
-                                                                .getName());
+                                LogIt.popup(
+                                        activity,
+                                        activity.getResources()
+                                                .getString(
+                                                        R.string.alert_global_trackName)
+                                                + " "
+                                                + DataStorage.getInstance()
+                                                        .getCurrentTrack()
+                                                        .getName());
 
                                 // stop logging
                                 try {
@@ -121,16 +119,8 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        }).setNegativeButton(
-                        activity.getResources().getString(
-                                R.string.alert_global_no),
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog,
-                                    int which) {
-                                dialog.cancel();
-                            }
-                        }).setNeutralButton(
+                        })
+                .setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_notSaveAndClose),
                         new DialogInterface.OnClickListener() {
@@ -141,17 +131,41 @@ public final class Helper {
 
                                 String trackname = DataStorage.getInstance()
                                         .getCurrentTrack().getName();
-                                try {
-                                    ServiceConnector.getLoggerService()
-                                            .stopTrack();
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
+
+                                if (DataTrack.exists(trackname)) {
+                                    try {
+                                        DataStorage.getInstance()
+                                                .unloadAllTracks();
+                                        ServiceConnector.getLoggerService()
+                                                .pauseLogging();
+
+                                    } catch (RemoteException e) {
+
+                                        e.printStackTrace();
+                                    }
+                                    activity.finish();
+                                } else {
+                                    try {
+                                        ServiceConnector.getLoggerService()
+                                                .stopTrack();
+                                    } catch (RemoteException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    DataTrack.delete(trackname);
+                                    activity.finish();
                                 }
+                            }
+                        })
+                .setNeutralButton(
+                        activity.getResources().getString(
+                                R.string.alert_global_no),
+                        new DialogInterface.OnClickListener() {
 
-                                DataStorage.getInstance().deserializeTrack(
-                                        trackname).delete();
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                dialog.cancel();
 
-                                activity.finish();
                             }
                         });
 
@@ -293,9 +307,8 @@ public final class Helper {
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
         // TODO: unhardcode
-        LogIt
-                .popup(context,
-                        "An error occured. Please restart the application and try again.");
+        LogIt.popup(context,
+                "An error occured. Please restart the application and try again.");
         LogIt.e(logTag, ex.getMessage());
     }
 

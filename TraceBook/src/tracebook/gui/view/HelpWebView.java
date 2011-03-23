@@ -95,16 +95,10 @@ public class HelpWebView extends Activity {
                 webview.loadUrl("file:///android_asset/about/about-dark-"
                         + language + ".html");
                 break;
-            /**
-             * TODO set TraceBook light theme
-             */
             case 3:
                 webview.loadUrl("file:///android_asset/about/about-light-"
                         + language + ".html");
                 break;
-            /**
-             * TODO set TraceBook dark theme
-             */
             case 4:
                 webview.loadUrl("file:///android_asset/about/about-light-"
                         + language + ".html");

@@ -37,6 +37,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -174,7 +175,7 @@ public class LoadTrackActivity extends ListActivity {
                                 break;
                             }
 
-                            updateAdapter();
+                            showDialogForAdapterUpdate();
 
                         }
                     });
@@ -255,7 +256,7 @@ public class LoadTrackActivity extends ListActivity {
 
                                     DataTrack.delete(trackname);
                                     // may crash here (did so previously).
-                                    updateAdapter();
+                                    showDialogForAdapterUpdate();
 
                                 }
                             })
@@ -291,7 +292,7 @@ public class LoadTrackActivity extends ListActivity {
 
         getApplicationContext()
                 .setTheme(android.R.style.Theme_Black_NoTitleBar);
-        updateAdapter();
+        showDialogForAdapterUpdate();
         setTitle(R.string.string_loadtrackActivity_title);
         setContentView(R.layout.activity_loadtrackactivity);
         registerForContextMenu(getListView());
@@ -344,11 +345,33 @@ public class LoadTrackActivity extends ListActivity {
                         R.string.opt_loadtrack_sortByTimestamp));
                 sortByName = true;
             }
-            updateAdapter();
+            showDialogForAdapterUpdate();
             return true;
         default:
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * This Method show a dialog for the User if the update from the Adapter
+     * take a longer time.
+     */
+    public void showDialogForAdapterUpdate() {
+        final ProgressDialog dialog = ProgressDialog.show(
+                this,
+                getResources().getString(
+                        R.string.alert_aboutActivity_pleaseWait),
+                getResources().getString(
+                        R.string.alert_loadtrackActivity_loadingTracks), true,
+                false);
+        new Thread() {
+            @Override
+            public void run() {
+                updateAdapter();
+                dialog.dismiss();
+            }
+        }.start();
+
     }
 
     /**
@@ -421,7 +444,7 @@ public class LoadTrackActivity extends ListActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 DataTrack.delete(trname);
                                 LogIt.d("DEBUG", "delete " + trname);
-                                // updateAdapter();
+                                // showDialogForAdapterUpdate();
                             }
                         })
                 .setNegativeButton(
@@ -553,7 +576,7 @@ public class LoadTrackActivity extends ListActivity {
             searchText = "";
         }
 
-        updateAdapter();
+        showDialogForAdapterUpdate();
 
     }
 
