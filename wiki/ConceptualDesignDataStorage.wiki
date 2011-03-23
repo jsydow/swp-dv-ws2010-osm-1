@@ -9,6 +9,8 @@ Core.data contains the data model of the tracking application. All tracked data 
 
 First of all read the wiki article [Data Data].
 
+== Data model ==
+
 The data model is a like a tree:
   * !DataStorage contains:
    * !DataTrack contains:
@@ -23,7 +25,14 @@ The data model is a like a tree:
      * tags
     * !DataMedia
 
-== !DataStorage ==
+== Data Operations ==
+
+There are 4 operations that can be done on a datum:
+  * create: create a new datum and append to parent object
+  * delete: delete the datum (operation is done on the parent object)
+  * update: update data of the datum
+  * query: if the parent object has a list of data, query (the parent) to find the specific datum.
+
 
 !DataStorage is the class that has all other data in it. It is therefore like a root-object. The whole data model is like a tree. Since all other parts of the application should only work on one "database" of the tracking data this class is modeled as Singleton. There is at most one instance of !DataStorage.
 
