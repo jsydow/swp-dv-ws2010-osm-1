@@ -3,7 +3,6 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@android:id/tabhost" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:orientation="vertical">
@@ -16,6 +15,7 @@
 				android:layout_height="fill_parent">
 
 			</LinearLayout>
+				<ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
 			<LinearLayout android:id="@+id/tab_newtrackActivity_new"
 				android:orientation="vertical" android:layout_width="fill_parent"
 				android:layout_height="wrap_content">
@@ -78,6 +78,7 @@
 					</LinearLayout>
 
 	</LinearLayout>
+	</ScrollView>
 	<LinearLayout android:id="@+id/tab_newtrackactivity_edit"
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
@@ -91,5 +92,4 @@
 	</LinearLayout>
 </FrameLayout>
 </LinearLayout>
-</ScrollView>
 </TabHost>
