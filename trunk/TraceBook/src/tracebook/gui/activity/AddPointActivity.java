@@ -48,19 +48,20 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
@@ -177,6 +178,11 @@ public class AddPointActivity extends ListActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
     /**
      * This method create the ContextMenu for the Item which was selected. 1.
      * deleteTag: delete the selected MetaTag from the node. 2. renameTag: open
@@ -231,8 +237,10 @@ public class AddPointActivity extends ListActivity {
                 node = DataStorage.getInstance().getCurrentTrack()
                         .getDataMapObjectById(nodeId);
                 if (node == null) {
-                    LogIt.popup(this, getResources().getString(
-                            R.string.toast_noneExistentNode));
+                    LogIt.popup(
+                            this,
+                            getResources().getString(
+                                    R.string.toast_noneExistentNode));
                     finish();
                 }
             }
@@ -254,9 +262,9 @@ public class AddPointActivity extends ListActivity {
         setNodeInformation();
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_addpointTitle), getResources().getString(
-                R.string.tv_statusbar_addpointDesc),
+        Helper.setStatusBar(this,
+                getResources().getString(R.string.tv_statusbar_addpointTitle),
+                getResources().getString(R.string.tv_statusbar_addpointDesc),
                 R.id.ly_addpointActivity_statusbar, false);
 
         initAdapter();
@@ -307,9 +315,9 @@ public class AddPointActivity extends ListActivity {
      *            note used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_addpointTitle), getResources().getString(
-                R.string.tv_statusbar_addpointDesc));
+        Helper.setActivityInfoDialog(this,
+                getResources().getString(R.string.tv_statusbar_addpointTitle),
+                getResources().getString(R.string.tv_statusbar_addpointDesc));
     }
 
     /**

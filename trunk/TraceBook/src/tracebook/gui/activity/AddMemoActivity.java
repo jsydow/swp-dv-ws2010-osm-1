@@ -30,6 +30,7 @@ import Trace.Book.R;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -55,6 +56,11 @@ public class AddMemoActivity extends Activity {
      * file to our data structure.
      */
     AudioRecorder recorder = new AudioRecorder();
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

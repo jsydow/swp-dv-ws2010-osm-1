@@ -54,6 +54,7 @@ public class StartActivity extends Activity {
     public void loadTrackBtn(View view) {
         Intent intent = new Intent(this, LoadTrackActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
     }
 
     /**
@@ -74,7 +75,7 @@ public class StartActivity extends Activity {
 
         Intent intent = new Intent(this, NewTrackActivity.class);
         startActivity(intent);
-
+        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
     }
 
     /*

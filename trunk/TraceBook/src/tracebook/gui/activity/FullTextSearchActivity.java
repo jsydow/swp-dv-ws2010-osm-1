@@ -34,6 +34,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -148,7 +149,6 @@ public class FullTextSearchActivity extends ListActivity {
     }
 
     private int currResIndex;
-
     private List<TagSearchResult> currTagSearchResult;
 
     /**
@@ -222,6 +222,11 @@ public class FullTextSearchActivity extends ListActivity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         Helper.setTheme(this);
         super.onCreate(savedInstanceState);
@@ -232,9 +237,12 @@ public class FullTextSearchActivity extends ListActivity {
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar
-        Helper.setStatusBar(this, getResources().getString(
-                R.string.tv_statusbar_fulltextsearchTitle), getResources()
-                .getString(R.string.tv_statusbar_fulltextsearchDesc),
+        Helper.setStatusBar(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
@@ -290,9 +298,12 @@ public class FullTextSearchActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this, getResources().getString(
-                R.string.tv_statusbar_fulltextsearchTitle), getResources()
-                .getString(R.string.tv_statusbar_fulltextsearchDesc));
+        Helper.setActivityInfoDialog(
+                this,
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchTitle),
+                getResources().getString(
+                        R.string.tv_statusbar_fulltextsearchDesc));
     }
 
     /**
