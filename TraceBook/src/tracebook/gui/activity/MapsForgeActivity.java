@@ -278,7 +278,7 @@ public class MapsForgeActivity extends MapActivity {
      * Catches the selected MenuItem from the options menu and
      * 
      * <ol>
-     * <li>Activate the internet connection to get more map data.</li>
+     * <li>Activate the Internet connection to get more map data.</li>
      * <li>Center the map to the current own position.</li>
      * <li>Stop tracking, show alert and go back to MainActivity.</li>
      * <li>Pause tracking and show alert</li>
@@ -386,9 +386,9 @@ public class MapsForgeActivity extends MapActivity {
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
-        if (info != null) {
+        if (info != null)
             return info.isConnectedOrConnecting();
-        }
+
         return false;
     }
 
@@ -486,5 +486,4 @@ public class MapsForgeActivity extends MapActivity {
 
         gpsReceiver.centerOnCurrentPosition();
     }
-
 }
