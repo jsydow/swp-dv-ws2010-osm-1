@@ -93,7 +93,6 @@ public class VideoMarker extends ButtonMarker {
             MarkerLayer parentlayer, double time, double offset) {
         super(ll, text, "tracebook_video.png", parentlayer, time, offset);
         this.videourl = videourl;
-        // TODO Auto-generated constructor stub
     }
 
     /**

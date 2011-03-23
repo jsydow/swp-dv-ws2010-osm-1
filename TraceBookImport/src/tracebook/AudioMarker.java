@@ -93,7 +93,6 @@ public class AudioMarker extends ButtonMarker {
             MarkerLayer parentlayer, double time, double offset) {
         super(ll, text, "tracebook_audio.png", parentlayer, time, offset);
         this.audiourl = audiourl;
-        // TODO Auto-generated constructor stub
     }
 
     /**
