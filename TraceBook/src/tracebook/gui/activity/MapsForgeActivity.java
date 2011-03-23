@@ -152,7 +152,7 @@ public class MapsForgeActivity extends MapActivity {
                 } else if (pointId > 0) {
                     DataNode node = Helper.currentTrack().getNodeById(pointId);
                     if (node != null) { // last node of a one_shot way after
-                                        // stopWay() was called
+                        // stopWay() was called
                         routesOverlay.putWaypoint(node);
                         if (node.getDataPointsList() != null) {
                             node.getDataPointsList().updateOverlayRoute();
@@ -178,21 +178,24 @@ public class MapsForgeActivity extends MapActivity {
                     routesOverlay.color(way, false);
                     routesOverlay.requestRedraw();
                 }
-
-                //$FALL-THROUGH$ remove the smoothing leftovers
+                removeInvalidItems();
+                break;
             case GpsMessage.REMOVE_INVALIDS:
-                LogIt.d(LOG_TAG, "Request to remove invalid nodes");
-
-                Collection<OverlayItem> invalids = Helper.currentTrack()
-                        .clearInvalidItems();
-                for (OverlayItem oi : invalids)
-                    pointsOverlay.removeItem(oi);
+                removeInvalidItems();
                 break;
             default:
-                LogIt.e(LOG_TAG,
-                        "unhandled Message, ID="
-                                + intend.getIntExtra("type", -1));
+                LogIt.e(LOG_TAG, "unhandled Message, ID="
+                        + intend.getIntExtra("type", -1));
             }
+        }
+
+        private void removeInvalidItems() {
+            LogIt.d(LOG_TAG, "Request to remove invalid nodes");
+
+            Collection<OverlayItem> invalids = Helper.currentTrack()
+                    .clearInvalidItems();
+            for (OverlayItem oi : invalids)
+                pointsOverlay.removeItem(oi);
         }
 
         /**
@@ -251,8 +254,8 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.requestRedraw();
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                LogIt.d(LOG_TAG,
-                        "Exiting edit mode for point " + editNode.getId());
+                LogIt.d(LOG_TAG, "Exiting edit mode for point "
+                        + editNode.getId());
                 editNode = null;
             }
 
@@ -297,9 +300,10 @@ public class MapsForgeActivity extends MapActivity {
                         R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item.setTitle(getResources()
-                        .getString(
-                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
+                item
+                        .setTitle(getResources()
+                                .getString(
+                                        R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(getOnlineTileStyle(), null);
             }
             useInternet = !useInternet;
@@ -316,10 +320,8 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.opt_mapsforgeActivity_export:
             DataStorage.getInstance().serialize();
-            LogIt.popup(
-                    this,
-                    getResources().getString(
-                            R.string.popup_mapsforgeactivity_saved));
+            LogIt.popup(this, getResources().getString(
+                    R.string.popup_mapsforgeactivity_saved));
             return true;
 
         case R.id.opt_mapsforgeActivity_pause:
@@ -465,10 +467,8 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt.popup(
-                        this,
-                        getResources().getString(
-                                R.string.toast_loadingOnlineMap));
+                LogIt.popup(this, getResources().getString(
+                        R.string.toast_loadingOnlineMap));
                 modeLocal = getOnlineTileStyle();
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
@@ -478,10 +478,8 @@ public class MapsForgeActivity extends MapActivity {
             }
         } else {
             if (!isOnline()) {
-                LogIt.popup(
-                        this,
-                        getResources().getString(
-                                R.string.toast_noInternetAccess));
+                LogIt.popup(this, getResources().getString(
+                        R.string.toast_noInternetAccess));
             }
         }
         mapView.setMapViewMode(modeLocal);
