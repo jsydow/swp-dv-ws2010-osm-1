@@ -42,16 +42,6 @@
 			android:summary="@string/string_preferences_descMaxHistorySize" />
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/string_preferences_catOSM">
-		<EditTextPreference android:key="et_OSMNickname"
-			android:title="@string/string_preferences_osmNickname"
-			android:defaultValue="" />
-
-		<EditTextPreference android:key="et_OSMPassword"
-			android:title="@string/string_preferences_osmPassword"
-			android:defaultValue="" />
-	</PreferenceCategory>
-
 	<PreferenceCategory android:title="@string/string_preferences_catGUI">
 		<CheckBoxPreference android:title="@string/string_preferences_showStatusbar"
 			android:defaultValue="false" android:summary="@string/string_preferences_descShowStatusbar"
@@ -72,8 +62,6 @@
 			android:key="check_displayAlwaysOn" />
 	</PreferenceCategory>
 	
-	<PreferenceCategory android:title="@string/string_preferences_catTrack"></PreferenceCategory>
-	
 	<PreferenceCategory android:title="@string/string_preferences_catMedia">
 		<ListPreference android:title="@string/string_preferences_setMaxVideoRecordingTime"
 			android:key="lst_maxVideoRecording" android:defaultValue="0"
@@ -86,12 +74,5 @@
 			android:entries="@array/setMaxAudioRecordingTime"
 			android:entryValues="@array/setMaxAudioRecordingTime_values"
 			android:summary="@string/string_preferences_descSetMaxAudioRecordingTime" />
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/string_preferences_catExport">
-
-		<EditTextPreference android:key="et_exportMail"
-			android:title="@string/string_preferences_exportMail"
-			android:defaultValue="" />
-
 	</PreferenceCategory>
 </PreferenceScreen>
