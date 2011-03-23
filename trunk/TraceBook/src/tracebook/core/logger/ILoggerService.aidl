@@ -21,7 +21,7 @@ package tracebook.core.logger;
 
 interface ILoggerService {
 	/**
-	 * Starts a new {@link DataTrack}. 
+	 * Starts a new {@link tracebook.core.data.DataTrack DataTrack}. 
 	 */
 	void startTrack(); 
 	
@@ -37,7 +37,7 @@ interface ILoggerService {
 	/**
 	* Adds a new point of interest, returning its id. The location of
 	* the point of interest will be updated the next time a GPS fix is
-	* availiable. If no continuous way is recorded, GPS is disabled
+	* available. If no continuous way is recorded, GPS is disabled
 	* after obtaining the fix.
 	* 
 	* This function will start GPS. If currently no track is recorded but
