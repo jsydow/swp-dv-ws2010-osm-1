@@ -107,29 +107,28 @@ public final class LogIt {
                         + File.separator + "log.txt");
                 try {
                     FileWriter fw = new FileWriter(logFile);
-                    fw.append(prefix + " : " + message);
+                    fw.append(prefix + ": " + message);
                     fw.close();
                 } catch (IOException e) {
-                    LogIt.e(LOG_PREFIX,
-                            "Logging error : Could not log to file!");
+                    LogIt.e(LOG_PREFIX, "Logging error: Could not log to file!");
                 }
                 break;
             case LOGMETHOD_ANDROID:
                 switch (logLevel) {
                 case 1:
-                    Log.v(LOG_PREFIX, prefix + " : " + message);
+                    Log.v(LOG_PREFIX, prefix + ": " + message);
                     break;
                 case 2:
-                    Log.d(LOG_PREFIX, prefix + " : " + message);
+                    Log.d(LOG_PREFIX, prefix + ": " + message);
                     break;
                 case 3:
-                    Log.i(LOG_PREFIX, prefix + " : " + message);
+                    Log.i(LOG_PREFIX, prefix + ": " + message);
                     break;
                 case 4:
-                    Log.w(LOG_PREFIX, prefix + " : " + message);
+                    Log.w(LOG_PREFIX, prefix + ": " + message);
                     break;
                 case 5:
-                    Log.e(LOG_PREFIX, prefix + " : " + message);
+                    Log.e(LOG_PREFIX, prefix + ": " + message);
                     break;
                 default:
                     break;

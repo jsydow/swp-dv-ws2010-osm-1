@@ -125,6 +125,7 @@ public class DataPointsList extends DataMapObject {
     public DataPointsList() {
         super();
         nodes = new LinkedList<DataNode>();
+        overlayRoute = new OverlayWay();
     }
 
     /**
@@ -369,5 +370,24 @@ public class DataPointsList extends DataMapObject {
             tmp[i++] = additional;
 
         return tmp;
+    }
+
+    /**
+     * Calls for an update of the OverlayRoute according to the changed data of
+     * this track.
+     */
+    public void updateOverlayRoute() {
+        overlayRoute.setWayData(toGeoPointArray(null));
+    }
+
+    /**
+     * Adds one additional Point to the OverlayRoute without affecting the
+     * actual data of the way.
+     * 
+     * @param additional
+     *            The additional node
+     */
+    public void updateOverlayRoute(GeoPoint additional) {
+        overlayRoute.setWayData(toGeoPointArray(additional));
     }
 }

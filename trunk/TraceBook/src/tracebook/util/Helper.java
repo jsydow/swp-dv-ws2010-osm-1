@@ -57,6 +57,8 @@ import android.widget.TextView;
  */
 public final class Helper {
 
+    private static Drawable defaultMarker;
+
     /**
      * Notification ID for the tracking notification.
      */
@@ -223,6 +225,20 @@ public final class Helper {
             return DataStorage.getInstance().getCurrentTrack().getNodes();
         }
         return null;
+    }
+
+    /**
+     * Gets a OverlayItem with default marker and no position added.
+     * 
+     * @param ctx
+     *            The Activity context
+     * @return a new OverlayItem
+     */
+    public static OverlayItem getOverlayItem(Context ctx) {
+        if (defaultMarker == null)
+            defaultMarker = ItemizedOverlay.boundCenterBottom(ctx
+                    .getResources().getDrawable(R.drawable.marker_red));
+        return new OverlayItem(null, null, null, defaultMarker);
     }
 
     /**

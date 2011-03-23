@@ -301,6 +301,7 @@ public class DataTrack extends DataMediaHolder {
         super();
         ways = new LinkedList<DataPointsList>();
         nodes = new LinkedList<DataNode>();
+        invalidItems = new LinkedList<OverlayItem>();
         this.name = getFilenameCompatibleTimeStamp();
         this.comment = "";
         createNewTrackFolder();

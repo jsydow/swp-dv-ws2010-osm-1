@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.mapsforge.android.maps.ArrayItemizedOverlay;
 import org.mapsforge.android.maps.ArrayWayOverlay;
-import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.OverlayWay;
 
 import tracebook.core.data.DataNode;
@@ -114,6 +113,24 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
     }
 
     /**
+     * Adds a {@link DataPointsList} to the overlay.
+     * 
+     * @param way
+     *            The DataPointList representing the way
+     * @param editing
+     *            weather the way should be given the 'currently edited' color
+     */
+    public void addWay(DataPointsList way, boolean editing) {
+        if (way.getNodes().size() == 0) // skip empty ways
+            return;
+        color(way, editing);
+        this.addWay(way.getOverlayRoute());
+
+        if (showWaypoints)
+            addWaypoints(way);
+    }
+
+    /**
      * Add a list of ways to the Overlay.
      * 
      * @param ways
@@ -121,60 +138,21 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
      *            the overlay
      */
     public void addWays(List<DataPointsList> ways) {
-        for (DataPointsList l : ways) {
-            if (l.getNodes().size() == 0) // skip empty ways
-                continue;
-            if (l.getOverlayRoute() == null) {
-                Pair<Paint, Paint> col = getColor(false, l.isArea());
-                l.setOverlayRoute(new OverlayWay(l.toGeoPointArray(),
-                        col.first, col.second));
-            }
-            this.addWay(l.getOverlayRoute());
-
-            if (showWaypoints)
-                addWaypoints(l);
-        }
+        for (DataPointsList l : ways)
+            addWay(l, false);
     }
 
     /**
-     * Redraw the given way.
+     * Sets a color for the {@link OverlayWay} in the {@link DataPointsList}.
      * 
      * @param way
-     *            way to be redrawn
+     *            The way to be colored
      * @param editing
-     *            is the way the currently edited way?
-     * @param additional
-     *            additional Point to be added to the way, may be null
+     *            weather the way should be marked as currently edited
      */
-    public void reDrawWay(DataPointsList way, boolean editing,
-            GeoPoint additional) {
-        if (way == null)
-            return;
-
-        this.removeWay(way.getOverlayRoute());
-        final Pair<Paint, Paint> color = getColor(editing, way.isArea());
-        way.setOverlayRoute(new OverlayWay(way.toGeoPointArray(additional),
-                color.first, color.second));
-        this.addWay(way.getOverlayRoute());
-
-        if (showWaypoints)
-            for (DataNode n : way.getNodes())
-                putWaypoint(n);
-
-    }
-
-    /**
-     * Update the color of a way once its not the current way any more.
-     * 
-     * @param id
-     *            id of the {@link DataPointsList} to be redrawn
-     */
-    public void reDrawWay(int id) {
-        if (id <= 0)
-            return;
-        DataPointsList currentWay = Helper.currentTrack().getCurrentWay();
-        reDrawWay(Helper.currentTrack().getPointsListById(id),
-                currentWay != null && currentWay.getId() == id, null);
+    public void color(DataPointsList way, boolean editing) {
+        Pair<Paint, Paint> col = getColor(editing, way.isArea());
+        way.getOverlayRoute().setPaint(col.first, col.second);
     }
 
     /**

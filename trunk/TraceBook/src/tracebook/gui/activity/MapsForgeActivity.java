@@ -90,21 +90,18 @@ public class MapsForgeActivity extends MapActivity {
             // Receive current location and do something with it
             switch (intend.getIntExtra("type", -1)) {
 
-            case GpsMessage.UPDATE_GPS_POS:
+            case GpsMessage.UPDATE_GPS_POS: // periodic position update
                 final double lng = intend.getExtras().getDouble("long");
                 final double lat = intend.getExtras().getDouble("lat");
 
                 currentGeoPoint = new GeoPoint(lat, lng); // we also need this
                 // to center the map
 
-                if (currentPosOI == null) {
+                if (currentPosOI == null)
                     currentPosOI = Helper.getOverlayItem(currentGeoPoint,
                             R.drawable.marker_green, MapsForgeActivity.this);
-                    pointsOverlay.addItem(currentPosOI);
-                } else
-                    currentPosOI.setPoint(currentGeoPoint);
-
-                pointsOverlay.requestRedraw();
+                currentPosOI.setPoint(currentGeoPoint);
+                pointsOverlay.addItem(currentPosOI);
 
                 /*
                  * In one_shot mode, we add the current point to the
@@ -113,10 +110,9 @@ public class MapsForgeActivity extends MapActivity {
                 if (intend.getExtras().getBoolean("one_shot")) {
                     DataPointsList currentWay = Helper.currentTrack()
                             .getCurrentWay();
-                    if (currentWay != null
-                            && currentWay.getOverlayRoute() != null)
-                        routesOverlay.reDrawWay(currentWay, true,
-                                currentGeoPoint);
+                    if (currentWay != null)
+                        currentWay.updateOverlayRoute(currentGeoPoint);
+
                 }
 
                 if (centerMap)
@@ -125,18 +121,20 @@ public class MapsForgeActivity extends MapActivity {
                 break;
             // Receive an update of a way and update the overlay accordingly
             case GpsMessage.UPDATE_OBJECT:
-                if (Helper.currentTrack() == null) {
-                    LogIt.e(LOG_TAG,
-                            "Received UPDATE_OBJECT with no current track present.");
-                    return;
-                }
-
                 LogIt.d(LOG_TAG, "UPDATE_OBJECT received, way: " + wayId
                         + " node: " + pointId);
 
-                if (wayId > 0)
-                    routesOverlay.reDrawWay(wayId);
-                else if (pointId > 0) { // New POI
+                if (wayId > 0) {
+                    DataPointsList way = Helper.currentTrack()
+                            .getPointsListById(wayId);
+                    if (way != null) {
+                        way.updateOverlayRoute();
+                        routesOverlay.addWay(way, true);
+                    } else
+                        LogIt.d(LOG_TAG, "Way can not be found.");
+
+                } else if (pointId > 0) { // New POI
+                    LogIt.d(LOG_TAG, "update point " + pointId);
                     DataNode node = Helper.currentTrack().getNodeById(pointId);
                     if (node != null) {
                         if (node.getOverlayItem() == null)
@@ -147,22 +145,41 @@ public class MapsForgeActivity extends MapActivity {
                                                     .getDrawable(
                                                             R.drawable.marker_red))));
                         pointsOverlay.addItem(node.getOverlayItem());
-                    }
+                    } else
+                        LogIt.d(LOG_TAG, "point is null");
                 }
 
                 break;
             case GpsMessage.MOVE_POINT:
-                if (Helper.currentTrack() != null) {
-                    editNode = Helper.currentTrack().getNodeById(pointId);
-                    LogIt.d(LOG_TAG, "Enter edit mode for Point " + pointId);
-                }
+                LogIt.d(LOG_TAG, "Enter edit mode for Point " + pointId);
+
+                editNode = Helper.currentTrack().getNodeById(pointId);
 
                 break;
             case GpsMessage.END_WAY:
-                routesOverlay.reDrawWay(intend.getExtras().getInt("way_id"));
+                LogIt.d(LOG_TAG, "End way for way " + wayId + " received.");
+
+                DataPointsList way = Helper.currentTrack().getPointsListById(
+                        wayId);
+                if (way != null) {
+                    way.updateOverlayRoute();
+                    routesOverlay.color(way, false);
+                    routesOverlay.requestRedraw();
+                }
 
                 break;
+            case GpsMessage.REMOVE_INVALIDS:
+                LogIt.d(LOG_TAG, "Request to remove invalid nodes");
+
+                List<OverlayItem> invalids = Helper.currentTrack()
+                        .clearInvalidItems();
+                for (OverlayItem oi : invalids)
+                    pointsOverlay.removeItem(oi);
+                break;
             default:
+                LogIt.e(LOG_TAG,
+                        "unhandled Message, ID="
+                                + intend.getIntExtra("type", -1));
             }
         }
 
@@ -217,8 +234,10 @@ public class MapsForgeActivity extends MapActivity {
                     (int) ev.getX(), (int) ev.getY());
 
             editNode.setLocation(projection);
-            if (editNode.getDataPointsList() != null)
-                routesOverlay.reDrawWay(editNode.getDataPointsList().getId());
+            if (editNode.getDataPointsList() != null) {
+                editNode.getDataPointsList().updateOverlayRoute();
+                routesOverlay.requestRedraw();
+            }
 
             pointsOverlay.requestRedraw();
 
@@ -320,15 +339,13 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     private void fillOverlays() {
-        for (DataNode n : Helper.currentTrack().getNodes())
-            if (n.getOverlayItem() != null) {
-                pointsOverlay.addItem(n.getOverlayItem());
-            }
-
-        List<DataPointsList> ways = Helper.currentTrack().getWays();
-        if (ways != null) {
-            routesOverlay.addWays(ways);
+        for (DataNode n : Helper.currentTrack().getNodes()) {
+            if (n.getOverlayItem() == null)
+                n.setOverlayItem(Helper.getOverlayItem(this));
+            pointsOverlay.addItem(n.getOverlayItem());
         }
+
+        routesOverlay.addWays(Helper.currentTrack().getWays());
     }
 
     @Override

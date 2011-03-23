@@ -278,7 +278,7 @@ public class AddPointActivity extends ListActivity {
                 && node instanceof DataNode) {
             LogIt.d("AddPoint", "POI is empty, will not keep it");
             Helper.currentTrack().deleteNode(node.getId());
-            (new GpsMessage(this)).sendPOIUpdate(node.getId());
+            (new GpsMessage(this)).sendDiscardIntent();
         }
 
         super.onDestroy();

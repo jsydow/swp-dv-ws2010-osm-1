@@ -77,6 +77,8 @@ public class GenericAdapter extends ArrayAdapter<GenericAdapterData> {
             inflatedView = layoutInflater.inflate(layoutId, parent, false);
         }
 
+        if (position >= super.getCount())
+            return null;
         GenericAdapterData data = super.getItem(position);
         data.fillView(inflatedView);
 
