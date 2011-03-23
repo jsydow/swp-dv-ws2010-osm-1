@@ -168,8 +168,8 @@
 	<string name="alert_newtrackActivity_saveSetTrack">Closing track</string>
 	<string name="alert_loadtrackActivity_rename">Rename track</string>
 	<string name="alert_loadtrackActivity_deleteTrack">Delete track?</string>
-	<string name="alert_aboutActivity_pleaseWait">Please wait...</string>
-	<string name="alert_aboutActivity_loadingLicense">License text is being loaded...</string>
+	<string name="alert_loadtrackActivity_pleaseWait">Please wait...</string>
+	<string name="alert_loadtrackActivity_loadingTracks">Tracks are being loaded...</string>
 	<string name="alert_global_notSaveAndClose">Exit</string>
 	<string name="alert_loadtrackActivity_stopCurrentTrack">Aktuellen Track beenden und neuen laden?</string>
 	<string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track points you have to enable it. Do you want to enable it?</string>
