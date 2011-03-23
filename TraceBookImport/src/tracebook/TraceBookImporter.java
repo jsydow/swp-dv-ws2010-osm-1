@@ -127,8 +127,8 @@ public class TraceBookImporter extends FileImporter {
                 GpxLayer gpxLayer = new GpxLayer(gpxData, file.getName());
                 Main.main.addLayer(gpxLayer);
                 MarkerLayer ml = null;
-                ml = new MarkerLayer(gpxData, tr("Markers from {0}", file
-                        .getName()), file, gpxLayer);
+                ml = new MarkerLayer(gpxData, tr("Markers from {0}",
+                        file.getName()), file, gpxLayer);
 
                 DocumentBuilderFactory fac = DocumentBuilderFactory
                         .newInstance();
@@ -142,13 +142,13 @@ public class TraceBookImporter extends FileImporter {
 
                 DecimalFormat decform = new DecimalFormat("0.0000000", decsymb);
                 HashMap<String, org.openstreetmap.josm.data.osm.Node> nodesMap = new HashMap<String, org.openstreetmap.josm.data.osm.Node>();
-                myProgressMonitor
-                        .beginTask(String.format("Importing Track data %s...",
+                myProgressMonitor.beginTask(
+                        String.format("Importing Track data %s...",
                                 file.getName(), nl.getLength()), nl.getLength()
                                 + nlw.getLength());
                 myProgressMonitor.subTask("nodes...");
                 for (int i = 0; i < nl.getLength(); i++) {
-                    myProgressMonitor.setTicks(i);
+                    myProgressMonitor.worked(1);
                     NamedNodeMap attributes = nl.item(i).getAttributes();
                     myProgressMonitor.setExtraText(((Attr) nl.item(i)
                             .getAttributes().getNamedItem("id")).getValue());
@@ -159,8 +159,9 @@ public class TraceBookImporter extends FileImporter {
                             .parse(lon.getNodeValue()).doubleValue());
 
                     org.openstreetmap.josm.data.osm.Node newosmnode = new org.openstreetmap.josm.data.osm.Node();
-                    newosmnode.setOsmId(Long.parseLong(((Attr) nl.item(i)
-                            .getAttributes().getNamedItem("id")).getValue()),
+                    newosmnode.setOsmId(
+                            Long.parseLong(((Attr) nl.item(i).getAttributes()
+                                    .getNamedItem("id")).getValue()),
                             Integer.parseInt(((Attr) nl.item(i).getAttributes()
                                     .getNamedItem("version")).getValue()));
                     newosmnode.setCoor(latlon);
@@ -180,8 +181,8 @@ public class TraceBookImporter extends FileImporter {
                                             .getNamedItem("v")).getValue());
                         }
 
-                        if (childs.item(a).getNodeName().equalsIgnoreCase(
-                                "link")) {
+                        if (childs.item(a).getNodeName()
+                                .equalsIgnoreCase("link")) {
                             Main.debug("child: "
                                     + childs.item(a).getNodeName()
                                     + " : "
@@ -202,7 +203,7 @@ public class TraceBookImporter extends FileImporter {
                                 Marker mr = ImageMarker.create(latlon, uri, ml,
                                         1.0, 1.0);
                                 if (mr == null)
-                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
+                                    Main.debug("THIS MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
                             } else if (uri.endsWith(".wav")
                                     || uri.endsWith(".m4a")) {
@@ -211,7 +212,7 @@ public class TraceBookImporter extends FileImporter {
                                         latlon, "Audio comment", uri, ml, 1.0,
                                         1.0);
                                 if (mr == null)
-                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
+                                    Main.debug("THIS MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
                             } else if (uri.endsWith(".3gp")
                                     || uri.endsWith(".mp4")) {
@@ -219,7 +220,7 @@ public class TraceBookImporter extends FileImporter {
                                 Marker mr = VideoMarker.create(latlon,
                                         "Video comment", uri, ml, 1.0, 1.0);
                                 if (mr == null)
-                                    Main.debug("THIS F-ING MARKER IS EMPTY!!!");
+                                    Main.debug("THIS MARKER IS EMPTY!!!");
                                 ml.data.add(mr);
                             } else if (uri.endsWith(".txt")) {
                                 Main.debug("Trying to parse textmarker");
@@ -240,17 +241,16 @@ public class TraceBookImporter extends FileImporter {
                             .item(i).getAttributes().getNamedItem("timestamp"))
                             .getValue()));
                     osmdata.addPrimitive(newosmnode);
-                    Main
-                            .debug("new nodes id: "
-                                    + ((Attr) attributes.getNamedItem("id"))
-                                            .getValue());
-                    nodesMap.put(((Attr) attributes.getNamedItem("id"))
-                            .getValue(), newosmnode);
+                    Main.debug("new nodes id: "
+                            + ((Attr) attributes.getNamedItem("id")).getValue());
+                    nodesMap.put(
+                            ((Attr) attributes.getNamedItem("id")).getValue(),
+                            newosmnode);
                 }
 
                 myProgressMonitor.subTask("ways...");
                 for (int i = 0; i < nlw.getLength(); i++) {
-                    myProgressMonitor.setTicks(nl.getLength() + i + 1);
+                    myProgressMonitor.worked(1);
                     myProgressMonitor.setExtraText(((Attr) nlw.item(i)
                             .getAttributes().getNamedItem("id")).getValue());
                     WayData wd = new WayData();
@@ -270,8 +270,7 @@ public class TraceBookImporter extends FileImporter {
                             String key = ((Attr) childs.item(a).getAttributes()
                                     .getNamedItem("ref")).getValue();
                             if (nodesMap.get(key) == null)
-                                Main
-                                        .debug("Hey we got a null node, impossible to add it to a way!");
+                                Main.debug("Hey we got a null node, impossible to add it to a way!");
                             else {
                                 waynodes.add(nodesMap.get(key));
                                 Main.debug("Adding node " + key + " (" + ""
@@ -290,8 +289,8 @@ public class TraceBookImporter extends FileImporter {
                     }
                     if (nlw.item(i).getAttributes().getNamedItem("timestamp") != null)
                         newway.setTimestamp(DateUtils.fromString(((Attr) nlw
-                                .item(i).getAttributes().getNamedItem(
-                                        "timestamp")).getValue()));
+                                .item(i).getAttributes()
+                                .getNamedItem("timestamp")).getValue()));
                     newway.setVisible(true);
                     newway.setNodes(waynodes);
                     if (tags != null) {
@@ -353,19 +352,13 @@ public class TraceBookImporter extends FileImporter {
                 // catch and forward exception
                 throw new IllegalDataException(e);
             } finally { // take care of monitor...
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    // we don't want to do anything with that exception
-                    e.printStackTrace();
-                }
+
                 myProgressMonitor.finishTask();
             }
         } else {
             throw new IOException(
                     tr(String
-                            .format(
-                                    "Unsupported file extension (file '%s' does not end with '%s')!",
+                            .format("Unsupported file extension (file '%s' does not end with '%s')!",
                                     file.getName(), TRACEBOOK_FILE_EXT)));
         }
     }
