@@ -1,7 +1,7 @@
 #summary OSM map features in an XML file.
 #labels Phase-Design
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
 Tags (more or less key value pairs of meta data on a node) are an essential part of OSM, and for users to have a common basis of those key value pairs to work with, the OSM wiki provides a [http://wiki.openstreetmap.org/wiki/Map_Features list with common map features].
 
