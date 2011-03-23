@@ -165,6 +165,20 @@ public class DataTrack extends DataMediaHolder {
     }
 
     /**
+     * Checks if a track is already saved on the SD-card. It checks whether
+     * there is a file .../TraceBook/trackfilename/track.tbt which only exists
+     * if the track was saved some time before.
+     * 
+     * @param name
+     *            The name of th track to check.
+     * @return True if there is such a track, false otherwise.
+     */
+    public static boolean exists(String name) {
+        File trackfile = new File(getPathOfTrackTbTFile(name));
+        return trackfile.exists();
+    }
+
+    /**
      * Creates a time stamp of the current time which can be used as a filename.
      * 
      * @return The time stamp String.
