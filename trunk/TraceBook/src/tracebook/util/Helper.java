@@ -19,6 +19,10 @@
 
 package tracebook.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.mapsforge.android.maps.GeoPoint;
@@ -29,6 +33,7 @@ import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
 import tracebook.core.data.DataTrack;
+import tracebook.core.data.db.TagSearchResult;
 import tracebook.core.logger.ServiceConnector;
 import Trace.Book.R;
 import android.app.Activity;
@@ -45,6 +50,8 @@ import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -84,8 +91,7 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -100,15 +106,18 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt.popup(
-                                        activity,
-                                        activity.getResources()
-                                                .getString(
-                                                        R.string.alert_global_trackName)
-                                                + " "
-                                                + DataStorage.getInstance()
-                                                        .getCurrentTrack()
-                                                        .getName());
+                                LogIt
+                                        .popup(
+                                                activity,
+                                                activity
+                                                        .getResources()
+                                                        .getString(
+                                                                R.string.alert_global_trackName)
+                                                        + " "
+                                                        + DataStorage
+                                                                .getInstance()
+                                                                .getCurrentTrack()
+                                                                .getName());
 
                                 // stop logging
                                 try {
@@ -121,8 +130,7 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        })
-                .setNegativeButton(
+                        }).setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_notSaveAndClose),
                         new DialogInterface.OnClickListener() {
@@ -158,8 +166,7 @@ public final class Helper {
                                     activity.finish();
                                 }
                             }
-                        })
-                .setNeutralButton(
+                        }).setNeutralButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
@@ -322,11 +329,78 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        LogIt.popup(
-                context,
-                context.getResources().getString(
-                        R.string.toast_applicationError));
+        LogIt.popup(context, context.getResources().getString(
+                R.string.toast_applicationError));
         LogIt.e(logTag, ex.getMessage());
+    }
+
+    /**
+     * Generates an info box with the given information and returns a reference
+     * to the object.
+     * 
+     * @return Reference to the generated dialog.
+     */
+    public static Dialog makeInfoDialog(final Context context, final Activity act,
+            final TagSearchResult tag, final String buttonCaption,
+            final boolean closeActivityAfterDialog) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_searchinfo);
+        dialog.setTitle(R.string.string_searchInfoDialog_title);
+        dialog.setCancelable(true);
+
+        ImageView img = (ImageView) dialog
+                .findViewById(R.id.iv_searchInfoDialog_wikiImage);
+
+        if (tag != null) {
+            try {
+                URL url = new URL(tag.getImage());
+                InputStream is = (InputStream) url.getContent();
+                Drawable d = Drawable.createFromStream(is, "src");
+                img.setImageDrawable(d);
+            } catch (MalformedURLException e) {
+                // TODO: define fallback image
+                LogIt.e("FullTextSearch", e.toString());
+            } catch (IOException e) {
+                // TODO: define fallback image
+                LogIt.e("FullTextSearch", e.toString());
+            }
+
+            TextView cat = (TextView) dialog
+                    .findViewById(R.id.tv_searchInfoDialog_category);
+            cat.setText(tag.getKey());
+
+            TextView val = (TextView) dialog
+                    .findViewById(R.id.tv_searchInfoDialog_value);
+            val.setText(tag.getValue());
+
+            TextView desc = (TextView) dialog
+                    .findViewById(R.id.tv_searchInfoDialog_description);
+            desc.setText(tag.getDescription());
+
+            TextView wiki = (TextView) dialog
+                    .findViewById(R.id.tv_searchInfoDialog_url);
+            wiki.setText(tag.getLink());
+        }
+
+        Button button = (Button) dialog
+                .findViewById(R.id.btn_searchInfoDialog_save);
+        button.setText(buttonCaption);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v1) {
+                final Intent intent = new Intent();
+                if (tag != null) {
+                    intent.putExtra("DataNodeKey", tag.getKey());
+                    intent.putExtra("DataNodeValue", tag.getValue());
+                }
+                act.setResult(Activity.RESULT_OK, intent);
+                dialog.cancel();
+                if (closeActivityAfterDialog) {
+                    act.finish();
+                }
+            }
+        });
+
+        return dialog;
     }
 
     /**
