@@ -255,4 +255,7 @@
 <string name="popup_mapsforgeactivity_saved">Track has been saved!</string>
 
 <string name="toast_noInternetAccess">You are currently not connected to the internet. The online map cannot be displayed.</string>
+<string name="toast_applicationError">An error occured. Please restart the application and try again.</string>
+<string name="toast_recordingFinished">Recording finished.</string>
+<string name="toast_noneExistentNode">Node does not exist!</string>
 </resources>

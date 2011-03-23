@@ -482,7 +482,6 @@ public class AddPointMetaActivity extends ListActivity {
         GenericAdapterData data = adapter.getItem(position);
         autoComplVal.setText(data.getText("Value"));
         autoComplCat.setText(data.getText("Key"));
-        // TODO fill key + value edit
 
         super.onListItemClick(l, v, position, id);
     }

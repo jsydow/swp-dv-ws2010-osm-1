@@ -136,8 +136,8 @@ public class RecordVideoActivity extends Activity implements
     public void onStop() {
         stopRecording();
 
-        // TODO: l10n!
-        LogIt.popup(this, "Recording finished.");
+        LogIt.popup(this,
+                getResources().getString(R.string.toast_recordingFinished));
 
         super.onStop();
     }

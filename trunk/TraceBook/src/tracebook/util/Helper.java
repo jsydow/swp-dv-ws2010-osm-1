@@ -322,9 +322,10 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        // TODO: unhardcode
-        LogIt.popup(context,
-                "An error occured. Please restart the application and try again.");
+        LogIt.popup(
+                context,
+                context.getResources().getString(
+                        R.string.toast_applicationError));
         LogIt.e(logTag, ex.getMessage());
     }
 
