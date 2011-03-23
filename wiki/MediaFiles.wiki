@@ -13,7 +13,7 @@ Ideally, we would not have to deal with the details of how acquiring such files 
 
 == Internal representation, data structure ==
 
-For every single media file, there is a !DataMedia object that is "attached" to a !DataMediaHolder (see DataStorageArchitecture) object. To do so, every recorder class has a method 
+For every single media file, there is a !DataMedia object that is "attached" to a !DataMediaHolder (see ConceptualDesignDataStorage) object. To do so, every recorder class has a method 
 
 {{{
     /**
