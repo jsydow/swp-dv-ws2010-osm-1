@@ -27,4 +27,4 @@ ant clean
 mapsforge-map-javadoc-create
 ant mapsforge-map-jar-create
 cd -
-cp $TARGET/dist/mapsforge-map-0.2.1.jar lib/
+cp $TARGET/dist/mapsforge-map-0.2.2.jar lib/
