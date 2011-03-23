@@ -19,15 +19,22 @@
 
 package tracebook.gui.activity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataNode;
 import tracebook.core.data.DataStorage;
+import tracebook.core.data.db.TagDb;
+import tracebook.core.data.db.TagSearchResult;
 import tracebook.core.logger.ServiceConnector;
 import tracebook.core.media.PictureRecorder;
 import tracebook.core.media.Recorder;
@@ -40,22 +47,28 @@ import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
@@ -251,9 +264,9 @@ public class AddPointActivity extends ListActivity {
         setNodeInformation();
 
         // Set status bar
-        Helper.setStatusBar(this,
-                getResources().getString(R.string.tv_statusbar_addpointTitle),
-                getResources().getString(R.string.tv_statusbar_addpointDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_addpointTitle), getResources().getString(
+                R.string.tv_statusbar_addpointDesc),
                 R.id.ly_addpointActivity_statusbar, false);
 
         initAdapter();
@@ -304,9 +317,9 @@ public class AddPointActivity extends ListActivity {
      *            note used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(this,
-                getResources().getString(R.string.tv_statusbar_addpointTitle),
-                getResources().getString(R.string.tv_statusbar_addpointDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_addpointTitle), getResources().getString(
+                R.string.tv_statusbar_addpointDesc));
     }
 
     /**
@@ -381,6 +394,69 @@ public class AddPointActivity extends ListActivity {
         default:
             break;
         }
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        GenericAdapterData data = adapter.getItem(position);
+        String key = data.getText("NodeKey");
+        String value = data.getText("NodeValue");
+        String language = Locale.getDefault().getLanguage();
+
+        final Dialog infoDialog = new Dialog(this);
+        infoDialog.setContentView(R.layout.dialog_searchinfo);
+        infoDialog.setTitle(R.string.string_searchInfoDialog_title);
+        infoDialog.setCancelable(true);
+
+        ImageView img = (ImageView) infoDialog
+                .findViewById(R.id.iv_searchInfoDialog_wikiImage);
+
+        TagDb db = new TagDb(getBaseContext());
+        final TagSearchResult tag = db.getDetails(key, value, language);
+
+        if (tag != null) {
+            try {
+                URL url = new URL(tag.getImage());
+                InputStream is = (InputStream) url.getContent();
+                Drawable d = Drawable.createFromStream(is, "src");
+                img.setImageDrawable(d);
+            } catch (MalformedURLException e) {
+                // TODO define fallback image
+                LogIt.e("FullTextSearch", e.toString());
+            } catch (IOException e) {
+                // TODO define fallback image
+                LogIt.e("FullTextSearch", e.toString());
+            }
+
+            TextView cat = (TextView) infoDialog
+                    .findViewById(R.id.tv_searchInfoDialog_category);
+            cat.setText(tag.getKey());
+
+            TextView val = (TextView) infoDialog
+                    .findViewById(R.id.tv_searchInfoDialog_value);
+            val.setText(tag.getValue());
+
+            TextView desc = (TextView) infoDialog
+                    .findViewById(R.id.tv_searchInfoDialog_description);
+            desc.setText(tag.getDescription());
+
+            TextView wiki = (TextView) infoDialog
+                    .findViewById(R.id.tv_searchInfoDialog_url);
+            wiki.setText(tag.getLink());
+        }
+
+        Button button = (Button) infoDialog
+                .findViewById(R.id.btn_searchInfoDialog_save);
+        button.setText("Close");
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v1) {
+                infoDialog.cancel();
+            }
+        });
+
+        infoDialog.show();
     }
 
     /**
