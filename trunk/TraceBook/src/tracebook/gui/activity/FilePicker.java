@@ -24,12 +24,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * @author js
+ * This is an activity that asks the user to pick a file with a certain
+ * extension. The filename is then returned. The extension is supplied via the
+ * intent that starts the activity. If no extension list is supplied all files
+ * are displayed. It is basically a small file browser which lets the user
+ * navigate through directories.
  * 
  */
 public class FilePicker extends ListActivity {
 
-    private class FilePickerArrayAdapter extends ArrayAdapter<FileWrapper> {
+    /**
+     * A simple Wrapper for the ArrayAdapter which simply updates the ImageView
+     * of the list item.
+     * 
+     */
+    private static class FilePickerArrayAdapter extends
+            ArrayAdapter<FileWrapper> {
 
         public FilePickerArrayAdapter(Context context, List<FileWrapper> objects) {
             super(context, R.layout.listview_filepicker, R.id.tv_listrow,
@@ -42,7 +52,7 @@ public class FilePicker extends ListActivity {
 
             FileWrapper f = getItem(position);
             ImageView iv = (ImageView) v.findViewById(R.id.iv_listrow);
-            if (f.file.isDirectory()) {
+            if (f.getFile().isDirectory()) {
                 iv.setImageResource(R.drawable.folder);
             } else {
                 iv.setImageResource(R.drawable.file);
@@ -53,8 +63,11 @@ public class FilePicker extends ListActivity {
 
     }
 
-    private class FileWrapper {
-        public File file;
+    /**
+     * Simple wrapper for File that overrides the toString() method.
+     */
+    private static class FileWrapper {
+        private File file;
 
         FileWrapper(File f) {
             file = f;
@@ -64,34 +77,49 @@ public class FilePicker extends ListActivity {
         public String toString() {
             return file.getName();
         }
+
+        /**
+         * Returns the file object.
+         * 
+         * @return The file
+         */
+        File getFile() {
+            return file;
+        }
     }
 
     /**
-	 * 
-	 */
-    public final static String EXTENSIONS = "extensions";
+     * This is the name of the extra information of the starting intent, that
+     * has the allowed extensions. The data provided must be an array of
+     * strings.
+     */
+    public static final String EXTENSIONS = "extensions";
     /**
-	 * 
-	 */
-    public final static String PATH = "path";
+     * This is the name of the extra information of the starting intent, that
+     * has the root directory of the file manager. The provided data must be a
+     * String. If this extra is not supplied then /mnt/sdcard is root-directory.
+     */
+    public static final String PATH = "path";
 
     /**
-	 * 
-	 */
-    protected final static String RESULT_CODE_ERROR = "error";
+     * This is extra field.
+     */
+    protected static final String RESULT_CODE_ERROR = "error";
 
     /**
-	 * 
-	 */
-    protected final static String RESULT_CODE_FILE = "file";
+     * This is the extra field where the file name that is returned is stored.
+     * It is only supplied when RESULT_OK is the return code.
+     */
+    protected static final String RESULT_CODE_FILE = "file";
 
     /**
-     * 
+     * This is the path of the current directory.
      */
     protected File currentFile;
 
     /**
-     * 
+     * All extensions that are allowed. Only files with such an extension are
+     * displayed.
      */
     protected String[] extensions;
 
@@ -120,8 +148,10 @@ public class FilePicker extends ListActivity {
     }
 
     /**
+     * Returns from the activity with RESULT_CANCELED. No filename is returned.
+     * 
      * @param msg
-     *            todo
+     *            Error message.
      */
     protected void cancel(String msg) {
         Intent result = new Intent();
@@ -131,21 +161,29 @@ public class FilePicker extends ListActivity {
     }
 
     /**
-     * @return todo
+     * Creates a list of all suiting files and directories of the current
+     * directory. These files are inserted in the list.
+     * 
+     * @return The list of files in this directory. Only files that have an
+     *         allowed extension are supplied. Directories are before all files.
      */
     protected List<FileWrapper> getFileList() {
+        // get all files and filter by extension
         File[] dirfiles = currentFile.listFiles(new FileFilter() {
             public boolean accept(File pathname) {
                 if (pathname.isDirectory()) {
+                    // directories are always accepted
                     return true;
                 }
                 if (extensions != null)
+                    // files that have an allowed extension are allowed.
                     for (String ext : extensions) {
                         if (pathname.getName().endsWith(ext)) {
                             return true;
                         }
                     }
                 else {
+                    // no extensions provided means that all files are accepted.
                     return true;
                 }
                 return false;
@@ -157,18 +195,18 @@ public class FilePicker extends ListActivity {
             for (File f : dirfiles) {
                 res.add(new FileWrapper(f));
             }
-
+            // Sort: directories first
             Collections.sort(res, new Comparator<FileWrapper>() {
                 public int compare(FileWrapper object1, FileWrapper object2) {
-                    if (object1.file.isDirectory()
-                            && !object2.file.isDirectory()) {
+                    if (object1.getFile().isDirectory()
+                            && !object2.getFile().isDirectory()) {
                         return -1;
                     }
-                    if (!object1.file.isDirectory()
-                            && object2.file.isDirectory()) {
+                    if (!object1.getFile().isDirectory()
+                            && object2.getFile().isDirectory()) {
                         return 1;
                     }
-                    return object1.file.compareTo(object2.file);
+                    return object1.getFile().compareTo(object2.getFile());
                 }
             });
 
@@ -196,10 +234,10 @@ public class FilePicker extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         final FileWrapper file = (FileWrapper) l.getItemAtPosition(position);
 
-        if (file.file.isFile()) {
+        if (file.getFile().isFile()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            builder.setTitle(file.file.getName());
+            builder.setTitle(file.getFile().getName());
             builder.setMessage(this.getResources().getString(
                     R.string.alert_filepicker_message));
 
@@ -207,7 +245,7 @@ public class FilePicker extends ListActivity {
                     this.getResources().getString(R.string.alert_global_ok),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            returnWithResult(file.file.getAbsolutePath());
+                            returnWithResult(file.getFile().getAbsolutePath());
                             dialog.cancel();
                         }
                     });
@@ -221,9 +259,9 @@ public class FilePicker extends ListActivity {
                     });
 
             builder.show();
-        } else if (file.file.isDirectory()) {
+        } else if (file.getFile().isDirectory()) {
             Intent i = new Intent(this, FilePicker.class);
-            i.putExtra(PATH, file.file.getAbsolutePath());
+            i.putExtra(PATH, file.getFile().getAbsolutePath());
             i.putExtra(EXTENSIONS, extensions);
             this.startActivityForResult(i, RESULT_OK);
         }
@@ -232,8 +270,10 @@ public class FilePicker extends ListActivity {
     }
 
     /**
+     * Return from this activity providing a file name that was picked.
+     * 
      * @param path
-     *            todo
+     *            The returned file name.
      */
     protected void returnWithResult(String path) {
         Intent result = new Intent();
@@ -244,8 +284,10 @@ public class FilePicker extends ListActivity {
     }
 
     /**
+     * Set the current path and check whether it is allowed.
+     * 
      * @param path
-     *            todo
+     *            The new path name.
      */
     protected void setPath(String path) {
         currentFile = new File(path);
@@ -256,7 +298,7 @@ public class FilePicker extends ListActivity {
     }
 
     /**
-     * 
+     * Updates the ListView.
      */
     protected void updateAdapter() {
         setListAdapter(new FilePickerArrayAdapter(this, getFileList()));
