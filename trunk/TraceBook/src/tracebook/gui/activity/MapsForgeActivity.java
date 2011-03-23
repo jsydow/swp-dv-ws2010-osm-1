@@ -148,6 +148,16 @@ public class MapsForgeActivity extends MapActivity {
 
                     } else
                         LogIt.d(LOG_TAG, "Way can not be found.");
+                } else if (pointId > 0) {
+                    DataNode node = Helper.currentTrack().getNodeById(pointId);
+                    if (node != null) { // last node of a one_shot way after
+                                        // stopWay() was called
+                        routesOverlay.putWaypoint(node);
+                        if (node.getDataPointsList() != null) {
+                            node.getDataPointsList().updateOverlayRoute();
+                            routesOverlay.requestRedraw();
+                        }
+                    }
                 }
 
                 break;

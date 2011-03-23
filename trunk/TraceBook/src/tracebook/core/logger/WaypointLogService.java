@@ -223,9 +223,16 @@ public class WaypointLogService extends Service implements LocationListener {
             for (DataNode node : current_nodes) {
                 node.setLocation(loc); // update node with proper GPS fix
 
-                if (currentWay() != null)
+                if (currentWay() != null) {
+                    LogIt.d("Logger", "new one-shot way point");
                     sender.sendWayUpdate(currentWay().getId(), node.getId()); // one_shot
-                // update
+                    // update
+                } else
+                    sender.sendWayUpdate(-1, node.getId()); // after end way in
+                                                            // one_shot mode, we
+                                                            // send an update
+                                                            // for the last
+                                                            // waypoint
             }
             current_nodes.clear(); // no node waiting for GPS position any more
         } else if (currentWay() != null && !one_shot) { // Continuous mode
