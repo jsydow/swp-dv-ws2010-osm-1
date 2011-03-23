@@ -112,9 +112,10 @@ public class MapsForgeActivity extends MapActivity {
                 if (intend.getExtras().getBoolean("one_shot")) {
                     DataPointsList currentWay = Helper.currentTrack()
                             .getCurrentWay();
-                    if (currentWay != null)
+                    if (currentWay != null) {
                         currentWay.updateOverlayRoute(currentGeoPoint);
-
+                        routesOverlay.requestRedraw();
+                    }
                 }
 
                 if (centerMap)
