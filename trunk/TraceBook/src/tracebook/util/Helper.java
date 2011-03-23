@@ -338,11 +338,21 @@ public final class Helper {
      * Generates an info box with the given information and returns a reference
      * to the object.
      * 
+     * @param context
+     *            Context to run this method in.
+     * @param activity
+     *            Activity to close, if necessary.
+     * @param tag
+     *            Tag to display information of.
+     * @param buttonCaption
+     *            Caption of the button in the dialog.
+     * @param closeActivityAfterDialog
+     *            Close given activity after the button has been clicked.
      * @return Reference to the generated dialog.
      */
-    public static Dialog makeInfoDialog(final Context context, final Activity act,
-            final TagSearchResult tag, final String buttonCaption,
-            final boolean closeActivityAfterDialog) {
+    public static Dialog makeInfoDialog(final Context context,
+            final Activity activity, final TagSearchResult tag,
+            final String buttonCaption, final boolean closeActivityAfterDialog) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_searchinfo);
         dialog.setTitle(R.string.string_searchInfoDialog_title);
@@ -392,10 +402,10 @@ public final class Helper {
                     intent.putExtra("DataNodeKey", tag.getKey());
                     intent.putExtra("DataNodeValue", tag.getValue());
                 }
-                act.setResult(Activity.RESULT_OK, intent);
+                activity.setResult(Activity.RESULT_OK, intent);
                 dialog.cancel();
                 if (closeActivityAfterDialog) {
-                    act.finish();
+                    activity.finish();
                 }
             }
         });
@@ -573,8 +583,8 @@ public final class Helper {
 
         Intent notificationIntent = new Intent(activity, cls);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(
-                activity.getApplicationContext(), 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(activity
+                .getApplicationContext(), 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText,
                 contentIntent);
