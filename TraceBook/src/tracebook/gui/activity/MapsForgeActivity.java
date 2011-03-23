@@ -53,9 +53,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 
 /**
- * This class implements a MapsForge map activity and draws ways and nodes as
- * overlays on it. In the future it will also be possible to modify said nodes
- * and ways.
+ * This class implements a MapsForge map activity to draw ways and nodes as
+ * overlays on it. It also contains a class to handle Messages form the
+ * LoggerService and offers means to modify points on the map.
  */
 public class MapsForgeActivity extends MapActivity {
     /**
