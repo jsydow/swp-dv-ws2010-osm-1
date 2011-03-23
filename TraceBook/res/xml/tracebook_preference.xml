@@ -9,7 +9,7 @@
 		<ListPreference android:title="@string/string_preferences_stopGPS"
 			android:key="lst_stopGPSafterSeconds" android:defaultValue="10"
 			android:entries="@array/stopTrackingAfter" android:entryValues="@array/stopTrackingAfter_values"
-			android:summary="@string/string_preferences_descStopGPS" />
+			android:summary="@string/string_preferences_descStopGPS" />				
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/string_preferences_catMapView">
@@ -22,6 +22,13 @@
 			android:key="lst_setOnlineTitleStyle" android:defaultValue="OSMA"
 			android:entries="@array/onlineTitleStyle" android:entryValues="@array/onlineTitleStyle_values"
 			android:summary="@string/string_preferences_descOnlineTitleStyle" />
+			
+		  <Preference
+		  		android:title="@string/string_preferences_chooseMap"
+                android:key="mapsforgeMapFilePath" 
+                android:defaultValue=""/>
+			
+				
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/string_preferences_catMetaTag">
