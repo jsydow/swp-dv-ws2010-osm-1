@@ -93,7 +93,6 @@ public class TextMarker extends ButtonMarker {
             MarkerLayer parentlayer, double time, double offset) {
         super(ll, text, "tracebook_text.png", parentlayer, time, offset);
         this.texturl = texturl;
-        // TODO Auto-generated constructor stub
     }
 
     /**
