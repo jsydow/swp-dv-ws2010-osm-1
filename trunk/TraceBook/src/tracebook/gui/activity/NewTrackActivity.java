@@ -115,6 +115,27 @@ public class NewTrackActivity extends TabActivity {
                 act.initListView();
                 tab.invalidate();
             }
+
+            ToggleButton areaToggle = (ToggleButton) act
+                    .findViewById(R.id.tbtn_newtrackActivity_startArea);
+            ToggleButton streetToggle = (ToggleButton) act
+                    .findViewById(R.id.tbtn_newtrackActivity_startWay);
+
+            if (Helper.currentTrack().getCurrentWay() == null) {
+                streetToggle.setEnabled(true);
+                streetToggle.setChecked(false);
+
+                areaToggle.setEnabled(true);
+                areaToggle.setChecked(false);
+            } else {
+                final boolean isArea = Helper.currentTrack().getCurrentWay()
+                        .isArea();
+                areaToggle.setEnabled(isArea);
+                areaToggle.setChecked(isArea);
+
+                streetToggle.setEnabled(!isArea);
+                streetToggle.setChecked(!isArea);
+            }
         }
     }
 
