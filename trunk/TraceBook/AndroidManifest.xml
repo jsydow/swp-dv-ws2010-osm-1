@@ -36,6 +36,7 @@
 		<activity android:name="tracebook.gui.view.HelpWebView"
 			android:configChanges="orientation" />
 
-	</application>
+	<activity android:name="tracebook.gui.activity.FilePicker"></activity>
+</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 </manifest>

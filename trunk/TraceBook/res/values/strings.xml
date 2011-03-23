@@ -259,4 +259,6 @@
 <string name="toast_applicationError">An error occured. Please restart the application and try again.</string>
 <string name="toast_recordingFinished">Recording finished.</string>
 <string name="toast_noneExistentNode">Node does not exist!</string>
+<string name="string_filepicker_error_invalid_path">Invalid path</string>
+<string name="alert_filepicker_message">Do you want to pick this file?</string>
 </resources>

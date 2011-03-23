@@ -20,7 +20,9 @@
 package tracebook.gui.activity;
 
 import tracebook.util.Helper;
+import tracebook.util.LogIt;
 import Trace.Book.R;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -56,6 +58,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        final Activity thisActivity = this;
         Helper.setTheme(this);
         super.onCreate(savedInstanceState);
 
@@ -71,9 +74,10 @@ public class PreferencesActivity extends PreferenceActivity {
 
                     public boolean onPreferenceClick(Preference preference) {
 
-                        Intent intent = new Intent(
-                                "org.openintents.action.PICK_FILE");
-                        startActivityForResult(intent, 1);
+                        Intent i = new Intent(thisActivity, FilePicker.class);
+                        i.putExtra(FilePicker.EXTENSIONS,
+                                new String[] { ".map" });
+                        thisActivity.startActivityForResult(i, 1);
 
                         return true;
                     }
@@ -87,13 +91,18 @@ public class PreferencesActivity extends PreferenceActivity {
 
         if (data != null) {
 
-            String uri = data.getData().toString();
+            String filename = data.getExtras().getString(
+                    FilePicker.RESULT_CODE_FILE);
+            LogIt.d("Preferences",
+                    "got: "
+                            + data.getExtras().getString(
+                                    FilePicker.RESULT_CODE_FILE));
 
             Editor editor = appPreferences.edit();
 
-            editor.putString("mapsforgeMapFilePath", uri);
+            editor.putString("mapsforgeMapFilePath", filename);
             editor.commit();
-            mapChooser.setSummary(uri);
+            mapChooser.setSummary(filename);
 
         }
     }
