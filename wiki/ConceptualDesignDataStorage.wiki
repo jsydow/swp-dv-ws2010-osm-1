@@ -64,6 +64,10 @@ In the folder of the track all media files are stored (Saved after recording). T
 
 There is also a file called info.xml in the track folder. It is created with the track.tbt file together and contains all the meta information of a track (creation time of the track, comment, number of POIs, ways and media). This XML-file is relatively small and therefore fast to parse. This way it does not take long to deserialize the !TrackInfo for a list of tracks. The !TrackInfo object stores the meta information of the info.xml file.
 
+== !DataPointList ==
+
+A !DataPointsList represents a object in OSM that consists of a series of nodes like areas and ways.
+
 == !DataMedia ==
 
 !DataMedia is a reference to a medium. It stores the path to the medium and its type.
