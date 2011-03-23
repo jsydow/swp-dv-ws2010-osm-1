@@ -28,11 +28,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import tracebook.util.LogIt;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import tracebook.util.LogIt;
 import android.util.Xml;
 
 /**
@@ -55,6 +55,45 @@ public class TagDb {
         super();
         this.context = context;
         helper = new TagDbOpenHelper(context);
+    }
+
+    /**
+     * Searches the database for a given key value pair and returns it, if it
+     * exists. Otherwise, returns null.
+     * 
+     * @param key
+     *            The key to search for.
+     * @param value
+     *            The value to search for.
+     * @param language
+     *            The lanaguage to search for.
+     * @return A TagSearchResult object, if key value pair exists. Null
+     *         otherwise.
+     */
+    public TagSearchResult getDetails(String key, String value, String language) {
+        TagSearchResult result = null;
+        String where = String.format("%s = ? and %s = ? and %s = ?",
+                TagDbOpenHelper.DICT_COLUMN_KEY,
+                TagDbOpenHelper.DICT_COLUMN_VALUE,
+                TagDbOpenHelper.DICT_COLUMN_LANG);
+
+        openDb();
+        if (db != null && db.isOpen()) {
+            Cursor cursor = db.query(TagDbOpenHelper.getDictTableName(),
+                    TagDbOpenHelper.getDictColumns(), where, new String[] {
+                            key, value, language }, null, null, null);
+
+            if (cursor.getCount() == 1) {
+                cursor.moveToFirst();
+                result = TagDbOpenHelper.getResultFromCursor(cursor);
+            }
+
+            closeDb();
+        } else {
+            LogIt.e("TagDataBase", "Could not open database.");
+        }
+
+        return result;
     }
 
     /**
@@ -136,6 +175,7 @@ public class TagDb {
                         boolean uriTagOpened = false;
                         String value = null;
                         SQLiteDatabase writeDb;
+
                         @Override
                         public void characters(char[] ch, int start, int length) {
                             String tmp = new String(ch, start, length);
@@ -151,6 +191,7 @@ public class TagDb {
                                 imgUrl += tmp;
                             }
                         }
+
                         /*
                          * (non-Javadoc)
                          * 
@@ -267,7 +308,9 @@ public class TagDb {
                 new String[] { "COUNT(*)" }, null, null, null, null, null);
         if (crs.getCount() > 0) {
             crs.moveToFirst();
-            LogIt.d("InitDbWithFile", "inserted " + crs.getString(0) + " rows.");
+            LogIt
+                    .d("InitDbWithFile", "inserted " + crs.getString(0)
+                            + " rows.");
         }
         crs.close();
         closeDb();
