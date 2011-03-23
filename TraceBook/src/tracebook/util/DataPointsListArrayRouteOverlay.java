@@ -156,6 +156,20 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
     }
 
     /**
+     * Creates a new OverlayItem for n if it has none yet.
+     * 
+     * @param n
+     *            DataNode that should get a marker
+     */
+    public void putWaypoint(DataNode n) {
+        if (n.getOverlayItem() == null)
+            n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
+                    R.drawable.dot_blue, context, true));
+        if (showWaypoints)
+            pointsOverlay.addItem(n.getOverlayItem());
+    }
+
+    /**
      * Enable/disable the drawing of way point markers.
      */
     public void toggleWaypoints() {
@@ -173,20 +187,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
             putWaypoint(n);
     }
 
-    /**
-     * Creates a new OverlayItem for n if it has none yet.
-     * 
-     * @param n
-     *            DataNode that should get a marker
-     */
-    private void putWaypoint(DataNode n) {
-        if (n.getOverlayItem() == null)
-            n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
-                    R.drawable.dot_blue, context, true));
-        pointsOverlay.addItem(n.getOverlayItem());
-    }
-
-    private void removeWaypoints(DataPointsList way) {
+    private synchronized void removeWaypoints(DataPointsList way) {
         for (DataNode n : way.getNodes())
             pointsOverlay.removeItem(n.getOverlayItem());
     }

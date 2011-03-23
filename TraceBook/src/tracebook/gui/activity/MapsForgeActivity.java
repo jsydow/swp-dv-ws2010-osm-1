@@ -115,7 +115,7 @@ public class MapsForgeActivity extends MapActivity {
                             .getCurrentWay();
                     if (currentWay != null) {
                         currentWay.updateOverlayRoute(currentGeoPoint);
-                        routesOverlay.addWay(currentWay.getOverlayRoute());
+                        routesOverlay.requestRedraw();
                     }
                 }
 
@@ -138,6 +138,13 @@ public class MapsForgeActivity extends MapActivity {
                             routesOverlay.addWay(way, true);
                         } else
                             routesOverlay.requestRedraw();
+
+                        if (pointId > 0) { // new waypoint
+                            DataNode node = Helper.currentTrack().getNodeById(
+                                    pointId);
+                            if (node != null)
+                                routesOverlay.putWaypoint(node);
+                        }
 
                     } else
                         LogIt.d(LOG_TAG, "Way can not be found.");
