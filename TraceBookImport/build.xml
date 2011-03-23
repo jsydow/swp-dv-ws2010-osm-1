@@ -28,7 +28,11 @@
 **
 -->
 <project name="TraceBookPlugin" default="install" basedir=".">
-
+	<path id="classpath">
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
 	<!-- enter the SVN commit message -->
 	<property name="commit.message" value="Commit message" />
 	<!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
@@ -76,9 +80,9 @@
 	    **********************************************************
 	    -->
 	<target name="javadoc">
-			<javadoc excludepackagenames="" access="protected" destdir="doc" version="true" windowtitle="TraceBookImport" sourcepath="src">
+			<javadoc excludepackagenames="" access="protected" destdir="doc" version="true" windowtitle="TraceBookImport" sourcepath="src" classpathref="classpath">
 				<doctitle>
-					<![CDATA[<h1>TraceBook</h1>]]></doctitle>
+					<![CDATA[<h1>TraceBookImport</h1>]]></doctitle>
 			<fileset dir="src" defaultexcludes="yes">
 				<include name="*.java" />
 			</fileset>
