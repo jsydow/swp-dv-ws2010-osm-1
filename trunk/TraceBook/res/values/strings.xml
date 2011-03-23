@@ -64,6 +64,7 @@
 	<string name="string_preferences_descSetMaxAudioRecordingTime"></string>
 	<string name="string_preferences_showMostRecentTagsInHistory">Show recently used tags</string>
 	<string name="string_preferences_descShowMostRecentTagsInHistory">Show your most recently used tags when adding a tag.</string>
+	<string name="string_preferences_chooseMap">Choose your map file</string>
 
 	<!-- App values -->
 	<string name="app_name">TraceBook</string>
