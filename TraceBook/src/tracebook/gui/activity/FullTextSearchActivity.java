@@ -259,8 +259,8 @@ public class FullTextSearchActivity extends ListActivity {
 
             if (extras != null) {
                 String tagValue = extras.getString("TagValue");
-                if (tagValue != null) {
-                    editBox.setText(tagValue);
+                if(tagValue != null) {
+                editBox.setText(tagValue);
                 }
             }
 
