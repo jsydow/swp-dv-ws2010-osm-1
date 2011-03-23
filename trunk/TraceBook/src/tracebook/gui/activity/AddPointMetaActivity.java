@@ -30,6 +30,7 @@ import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
 import tracebook.core.data.db.HistoryDb;
 import tracebook.core.data.db.TagSearchResult;
+import tracebook.core.logger.ServiceConnector;
 import tracebook.gui.adapter.GenericAdapter;
 import tracebook.gui.adapter.GenericAdapterData;
 import tracebook.gui.adapter.GenericItemDescription;
@@ -43,6 +44,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -495,8 +497,20 @@ public class AddPointMetaActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Helper.startUserNotification(this, R.drawable.ic_notification,
-                AddPointMetaActivity.class);
+        try {
+            if (ServiceConnector.getLoggerService().isLogging()) {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_active,
+                        NewTrackActivity.class);
+            } else {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_pause,
+                        NewTrackActivity.class);
+            }
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+        }
     }
 
 }

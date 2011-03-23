@@ -56,7 +56,7 @@ public class HelpWebView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        String language = "de";
+        String language = "en";
         boolean about = false;
         boolean help = false;
         super.onCreate(savedInstanceState);
@@ -73,6 +73,9 @@ public class HelpWebView extends Activity {
                 help = true;
             }
         }
+
+        if (!language.equals("en") && !language.equals("de"))
+            language = "en";
 
         setContentView(R.layout.activity_webviewactivity);
 

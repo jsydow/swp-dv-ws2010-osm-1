@@ -33,11 +33,11 @@ import tracebook.core.data.DataNode;
 import tracebook.core.data.DataPointsList;
 import tracebook.core.data.DataStorage;
 import tracebook.core.logger.ServiceConnector;
+import tracebook.util.DataNodeArrayItemizedOverlay;
 import tracebook.util.DataPointsListArrayRouteOverlay;
 import tracebook.util.GpsMessage;
 import tracebook.util.Helper;
 import tracebook.util.LogIt;
-import tracebook.util.DataNodeArrayItemizedOverlay;
 import Trace.Book.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -184,8 +184,9 @@ public class MapsForgeActivity extends MapActivity {
                 removeInvalidItems();
                 break;
             default:
-                LogIt.e(LOG_TAG, "unhandled Message, ID="
-                        + intend.getIntExtra("type", -1));
+                LogIt.e(LOG_TAG,
+                        "unhandled Message, ID="
+                                + intend.getIntExtra("type", -1));
             }
         }
 
@@ -254,8 +255,8 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.requestRedraw();
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                LogIt.d(LOG_TAG, "Exiting edit mode for point "
-                        + editNode.getId());
+                LogIt.d(LOG_TAG,
+                        "Exiting edit mode for point " + editNode.getId());
                 editNode = null;
             }
 
@@ -300,10 +301,9 @@ public class MapsForgeActivity extends MapActivity {
                         R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item
-                        .setTitle(getResources()
-                                .getString(
-                                        R.string.opt_mapsforgeActivity_deactivateMobileInternet));
+                item.setTitle(getResources()
+                        .getString(
+                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(getOnlineTileStyle(), null);
             }
             useInternet = !useInternet;
@@ -320,8 +320,10 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.opt_mapsforgeActivity_export:
             DataStorage.getInstance().serialize();
-            LogIt.popup(this, getResources().getString(
-                    R.string.popup_mapsforgeactivity_saved));
+            LogIt.popup(
+                    this,
+                    getResources().getString(
+                            R.string.popup_mapsforgeactivity_saved));
             return true;
 
         case R.id.opt_mapsforgeActivity_pause:
@@ -331,15 +333,22 @@ public class MapsForgeActivity extends MapActivity {
                             R.string.opt_mapsforgeActivity_resume));
                     item.setIcon(android.R.drawable.ic_media_play);
                     ServiceConnector.getLoggerService().pauseLogging();
+                    Helper.startUserNotification(this,
+                            R.drawable.ic_notification_pause,
+                            NewTrackActivity.class);
                 } else {
                     item.setTitle(getResources().getString(
                             R.string.opt_mapsforgeActivity_pause));
                     item.setIcon(android.R.drawable.ic_media_pause);
                     ServiceConnector.getLoggerService().resumeLogging();
+                    Helper.startUserNotification(this,
+                            R.drawable.ic_notification_active,
+                            NewTrackActivity.class);
                 }
             } catch (RemoteException ex) {
                 Helper.handleNastyException(this, ex, LOG_TAG);
             }
+
             return true;
         case R.id.opt_mapsforgeActivity_stopTrack:
             Helper.alertStopTracking(this);
@@ -467,8 +476,10 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt.popup(this, getResources().getString(
-                        R.string.toast_loadingOnlineMap));
+                LogIt.popup(
+                        this,
+                        getResources().getString(
+                                R.string.toast_loadingOnlineMap));
                 modeLocal = getOnlineTileStyle();
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
@@ -478,8 +489,10 @@ public class MapsForgeActivity extends MapActivity {
             }
         } else {
             if (!isOnline()) {
-                LogIt.popup(this, getResources().getString(
-                        R.string.toast_noInternetAccess));
+                LogIt.popup(
+                        this,
+                        getResources().getString(
+                                R.string.toast_noInternetAccess));
             }
         }
         mapView.setMapViewMode(modeLocal);
