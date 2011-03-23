@@ -58,6 +58,8 @@ At this point we should describe how the data are stored on the SD-card:
 
 === Storing data on the SD-card ===
 
-In the root directory of the SD card there is a folder TraceBook. In it there folders for each track. Each track has exactly one folder. The name of the track is equal to the name of the folder.
+In the root directory of the SD card there is a folder !TraceBook. In it there folders for each track. Each track has exactly one folder. The name of the track is equal to the name of the folder.
 
-In the folder of the track all media files are stored (Saved after recording). The actual tracking data are stored in an .xml-file "track.tbt". It has the extension .tbt because the JOSM plugin can then easier differentiate between our XML-file and an XML-file of OpenStreetMap data
+In the folder of the track all media files are stored (Saved after recording). The actual tracking data are stored in an .xml-file "track.tbt". It has the extension .tbt because the JOSM plugin can then easier differentiate between our XML-file and an XML-file of !OpenStreetMap data. This .tbt-file has the same structure as an OSM XML-file with one exception: The .tbt file contains references to the media stored for the Track. The track.tbt file is created when the track is serialised.
+
+There is also a file called info.xml in the track folder. It is created with the track.tbt file together and contains all the meta information of a track (creation time of the track, comment, number of POIs, ways and media). This XML-file is relatively small and therefore fast to parse. This way it does not take long to deserialize the !TrackInfo for a list of tracks. The TrackInfo object stores the meta information of the info.xml file.
