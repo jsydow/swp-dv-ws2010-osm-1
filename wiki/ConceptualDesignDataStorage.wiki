@@ -7,3 +7,9 @@ Core.data contains the data model of the tracking application. All tracked data 
 = Details =
 
 == DataStorage ==
+
+DataStorage is the class that has all other data in it. It is therefore like a root-object. The whole data model is like a tree. Since all other parts of the application should only work on one "database" of the tracking data this class is modeled as Singleton. There is at most one instance of DataStorage.
+
+It is possible to load tracks from memory (deserialize) and it is possible to get a list of all tracks that are saved on the devices SD-card (getAllTracks). 
+
+It is possible to delete a track or get a track that is already loaded. There is a special reference to a loaded track called currentWay. The current way is the way that is currently edited.
