@@ -52,7 +52,7 @@
 	<string name="string_preferences_localTitleMapCache">Local tile cache</string>
 	<string name="string_preferences_descLocalTitleMapCache">Use local rendering instead of OSM.</string>
 	<string name="string_preferences_onlineTitleStyle">Rendering engine</string>
-	<string name="string_preferences_descOnlineTitleStyle">Choose your rendering engine for OSM map view.</string>
+	<string name="string_preferences_descOnlineTitleStyle">Choose your OSM rendering engine.</string>
 	<string name="string_preferences_maxHistorySize">History size</string>
 	<string name="string_preferences_descMaxHistorySize">Number of tags to be remembered in tag search.</string>
 	<string name="string_preferences_exportMail">Recipient for sending tracks to</string>
@@ -65,6 +65,7 @@
 	<string name="string_preferences_showMostRecentTagsInHistory">Show recently used tags</string>
 	<string name="string_preferences_descShowMostRecentTagsInHistory">Show your most recently used tags when adding a tag.</string>
 	<string name="string_preferences_chooseMap">Choose your map file</string>
+	<string name="string_filepicker_error_invalid_path">Invalid path</string>
 
 	<!-- App values -->
 	<string name="app_name">TraceBook</string>
@@ -110,11 +111,9 @@
 	<string name="tv_searchInfoDialog_noInformation">No information available.</string>
 	<string name="tv_searchInfoDialog_urlTitle">URI to wiki:</string>
 	<string name="tv_statusbar_addpointTitle">Add point of interest</string>
-	<string name="tv_statusbar_addpointDesc">Add tags and media files here.
-	</string>
+	<string name="tv_statusbar_addpointDesc">Add tags and media files here.</string>
 	<string name="tv_statusbar_addpointmetaTitle">Add meta information</string>
-	<string name="tv_statusbar_addpointmetaDesc">Add tags and media files here.
-	</string>
+	<string name="tv_statusbar_addpointmetaDesc">Add tags and media files here.</string>
 	<string name="tv_statusbar_fulltextsearchTitle">Search tags</string>
 	<string name="tv_statusbar_fulltextsearchDesc">Search for existing tags in OSM.</string>
 	<string name="tv_statusbar_aboutTitle">About TraceBook</string>
@@ -122,26 +121,28 @@
 	<string name="tv_statusbar_loadtrackTitle">Load track</string>
 	<string name="tv_statusbar_loadtrackDesc">Resume your saved tracks here.</string>
 	<string name="tv_newtrackactivity_allElements">All saved track elements of this session.</string>
+	<string name="tv_filepicker_currdir">Current directory:</string>
 	
 	<!-- Edit Text values -->
-	<string name="et_fulltextsearchActivity_search">Searching...</string>
+	<string name="et_fulltextsearchActivity_search">Search tags</string>
 
 	<!-- Toast values -->
 	<string name="toast_noTrackFound">Track could not be found.</string>
-	<string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from
-		Internet.</string>
+	<string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from the internet.</string>
+	<string name="toast_noInternetAccess">You are currently not connected to the internet. The online map cannot be displayed.</string>
+	<string name="toast_applicationError">An error occurred. Please restart the application and try again.</string>
+	<string name="toast_recordingFinished">Recording finished.</string>
+	<string name="toast_noneExistentNode">Node does not exist!</string>
 
 	<!-- AlertBox values -->
-	<string name="alert_addmemoactivity_progressdialog">Please wait.\nRecording is starting soon...
-	</string>
+	<string name="alert_addmemoactivity_progressdialog">Please wait.\nRecording is starting soon...</string>
 	<string name="alert_global_cancel">Cancel</string>
 	<string name="alert_global_ok">Ok</string>
 	<string name="alert_global_yes">Yes</string>
 	<string name="alert_global_no">No</string>
 	<string name="alert_global_addNotice">Add note</string>
 	<string name="alert_global_addedNotice">Added note:</string>
-	<string name="alert_global_exit">Do you want to end the current session and save
-		your progress?</string>
+	<string name="alert_global_exit">Do you want to end the current session and save your progress?</string>
 	<string name="alert_global_trackName">Track:</string>
 	<string name="alert_mapsforgeActivity_pause">Do you want to pause the current session?</string>
 	<string name="alert_newtrackActivity_rename">Rename node</string>
@@ -152,9 +153,10 @@
 	<string name="alert_loadtrackActivity_pleaseWait">Please wait...</string>
 	<string name="alert_loadtrackActivity_loadingTracks">Tracks are being loaded...</string>
 	<string name="alert_global_notSaveAndClose">Exit</string>
-	<string name="alert_loadtrackActivity_stopCurrentTrack">Aktuellen Track beenden und neuen laden?</string>
-	<string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track points you have to enable it. Do you want to enable it?</string>
+	<string name="alert_loadtrackActivity_stopCurrentTrack">Close recent track and load new track?</string>
+	<string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track points, you have to enable it. Do you want to enable it?</string>
 	<string name="alert_NewTrackActivity_NoGpsTitle">GPS disabled</string>
+	<string name="alert_filepicker_message">Do you want to pick this file?</string>
 	
 	<!-- Option menu values -->
 	<string name="opt_startActivity_preferences">Preferences</string>
@@ -162,8 +164,8 @@
 	<string name="opt_loadtrack_sortByTimestamp">Sort by time</string>
 	<string name="opt_loadtrack_sortByName">Sort by name</string>
 	<string name="opt_mapsforgeActivity_centerAtOwnPosition">My location</string>
-	<string name="opt_mapsforgeActivity_activateMobileInternet">Online map</string>
-	<string name="opt_mapsforgeActivity_deactivateMobileInternet">Offline map</string>
+	<string name="opt_mapsforgeActivity_activateMobileInternet">On-line map</string>
+	<string name="opt_mapsforgeActivity_deactivateMobileInternet">Off-line map</string>
 	<string name="opt_mapsforgeActivity_stopTrack">Stop tracking</string>
 	<string name="opt_mapsforgeActivity_resumeTrack">Resume tracking</string>
 	<string name="opt_mapsforgeActivity_help">Help</string>
@@ -216,7 +218,7 @@
 	<string name="btn_recordvideoActivity_startRec">Start</string>
 	<string name="btn_recordvideoActivity_stopRec">Stop</string>
 	<string name="btn_newtrackActivity_addPoint">Add point of interest</string>
-	<string name="btn_newtrackActivity_stopTrack">Save &amp; Close</string>
+	<string name="btn_newtrackActivity_stopTrack">Close</string>
 	<string name="btn_newtrackActivity_editComment">Edit track notes</string>
 	<string name="btn_addpointmetaActivity_poi">Point of interest</string>
 	<string name="btn_addpointmetaActivity_save">Save</string>
@@ -233,13 +235,5 @@
 	<string name="btn_addpointmetaActivity_search">Search</string>
 	<string name="btn_searchInfoDialog_save">Apply</string>
 	<string name="btn_startActivity_reseumeTrack">Resume track</string>
-<string name="popup_mapsforgeactivity_saved">Track has been saved!</string>
-
-<string name="toast_noInternetAccess">You are currently not connected to the internet. The online map cannot be displayed.</string>
-<string name="toast_applicationError">An error occured. Please restart the application and try again.</string>
-<string name="toast_recordingFinished">Recording finished.</string>
-<string name="toast_noneExistentNode">Node does not exist!</string>
-<string name="string_filepicker_error_invalid_path">Invalid path</string>
-<string name="alert_filepicker_message">Do you want to pick this file?</string>
-<string name="tv_filepicker_currdir">Current directory:</string>
+	<string name="popup_mapsforgeactivity_saved">Track has been saved.</string>
 </resources>
