@@ -44,6 +44,11 @@ public class GpsMessage {
     public static final int MOVE_POINT = 3;
 
     /**
+     * Type of the Intent that signals the existence of invalid OverlayItems.
+     */
+    public static final int REMOVE_INVALIDS = 4;
+
+    /**
      * Tag of the Intent send by this class.
      */
     public static final String TAG = "de.fu-berlin.inf.tracebook.UPDATE";
@@ -89,6 +94,15 @@ public class GpsMessage {
         intent.putExtra("long", loc.getLongitude());
         intent.putExtra("lat", loc.getLatitude());
         intent.putExtra("one_shot", oneShot);
+        ctx.sendBroadcast(intent);
+    }
+
+    /**
+     * Signals the MapActivity that invalid OverlayItems are availiable to be
+     * removed.
+     */
+    public void sendDiscardIntent() {
+        intent.putExtra("type", REMOVE_INVALIDS);
         ctx.sendBroadcast(intent);
     }
 

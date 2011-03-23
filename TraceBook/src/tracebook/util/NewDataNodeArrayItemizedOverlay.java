@@ -69,8 +69,8 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
             case 0: // Tag this
                 final Intent intent = new Intent(context,
                         AddPointActivity.class);
-                intent.putExtra("DataNodeId", Helper.currentTrack().newNode(
-                        point).getId());
+                intent.putExtra("DataNodeId",
+                        Helper.currentTrack().newNode(point).getId());
 
                 context.startActivity(intent);
                 break;
@@ -146,8 +146,8 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
                     if (way != null) // we have to redraw the way
                         sender.sendWayUpdate(way.getId());
                 } else
-                    LogIt.popup(context, "Can not delete Node id="
-                            + node.getId());
+                    LogIt.popup(context,
+                            "Can not delete Node id=" + node.getId());
                 break;
             default:
                 break;
