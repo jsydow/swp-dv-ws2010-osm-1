@@ -29,6 +29,7 @@ import tracebook.util.LogIt;
 import Trace.Book.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
@@ -54,6 +55,11 @@ public class RecordVideoActivity extends Activity implements
      * Recorder for this activity.
      */
     VideoRecorder recorder = new VideoRecorder();
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

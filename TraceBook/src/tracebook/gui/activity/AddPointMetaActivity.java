@@ -40,6 +40,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -120,6 +121,11 @@ public class AddPointMetaActivity extends ListActivity {
         // return the value tags for the selected category tag
         String[] valueTags = parseTags(Tags.VALUE, category);
         return valueTags;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
