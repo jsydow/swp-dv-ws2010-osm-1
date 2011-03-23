@@ -25,6 +25,7 @@ import java.util.Locale;
 
 import tracebook.core.data.db.TagDb;
 import tracebook.core.data.db.TagSearchResult;
+import tracebook.core.logger.ServiceConnector;
 import tracebook.gui.adapter.GenericAdapter;
 import tracebook.gui.adapter.GenericAdapterData;
 import tracebook.gui.adapter.GenericItemDescription;
@@ -36,6 +37,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -353,7 +355,19 @@ public class FullTextSearchActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Helper.startUserNotification(this, R.drawable.ic_notification,
-                FullTextSearchActivity.class);
+        try {
+            if (ServiceConnector.getLoggerService().isLogging()) {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_active,
+                        NewTrackActivity.class);
+            } else {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_pause,
+                        NewTrackActivity.class);
+            }
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+        }
     }
 }

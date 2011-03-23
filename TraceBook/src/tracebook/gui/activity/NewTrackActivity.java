@@ -588,8 +588,20 @@ public class NewTrackActivity extends TabActivity {
         initListView();
         checkGpsStatus();
         setGpsStatus();
-        Helper.startUserNotification(this, R.drawable.ic_notification,
-                NewTrackActivity.class);
+        try {
+            if (ServiceConnector.getLoggerService().isLogging()) {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_active,
+                        NewTrackActivity.class);
+            } else {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_pause,
+                        NewTrackActivity.class);
+            }
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+        }
     }
 
     /**

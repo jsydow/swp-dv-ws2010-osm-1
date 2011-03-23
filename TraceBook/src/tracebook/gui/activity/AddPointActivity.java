@@ -50,6 +50,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -427,8 +428,20 @@ public class AddPointActivity extends ListActivity {
 
         // Initializes Adapter and fill with new Information
         initAdapter();
-        Helper.startUserNotification(this, R.drawable.ic_notification,
-                AddPointActivity.class);
+        try {
+            if (ServiceConnector.getLoggerService().isLogging()) {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_active,
+                        NewTrackActivity.class);
+            } else {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_pause,
+                        NewTrackActivity.class);
+            }
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+        }
 
     }
 

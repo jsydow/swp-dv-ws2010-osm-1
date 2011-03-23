@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import tracebook.core.data.DataMapObject;
 import tracebook.core.data.DataStorage;
+import tracebook.core.logger.ServiceConnector;
 import tracebook.core.media.VideoRecorder;
 import tracebook.util.Helper;
 import tracebook.util.LogIt;
@@ -31,6 +32,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -171,8 +173,20 @@ public class RecordVideoActivity extends Activity implements
     @Override
     protected void onResume() {
         super.onResume();
-        Helper.startUserNotification(this, R.drawable.ic_notification,
-                RecordVideoActivity.class);
+        try {
+            if (ServiceConnector.getLoggerService().isLogging()) {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_active,
+                        NewTrackActivity.class);
+            } else {
+                Helper.startUserNotification(this,
+                        R.drawable.ic_notification_pause,
+                        NewTrackActivity.class);
+            }
+        } catch (RemoteException e) {
+
+            e.printStackTrace();
+        }
     }
 
     /**
