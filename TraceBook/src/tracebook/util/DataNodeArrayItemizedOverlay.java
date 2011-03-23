@@ -39,7 +39,7 @@ import android.os.RemoteException;
  * This class extends the {@link ArrayItemizedOverlay} in order to overwrite its
  * {@link #onTap(int)} method.
  */
-public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
+public class DataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
     private class CurrentPosListener implements DialogInterface.OnClickListener {
         private final CharSequence[] items_default = {
                 context.getResources().getString(
@@ -178,7 +178,7 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
      * @param context
      *            reference to the {@link MapActivity}
      */
-    public NewDataNodeArrayItemizedOverlay(Context context) {
+    public DataNodeArrayItemizedOverlay(Context context) {
         super(null, context);
         this.context = context;
 
