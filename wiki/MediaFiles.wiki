@@ -50,8 +50,12 @@ Recording a video can be done using intents, as well, in theory. With intents, h
 
 As such, we record videos using the [http://developer.android.com/reference/android/media/MediaRecorder.html MediaRecorder] class, which we have to create a "video recording" activity for. This activity provides the surface GUI item necessary for the !MediaRecorder class to show the camera preview in, as well as start/stop buttons to control recording.
 
+Video data is encoded by the native MPEG-4 codec, whereas audio data has to be encoded by AMR narrow-band, because the other two possibilities (AAC and AMR wide-band) are not supported at API level 4. Both the video track and the audio track lie within an MPEG-4 container.
+
 = Audio files =
 
 Unfortunately, Android does not provide a standard action for recording audio files using intents. Therefore, we use !MediaRecorder for this task. It does not require any certain GUI elements, except for a button to actually stop recording.
 
 We have opted against using the [http://developer.android.com/reference/android/media/AudioRecord.html AudioRecord] class, despite the possibility to record files of higher quality than !MediaRecorder. Handling !AudioRecord, however, is much more tedious than using !MediaRecorder, because we would have to write the whole audio stream !AudioRecord provides into a file (easy), and we would have to make sure the headers for the .wav file we have created are correct (not so easy), among other things.
+
+Since we are developing at API level 4, we cannot utilize any other audio codec than AMR narrow-band (see above). Like video files, MPEG-4 serves as a container for the audio track.
