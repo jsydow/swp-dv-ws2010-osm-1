@@ -141,15 +141,16 @@ public class NewDataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
                 DataPointsList way = null;
                 if (node != null) {
                     way = node.getDataPointsList();
-                if (Helper.currentTrack() != null
-                        && Helper.currentTrack().deleteNode(node.getId()) != null) {
-                    removeItem(node.getOverlayItem());
-                    if (way != null) // we have to redraw the way
-                        sender.sendWayUpdate(way.getId(), -1);
+                    if (Helper.currentTrack() != null
+                            && Helper.currentTrack().deleteNode(node.getId()) != null) {
+                        removeItem(node.getOverlayItem());
+                        if (way != null) // we have to redraw the way
+                            sender.sendWayUpdate(way.getId(), -1);
+                    } else {
+                        LogIt.popup(context,
+                                "Can not delete Node id=" + node.getId());
+                    }
                 }
-                } else
-                    LogIt.popup(context,
-                            "Can not delete Node id=" + node.getId());
                 break;
             default:
                 break;
