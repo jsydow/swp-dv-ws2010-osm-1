@@ -377,7 +377,11 @@ public class DataPointsList extends DataMapObject {
      * this track.
      */
     public void updateOverlayRoute() {
-        overlayRoute.setWayData(toGeoPointArray(null));
+        GeoPoint[] array = toGeoPointArray(null);
+        LogIt.d("DataPointList", "OverlayRoute has " + array.length + " nodes.");
+        for (GeoPoint p : array)
+            LogIt.d("DataPointList", p.toString());
+        overlayRoute.setWayData(array);
     }
 
     /**
@@ -388,6 +392,8 @@ public class DataPointsList extends DataMapObject {
      *            The additional node
      */
     public void updateOverlayRoute(GeoPoint additional) {
-        overlayRoute.setWayData(toGeoPointArray(additional));
+        GeoPoint[] array = toGeoPointArray(additional);
+        LogIt.d("DataPointList", "OverlayRoute has " + array.length + " nodes.");
+        overlayRoute.setWayData(array);
     }
 }

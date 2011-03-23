@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.List;
 
 import org.mapsforge.android.maps.GeoPoint;
-import org.mapsforge.android.maps.ItemizedOverlay;
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
 import org.mapsforge.android.maps.MapView;
@@ -65,6 +64,8 @@ public class MapsForgeActivity extends MapActivity {
      * data has changed.
      */
     private class GPSReceiver extends BroadcastReceiver {
+
+        private int oldWayId = -1;
 
         /**
          * Centers the map to the current position if true. This will be set to
@@ -114,7 +115,7 @@ public class MapsForgeActivity extends MapActivity {
                             .getCurrentWay();
                     if (currentWay != null) {
                         currentWay.updateOverlayRoute(currentGeoPoint);
-                        routesOverlay.requestRedraw();
+                        routesOverlay.addWay(currentWay.getOverlayRoute());
                     }
                 }
 
@@ -132,25 +133,34 @@ public class MapsForgeActivity extends MapActivity {
                             .getPointsListById(wayId);
                     if (way != null) {
                         way.updateOverlayRoute();
-                        routesOverlay.addWay(way, true);
+                        if (oldWayId != wayId) {
+                            oldWayId = wayId;
+                            routesOverlay.addWay(way, true);
+                        } else
+                            routesOverlay.requestRedraw();
+
                     } else
                         LogIt.d(LOG_TAG, "Way can not be found.");
-
-                } else if (pointId > 0) { // New POI
-                    LogIt.d(LOG_TAG, "update point " + pointId);
-                    DataNode node = Helper.currentTrack().getNodeById(pointId);
-                    if (node != null) {
-                        if (node.getOverlayItem() == null)
-                            node.setOverlayItem(Helper.getOverlayItem(
-                                    node.toGeoPoint(),
-                                    ItemizedOverlay
-                                            .boundCenterBottom(getResources()
-                                                    .getDrawable(
-                                                            R.drawable.marker_red))));
-                        pointsOverlay.addItem(node.getOverlayItem());
-                    } else
-                        LogIt.d(LOG_TAG, "point is null");
                 }
+
+                // } else if (pointId > 0) { // New POI - this does actually not
+                // // get called as we update all POIs
+                // // onResume(), we currently only get
+                // // new POIs by another Activity
+                // LogIt.d(LOG_TAG, "update point " + pointId);
+                // DataNode node = Helper.currentTrack().getNodeById(pointId);
+                // if (node != null) {
+                // if (node.getOverlayItem() == null)
+                // node.setOverlayItem(Helper.getOverlayItem(
+                // node.toGeoPoint(),
+                // ItemizedOverlay
+                // .boundCenterBottom(getResources()
+                // .getDrawable(
+                // R.drawable.marker_red))));
+                // pointsOverlay.addItem(node.getOverlayItem());
+                // } else
+                // LogIt.d(LOG_TAG, "point is null");
+                // }
 
                 break;
             case GpsMessage.MOVE_POINT:
@@ -239,6 +249,7 @@ public class MapsForgeActivity extends MapActivity {
             editNode.setLocation(projection);
             if (editNode.getDataPointsList() != null) {
                 editNode.getDataPointsList().updateOverlayRoute();
+                LogIt.d(LOG_TAG, "Requesting redraw");
                 routesOverlay.requestRedraw();
             }
 
