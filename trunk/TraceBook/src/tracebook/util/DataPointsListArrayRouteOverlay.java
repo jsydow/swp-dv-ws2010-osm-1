@@ -187,7 +187,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
             putWaypoint(n);
     }
 
-    private synchronized void removeWaypoints(DataPointsList way) {
+    private void removeWaypoints(DataPointsList way) {
         for (DataNode n : way.getNodes())
             pointsOverlay.removeItem(n.getOverlayItem());
     }

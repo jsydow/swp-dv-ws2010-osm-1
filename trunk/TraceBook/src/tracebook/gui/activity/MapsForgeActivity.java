@@ -20,7 +20,7 @@
 package tracebook.gui.activity;
 
 import java.io.File;
-import java.util.List;
+import java.util.Collection;
 
 import org.mapsforge.android.maps.GeoPoint;
 import org.mapsforge.android.maps.MapActivity;
@@ -150,25 +150,6 @@ public class MapsForgeActivity extends MapActivity {
                         LogIt.d(LOG_TAG, "Way can not be found.");
                 }
 
-                // } else if (pointId > 0) { // New POI - this does actually not
-                // // get called as we update all POIs
-                // // onResume(), we currently only get
-                // // new POIs by another Activity
-                // LogIt.d(LOG_TAG, "update point " + pointId);
-                // DataNode node = Helper.currentTrack().getNodeById(pointId);
-                // if (node != null) {
-                // if (node.getOverlayItem() == null)
-                // node.setOverlayItem(Helper.getOverlayItem(
-                // node.toGeoPoint(),
-                // ItemizedOverlay
-                // .boundCenterBottom(getResources()
-                // .getDrawable(
-                // R.drawable.marker_red))));
-                // pointsOverlay.addItem(node.getOverlayItem());
-                // } else
-                // LogIt.d(LOG_TAG, "point is null");
-                // }
-
                 break;
             case GpsMessage.MOVE_POINT:
                 LogIt.d(LOG_TAG, "Enter edit mode for Point " + pointId);
@@ -187,18 +168,19 @@ public class MapsForgeActivity extends MapActivity {
                     routesOverlay.requestRedraw();
                 }
 
-                break;
+                //$FALL-THROUGH$ remove the smoothing leftovers
             case GpsMessage.REMOVE_INVALIDS:
                 LogIt.d(LOG_TAG, "Request to remove invalid nodes");
 
-                List<OverlayItem> invalids = Helper.currentTrack()
+                Collection<OverlayItem> invalids = Helper.currentTrack()
                         .clearInvalidItems();
                 for (OverlayItem oi : invalids)
                     pointsOverlay.removeItem(oi);
                 break;
             default:
-                LogIt.e(LOG_TAG, "unhandled Message, ID="
-                        + intend.getIntExtra("type", -1));
+                LogIt.e(LOG_TAG,
+                        "unhandled Message, ID="
+                                + intend.getIntExtra("type", -1));
             }
         }
 
@@ -262,8 +244,8 @@ public class MapsForgeActivity extends MapActivity {
             pointsOverlay.requestRedraw();
 
             if (ev.getAction() == MotionEvent.ACTION_UP) {
-                LogIt.d(LOG_TAG, "Exiting edit mode for point "
-                        + editNode.getId());
+                LogIt.d(LOG_TAG,
+                        "Exiting edit mode for point " + editNode.getId());
                 editNode = null;
             }
 
@@ -308,10 +290,9 @@ public class MapsForgeActivity extends MapActivity {
                         R.string.opt_mapsforgeActivity_activateMobileInternet));
                 changeMapViewToOfflineRendering();
             } else {
-                item
-                        .setTitle(getResources()
-                                .getString(
-                                        R.string.opt_mapsforgeActivity_deactivateMobileInternet));
+                item.setTitle(getResources()
+                        .getString(
+                                R.string.opt_mapsforgeActivity_deactivateMobileInternet));
                 changeMapViewMode(onlineRenderer, null);
             }
             useInternet = !useInternet;
@@ -328,8 +309,10 @@ public class MapsForgeActivity extends MapActivity {
             return true;
         case R.id.opt_mapsforgeActivity_export:
             DataStorage.getInstance().serialize();
-            LogIt.popup(this, getResources().getString(
-                    R.string.popup_mapsforgeactivity_saved));
+            LogIt.popup(
+                    this,
+                    getResources().getString(
+                            R.string.popup_mapsforgeactivity_saved));
             return true;
 
         case R.id.opt_mapsforgeActivity_pause:
@@ -452,8 +435,10 @@ public class MapsForgeActivity extends MapActivity {
 
         if (mode == MapViewMode.CANVAS_RENDERER) {
             if (file == null || !file.exists()) {
-                LogIt.popup(this, getResources().getString(
-                        R.string.toast_loadingOnlineMap));
+                LogIt.popup(
+                        this,
+                        getResources().getString(
+                                R.string.toast_loadingOnlineMap));
                 modeLocal = onlineRenderer;
             } else {
                 mapView.setMapViewMode(modeLocal); // MapsForge crashes if we
@@ -463,8 +448,10 @@ public class MapsForgeActivity extends MapActivity {
             }
         } else {
             if (!isOnline()) {
-                LogIt.popup(this, getResources().getString(
-                        R.string.toast_noInternetAccess));
+                LogIt.popup(
+                        this,
+                        getResources().getString(
+                                R.string.toast_noInternetAccess));
             }
         }
         mapView.setMapViewMode(modeLocal);
