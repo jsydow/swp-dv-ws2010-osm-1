@@ -10,17 +10,18 @@ Core.data contains the data model of the tracking application. All tracked data 
 First of all read the wiki article [Data Data].
 
 The data model is a like a tree:
-  * DataStorage contains:
-   * DataTrack contains:
-    * DataNode (POIs) contains:
+  * !DataStorage contains:
+   * !DataTrack contains:
+    * !DataNode (POIs) contains:
      * tags
-     * DataMedia
-    * DataPointsList (Ways and Areas) contains:
-     * DataMedia
-     * DataNode contains:
-      * ... see above
+     * !DataMedia
+    * !DataPointsList (ways and areas) contains:
+     * !DataMedia
+     * !DataNode contains:
+      * tags
+      * !DataMedia
      * tags
-    * DataMedia
+    * !DataMedia
 
 == !DataStorage ==
 
