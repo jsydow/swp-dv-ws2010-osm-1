@@ -103,27 +103,6 @@
 	<string name="tv_addmemoActivity_stopRecord">Stop voice recording</string>
 	<string name="tv_addmemoActivity_startRecord">Start voice recording</string>
 	<string name="tv_addmemoActivity_record">Recording...</string>
-	<string name="tv_aboutActivity_creditsTitle">Credits:</string>
-	<string name="tv_aboutActivity_creditsTeam">\n
-		David Beyer - anubis@cstilch.de\n
-		Huy Dinh -
-		mail@huydinh.eu\n
-		Marc Sperling - greenTraxas@googlemail.com\n
-		Jan Sydow
-		- js.schrifterz@googlemail.com\n
-		Benjamin Valentin -
-		benpicco@googlemail.com\n
-		Şahin Vardar - sakirsoft@gmail.com 	
-	</string>
-	<string name="tv_aboutActivity_usedResourcesTitle">Resources: </string>
-	<string name="tv_aboutActivity_usedResources"></string>
-	<string name="tv_aboutActivity_projectPage">https://code.google.com/p/swp-dv-ws2010-osm-1
-	</string>
-	<string name="tv_aboutActivity_licenseTitle">License:</string>
-	<string name="tv_aboutActivity_license">This application is licensed under the GNU GPL3
-	</string>
-	<string name="tv_aboutActivity_versionTitle">Version:</string>
-	<string name="tv_aboutActivity_version">0.90 beta</string>
 	<string name="tv_listviewedit_idTitle">Id: </string>
 	<string name="tv_loadtrackActivity_filter">Filter:</string>
 	<string name="tv_newtrackactivity_signalstrength_strength">GPS reception: </string>
@@ -142,7 +121,8 @@
 	<string name="tv_statusbar_aboutDesc"></string>
 	<string name="tv_statusbar_loadtrackTitle">Load track</string>
 	<string name="tv_statusbar_loadtrackDesc">Resume your saved tracks here.</string>
-
+	<string name="tv_newtrackactivity_allElements">All saved track elements of this session.</string>
+	
 	<!-- Edit Text values -->
 	<string name="et_fulltextsearchActivity_search">Searching...</string>
 

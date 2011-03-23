@@ -82,6 +82,11 @@
 	<LinearLayout android:id="@+id/tab_newtrackactivity_edit"
 		android:orientation="vertical" android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
+	
+		<TextView android:id="@+id/tv_newtrackactivity_allElements"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:text="@string/tv_newtrackactivity_allElements"/>
+
 
 		<ListView android:id="@+id/tracks_lvw" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:layout_weight="1"
