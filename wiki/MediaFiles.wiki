@@ -1,7 +1,7 @@
 #summary Acquiring audio, video and image files.
 #labels Phase-Design
 
-<wiki:toc max_depth="1" />
+<wiki:toc max_depth="2" />
 
 = Introduction =
 
