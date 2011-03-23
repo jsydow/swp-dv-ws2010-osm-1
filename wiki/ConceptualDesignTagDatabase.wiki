@@ -25,9 +25,9 @@ See [http://developer.android.com/reference/android/database/sqlite/SQLiteOpenHe
 
 The !TagDb class encapsulates the tag database. It provides easy access to the database. The operations are:
 
-  * !getTag: Given a keyword, get all !TagSearchResults where the keywords appears somewhere in the description.
-  * !getRowCountForLanguage: Pretty much self explaining. It retrieves the number of rows/entries of a language.
-  * !getDetails: Given a tag (key-value-pair) get the description of a it.
+  * getTag: Given a keyword, get all !TagSearchResults where the keywords appears somewhere in the description.
+  * getRowCountForLanguage: Pretty much self explaining. It retrieves the number of rows/entries of a language.
+  * getDetails: Given a tag (key-value-pair) get the description of a it.
 
 == !HistoryDb ==
 
