@@ -6,6 +6,8 @@ Core.data contains the data model of the tracking application. All tracked data 
 
 = Details =
 
+First of all read the wiki article called Data.
+
 == DataStorage ==
 
 DataStorage is the class that has all other data in it. It is therefore like a root-object. The whole data model is like a tree. Since all other parts of the application should only work on one "database" of the tracking data this class is modeled as Singleton. There is at most one instance of DataStorage.
