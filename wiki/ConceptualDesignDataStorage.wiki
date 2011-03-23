@@ -1,4 +1,5 @@
 #summary The design of core.data
+#labels Phase-Design
 
 = Introduction =
 
@@ -6,12 +7,22 @@ Core.data contains the data model of the tracking application. All tracked data 
 
 = Details =
 
-First of all read the wiki article called Data.
+First of all read the wiki article [Data Data].
 
 == !DataStorage ==
 
 !DataStorage is the class that has all other data in it. It is therefore like a root-object. The whole data model is like a tree. Since all other parts of the application should only work on one "database" of the tracking data this class is modeled as Singleton. There is at most one instance of !DataStorage.
 
-It is possible to load tracks from memory (deserialize) and it is possible to get a list of all tracks that are saved on the devices SD-card (!getAllTracks). 
+The data in a !DataStorage object are tracks. Tracks are like tracking sessions. They contain all data that were recorded and edited in one (or multiple) application usage sessions.
 
-It is possible to delete a track or get a track that is already loaded.  Also it is possible to create a new track. All possible operations ont the child datatype are therefore implemented (see [Data Data article] for information on all operations). There is a special reference to a loaded track called currentWay. The current way is the way that is currently edited. There is at most one current way.
+Folling operations are implemented:
+  
+  * load tracks
+  * get loaded tracks
+  * delete tracks
+  * create new tracks
+  * get a list of all tracks on the SD-card
+
+There is a special reference to a loaded track called currentWay. The current way is the way that is currently edited. There is at most one current way.
+
+== !DataMediaHolder ==
