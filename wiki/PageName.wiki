@@ -1,0 +1,10 @@
+#summary The design of core.data
+#labels Phase-Design
+
+= Introduction =
+
+Core.data contains the data model of the tracking application. All tracked data are stored here an can be retrieved, changed, saved to SD-card and loaded from SD-card.
+
+= Details =
+
+== DataStorage ==
