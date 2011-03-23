@@ -173,7 +173,7 @@ public class FilePicker extends ListActivity {
 
             return res;
         }
-        return null;
+        return new ArrayList<FileWrapper>();
     }
 
     @Override
