@@ -333,7 +333,7 @@ public class NewTrackActivity extends TabActivity {
         ToggleButton streetToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startWay);
         String check = areaToggle.getText().toString();
         if (check.equals(areaToggle.getTextOn().toString())) {
-            streetToggle.setClickable(false);
+            streetToggle.setEnabled(false);
             setButtonList(true, 2);
             try {
                 ServiceConnector.getLoggerService().beginArea(false);
@@ -341,7 +341,7 @@ public class NewTrackActivity extends TabActivity {
                 e.printStackTrace();
             }
         } else {
-            streetToggle.setClickable(true);
+            streetToggle.setEnabled(true);
             setButtonList(false, 0);
             try {
                 ServiceConnector.getLoggerService().endWay();
@@ -365,7 +365,7 @@ public class NewTrackActivity extends TabActivity {
         ToggleButton areaToggle = (ToggleButton) findViewById(R.id.tbtn_newtrackActivity_startArea);
         String check = streetToggle.getText().toString();
         if (check.equals(streetToggle.getTextOn().toString())) {
-            areaToggle.setClickable(false);
+            areaToggle.setEnabled(false);
             setButtonList(true, 1);
             try {
                 ServiceConnector.getLoggerService().beginWay(false);
@@ -374,7 +374,7 @@ public class NewTrackActivity extends TabActivity {
                 e.printStackTrace();
             }
         } else {
-            areaToggle.setClickable(true);
+            areaToggle.setEnabled(true);
             setButtonList(false, 0);
             try {
                 ServiceConnector.getLoggerService().endWay();
