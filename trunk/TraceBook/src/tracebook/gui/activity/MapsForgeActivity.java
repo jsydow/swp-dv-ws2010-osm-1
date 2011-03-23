@@ -37,7 +37,7 @@ import tracebook.util.DataPointsListArrayRouteOverlay;
 import tracebook.util.GpsMessage;
 import tracebook.util.Helper;
 import tracebook.util.LogIt;
-import tracebook.util.NewDataNodeArrayItemizedOverlay;
+import tracebook.util.DataNodeArrayItemizedOverlay;
 import Trace.Book.R;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -229,7 +229,7 @@ public class MapsForgeActivity extends MapActivity {
     /**
      * Overlay containing all POIs.
      */
-    NewDataNodeArrayItemizedOverlay pointsOverlay;
+    DataNodeArrayItemizedOverlay pointsOverlay;
 
     /**
      * Overlay containing all areas and ways.
@@ -398,7 +398,7 @@ public class MapsForgeActivity extends MapActivity {
 
         LogIt.d(LOG_TAG, "Creating MapActivity");
 
-        pointsOverlay = new NewDataNodeArrayItemizedOverlay(this);
+        pointsOverlay = new DataNodeArrayItemizedOverlay(this);
         routesOverlay = new DataPointsListArrayRouteOverlay(this, pointsOverlay);
 
         // as this activity is destroyed when adding a POI, we get all POIs here
