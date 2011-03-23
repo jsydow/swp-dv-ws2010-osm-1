@@ -274,7 +274,7 @@ public class DataTrack extends DataMediaHolder {
     private List<DataPointsList> ways;
 
     /**
-     * this list stores all discarded OverlayItems, MapsActivity will poll and
+     * This list stores all discarded OverlayItems, MapsActivity will poll and
      * remove them.
      */
     List<OverlayItem> invalidItems;
