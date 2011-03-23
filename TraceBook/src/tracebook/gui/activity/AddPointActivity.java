@@ -226,8 +226,10 @@ public class AddPointActivity extends ListActivity {
                 node = DataStorage.getInstance().getCurrentTrack()
                         .getDataMapObjectById(nodeId);
                 if (node == null) {
-                    // TODO: unhardcode
-                    LogIt.popup(this, "Node does not exist!");
+                    LogIt.popup(
+                            this,
+                            getResources().getString(
+                                    R.string.toast_noneExistentNode));
                     finish();
                 }
             }
