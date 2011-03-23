@@ -223,17 +223,17 @@ public class WaypointLogService extends Service implements LocationListener {
             for (DataNode node : current_nodes) {
                 node.setLocation(loc); // update node with proper GPS fix
 
-                if (currentWay() == null) // not one_shot mode
-                    // inform the MapActivity about the new POI
-                    sender.sendPOIUpdate(node.getId());
-                else
-                    sender.sendWayUpdate(currentWay().getId()); // one_shot
-                                                                // update
+                if (currentWay() != null)
+                    sender.sendWayUpdate(currentWay().getId(), node.getId()); // one_shot
+                // update
             }
             current_nodes.clear(); // no node waiting for GPS position any more
         } else if (currentWay() != null && !one_shot) { // Continuous mode
-            currentWay().newNode(loc); // POI in track was already added before
-            sender.sendWayUpdate(currentWay().getId()); // call for an update of
+            DataNode nn = currentWay().newNode(loc); // POI in track was already
+                                                     // added before
+            sender.sendWayUpdate(currentWay().getId(), nn.getId()); // call for
+                                                                    // an update
+                                                                    // of
             // the way
         }
     }

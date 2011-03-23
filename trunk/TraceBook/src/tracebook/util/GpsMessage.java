@@ -132,27 +132,17 @@ public class GpsMessage {
     }
 
     /**
-     * Signal an update or creation of a POI, so that it can be displayed.
-     * 
-     * @param id
-     *            the id of the POI that was changed or created.
-     */
-    public void sendPOIUpdate(int id) {
-        intent.putExtra("type", UPDATE_OBJECT);
-        intent.putExtra("point_id", id);
-        intent.putExtra("way_id", -1);
-        ctx.sendBroadcast(intent);
-    }
-
-    /**
      * Signal an update of the way, so that it can be redrawn.
      * 
      * @param id
      *            id of the way that was changed
+     * @param newNode
+     *            the Id of the new waypoint, -1 if the way just has to be
+     *            updated without adding a new point (e.g. when removing one)
      */
-    public void sendWayUpdate(int id) {
+    public void sendWayUpdate(int id, int newNode) {
         intent.putExtra("type", UPDATE_OBJECT);
-        intent.putExtra("point_id", -1);
+        intent.putExtra("point_id", newNode);
         intent.putExtra("way_id", id);
         ctx.sendBroadcast(intent);
     }
