@@ -1,0 +1,430 @@
+<resources>
+    <!-- EDIT THIS! -->
+    <string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track points, you have to enable it. Do you want to enable it?</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_NewTrackActivity_NoGpsTitle">GPS disabled</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_addmemoactivity_progressdialog">Please wait.\nRecording is starting soon...</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_filepicker_message">Do you want to pick this file?</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_addNotice">Add note</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_addedNotice">Added note:</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_cancel">Cancel</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_exit">Do you want to end the current session and save your progress?</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_no">No</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_notSaveAndClose">Exit</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_ok">Ok</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_trackName">Track:</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_global_yes">Yes</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_loadtrackActivity_deleteTrack">Delete track?</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_loadtrackActivity_loadingTracks">Tracks are being loaded...</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_loadtrackActivity_pleaseWait">Please wait...</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_loadtrackActivity_rename">Rename track</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_loadtrackActivity_stopCurrentTrack">Close recent track and load new track?</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_mapsforgeActivity_pause">Do you want to pause the current session?</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_newtrackActivity_addTrackNotice">Add note to track</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_newtrackActivity_rename">Rename node</string>
+    <!-- EDIT THIS! -->
+    <string name="alert_newtrackActivity_saveSetTrack">Closing track</string>
+    <!-- EDIT THIS! -->
+    <string name="app_name">TraceBook</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_aboutActivity_license">Show license</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addMetaMedia_makeMemo">Voice</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addMetaMedia_makeNotice">Text note</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addMetaMedia_makePicture">Photo</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addMetaMedia_makeVideo">Video</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addpointActivity_addMeta">Add</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addpointActivity_back">Close</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addpointmetaActivity_cancel">Cancel</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addpointmetaActivity_poi">Point of interest</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addpointmetaActivity_save">Save</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_addpointmetaActivity_search">Search</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_newtrackActivity_addPoint">Add point of interest</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_newtrackActivity_editComment">Edit track notes</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_newtrackActivity_stopTrack">Close</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_recordvideoActivity_startRec">Start</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_recordvideoActivity_stopRec">Stop</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_searchInfoDialog_save">Apply</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_startActivity_loadTrack">Load track</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_startActivity_newTrack">New track</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_startActivity_reseumeTrack">Resume track</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_trackInfoDialog">OK</string>
+    <!-- EDIT THIS! -->
+    <string name="btn_trackInfoDialog_back">Back</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_delete">Delete this</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_my_pos">My location</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_tag">Tag this</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_way_add">Add way point</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_addpointActivity_deleteTag">Delete tag</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_addpointActivity_renameTag">Rename tag</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_addpointActivity_title">Edit tag</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_editmapobjects_delete">Delete</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_editmapobjects_edit">Edit</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_editmapobjects_title">Edit map object</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_loadtrackActivity_delete">Delete track</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_loadtrackActivity_info">Show details</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_loadtrackActivity_load">Load track</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_loadtrackActivity_rename">Rename track</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_loadtrackActivity_title">Track actions</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_mapsforgeActivity_deletePoint">Delete point</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_mapsforgeActivity_editPoint">Edit point</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_mapsforgeActivity_movePoint">Move point</string>
+    <!-- EDIT THIS! -->
+    <string name="et_fulltextsearchActivity_search">Search tags</string>
+    <!-- EDIT THIS! -->
+    <string name="not_startActivity_contentText">Currently tracking...</string>
+    <!-- EDIT THIS! -->
+    <string name="not_startActivity_contentTitle">TraceBook</string>
+    <!-- EDIT THIS! -->
+    <string name="not_startActivity_tickerText">Tracking active</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_addpointmetaactivity_lastUsed">Last used tag first</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_addpointmetaactivity_mostUsed">Most used tag first</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_loadtrack_sortByName">Sort by name</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_loadtrack_sortByTimestamp">Sort by time</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_activateMobileInternet">On-line map</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_centerAtOwnPosition">My location</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_deactivateMobileInternet">Off-line map</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_export">Export</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_help">Help</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_pause">Pause</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_resume">Resume</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_resumeTrack">Resume tracking</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_setMapLocation">Map file</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_showToggleWayPoints">Toggle markers</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_mapsforgeActivity_stopTrack">Stop tracking</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_startActivity_about">About</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_startActivity_close">Close</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_startActivity_help">Help</string>
+    <!-- EDIT THIS! -->
+    <string name="opt_startActivity_preferences">Preferences</string>
+    <!-- EDIT THIS! -->
+    <string name="popup_mapsforgeactivity_saved">Track has been saved.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_aboutActivity_title">About</string>
+    <!-- EDIT THIS! -->
+    <string name="string_addmemoActivity_title">Record voice</string>
+    <!-- EDIT THIS! -->
+    <string name="string_addpointActivity_title">Add POI</string>
+    <!-- EDIT THIS! -->
+    <string name="string_addpointmetaActivity_title">Add meta data</string>
+    <!-- EDIT THIS! -->
+    <string name="string_filepicker_error_invalid_path">Invalid path</string>
+    <!-- EDIT THIS! -->
+    <string name="string_fulltextsearchActivity_title">Search</string>
+    <!-- EDIT THIS! -->
+    <string name="string_global_area">Area</string>
+    <!-- EDIT THIS! -->
+    <string name="string_global_categoryTitle">Category:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_global_descriptionTitle">Description:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_global_poi">POI</string>
+    <!-- EDIT THIS! -->
+    <string name="string_global_valueTitle">Value:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_global_way">Way</string>
+    <!-- EDIT THIS! -->
+    <string name="string_licenseDialog_title">GPL3 License</string>
+    <!-- EDIT THIS! -->
+    <string name="string_loadtrackActivity_title">Load track</string>
+    <!-- EDIT THIS! -->
+    <string name="string_loadtrackactivity_comment"></string>
+    <!-- EDIT THIS! -->
+    <string name="string_loadtrackactivity_nocomment">No comment.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackActivity_title">New track</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackactivity_list_end">End</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackactivity_list_lat">Lat:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackactivity_list_lon">Lon:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackactivity_list_media">Media files:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackactivity_list_pointcount">Number of nodes:</string>
+    <!-- EDIT THIS! -->
+    <string name="string_newtrackactivity_list_start">Start</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferencesActivity_title">Preferences</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catExport">Export</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catGPS">GPS</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catGUI">Display</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catMapView">Map</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catMedia">Media files</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catMetaTag">Meta tags</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catOSM">OSM</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_catTrackTag">Track</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_checkGPS">Check GPS status</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_chooseMap">Choose your map file</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descDisplayOn">When enabled, display never is turned off.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descGPS">Check whether GPS is enabled</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descLocalTitleMapCache">Use local rendering instead of OSM.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descMaxHistorySize">Number of tags to be remembered in tag search.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descOnlineTitleStyle">Choose your OSM rendering engine.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descSetMaxAudioRecordingTime"></string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descSetMaxVideoRecordingTime"></string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descShowGPSsiginalQuality">Show GPS signal strength in status bar.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descShowMostRecentTagsInHistory">Show your most recently used tags when adding a tag.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descShowStatusbar">Show status bar (description, button to preferences and details).</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descStopGPS">When to turn off GPS if inactive?</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_descSwitchTheme">Pick a theme for TraceBook.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_displayOn">Never turn off display</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_exportMail">Recipient for sending tracks to</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_localTitleMapCache">Local tile cache</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_maxHistorySize">History size</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_onlineTitleStyle">Rendering engine</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_osmNickname">OSM user name</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_osmPassword">OSM password</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_setMaxAudioRecordingTime">Maximum audio length</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_setMaxVideoRecordingTime">Maximum video length</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_showGPSsiginalQuality">Show GPS reception</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_showMostRecentTagsInHistory">Show recently used tags</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_showStatusbar">Show status bar</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_stopGPS">GPS timeout</string>
+    <!-- EDIT THIS! -->
+    <string name="string_preferences_switchTheme">Appearance</string>
+    <!-- EDIT THIS! -->
+    <string name="string_recordvideoActivity_title">Record video</string>
+    <!-- EDIT THIS! -->
+    <string name="string_searchInfoDialog_title">Meta data information</string>
+    <!-- EDIT THIS! -->
+    <string name="string_startActivity_title">TraceBook</string>
+    <!-- EDIT THIS! -->
+    <string name="string_statusDialog_here">You are here.</string>
+    <!-- EDIT THIS! -->
+    <string name="string_trackInfoDialog_title">Track details</string>
+    <!-- EDIT THIS! -->
+    <string name="tab_newtrackActivity_edit">Edit</string>
+    <!-- EDIT THIS! -->
+    <string name="tab_newtrackActivity_map">Map</string>
+    <!-- EDIT THIS! -->
+    <string name="tab_newtrackActivity_new">New</string>
+    <!-- EDIT THIS! -->
+    <string name="tbtn_newtrackActivity_areaOff">End area</string>
+    <!-- EDIT THIS! -->
+    <string name="tbtn_newtrackActivity_areaOn">Start area</string>
+    <!-- EDIT THIS! -->
+    <string name="tbtn_newtrackActivity_streetOff">End way</string>
+    <!-- EDIT THIS! -->
+    <string name="tbtn_newtrackActivity_streetOn">Start way</string>
+    <!-- EDIT THIS! -->
+    <string name="toast_applicationError">An error occurred. Please restart the application and try again.</string>
+    <!-- EDIT THIS! -->
+    <string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from the internet.</string>
+    <!-- EDIT THIS! -->
+    <string name="toast_noInternetAccess">You are currently not connected to the internet. The online map cannot be displayed.</string>
+    <!-- EDIT THIS! -->
+    <string name="toast_noTrackFound">Track could not be found.</string>
+    <!-- EDIT THIS! -->
+    <string name="toast_noneExistentNode">Node does not exist!</string>
+    <!-- EDIT THIS! -->
+    <string name="toast_recordingFinished">Recording finished.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addmemoActivity_record">Recording...</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addmemoActivity_startRecord">Start voice recording</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addmemoActivity_stopRecord">Stop voice recording</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointActivity_MetaData">Meta data available for this node</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointActivity_editMeta">Edit meta data</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointActivity_noMetaData">No meta data available</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointActivity_nodeId">Node id:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointActivity_titleListViewCat">Key</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointActivity_titleListViewVal">Value</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointmetaActivity_insertTag">Add tag</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_addpointmetaActivity_insertValue">Add value</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_filepicker_currdir">Current directory:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_listviewedit_idTitle">Id:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_loadtrackActivity_filter">Filter:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_newtrackActivity_setButtonList1">Add media data to current way</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_newtrackActivity_setButtonList2">Add media data to current area</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_newtrackactivity_allElements">All saved track elements of this session.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_newtrackactivity_signalstrength_count">Number of satellites:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_newtrackactivity_signalstrength_strength">GPS reception:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_searchInfoDialog_noInformation">No information available.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_searchInfoDialog_urlTitle">URI to wiki:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_startActivity_welcome">Welcome to TraceBook</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_aboutDesc"></string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_aboutTitle">About TraceBook</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_addpointDesc">Add tags and media files here.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_addpointTitle">Add point of interest</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_addpointmetaDesc">Add tags and media files here.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_addpointmetaTitle">Add meta information</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_fulltextsearchDesc">Search for existing tags in OSM.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_fulltextsearchTitle">Search tags</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_loadtrackDesc">Resume your saved tracks here.</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_statusbar_loadtrackTitle">Load track</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_comment">Note:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_commentText">Notes:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_media">Number of media files:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_mediaText">Media files:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_name">Name:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_nameText">Name:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_noInformation">No information available</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_pois">Number of POIs:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_poisText">Number of saved POIs:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_timestamp">Timestamp:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_timestampText">Timestamp:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_trackName">Track name:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_ways">Number of ways:</string>
+    <!-- EDIT THIS! -->
+    <string name="tv_trackInfoDialog_waysText">Number of saved ways:</string>
+</resources>
