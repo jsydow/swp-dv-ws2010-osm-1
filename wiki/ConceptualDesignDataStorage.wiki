@@ -33,6 +33,8 @@ There are 4 operations that can be done on a datum:
   * update: update data of the datum
   * query: if the parent object has a list of data, query (the parent) to find the specific datum.
 
+All of the following classes implement those operations. So we only describe the differences of the classes:
+
 == !DataStorage ==
 !DataStorage is the class that has all other data in it. It is therefore like a root-object. Since all other parts of the application should only work on one "database" of the tracking data this class is modeled as Singleton. There is at most one instance of !DataStorage.
 
