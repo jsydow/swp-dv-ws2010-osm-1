@@ -48,7 +48,7 @@ Upon successfully taking a picture, `appendFileToObject` has to be invoked manua
 
 Recording a video can be done using intents, as well, in theory. With intents, however, we faced a multitude of problems on several different devices running different releases of Android. The camcorder application did not work at all (and caused a full system crash), created empty video files, or worked fine, except for saving videos to the wrong location. Each type of behaviour seems to be typical for each manufacturer, respectively, and the only thing that works constantly using intents is that it is not working the way we want it to. ;-/
 
-As such, we record videos using the [http://developer.android.com/reference/android/media/MediaRecorder.html MediaRecorder] class, which we have to create a "video recording" activity for. This activity provides the surface GUI item necessary for the !MediaRecorder class to show the camera preview in, as well as start/stop buttons to control recording.
+As such, we record videos using the [http://developer.android.com/reference/android/media/MediaRecorder.html MediaRecorder] class, which we have to create a "video recording" activity for. This activity provides the surface GUI item necessary for the !MediaRecorder class to show the camera preview in, as well as start/stop buttons to control recording. But even when using !MediaRecorder, we have come across problems with several different devices, unfortunately.
 
 Video data is encoded by the native MPEG-4 codec, whereas audio data has to be encoded by AMR narrow-band, because the other two possibilities (AAC and AMR wide-band) are not supported at API level 4. Both the video track and the audio track lie within an MPEG-4 container.
 
