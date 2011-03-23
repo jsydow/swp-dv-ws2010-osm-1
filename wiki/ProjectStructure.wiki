@@ -10,19 +10,24 @@ The project is divided in different packages which correspondent to different pa
 Here a list of the package names and their usage:
 
  * core
-  * Node defintion
-  * Track definition 
-  * data storage
-  
- * gps
-  * gps data collector
-  * gps pooling service
-  * gps listener
- 
- * gui
-  * all activitys
+  * data
+   * Definition of data model
+   * Storage of data
+   * Saving and loading data
+   * db
+    * Stores the history of used tags
+    * Stores the description of tags so that the user can search for tags.
+  * logger
+   * Provides a service that logs the gps data
+   * Serves partly as interface between data model and gui
+  * media
+   * Provides methods to record and store media (photo, video, audio)
 
- * osm 
-  * osm login information storage
-  * osm uploader
-  * josm uploader
+ * gui
+  * activity
+   * Contains all activities (GUI)
+  * adapter
+   * Provides a generic adapter which can be used for a ListActivity to store any data in a ListItem
+ * util 
+  * view
+   * Provides a HelpWebView to display html files as help
