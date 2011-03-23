@@ -149,7 +149,7 @@ public final class LogIt {
      *            The message to display.
      */
     public static void popup(Context app, String msg) {
-        Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_SHORT)
+        Toast.makeText(app.getApplicationContext(), msg, Toast.LENGTH_LONG)
                 .show();
     }
 

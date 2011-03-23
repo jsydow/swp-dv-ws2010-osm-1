@@ -44,6 +44,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.Menu;
@@ -348,6 +350,15 @@ public class MapsForgeActivity extends MapActivity {
         routesOverlay.addWays(Helper.currentTrack().getWays());
     }
 
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null) {
+            return info.isConnectedOrConnecting();
+        }
+        return false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -430,9 +441,17 @@ public class MapsForgeActivity extends MapActivity {
                 // Online mode
                 mapView.setMapFile(file.getAbsolutePath());
             }
+        } else {
+            if (!isOnline()) {
+                LogIt.popup(
+                        this,
+                        getResources().getString(
+                                R.string.toast_noInternetAccess));
+            }
         }
         mapView.setMapViewMode(modeLocal);
 
         gpsReceiver.centerOnCurrentPosition();
     }
+
 }
