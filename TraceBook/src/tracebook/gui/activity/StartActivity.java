@@ -202,6 +202,7 @@ public class StartActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        Helper.stopUserNotification(this);
         Button startresumeBtn = (Button) findViewById(R.id.btn_startActivity_newTrack);
         if (Helper.currentTrack() == null)
             startresumeBtn.setText(getResources().getString(

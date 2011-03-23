@@ -486,4 +486,11 @@ public class AddPointMetaActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Helper.startUserNotification(this, R.drawable.ic_notification,
+                AddPointMetaActivity.class);
+    }
+
 }

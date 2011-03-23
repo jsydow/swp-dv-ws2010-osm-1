@@ -561,6 +561,8 @@ public class NewTrackActivity extends TabActivity {
         initListView();
         checkGpsStatus();
         setGpsStatus();
+        Helper.startUserNotification(this, R.drawable.ic_notification,
+                NewTrackActivity.class);
     }
 
     /**

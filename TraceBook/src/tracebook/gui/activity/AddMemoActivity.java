@@ -177,6 +177,13 @@ public class AddMemoActivity extends Activity {
         finish();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Helper.startUserNotification(this, R.drawable.ic_notification,
+                AddMemoActivity.class);
+    }
+
     /**
      * Stops recording the audio file and appends the new media object to our
      * node, if we were recording, at all.
