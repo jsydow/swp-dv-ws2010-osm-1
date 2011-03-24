@@ -91,8 +91,7 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false)
-                .setPositiveButton(
+                .setCancelable(false).setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -107,15 +106,18 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt.popup(
-                                        activity,
-                                        activity.getResources()
-                                                .getString(
-                                                        R.string.alert_global_trackName)
-                                                + " "
-                                                + DataStorage.getInstance()
-                                                        .getCurrentTrack()
-                                                        .getName());
+                                LogIt
+                                        .popup(
+                                                activity,
+                                                activity
+                                                        .getResources()
+                                                        .getString(
+                                                                R.string.alert_global_trackName)
+                                                        + " "
+                                                        + DataStorage
+                                                                .getInstance()
+                                                                .getCurrentTrack()
+                                                                .getName());
 
                                 // stop logging
                                 try {
@@ -128,10 +130,19 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        })
-                .setNegativeButton(
+                        }).setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_notSaveAndClose),
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                dialog.cancel();
+
+                            }
+                        }).setNeutralButton(
+                        activity.getResources().getString(
+                                R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
@@ -164,17 +175,6 @@ public final class Helper {
                                     DataTrack.delete(trackname);
                                     activity.finish();
                                 }
-                            }
-                        })
-                .setNeutralButton(
-                        activity.getResources().getString(
-                                R.string.alert_global_no),
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog,
-                                    int which) {
-                                dialog.cancel();
-
                             }
                         });
 
@@ -329,10 +329,8 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        LogIt.popup(
-                context,
-                context.getResources().getString(
-                        R.string.toast_applicationError));
+        LogIt.popup(context, context.getResources().getString(
+                R.string.toast_applicationError));
         LogIt.e(logTag, ex.getMessage());
     }
 
@@ -596,8 +594,8 @@ public final class Helper {
 
         Intent notificationIntent = new Intent(activity, cls);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(
-                activity.getApplicationContext(), 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(activity
+                .getApplicationContext(), 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText,
                 contentIntent);
