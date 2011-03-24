@@ -40,7 +40,7 @@ for a way or
  {{{
 <tag k="amenity" v="postbox" />
 }}} 
-for a node
+for a node.
 Additionally, each node can contain media links to provide additional information for later editing.
 example:
  {{{
