@@ -30,6 +30,4 @@ A long click on a track will show the context menu for the track. It should look
 
 <img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_context.png" height="30%" width="30%"/>
 
-The choices are pretty straight forward. There is not much to explain here.
-
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_trackdetails.png" height="30%" width="30%"/>
+The choices are pretty straight forward. There is not much to explain here. If the user chooses "Track details" a dialog shows information of the selected track.
