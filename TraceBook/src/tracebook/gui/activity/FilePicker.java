@@ -72,9 +72,9 @@ public class FilePicker extends ListActivity {
             FileWrapper f = getItem(position);
             ImageView iv = (ImageView) v.findViewById(R.id.iv_listrow);
             if (f.getFile().isDirectory()) {
-                iv.setImageResource(R.drawable.folder);
+                iv.setImageResource(R.drawable.ic_folder);
             } else {
-                iv.setImageResource(R.drawable.file);
+                iv.setImageResource(R.drawable.ic_file);
             }
 
             return v;

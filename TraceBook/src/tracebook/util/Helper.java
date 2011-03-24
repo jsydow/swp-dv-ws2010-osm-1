@@ -91,7 +91,8 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -106,18 +107,15 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt
-                                        .popup(
-                                                activity,
-                                                activity
-                                                        .getResources()
-                                                        .getString(
-                                                                R.string.alert_global_trackName)
-                                                        + " "
-                                                        + DataStorage
-                                                                .getInstance()
-                                                                .getCurrentTrack()
-                                                                .getName());
+                                LogIt.popup(
+                                        activity,
+                                        activity.getResources()
+                                                .getString(
+                                                        R.string.alert_global_trackName)
+                                                + " "
+                                                + DataStorage.getInstance()
+                                                        .getCurrentTrack()
+                                                        .getName());
 
                                 // stop logging
                                 try {
@@ -130,7 +128,8 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        }).setNegativeButton(
+                        })
+                .setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_notSaveAndClose),
                         new DialogInterface.OnClickListener() {
@@ -166,7 +165,8 @@ public final class Helper {
                                     activity.finish();
                                 }
                             }
-                        }).setNeutralButton(
+                        })
+                .setNeutralButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
@@ -244,7 +244,7 @@ public final class Helper {
     public static OverlayItem getOverlayItem(Context ctx) {
         if (defaultMarker == null)
             defaultMarker = ItemizedOverlay.boundCenterBottom(ctx
-                    .getResources().getDrawable(R.drawable.marker_red));
+                    .getResources().getDrawable(R.drawable.ic_marker_red));
         return new OverlayItem(null, null, null, defaultMarker);
     }
 
@@ -329,8 +329,10 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        LogIt.popup(context, context.getResources().getString(
-                R.string.toast_applicationError));
+        LogIt.popup(
+                context,
+                context.getResources().getString(
+                        R.string.toast_applicationError));
         LogIt.e(logTag, ex.getMessage());
     }
 
@@ -531,19 +533,13 @@ public final class Helper {
             activity.setTheme(android.R.style.Theme_Light);
             break;
         case 2:
-            activity.setTheme(android.R.style.Theme_Wallpaper);
+            activity.setTheme(R.style.TraceBookCarbon);
             break;
-        /**
-         * TODO set TraceBook light theme
-         */
         case 3:
-            activity.setTheme(android.R.style.Theme_Light);
+            activity.setTheme(R.style.TraceBookGreen);
             break;
-        /**
-         * TODO set TraceBook dark theme
-         */
         case 4:
-            activity.setTheme(android.R.style.Theme_Light);
+            activity.setTheme(R.style.TraceBookStickyNode);
             break;
         default:
             activity.setTheme(android.R.style.Theme_Black);
@@ -583,8 +579,8 @@ public final class Helper {
 
         Intent notificationIntent = new Intent(activity, cls);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(activity
-                .getApplicationContext(), 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                activity.getApplicationContext(), 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText,
                 contentIntent);

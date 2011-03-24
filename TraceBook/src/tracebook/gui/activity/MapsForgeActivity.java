@@ -103,7 +103,7 @@ public class MapsForgeActivity extends MapActivity {
 
                 if (currentPosOI == null)
                     currentPosOI = Helper.getOverlayItem(currentGeoPoint,
-                            R.drawable.marker_green, MapsForgeActivity.this);
+                            R.drawable.ic_marker_green, MapsForgeActivity.this);
                 currentPosOI.setPoint(currentGeoPoint);
                 pointsOverlay.addItem(currentPosOI);
 

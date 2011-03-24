@@ -31,9 +31,9 @@
 	<string-array name="switchTheme">
 		<item>Android-White</item>
 		<item>Android-Black</item>
-		<item>Android-Wallpaper</item>
-		<item>TraceBook-White</item>
-		<item>TraceBook-Dark</item>
+		<item>TraceBook-Carbon</item>
+		<item>TraceBook-Green</item>
+		<item>TraceBook-StickyNode</item>
 	</string-array>
 	<string-array name="switchTheme_values">
 		<item>0</item>
