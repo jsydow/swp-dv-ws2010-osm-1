@@ -1,0 +1,13 @@
+#summary This article contains the user manual for the starting screen.
+
+= Introduction =
+
+In this activity, the user can start a new track or resume a not yet closed track of theirs, as well as load one of their previously saved tracks.
+
+= Details =
+
+Upon starting TraceBook, you can choose to either start a new track or load an existing track.
+
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_start.png" height="30%" width="30%"/>
+
+Furthermore, the option menu offers the possibility to set common preferences, as well as showing some help and information about !TraceBook.
