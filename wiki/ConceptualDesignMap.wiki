@@ -12,6 +12,9 @@ We send notifications about different possible actions like adding way nodes, ch
 MapsForgeActivity therefore registers a _GPSReceiver_, a _BroadcastReceiver_ that will receive these Intends. It will however only receive messages when the MapsForgeActivity is active. So we clear all overlays on resume an populate them again with all POIs and ways, this way we make sure not to miss anything. (It actually saves us from handling the case of adding a POI to the overlay by BroadCast intent as we have no means of adding a POI without rendering the MapActivity inactive.
 Every DataNode references an OverlayItem, it will automatically update the OverlayItems position if it's position changes, it's OverlayItem should be added to the list of invalid items when it is removed.
 
+=== GPSReceiver ===
+[img http://code.google.com/p/swp-dv-ws2010-osm-1/source/browse/trunk/TraceBook/res/drawable-hdpi/card_marker_green.png]
+For every new GPS fix we receive a UPDATE_GPS_POS Intent that contains the new Position, so the marker for the Current position can be updated.
 
 == DataNodeArrayItemizedOverlay ==
 The DataNodeArrayItemizedOverlay extends MapsForges ArrayItemizedOverlay to overwrite the onTap() method and display a context menu (an AlertDialog actually) for each POI. It gets the actual DataNode corresponding to the OverlayItem by searching all Nodes of the currentTrack. If the OverlayItem is not referenced by any DataNode, it is assumed it is the marker marking the current position of the user.
