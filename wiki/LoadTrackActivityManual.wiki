@@ -21,4 +21,11 @@ If the user has enabled the status bar however, the screen should look like this
 
 <img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_status.png" height="30%" width="30%"/>
 
-The button showing the gear will open the preference menu. The button showing a magnifying glass will open the search box which works as described above. Clicking on the text left of the two buttons will open a small dialog which contains some simple help for the screen.
+The button showing the gear will open the preference menu. The button showing a magnifying glass will open the search box which works as described above. Clicking on the text left of the two buttons will open a small dialog which contains some simple help for the screen. The dialog box can be closed by pressing the back button. 
+
+== Working with list entries ==
+
+A short click will load the track. This may take a few seconds.
+A long click on a track will show the context menu for the track. It should look like this.
+
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_context.png" height="30%" width="30%"/>
