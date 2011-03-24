@@ -446,12 +446,22 @@ public class MapsForgeActivity extends MapActivity {
                     super.run();
                     // with out looper it won't work
                     Looper.prepare();
-                    try {
-                        // Give the Gui Thread some time to do its init stuff
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+
+                    /*
+                     * We init the map in a thread to archive a better ui
+                     * experience. But on one core cpu system the thread still
+                     * slows the ui down. So we wait one second to give the ui
+                     * some time to smoothly init its self.
+                     */
+                    if (Runtime.getRuntime().availableProcessors() == 1) {
+                        try {
+                            // Give the Gui Thread some time to do its init
+                            // stuff
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                     mapView = new MapView(MapsForgeActivity.this);
                     mapView.setClickable(true);
