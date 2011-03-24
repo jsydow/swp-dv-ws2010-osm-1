@@ -28,7 +28,7 @@
 	<string name="string_startActivity_title">TraceBook</string>
 	<string name="string_recordvideoActivity_title">Record video</string>
 	<string name="string_searchInfoDialog_title">Meta data information</string>
-	<string name="string_statusDialog_here">You are here.</string>
+	<string name="string_statusDialog_here">You are here</string>
 	<string name="string_preferences_catGPS">GPS</string>
 	<string name="string_preferences_catMapView">Map</string>
 	<string name="string_preferences_catOSM">OSM</string>
