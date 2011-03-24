@@ -208,7 +208,7 @@ public class TraceBookImporter extends FileImporter {
                             } else if (uri.endsWith(".wav")
                                     || uri.endsWith(".m4a")) {
                                 Main.debug("Trying to parse audiomarker");
-                                Marker mr = tracebook.AudioMarker.create(
+                                Marker mr = de.fu.tracebook.AudioMarker.create(
                                         latlon, "Audio comment", uri, ml, 1.0,
                                         1.0);
                                 if (mr == null)
