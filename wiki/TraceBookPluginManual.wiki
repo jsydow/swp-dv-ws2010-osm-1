@@ -36,7 +36,7 @@ use the !TraceBook app on your device for that stuff or delete folders manually.
 
 = Usage =
 
-After successful installation, just bring up the file open dialog. In the file extension filter select "TraceBookTrack (`*`.tbt)" and navigate to the place where your tracks are stored (in most cases the Phone or SDcard). Open the folder of the track you want to open, select the *.tbt file and click "open".
+After successful installation, just bring up the file open dialog. In the file extension filter select "TraceBookTrack (`*`.tbt)" and navigate to the place where your tracks are stored (in most cases the Phone or SDcard). Open the folder of the track you want to open, select the `*`.tbt file and click "open".
 After a short progress dialog ,depending how big your track is, you should see a standard osm layer view and an additional layer with the media you attached.
 The osm layer behaves just like the usual JOSM osm layer, with the limitations that currently changes can not be saved to the file. You can still manipulate and upload your data though.
 The media layer is read only too, and can be used as reference when tagging the osm data.
