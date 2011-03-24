@@ -15,21 +15,33 @@ example:
 }}}
 It is followed by the root node with the name "osm" which contains information about the osm version that it conforms to, and which generator tool created it. This makes the file readable for JOSM even without our plugin, if you rename it to "`*`.osm", with the limitation that no media information can be displayed.
 example: 
- {{{<osm version="0.6" generator="TraceBook">}}}
+ {{{
+<osm version="0.6" generator="TraceBook">
+}}}
 
 The root node may contain either nodes or ways.
 example
- {{{<node lat="52.4569883" lon="13.2957700" id="2" timestamp="2011-03-07T14:40:51.105+0000" version="1" />}}}
+ {{{
+<node lat="52.4569883" lon="13.2957700" id="2" timestamp="2011-03-07T14:40:51.105+0000" version="1" />
+}}}
 or 
- {{{<way version="1" id="1">}}}
+ {{{
+<way version="1" id="1">
+}}}
 A node contains coordinates, a unique id and an editing version.
 A way contains only the unique id and the editing version.
 
 Like in OSM xml format, each node and way can contain tags, with additional information for the special point or way
 example:
- {{{<tag k="area" v="yes" />}}} for a way
+ {{{
+<tag k="area" v="yes" />
+}}} for a way
 or
- {{{<tag k="amenity" v="postbox" />}}} for a node
+ {{{
+<tag k="amenity" v="postbox" />
+}}} for a node
 Additionally, each node can contain media links to provide additional information for later editing.
 example:
- {{{<link href="test.txt" />}}}
+ {{{
+<link href="test.txt" />
+}}}
