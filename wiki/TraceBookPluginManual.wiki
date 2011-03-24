@@ -3,7 +3,7 @@
 
 = Introduction =
 
-The TraceBookImport plugin for JOSM enables JOSM to read !TraceBookTrack (*.tbt) files which are created by our TraceBook application for android mobile devices.
+The TraceBookImport plugin for JOSM enables JOSM to read !TraceBookTrack (`*`.tbt) files which are created by our TraceBook application for android mobile devices.
 
 
 = Known Bugs and Limitations =
@@ -36,12 +36,12 @@ use the !TraceBook app on your device for that stuff or delete folders manually.
 
 = Usage =
 
-After successful installation, just bring up the file open dialog. In the file extension filter select "TraceBookTrack (*.tbt)" and navigate to the place where your tracks are stored (in most cases the Phone or SDcard). Open the folder of the track you want to open, select the *.tbt file and click "open".
+After successful installation, just bring up the file open dialog. In the file extension filter select "TraceBookTrack (`*`.tbt)" and navigate to the place where your tracks are stored (in most cases the Phone or SDcard). Open the folder of the track you want to open, select the *.tbt file and click "open".
 After a short progress dialog ,depending how big your track is, you should see a standard osm layer view and an additional layer with the media you attached.
 The osm layer behaves just like the usual JOSM osm layer, with the limitations that currently changes can not be saved to the file. You can still manipulate and upload your data though.
 The media layer is read only too, and can be used as reference when tagging the osm data.
 
 The text, audio and video markers will be opened by your default system viewer.
- * For audio comments you need a player on your system that is capable and linked to playing *.m4a files
-* For video comments you need a player on your system that is capable and linked to playing *.mp4 files
-* For text comments you need a player on your system that is capable and linked to playing *.txt files
+ * For audio comments you need a player on your system that is capable and linked to playing `*`.m4a files
+ * For video comments you need a player on your system that is capable and linked to playing `*`.mp4 files
+ * For text comments you need a player on your system that is capable and linked to playing `*`.txt files
