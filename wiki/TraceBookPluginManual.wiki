@@ -8,9 +8,9 @@ The TraceBookImport plugin for JOSM enables JOSM to read TraceBookTrack (*.tbt) 
 = Known Bugs and Limitations =
 
 The Plugin can not:
-* save a modified track
-* manipulate media information
-* delete track information/whole tracks
+ * save a modified track
+ * manipulate media information
+ * delete track information/whole tracks
 use the TraceBook app on your device for that stuff or delete folders manually.
 
 
