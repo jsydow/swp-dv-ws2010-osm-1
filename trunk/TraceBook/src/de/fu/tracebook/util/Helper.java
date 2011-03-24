@@ -374,14 +374,14 @@ public final class Helper {
                 } catch (MalformedURLException e) {
                     // TODO
                     img.setImageDrawable(context.getResources().getDrawable(
-                            R.drawable.ic_file));
+                            R.drawable.ic_noimage));
                 } catch (IOException e) {
                     img.setImageDrawable(context.getResources().getDrawable(
-                            R.drawable.ic_file));
+                            R.drawable.ic_noimage));
                 }
             } else {
                 img.setImageDrawable(context.getResources().getDrawable(
-                        R.drawable.ic_file));
+                        R.drawable.ic_noimage));
             }
 
             TextView cat = (TextView) dialog
