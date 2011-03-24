@@ -37,8 +37,6 @@ import de.fu.tracebook.gui.activity.MapsForgeActivity;
 /**
  * Class wrapping the ·{@link ArrayWayOverlay} to get some methods out of
  * {@link MapsForgeActivity}.
- * 
- * 
  */
 public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
     /**

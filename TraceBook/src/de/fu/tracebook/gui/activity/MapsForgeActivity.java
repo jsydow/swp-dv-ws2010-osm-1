@@ -459,7 +459,6 @@ public class MapsForgeActivity extends MapActivity {
             (new Thread() {
                 @Override
                 public void run() {
-                    super.run();
                     // with out looper it won't work
                     Looper.prepare();
 
@@ -508,7 +507,8 @@ public class MapsForgeActivity extends MapActivity {
                 }
 
             }).start();
-        }
+        } else
+            registerReceiver(gpsReceiver, new IntentFilter(GpsMessage.TAG));
     }
 
     /**
