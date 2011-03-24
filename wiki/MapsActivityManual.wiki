@@ -15,7 +15,7 @@ By tapping on the map, you can zoom in and zoom out using the keys in the lower 
 
 == The one-shot mode ==
 
-A long tap on the green marker indicating your current location will let you choose between recording a point of interest or starting a way (or an area) in so-called "one-shot mode". In this mode, GPS information only is added to the current way/area when you explicitly want to by choosing "Add way point" after another long tap on the green marker. To finalize your way/area, hit "End way/area" instead.
+A tap on the green marker indicating your current location will let you choose between recording a point of interest or starting a way (or an area) in so-called "one-shot mode". In this mode, GPS information only is added to the current way/area when you explicitly want to by choosing "Add way point" after another long tap on the green marker. To finalize your way/area, hit "End way/area" instead.
 
 = Menu =
 
@@ -25,4 +25,4 @@ In the menu, you can center the map to your current location, as well as switchi
 
 <img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_newtrack_card_onclick.png" height="30%" width="30%"/>
 
-Finally, you can toggle markers on the screen. When visible, you can long tap on a marker and move it around on the map, add tags to the picked node, or delete that node from your track.
+Finally, you can toggle markers on the screen. When visible, you can tap on a marker and move it around on the map, add tags to the picked node, or delete that node from your track.
