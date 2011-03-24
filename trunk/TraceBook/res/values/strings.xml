@@ -69,6 +69,8 @@
 		tag.</string>
 	<string name="string_preferences_chooseMap">Choose your map file</string>
 	<string name="string_filepicker_error_invalid_path">Invalid path</string>
+	<string name="string_preferences_setMapFilter">Activate map filter</string>
+	<string name="string_preferences_descMapFilter">When activating, you tracked way get smoother.</string>
 
 	<!-- App values -->
 	<string name="app_name">TraceBook</string>

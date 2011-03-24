@@ -24,8 +24,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import de.fu.tracebook.R;
 
 /**
@@ -33,6 +37,13 @@ import de.fu.tracebook.R;
  * device language.
  */
 public class HelpWebView extends Activity {
+
+    /**
+     * Need this for zoom control of our webView.
+     */
+    private static final FrameLayout.LayoutParams ZOOM_PARAMS = new FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.FILL_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
 
     /**
      * WebView for our WebView which we use in this activity.
@@ -81,6 +92,11 @@ public class HelpWebView extends Activity {
 
         webview = (WebView) findViewById(R.id.wv_helpwebviewActivity_webview);
         webview.getSettings().setJavaScriptEnabled(true);
+        FrameLayout mContentView = (FrameLayout) getWindow().getDecorView()
+                .findViewById(android.R.id.content);
+        final View zoom = this.webview.getZoomControls();
+        mContentView.addView(zoom, ZOOM_PARAMS);
+        zoom.setVisibility(View.GONE);
         if (about) {
             SharedPreferences appPreferences = PreferenceManager
                     .getDefaultSharedPreferences(this);
