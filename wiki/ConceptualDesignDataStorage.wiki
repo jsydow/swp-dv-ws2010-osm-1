@@ -33,6 +33,8 @@ There are 4 operations that can be done on a datum:
   * update: update data of the datum
   * query: if the parent object has a list of data, query (the parent) to find the specific datum.
 
+They are equivalent to the 4 SQL statements INSERT, DELETE, UPDATE and SELECT.
+
 All of the following classes implement those operations. So we only describe the differences of the classes:
 
 == !DataStorage ==
