@@ -6,9 +6,9 @@
     <string name="alert_global_addNotice">Notiz hinzuf&#252;gen</string>
     <string name="alert_global_addedNotice">Notiz h&#252;nzugef&#252;gt:</string>
     <string name="alert_global_cancel">Cancel</string>
-    <string name="alert_global_exit">M&#246;chten Sie die aktuelle Session stoppen und speichern?</string>
+    <string name="alert_global_exit">M&#246;chten Sie die aktuelle Session speichern?</string>
     <string name="alert_global_no">Nein</string>
-    <string name="alert_global_notSaveAndClose">Beenden</string>
+    <string name="alert_global_notSaveAndClose">Abbrechen</string>
     <string name="alert_global_ok">Ok</string>
     <string name="alert_global_trackName">Trackname:</string>
     <string name="alert_global_yes">Ja</string>
@@ -20,7 +20,7 @@
     <string name="alert_mapsforgeActivity_pause">M&#246;chten Sie die aktuelle Session pausieren?</string>
     <string name="alert_newtrackActivity_addTrackNotice">Tracknotiz hinzuf&#252;gen</string>
     <string name="alert_newtrackActivity_rename">Node umbenennen</string>
-    <string name="alert_newtrackActivity_saveSetTrack">Sichern und Trackname</string>
+    <string name="alert_newtrackActivity_saveSetTrack">Track beenden</string>
     <string name="app_name">TraceBook</string>
     <string name="btn_aboutActivity_license">Zeige Lizenz</string>
     <string name="btn_addMetaMedia_makeMemo">Sprachnotiz</string>
@@ -34,8 +34,8 @@
     <string name="btn_addpointmetaActivity_save">Speichern</string>
     <string name="btn_addpointmetaActivity_search">Suchen</string>
     <string name="btn_newtrackActivity_addPoint">Point Of Interest hinzuf&#252;gen</string>
-    <string name="btn_newtrackActivity_editComment">Track Kommentar bearbeiten</string>
-    <string name="btn_newtrackActivity_stopTrack">Speichern und beenden</string>
+    <string name="btn_newtrackActivity_editComment">Track-Kommentar bearbeiten</string>
+    <string name="btn_newtrackActivity_stopTrack">Beenden</string>
     <string name="btn_recordvideoActivity_startRec">Start</string>
     <string name="btn_recordvideoActivity_stopRec">Stopp</string>
     <string name="btn_searchInfoDialog_save">&#220;bernehmen</string>
