@@ -32,4 +32,4 @@ A long click on a track will show the context menu for the track. It should look
 
 The choices are pretty straight forward. There is not much to explain here.
 
-<img src="https://code.google.com/p/swp-dv-ws2010-osm-1/source/browse/wiki/img/manual_loadtrack_trackdetails.png" height="30%" width="30%"/>
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_trackdetails.png" height="30%" width="30%"/>
