@@ -1,10 +1,10 @@
 #summary This page describes the installation and usage of the TraceBook import plugin for JOSM.
-#labels Phase-Support
+#labels Phase-Deploy
 
 = Introduction =
 
 The TraceBook import plugin for JOSM enables JOSM to read TraceBookTrack (`*`.tbt) files which are created by our TraceBook application for android mobile devices.
-
+This is the user manual page. The developer information can be obtained [TraceBookImport here]
 
 = Known Bugs and Limitations =
 
