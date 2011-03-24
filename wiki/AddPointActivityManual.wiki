@@ -1,4 +1,5 @@
 #summary This article contains the user manual for the new addPoint activity.
+#labels Phase-Support
 
 
 = Introduction =
