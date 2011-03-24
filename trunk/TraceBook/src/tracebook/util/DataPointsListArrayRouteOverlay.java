@@ -164,7 +164,7 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
     public void putWaypoint(DataNode n) {
         if (n.getOverlayItem() == null)
             n.setOverlayItem(Helper.getOverlayItem(n.toGeoPoint(),
-                    R.drawable.ic_dot_blue, context, true));
+                    R.drawable.card_dot_blue, context, true));
         if (showWaypoints)
             pointsOverlay.addItem(n.getOverlayItem());
     }

@@ -62,7 +62,7 @@
 					<Button android:id="@+id/btn_newtrackActivity_stopTrack"
 						android:layout_width="fill_parent" android:layout_height="wrap_content"
 						android:text="@string/btn_newtrackActivity_stopTrack"
-						android:onClick="stopTrackBtn" android:drawableLeft="@drawable/ic_stop" />
+						android:onClick="stopTrackBtn" android:drawableLeft="@drawable/btn_stop" />
 
 					<TextView android:id="@+id/tv_newtrackActivity_setButtonList"
 						android:layout_width="fill_parent" android:layout_height="wrap_content"
