@@ -7,4 +7,4 @@ In this screen the user can view a list of all recorded tracks. The user can als
 
 = Details =
 
-http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_full.png
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_full.png" />
