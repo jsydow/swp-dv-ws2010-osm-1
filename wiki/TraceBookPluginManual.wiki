@@ -12,7 +12,7 @@ The plugin can not:
  * save a modified track
  * manipulate media information
  * delete track information/whole tracks
-use the TraceBook app on your device for that stuff or delete folders manually.
+Use the TraceBook app on your device for those actions or delete folders manually.
 
 = Download/Installation =
 ==1. Installing the precompiled jar==
