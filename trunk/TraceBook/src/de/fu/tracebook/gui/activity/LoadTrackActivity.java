@@ -24,15 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import de.fu.tracebook.core.data.DataStorage;
-import de.fu.tracebook.core.data.DataTrack;
-import de.fu.tracebook.core.data.DataTrackInfo;
-import de.fu.tracebook.gui.adapter.GenericAdapter;
-import de.fu.tracebook.gui.adapter.GenericAdapterData;
-import de.fu.tracebook.gui.adapter.GenericItemDescription;
-import de.fu.tracebook.util.Helper;
-import de.fu.tracebook.util.LogIt;
-import de.fu.tracebook.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -41,6 +32,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -58,6 +50,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.fu.tracebook.R;
+import de.fu.tracebook.core.data.DataStorage;
+import de.fu.tracebook.core.data.DataTrack;
+import de.fu.tracebook.core.data.DataTrackInfo;
+import de.fu.tracebook.gui.adapter.GenericAdapter;
+import de.fu.tracebook.gui.adapter.GenericAdapterData;
+import de.fu.tracebook.gui.adapter.GenericItemDescription;
+import de.fu.tracebook.util.Helper;
+import de.fu.tracebook.util.LogIt;
 
 /**
  * The Class LoadTrackActivity list all saved Track in a list view. With a
@@ -86,6 +87,7 @@ public class LoadTrackActivity extends ListActivity {
      * The text that is in the search text box.
      */
     String searchText = "";
+
     /**
      * Should the list be sorted by name? If not then the list is sorted by
      * time.
@@ -108,6 +110,11 @@ public class LoadTrackActivity extends ListActivity {
         }
         LogIt.w("BUTTON", (String) v.getTag());
         deleteTrack((String) v.getTag());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     /**
@@ -368,10 +375,11 @@ public class LoadTrackActivity extends ListActivity {
             @Override
             public void run() {
                 updateAdapter();
-                dialog.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         }).start();
-
     }
 
     /**
