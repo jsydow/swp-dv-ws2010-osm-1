@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary This article contains the user manual for the file picker activity
 
 = Introduction =
 
