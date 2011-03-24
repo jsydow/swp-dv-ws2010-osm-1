@@ -9,3 +9,8 @@ We use [http://code.google.com/p/mapsforge/ MapsForge] to draw our map and overl
 Our _MapsForgeActivity_ extends the MapsForge _MapActivity_, not only to display a context menu but also to overwrite `dispatchTouchEvent()`, so that we can move Points around.
 We send notifications about different possible actions like adding way nodes, change of the current position, etc. as broadcast Intent, _GpsMessage_ provides methods for composing such Intends.
 MapsForgeActivity therefore registers a _GPSReceiver_, a _BroadcastReceiver_ that will receive these Intends. It will however only receive messages when the MapsForgeActivity is active. So we clear all overlays on resume an populate them again with all POIs and ways, this way we make sure not to miss anything. (It actually saves us from handling the case of adding a POI to the overlay by BroadCast intent as we have no means of adding a POI without rendering the MapActivity inactive.
+Every DataNode references an OverlayItem, it will automatically update the OverlayItems position if it's position changes, it's OverlayItem should be added to the list of invalid items when it is removed.
+
+
+==DataNodeArrayItemizedOverlay==
+The DataNodeArrayItemizedOverlay extends MapsForges ArrayItemizedOverlay to overwrite the onTap() method and display a context menu (an AlertDialog actually) for each POI. It gets the actual DataNode corresponding to the OverlayItem by searching all Nodes of the currentTrack. If the OverlayItem is not referenced by any DataNode, it is assumed it is the marker marking the current position of the user.
