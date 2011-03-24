@@ -80,7 +80,7 @@
 	    **********************************************************
 	    -->
 	<target name="javadoc">
-			<javadoc excludepackagenames="" access="protected" destdir="doc" version="true" windowtitle="TraceBookImport" sourcepath="src" classpathref="classpath">
+			<javadoc excludepackagenames="" access="protected" author="false" destdir="doc" version="true" windowtitle="TraceBookImport" sourcepath="src" classpathref="classpath">
 				<doctitle>
 					<![CDATA[<h1>TraceBookImport</h1>]]></doctitle>
 			<fileset dir="src" defaultexcludes="yes">
@@ -121,7 +121,7 @@
     -->
 			<manifest>
 				<attribute name="Author" value="David Beyer" />
-				<attribute name="Plugin-Class" value="tracebook.TraceBookPlugin" />
+				<attribute name="Plugin-Class" value="de.fu.tracebook.TraceBookPlugin" />
 				<attribute name="Plugin-Date" value="${version.entry.commit.date}" />
 				<attribute name="Plugin-Description" value="Reads GPS Data and Tags from TraceBookTrack files" />
 				<attribute name="Plugin-Icon" value="tracebook_icon.png" />
