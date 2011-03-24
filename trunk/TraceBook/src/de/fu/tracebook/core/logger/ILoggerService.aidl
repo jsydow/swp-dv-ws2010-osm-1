@@ -21,7 +21,7 @@ package de.fu.tracebook.core.logger;
 
 interface ILoggerService {
 	/**
-	 * Starts a new {@link tracebook.core.data.DataTrack DataTrack}. 
+	 * Starts a new {@link de.fu.tracebook.core.data.DataTrack DataTrack}. 
 	 */
 	void startTrack(); 
 	
