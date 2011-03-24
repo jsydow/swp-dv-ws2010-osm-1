@@ -25,4 +25,6 @@ Like this.
 
 You are not bounded to official tags. New tag value pairs can be also added. After you selected your tag and value you can added to your point by pressing the "Save" button. An can repeat adding tags by pressing the "Add" button in the previous dialog.
 
-Some times it can happen that you do not exactly now which tag you can use for your point of interest. In this case you can perform a full text search based on the wiki descri 
+Some times it can happen that you do not exactly now which tag you can use for your point of interest. In this case you can perform a full text search based on the wiki description of tag value pairs of the OpenStreetMap wiki page.
+
+Press on the search button to go to the FullTextSearch dialog.
