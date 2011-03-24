@@ -1,5 +1,5 @@
 #summary This page describes the installation and usage of the TraceBook import plugin for JOSM.
-#labels Phase-Deploy
+#labels Phase-Deploy,Phase-Support
 
 = Introduction =
 
