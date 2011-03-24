@@ -6,7 +6,7 @@ In this activity, the user can start a new track or resume a not yet closed trac
 
 = Details =
 
-Upon starting TraceBook, you can choose to either start a new track or load an existing track.
+Upon starting !TraceBook, you can choose to either start a new track or load an existing track.
 
 <img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_start.png" height="30%" width="30%"/>
 
