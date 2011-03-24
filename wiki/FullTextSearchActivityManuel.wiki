@@ -10,6 +10,6 @@ Here you have a pretty nice way to find the right tag value pair which suites to
 
 Just type something where you think it will suit to a valid tag value pair.
 
-In our example we have typed "highway".As you can see you will get all results which contains the word highway in the description text and in the tag value pair.
+In our example we have typed "hig".As you can see you will get all results which contains the word hig in the description text and in the tag value pair.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_search_status_highway.png" height="30%" width="30%"/>
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_search_status_list.png" height="30%" width="30%"/>
