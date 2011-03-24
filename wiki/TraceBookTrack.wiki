@@ -51,12 +51,10 @@ Every way needs to have at least one node as child reference.
 example:
  {{{
 <way version="1" timestamp="2011-03-08T14:35:18.538+0100" id="1" area="yes">
-<tag v="yes" k="area"/>
-<nd ref="2" />
-<nd ref="10" />
-<nd ref="3" />
-<nd ref="2" />
-
-
+ <tag v="yes" k="area"/>
+ <nd ref="2" />
+ <nd ref="10" />
+ <nd ref="3" />
+ <nd ref="2" />
 </way>
 }}}
