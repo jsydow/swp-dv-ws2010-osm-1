@@ -23,14 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import de.fu.tracebook.core.data.db.TagDb;
-import de.fu.tracebook.core.data.db.TagSearchResult;
-import de.fu.tracebook.core.logger.ServiceConnector;
-import de.fu.tracebook.gui.adapter.GenericAdapter;
-import de.fu.tracebook.gui.adapter.GenericAdapterData;
-import de.fu.tracebook.gui.adapter.GenericItemDescription;
-import de.fu.tracebook.util.Helper;
-import de.fu.tracebook.R;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -45,6 +37,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ListView;
+import de.fu.tracebook.R;
+import de.fu.tracebook.core.data.db.TagDb;
+import de.fu.tracebook.core.data.db.TagSearchResult;
+import de.fu.tracebook.core.logger.ServiceConnector;
+import de.fu.tracebook.gui.adapter.GenericAdapter;
+import de.fu.tracebook.gui.adapter.GenericAdapterData;
+import de.fu.tracebook.gui.adapter.GenericItemDescription;
+import de.fu.tracebook.util.Helper;
 
 /**
  * The FullTextSearchActivity deals with a full text search on the description
@@ -66,6 +66,11 @@ public class FullTextSearchActivity extends ListActivity {
      * the list view.
      */
     static class MyTextWatcher implements TextWatcher {
+
+        /**
+         * The thread currently used for searching the DB
+         */
+        private Thread searchThread = null;
 
         /**
          * Reference to the FullTextSearchActivity to update the list view.
@@ -94,8 +99,14 @@ public class FullTextSearchActivity extends ListActivity {
 
         public void onTextChanged(CharSequence s, int start, int before,
                 int count) {
-            final String searchText = s.toString();
-            new SearchThread(act, act.increaseIndex(), searchText).start();
+            final String searchText = s.toString().trim();
+
+            // if (searchThread != null)
+            // searchThread.stop();
+
+            searchThread = new SearchThread(act, act.increaseIndex(),
+                    searchText);
+            searchThread.start();
         }
     }
 
@@ -146,7 +157,6 @@ public class FullTextSearchActivity extends ListActivity {
             List<TagSearchResult> result = db.getTag(searchText, Locale
                     .getDefault().getLanguage());
             act.fillResultsToList(result, resIndex);
-
         }
     }
 
