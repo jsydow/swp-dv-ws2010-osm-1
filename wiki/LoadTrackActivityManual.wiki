@@ -1,0 +1,10 @@
+#summary This article contains the user manual for the load track activity
+#labels Phase-Support
+
+= Introduction =
+
+In this screen the user can view a list of all recorded tracks. The user can also view details, delete, rename and load tracks.
+
+= Details =
+
+TODO
