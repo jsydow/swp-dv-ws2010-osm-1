@@ -1,35 +1,25 @@
 <resources>
-    <!-- EDIT THIS! -->
     <string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track points, you have to enable it. Do you want to enable it?</string>
-    <!-- EDIT THIS! -->
     <string name="alert_NewTrackActivity_NoGpsTitle">GPS disabled</string>
-    <!-- EDIT THIS! -->
     <string name="alert_addmemoactivity_progressdialog">Please wait.\nRecording is starting soon...</string>
-    <!-- EDIT THIS! -->
     <string name="alert_filepicker_message">Do you want to pick this file?</string>
     <string name="alert_global_addNotice">Dodaj notatk&#281;</string>
     <string name="alert_global_addedNotice">Notatka dodana:</string>
     <string name="alert_global_cancel">Anuluj</string>
     <string name="alert_global_exit">Zako&#324;czy&#263; i zapisa&#263; aktualn&#261; sesj&#281;?</string>
     <string name="alert_global_no">Nie</string>
-    <!-- EDIT THIS! -->
     <string name="alert_global_notSaveAndClose">Exit</string>
     <string name="alert_global_ok">Ok</string>
-    <!-- EDIT THIS! -->
     <string name="alert_global_trackName">Track:</string>
     <string name="alert_global_yes">Tak</string>
     <string name="alert_loadtrackActivity_deleteTrack">Usun&#261;&#263; drog&#281;?</string>
-    <!-- EDIT THIS! -->
     <string name="alert_loadtrackActivity_loadingTracks">Tracks are being loaded...</string>
-    <!-- EDIT THIS! -->
     <string name="alert_loadtrackActivity_pleaseWait">Please wait...</string>
     <string name="alert_loadtrackActivity_rename">Zmie&#324; nazwe drogi</string>
-    <!-- EDIT THIS! -->
     <string name="alert_loadtrackActivity_stopCurrentTrack">Close recent track and load new track?</string>
     <string name="alert_mapsforgeActivity_pause">Zatrzyma&#263; aktualn&#261; sesj&#281;?</string>
     <string name="alert_newtrackActivity_addTrackNotice">Doda&#263; notatk&#281; o drodze</string>
     <string name="alert_newtrackActivity_rename">Zmie&#324; nazwe w&#281;z&#322;a</string>
-    <!-- EDIT THIS! -->
     <string name="alert_newtrackActivity_saveSetTrack">Closing track</string>
     <string name="app_name">TraceBook</string>
     <string name="btn_aboutActivity_license">Poka&#380; licencj&#281;</string>
@@ -48,14 +38,14 @@
     <string name="btn_newtrackActivity_stopTrack">Zapisz i wyjd&#380;</string>
     <string name="btn_recordvideoActivity_startRec">Start</string>
     <string name="btn_recordvideoActivity_stopRec">Stop</string>
-    <!-- EDIT THIS! -->
     <string name="btn_searchInfoDialog_save">Apply</string>
     <string name="btn_startActivity_loadTrack">&#321;aduj drog&#281;</string>
     <string name="btn_startActivity_newTrack">Nowa droga</string>
-    <!-- EDIT THIS! -->
     <string name="btn_startActivity_reseumeTrack">Resume track</string>
     <string name="btn_trackInfoDialog">OK</string>
     <string name="btn_trackInfoDialog_back">Powr&#243;t</string>
+    <!-- EDIT THIS! -->
+    <string name="cm_DataNodeArrayItemizedOverlay_area_start">Start area</string>
     <string name="cm_DataNodeArrayItemizedOverlay_delete">Delete this</string>
     <string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
     <string name="cm_DataNodeArrayItemizedOverlay_my_pos">Current Location</string>
@@ -65,35 +55,34 @@
     <string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
     <string name="cm_addpointActivity_deleteTag">Usu&#324; Tag</string>
     <string name="cm_addpointActivity_renameTag">Zmie&#324; Tag</string>
-    <!-- EDIT THIS! -->
     <string name="cm_addpointActivity_title">Edit tag</string>
     <string name="cm_editmapobjects_delete">Usu&#324;</string>
     <string name="cm_editmapobjects_edit">Edytuj</string>
-    <!-- EDIT THIS! -->
     <string name="cm_editmapobjects_title">Edit map object</string>
     <string name="cm_loadtrackActivity_delete">Usu&#324; drog&#281;</string>
     <string name="cm_loadtrackActivity_info">Wy&#347;wietlij informacje</string>
     <string name="cm_loadtrackActivity_load">&#321;aduj drog&#281;</string>
     <string name="cm_loadtrackActivity_rename">Zmie&#324; nazw&#281; drogi</string>
-    <!-- EDIT THIS! -->
     <string name="cm_loadtrackActivity_title">Track actions</string>
     <string name="cm_mapsforgeActivity_deletePoint">Usu&#324; punkt</string>
     <string name="cm_mapsforgeActivity_editPoint">Edytuj punkt</string>
     <string name="cm_mapsforgeActivity_movePoint">Przenie&#347; punkt</string>
     <string name="et_fulltextsearchActivity_search">Trwa szukanie...</string>
     <!-- EDIT THIS! -->
-    <string name="not_startActivity_contentText">Currently tracking...</string>
+    <string name="not_startActivity_contentTextActive">Currently tracking...</string>
     <!-- EDIT THIS! -->
-    <string name="not_startActivity_contentTitle">TraceBook</string>
+    <string name="not_startActivity_contentTextPause">Currently pause the tracking...</string>
     <!-- EDIT THIS! -->
-    <string name="not_startActivity_tickerText">Tracking active</string>
+    <string name="not_startActivity_contentTitleActive">TraceBook</string>
     <!-- EDIT THIS! -->
+    <string name="not_startActivity_contentTitlePause">TraceBook</string>
+    <!-- EDIT THIS! -->
+    <string name="not_startActivity_tickerTextActive">Tracking active</string>
+    <!-- EDIT THIS! -->
+    <string name="not_startActivity_tickerTextPause">Tracking pause</string>
     <string name="opt_addpointmetaactivity_lastUsed">Last used tag first</string>
-    <!-- EDIT THIS! -->
     <string name="opt_addpointmetaactivity_mostUsed">Most used tag first</string>
-    <!-- EDIT THIS! -->
     <string name="opt_loadtrack_sortByName">Sort by name</string>
-    <!-- EDIT THIS! -->
     <string name="opt_loadtrack_sortByTimestamp">Sort by time</string>
     <string name="opt_mapsforgeActivity_activateMobileInternet">Mapa online</string>
     <string name="opt_mapsforgeActivity_centerAtOwnPosition">Nastawi&#263;</string>
@@ -101,7 +90,6 @@
     <string name="opt_mapsforgeActivity_export">Eksportowa&#263;</string>
     <string name="opt_mapsforgeActivity_help">Pomoc</string>
     <string name="opt_mapsforgeActivity_pause">Pauza</string>
-    <!-- EDIT THIS! -->
     <string name="opt_mapsforgeActivity_resume">Resume</string>
     <string name="opt_mapsforgeActivity_resumeTrack">Kontynuuj nagrywanie</string>
     <string name="opt_mapsforgeActivity_setMapLocation">Mapfile</string>
@@ -111,121 +99,70 @@
     <string name="opt_startActivity_close">Zako&#324;cz</string>
     <string name="opt_startActivity_help">Pomoc</string>
     <string name="opt_startActivity_preferences">Ustawienia</string>
-    <!-- EDIT THIS! -->
     <string name="popup_mapsforgeactivity_saved">Track has been saved.</string>
     <string name="string_aboutActivity_title">O programie</string>
     <string name="string_addmemoActivity_title">Notatka dzwi&#281;kowa</string>
     <string name="string_addpointActivity_title">Dodaj punkt</string>
     <string name="string_addpointmetaActivity_title">Dodaj metadane</string>
-    <!-- EDIT THIS! -->
     <string name="string_filepicker_error_invalid_path">Invalid path</string>
     <string name="string_fulltextsearchActivity_title">Szukaj</string>
     <string name="string_global_area">Area</string>
-    <!-- EDIT THIS! -->
     <string name="string_global_categoryTitle">Category:</string>
-    <!-- EDIT THIS! -->
     <string name="string_global_descriptionTitle">Description:</string>
     <string name="string_global_poi">POI</string>
-    <!-- EDIT THIS! -->
     <string name="string_global_valueTitle">Value:</string>
     <string name="string_global_way">Way</string>
     <string name="string_licenseDialog_title">Licencja GLP3</string>
     <string name="string_loadtrackActivity_title">&#321;aduj drog&#281;</string>
-    <!-- EDIT THIS! -->
     <string name="string_loadtrackactivity_comment"></string>
-    <!-- EDIT THIS! -->
     <string name="string_loadtrackactivity_nocomment">No comment.</string>
     <string name="string_newtrackActivity_title">Nowa droga</string>
-    <!-- EDIT THIS! -->
     <string name="string_newtrackactivity_list_end">End</string>
-    <!-- EDIT THIS! -->
     <string name="string_newtrackactivity_list_lat">Lat:</string>
-    <!-- EDIT THIS! -->
     <string name="string_newtrackactivity_list_lon">Lon:</string>
-    <!-- EDIT THIS! -->
     <string name="string_newtrackactivity_list_media">Media files:</string>
-    <!-- EDIT THIS! -->
     <string name="string_newtrackactivity_list_pointcount">Number of nodes:</string>
-    <!-- EDIT THIS! -->
     <string name="string_newtrackactivity_list_start">Start</string>
     <string name="string_preferencesActivity_title">Ustawienia</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catExport">Export</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catGPS">GPS</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catGUI">Display</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catMapView">Map</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catMedia">Media files</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catMetaTag">Meta tags</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catOSM">OSM</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_catTrackTag">Track</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_checkGPS">Check GPS status</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_chooseMap">Choose your map file</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descDisplayOn">When enabled, display never is turned off.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descGPS">Check whether GPS is enabled</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descLocalTitleMapCache">Use local rendering instead of OSM.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descMaxHistorySize">Number of tags to be remembered in tag search.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descOnlineTitleStyle">Choose your OSM rendering engine.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descSetMaxAudioRecordingTime"></string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descSetMaxVideoRecordingTime"></string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descShowGPSsiginalQuality">Show GPS signal strength in status bar.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descShowMostRecentTagsInHistory">Show your most recently used tags when adding a tag.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descShowStatusbar">Show status bar (description, button to preferences and details).</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descStopGPS">When to turn off GPS if inactive?</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_descSwitchTheme">Pick a theme for TraceBook.</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_displayOn">Never turn off display</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_exportMail">Recipient for sending tracks to</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_localTitleMapCache">Local tile cache</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_maxHistorySize">History size</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_onlineTitleStyle">Rendering engine</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_osmNickname">OSM user name</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_osmPassword">OSM password</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_setMaxAudioRecordingTime">Maximum audio length</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_setMaxVideoRecordingTime">Maximum video length</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_showGPSsiginalQuality">Show GPS reception</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_showMostRecentTagsInHistory">Show recently used tags</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_showStatusbar">Show status bar</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_stopGPS">GPS timeout</string>
-    <!-- EDIT THIS! -->
     <string name="string_preferences_switchTheme">Appearance</string>
     <string name="string_recordvideoActivity_title">Nagraj film</string>
-    <!-- EDIT THIS! -->
     <string name="string_searchInfoDialog_title">Meta data information</string>
     <string name="string_startActivity_title">Tracebook</string>
-    <!-- EDIT THIS! -->
     <string name="string_statusDialog_here">You are here.</string>
     <string name="string_trackInfoDialog_title">Informacje o drodze</string>
     <string name="tab_newtrackActivity_edit">Zmie&#324;</string>
@@ -235,20 +172,13 @@
     <string name="tbtn_newtrackActivity_areaOn">Pocz&#261;tek powierzchni</string>
     <string name="tbtn_newtrackActivity_streetOff">Koniec ulicy</string>
     <string name="tbtn_newtrackActivity_streetOn">Pocz&#261;tek ulicy</string>
-    <!-- EDIT THIS! -->
     <string name="toast_applicationError">An error occurred. Please restart the application and try again.</string>
-    <!-- EDIT THIS! -->
     <string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from the internet.</string>
-    <!-- EDIT THIS! -->
     <string name="toast_noInternetAccess">You are currently not connected to the internet. The online map cannot be displayed.</string>
-    <!-- EDIT THIS! -->
     <string name="toast_noTrackFound">Track could not be found.</string>
-    <!-- EDIT THIS! -->
     <string name="toast_noneExistentNode">Node does not exist!</string>
-    <!-- EDIT THIS! -->
     <string name="toast_recordingFinished">Recording finished.</string>
     <string name="tv_addmemoActivity_record">Trwa nagrywanie dzwi&#281;kowe...</string>
-    <!-- EDIT THIS! -->
     <string name="tv_addmemoActivity_startRecord">Start voice recording</string>
     <string name="tv_addmemoActivity_stopRecord">Zatrzyma&#263; nagrywanie dzwi&#281;kowe</string>
     <string name="tv_addpointActivity_MetaData">W&#281;ze&#322; ma nast&#281;puj&#261;ce metadane</string>
@@ -259,43 +189,26 @@
     <string name="tv_addpointActivity_titleListViewVal">Warto&#347;&#263;</string>
     <string name="tv_addpointmetaActivity_insertTag">Dodaj Tag</string>
     <string name="tv_addpointmetaActivity_insertValue">Dodaj warto&#347;&#263;</string>
-    <!-- EDIT THIS! -->
     <string name="tv_filepicker_currdir">Current directory:</string>
     <string name="tv_listviewedit_idTitle">ID:</string>
-    <!-- EDIT THIS! -->
     <string name="tv_loadtrackActivity_filter">Filter:</string>
     <string name="tv_newtrackActivity_setButtonList1">Doda&#263; do aktualnej ulicy metadane</string>
     <string name="tv_newtrackActivity_setButtonList2">Doda&#263; do aktualnej powierzchni metadane</string>
-    <!-- EDIT THIS! -->
     <string name="tv_newtrackactivity_allElements">All saved track elements of this session.</string>
-    <!-- EDIT THIS! -->
     <string name="tv_newtrackactivity_signalstrength_count">Number of satellites:</string>
-    <!-- EDIT THIS! -->
     <string name="tv_newtrackactivity_signalstrength_strength">GPS reception:</string>
-    <!-- EDIT THIS! -->
     <string name="tv_searchInfoDialog_noInformation">No information available.</string>
-    <!-- EDIT THIS! -->
     <string name="tv_searchInfoDialog_urlTitle">URI to wiki:</string>
     <string name="tv_startActivity_welcome">Witaj w TraceBooku</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_aboutDesc"></string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_aboutTitle">About TraceBook</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_addpointDesc">Add tags and media files here.</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_addpointTitle">Add point of interest</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_addpointmetaDesc">Add tags and media files here.</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_addpointmetaTitle">Add meta information</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_fulltextsearchDesc">Search for existing tags in OSM.</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_fulltextsearchTitle">Search tags</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_loadtrackDesc">Resume your saved tracks here.</string>
-    <!-- EDIT THIS! -->
     <string name="tv_statusbar_loadtrackTitle">Load track</string>
     <string name="tv_trackInfoDialog_comment">Komentarz:</string>
     <string name="tv_trackInfoDialog_commentText">Komentarz:</string>
