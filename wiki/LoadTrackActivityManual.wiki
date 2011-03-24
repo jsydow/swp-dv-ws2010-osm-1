@@ -7,4 +7,4 @@ In this screen the user can view a list of all recorded tracks. The user can als
 
 = Details =
 
-TODO
+[manual_loadtrack_full.png]
