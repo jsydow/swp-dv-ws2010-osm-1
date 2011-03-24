@@ -1,5 +1,5 @@
 #summary Here will be the description of our xml file format.
-#labels Phase-Implementation
+#labels Phase-Support
 
 = Introduction =
 
