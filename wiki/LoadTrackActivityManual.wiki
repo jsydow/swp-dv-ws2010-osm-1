@@ -16,3 +16,9 @@ The large part of the screen contains a list of all recorded tracks. If there is
 The text box at the top lets the user search for tracks. If he enters a part of a track name then only tracks that contain this part are displayed in the list below like this:
 
 <img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_filter.png" height="30%" width="30%"/>
+
+If the user has enabled the status bar however, the screen should look like this: 
+
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_status.png" height="30%" width="30%"/>
+
+The button showing the gear will open the preference menu. The button showing a magnifying glass will open the search box which works as described above. Clicking on the text left of the two buttons will open a small dialog which contains some simple help for the screen.
