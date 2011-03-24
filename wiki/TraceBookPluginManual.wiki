@@ -31,7 +31,7 @@ _(advanced users only!)_
 ==Final steps:==
 _insert images here_
  * Start up JOSM
- * open the menu "Edit -> Ereferences"
+ * open the menu "Edit -> Preferences"
  * open the tab "Plugins"
  * select !TraceBookPlugin
  * click "OK" and restart JOSM
