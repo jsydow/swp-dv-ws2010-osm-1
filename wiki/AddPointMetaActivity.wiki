@@ -1,0 +1,19 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+After you have added your point of interest you can added one more meta tags to it.
+
+
+= Details =
+
+Here the screen you will see after you pressed the "Add" button in the "Add point of interest" dialog before.
+
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_addmetapoin_empty.png" height="30%" width="30%"/>  
+
+The advanced user can begin to type the tag and value to the corresponding input fields which are labeled tag and value.
+
+TraceBooks assists you via an auto-complete in case you forgot a tag name or value name. As soon as you begin to input characters it will show you possible official OpenStreeetMap tag.
+
+Like here.
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_addmetapoin_empty_auto.png" height="30%" width="30%"/>  
