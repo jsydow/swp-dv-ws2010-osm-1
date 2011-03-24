@@ -8,7 +8,7 @@
 = Map view =
   * Colors for several item groups (ways, areas, POIs) (Colorpicker)
   * Map file to be used (for !MapsForge) (EditText)
-  * Trackfilter, with some SeekBar 
+  * Trackfilter, with some SeekBar (CheckBox) android:key="check_setMapFilter" android:default="true"
   * Default map from SDCard or online (Array)
   * Enable/Disable local tile cache (Checkbox) - android:key="check_activateLocalTitleMapCache" , android:defaultValue="false" , getBool();
   * Online tile style (select between OSMARENDER, MAPNIK and OPENCYCLEMAP) - android:key="lst_setOnlineTitleStyle" , android:defaultValue="OSMA" , getString();
