@@ -30,9 +30,9 @@ _(advanced users only!)_
 
 ==Final steps:==
  * Start up JOSM
- * open the menu "edit->preferences"
- * open the tab "plugins"
- * select TraceBookPlugin
+ * open the menu "Edit -> Ereferences"
+ * open the tab "Plugins"
+ * select !TraceBookPlugin
  * click "OK" and restart JOSM
 
 = Usage =
