@@ -214,19 +214,27 @@ public class MapsForgeActivity extends MapActivity {
     }
 
     private static final String LOG_TAG = "MapsForgeActivity";
-    private GPSReceiver gpsReceiver;
-    private boolean useInternet = false;
 
+    private boolean useInternet = false;
     /**
      * Node currently edited.
      */
     DataNode editNode = null;
 
     /**
+     * Reference to a internal class that receives messages from
+     * {@link GpsMessage} to redraw the Overlay when Items have changed.
+     */
+    GPSReceiver gpsReceiver;
+
+    /**
      * MapController object to interact with the Map.
      */
     MapController mapController;
 
+    /**
+     * Reference to the MapsForce MapView Object.
+     */
     MapView mapView;
 
     /**
@@ -436,13 +444,10 @@ public class MapsForgeActivity extends MapActivity {
         pointsOverlay.clear();
         fillOverlays();
 
-        registerReceiver(gpsReceiver, new IntentFilter(GpsMessage.TAG));
-
         if (mapView == null) {
             (new Thread() {
                 @Override
                 public void run() {
-                    // TODO Auto-generated method stub
                     super.run();
                     // with out looper it won't work
                     Looper.prepare();
@@ -457,10 +462,9 @@ public class MapsForgeActivity extends MapActivity {
                         try {
                             // Give the Gui Thread some time to do its init
                             // stuff
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                            LogIt.e(LOG_TAG, e.getMessage());
                         }
                     }
                     mapView = new MapView(MapsForgeActivity.this);
@@ -488,6 +492,8 @@ public class MapsForgeActivity extends MapActivity {
                         }
                     });
 
+                    registerReceiver(gpsReceiver, new IntentFilter(
+                            GpsMessage.TAG));
                 }
 
             }).start();
@@ -534,6 +540,9 @@ public class MapsForgeActivity extends MapActivity {
         gpsReceiver.centerOnCurrentPosition();
     }
 
+    /**
+     * Switch to offine rendering unsing a specified map file.
+     */
     void changeMapViewToOfflineRendering() {
         String mapFile = PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("mapsforgeMapFilePath", "/mnt/sdcard/default.map");
