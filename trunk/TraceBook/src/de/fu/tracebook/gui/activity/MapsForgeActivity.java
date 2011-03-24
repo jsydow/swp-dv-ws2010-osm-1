@@ -29,6 +29,7 @@ import org.mapsforge.android.maps.MapView;
 import org.mapsforge.android.maps.MapViewMode;
 import org.mapsforge.android.maps.OverlayItem;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -215,7 +216,26 @@ public class MapsForgeActivity extends MapActivity {
 
     private static final String LOG_TAG = "MapsForgeActivity";
 
+    /**
+     * Checks whether there is an internet connection available.
+     * 
+     * @param activity
+     *            An activity.
+     * @return Returns true if there is an internet connection available, false
+     *         otherwise.
+     */
+    public static boolean isOnline(Activity activity) {
+        ConnectivityManager cm = (ConnectivityManager) activity
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null)
+            return info.isConnectedOrConnecting();
+
+        return false;
+    }
+
     private boolean useInternet = false;
+
     /**
      * Node currently edited.
      */
@@ -396,15 +416,6 @@ public class MapsForgeActivity extends MapActivity {
         return MapViewMode.OSMARENDER_TILE_DOWNLOAD;
     }
 
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = cm.getActiveNetworkInfo();
-        if (info != null)
-            return info.isConnectedOrConnecting();
-
-        return false;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -528,7 +539,7 @@ public class MapsForgeActivity extends MapActivity {
                 mapView.setMapFile(file.getAbsolutePath());
             }
         } else {
-            if (!isOnline()) {
+            if (!isOnline(this)) {
                 LogIt.popup(
                         this,
                         getResources().getString(

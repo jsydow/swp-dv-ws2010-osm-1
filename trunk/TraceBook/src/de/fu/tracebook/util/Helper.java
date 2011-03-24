@@ -58,6 +58,7 @@ import de.fu.tracebook.core.data.DataStorage;
 import de.fu.tracebook.core.data.DataTrack;
 import de.fu.tracebook.core.data.db.TagSearchResult;
 import de.fu.tracebook.core.logger.ServiceConnector;
+import de.fu.tracebook.gui.activity.MapsForgeActivity;
 
 /**
  * General helper class to feature some useful functions.
@@ -91,7 +92,8 @@ public final class Helper {
                 R.string.alert_newtrackActivity_saveSetTrack));
         builder.setMessage(
                 activity.getResources().getString(R.string.alert_global_exit))
-                .setCancelable(false).setPositiveButton(
+                .setCancelable(false)
+                .setPositiveButton(
                         activity.getResources().getString(
                                 R.string.alert_global_yes),
                         new DialogInterface.OnClickListener() {
@@ -106,18 +108,15 @@ public final class Helper {
                                 }
 
                                 // send notification toast for user
-                                LogIt
-                                        .popup(
-                                                activity,
-                                                activity
-                                                        .getResources()
-                                                        .getString(
-                                                                R.string.alert_global_trackName)
-                                                        + " "
-                                                        + DataStorage
-                                                                .getInstance()
-                                                                .getCurrentTrack()
-                                                                .getName());
+                                LogIt.popup(
+                                        activity,
+                                        activity.getResources()
+                                                .getString(
+                                                        R.string.alert_global_trackName)
+                                                + " "
+                                                + DataStorage.getInstance()
+                                                        .getCurrentTrack()
+                                                        .getName());
 
                                 // stop logging
                                 try {
@@ -130,7 +129,8 @@ public final class Helper {
                                 activity.finish();
 
                             }
-                        }).setNegativeButton(
+                        })
+                .setNegativeButton(
                         activity.getResources().getString(
                                 R.string.alert_global_notSaveAndClose),
                         new DialogInterface.OnClickListener() {
@@ -140,7 +140,8 @@ public final class Helper {
                                 dialog.cancel();
 
                             }
-                        }).setNeutralButton(
+                        })
+                .setNeutralButton(
                         activity.getResources().getString(
                                 R.string.alert_global_no),
                         new DialogInterface.OnClickListener() {
@@ -329,8 +330,10 @@ public final class Helper {
      */
     public static void handleNastyException(Context context, Exception ex,
             String logTag) {
-        LogIt.popup(context, context.getResources().getString(
-                R.string.toast_applicationError));
+        LogIt.popup(
+                context,
+                context.getResources().getString(
+                        R.string.toast_applicationError));
         LogIt.e(logTag, ex.getMessage());
     }
 
@@ -362,17 +365,23 @@ public final class Helper {
                 .findViewById(R.id.iv_searchInfoDialog_wikiImage);
 
         if (tag != null) {
-            try {
-                URL url = new URL(tag.getImage());
-                InputStream is = (InputStream) url.getContent();
-                Drawable d = Drawable.createFromStream(is, "src");
-                img.setImageDrawable(d);
-            } catch (MalformedURLException e) {
-                // TODO: define fallback image
-                LogIt.e("FullTextSearch", e.toString());
-            } catch (IOException e) {
-                // TODO: define fallback image
-                LogIt.e("FullTextSearch", e.toString());
+            if (MapsForgeActivity.isOnline(activity)) {
+                try {
+                    URL url = new URL(tag.getImage());
+                    InputStream is = (InputStream) url.getContent();
+                    Drawable d = Drawable.createFromStream(is, "src");
+                    img.setImageDrawable(d);
+                } catch (MalformedURLException e) {
+                    // TODO
+                    img.setImageDrawable(context.getResources().getDrawable(
+                            R.drawable.ic_file));
+                } catch (IOException e) {
+                    img.setImageDrawable(context.getResources().getDrawable(
+                            R.drawable.ic_file));
+                }
+            } else {
+                img.setImageDrawable(context.getResources().getDrawable(
+                        R.drawable.ic_file));
             }
 
             TextView cat = (TextView) dialog
@@ -594,8 +603,8 @@ public final class Helper {
 
         Intent notificationIntent = new Intent(activity, cls);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(activity
-                .getApplicationContext(), 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                activity.getApplicationContext(), 0, notificationIntent, 0);
 
         notification.setLatestEventInfo(context, contentTitle, contentText,
                 contentIntent);

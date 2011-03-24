@@ -22,12 +22,6 @@ package de.fu.tracebook.core.logger;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import de.fu.tracebook.core.data.DataNode;
-import de.fu.tracebook.core.data.DataPointsList;
-import de.fu.tracebook.core.data.DataStorage;
-import de.fu.tracebook.util.GpsMessage;
-import de.fu.tracebook.util.LogIt;
-import de.fu.tracebook.util.WayFilter;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +30,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import de.fu.tracebook.core.data.DataNode;
+import de.fu.tracebook.core.data.DataPointsList;
+import de.fu.tracebook.core.data.DataStorage;
+import de.fu.tracebook.util.GpsMessage;
+import de.fu.tracebook.util.LogIt;
+import de.fu.tracebook.util.WayFilter;
 
 /**
  * This background service logs GPS data and stores it in the
@@ -92,8 +92,7 @@ public class WaypointLogService extends Service implements LocationListener {
                 if (tmp.getNodes().size() < 2)
                     storage.getCurrentTrack().deleteWay(tmp.getId());
                 else {
-                    if (!one_shot) { // TODO: user configurable and less
-                        // arbitrary weight
+                    if (!one_shot) {
                         WayFilter.smoothenPoints(tmp.getNodes(), 3, 3);
                         WayFilter.filterPoints(tmp.getNodes(), 2);
                     }
