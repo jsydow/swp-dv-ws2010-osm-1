@@ -9,7 +9,7 @@
 		android:gravity="center_horizontal" android:textSize="15sp" />
 
 	<ImageView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:src="@drawable/microphone" />
+		android:layout_height="wrap_content" android:src="@drawable/bg_microphone" />
 
 	<Button android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:onClick="startMemoBtn" android:minWidth="100dp"

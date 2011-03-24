@@ -14,14 +14,14 @@
 
 	<AutoCompleteTextView android:id="@+id/ac_addpointmetaActivity_categorie"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:completionThreshold="1" />
+		android:completionThreshold="1" android:textColor="#000"/>
 
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/tv_addpointmetaActivity_insertValue" />
 
 	<AutoCompleteTextView android:id="@+id/ac_addpointmetaActivity_value"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:completionThreshold="1" />
+		android:completionThreshold="1" android:textColor="#000" />
 
 	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">

@@ -21,7 +21,6 @@ package tracebook.gui.activity;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import tracebook.core.data.DataNode;
@@ -45,8 +44,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.location.GpsSatellite;
-import android.location.GpsStatus;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -345,7 +342,6 @@ public class NewTrackActivity extends TabActivity {
         menu.setHeaderIcon(android.R.drawable.ic_menu_edit);
         menu.setHeaderTitle(getResources().getString(
                 R.string.cm_editmapobjects_title));
-        setGpsStatus();
     }
 
     /**
@@ -545,28 +541,6 @@ public class NewTrackActivity extends TabActivity {
         makeNoticeBtn.setVisibility(visible);
     }
 
-    private void setGpsStatus() {
-        LocationManager loc = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        GpsStatus gps = loc.getGpsStatus(null);
-        Iterator<GpsSatellite> it = gps.getSatellites().iterator();
-        int i = 0;
-        float sum = 0;
-        while (it.hasNext()) {
-            GpsSatellite sat = it.next();
-            i++;
-            sum += sat.getSnr();
-        }
-
-        TextView tv = (TextView) findViewById(R.id.tv_newtrackActivity_gpsStatus);
-        tv.setText(getResources().getString(
-                R.string.tv_newtrackactivity_signalstrength_strength)
-                + sum
-                + getResources().getString(
-                        R.string.tv_newtrackactivity_signalstrength_count)
-                + i
-                + " " + it.toString());
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         DataTrack dt = DataStorage.getInstance().getCurrentTrack();
@@ -587,7 +561,6 @@ public class NewTrackActivity extends TabActivity {
         super.onResume();
         initListView();
         checkGpsStatus();
-        setGpsStatus();
         try {
             if (ServiceConnector.getLoggerService().isLogging()) {
                 Helper.startUserNotification(this,
@@ -646,7 +619,7 @@ public class NewTrackActivity extends TabActivity {
                                     R.string.string_newtrackactivity_list_lon)
                             + nf.format(dn.getLon()));
 
-            item.setImage("NodeImg", R.drawable.node_icon);
+            item.setImage("NodeImg", R.drawable.ic_node);
             item.setText(
                     "NodeStats",
                     getResources().getString(
@@ -689,8 +662,8 @@ public class NewTrackActivity extends TabActivity {
                                 + nf.format(start.getLon()) + endCoord);
             }
 
-            item.setImage("NodeImg", dn.isArea() ? R.drawable.area_icon
-                    : R.drawable.way_icon);
+            item.setImage("NodeImg", dn.isArea() ? R.drawable.ic_area
+                    : R.drawable.ic_way);
             item.setText(
                     "NodeStats",
                     getResources().getString(
