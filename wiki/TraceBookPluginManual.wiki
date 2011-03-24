@@ -1,0 +1,21 @@
+#summary This page describes the installation and usage of the TraceBook import plugin for JOSM.
+
+= Introduction =
+
+The TraceBookImport plugin for JOSM enables JOSM to read TraceBookTrack (*.tbt) files which are created by our TraceBook application for android mobile devices.
+
+
+= Known Bugs and Limitations =
+
+The Plugin can not:
+* save a modified track
+* manipulate media information
+* delete track information/whole tracks
+use the TraceBook app on your device for that stuff or delete folders manually.
+
+
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
