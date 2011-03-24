@@ -211,6 +211,7 @@
 	<string name="cm_DataNodeArrayItemizedOverlay_move">Move this</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_delete">Delete this</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
+	<string name="cm_DataNodeArrayItemizedOverlay_area_start">Start area</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_way_add">Add way point</string>
 	<string name="cm_DataNodeArrayItemizedOverlay_my_pos">My location</string>
