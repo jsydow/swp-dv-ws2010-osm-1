@@ -29,6 +29,7 @@ _(advanced users only!)_
  * if you meet all the requirements, navigate to the location where you checked out the source and type "ant install". The plugin will be automatically build and installed into your JOSM installation.
 
 ==Final steps:==
+_insert images here_
  * Start up JOSM
  * open the menu "Edit -> Ereferences"
  * open the tab "Plugins"
@@ -41,6 +42,8 @@ After successful installation, just bring up the file open dialog. In the file e
 After a short progress dialog ,depending how big your track is, you should see a standard osm layer view and an additional layer with the media you attached.
 The osm layer behaves just like the usual JOSM osm layer, with the limitations that currently changes can not be saved to the file. You can still manipulate and upload your data though.
 The media layer is read only too, and can be used as reference when tagging the osm data.
+
+_insert sample screenshot here_
 
 The text, audio and video markers will be opened by your default system viewer.
  * For audio comments you need a player on your system that is capable and linked to playing `*`.m4a files
