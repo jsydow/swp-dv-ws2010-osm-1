@@ -1,8 +1,9 @@
 #summary This page describes the installation and usage of the TraceBook import plugin for JOSM.
+#labels Phase-Deploy
 
 = Introduction =
 
-The !TraceBookImport plugin for JOSM enables JOSM to read !TraceBookTrack (*.tbt) files which are created by our !TraceBook application for android mobile devices.
+The TraceBookImport plugin for JOSM enables JOSM to read !TraceBookTrack (*.tbt) files which are created by our TraceBook application for android mobile devices.
 
 
 = Known Bugs and Limitations =
@@ -13,8 +14,20 @@ The plugin can not:
  * delete track information/whole tracks
 use the !TraceBook app on your device for that stuff or delete folders manually.
 
+= Download/Installation =
+1. Installing the precompiled jar
+ * Download the jar from our <a href="http://code.google.com/p/swp-dv-ws2010-osm-1/downloads/list">Download Page</a>
+ * Windows users: Copy the jar file to "_yourusername_\Appdata\Roaming\JOSM\plugins"
+ * Linux users: Copy the jar file to "/home/_yourusername_/.JOSM/plugins"
+ * when in doubt refer to the JOSM Plugin installation guide for your os
 
+2. Building/Installing from source _(advanced users only!)_
+ * Checkout the TraceBookImport source from <a href="http://code.google.com/p/swp-dv-ws2010-osm-1/source/checkout">here</a>
+ * for compiling you need at least: java6, svn command line tool, ant
+ * if you wish to build for a newer version of JOSM (>3966) replace the josm-tested.jar in "lib" with the newer one
+ * if you meet all the requirements, navigate to the location where you checked out the source and type "ant install". The plugin will be automatically build and installed into your JOSM installation.
 
+= Usage =
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
