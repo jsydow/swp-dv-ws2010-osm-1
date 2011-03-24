@@ -152,9 +152,8 @@
 	<string name="alert_global_no">No</string>
 	<string name="alert_global_addNotice">Add note</string>
 	<string name="alert_global_addedNotice">Added note:</string>
-	<string name="alert_global_exit">Do you want to end the current session and save
-		your progress?</string>
-	<string name="alert_global_trackName">Track:</string>
+	<string name="alert_global_exit">Do you want to save your track?</string>
+	<string name="alert_global_trackName">Saved track:</string>
 	<string name="alert_mapsforgeActivity_pause">Do you want to pause the current session?</string>
 	<string name="alert_newtrackActivity_rename">Rename node</string>
 	<string name="alert_newtrackActivity_addTrackNotice">Add note to track</string>
@@ -163,7 +162,7 @@
 	<string name="alert_loadtrackActivity_deleteTrack">Delete track?</string>
 	<string name="alert_loadtrackActivity_pleaseWait">Please wait...</string>
 	<string name="alert_loadtrackActivity_loadingTracks">Tracks are being loaded...</string>
-	<string name="alert_global_notSaveAndClose">Exit</string>
+	<string name="alert_global_notSaveAndClose">Cancel</string>
 	<string name="alert_loadtrackActivity_stopCurrentTrack">Close recent track and load new track?</string>
 	<string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track
 		points, you have to enable it. Do you want to enable it?</string>
