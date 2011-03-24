@@ -23,19 +23,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.fu.tracebook.core.data.DataNode;
-import de.fu.tracebook.core.data.DataPointsList;
-import de.fu.tracebook.core.data.DataStorage;
-import de.fu.tracebook.core.data.DataTrack;
-import de.fu.tracebook.core.logger.ServiceConnector;
-import de.fu.tracebook.core.media.PictureRecorder;
-import de.fu.tracebook.core.media.Recorder;
-import de.fu.tracebook.gui.adapter.GenericAdapter;
-import de.fu.tracebook.gui.adapter.GenericAdapterData;
-import de.fu.tracebook.gui.adapter.GenericItemDescription;
-import de.fu.tracebook.util.Helper;
-import de.fu.tracebook.util.LogIt;
-import de.fu.tracebook.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TabActivity;
@@ -66,6 +53,19 @@ import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import de.fu.tracebook.R;
+import de.fu.tracebook.core.data.DataNode;
+import de.fu.tracebook.core.data.DataPointsList;
+import de.fu.tracebook.core.data.DataStorage;
+import de.fu.tracebook.core.data.DataTrack;
+import de.fu.tracebook.core.logger.ServiceConnector;
+import de.fu.tracebook.core.media.PictureRecorder;
+import de.fu.tracebook.core.media.Recorder;
+import de.fu.tracebook.gui.adapter.GenericAdapter;
+import de.fu.tracebook.gui.adapter.GenericAdapterData;
+import de.fu.tracebook.gui.adapter.GenericItemDescription;
+import de.fu.tracebook.util.Helper;
+import de.fu.tracebook.util.LogIt;
 
 /**
  * The NewTrackActivity is the main activity to record, edit and see your ways,
@@ -118,6 +118,21 @@ public class NewTrackActivity extends TabActivity {
                     .findViewById(R.id.tbtn_newtrackActivity_startArea);
             ToggleButton streetToggle = (ToggleButton) act
                     .findViewById(R.id.tbtn_newtrackActivity_startWay);
+
+            try {
+                if (ServiceConnector.getLoggerService().isLogging()) {
+                    Button resume = (Button) act
+                            .findViewById(R.id.btn_newtrackActivity_resume);
+                    resume.setVisibility(8);
+                } else {
+                    Button resume = (Button) act
+                            .findViewById(R.id.btn_newtrackActivity_resume);
+                    resume.setVisibility(1);
+                }
+            } catch (RemoteException e) {
+
+                e.printStackTrace();
+            }
 
             if (Helper.currentTrack().getCurrentWay() == null) {
                 streetToggle.setEnabled(true);
@@ -345,6 +360,25 @@ public class NewTrackActivity extends TabActivity {
     }
 
     /**
+     * This method resume the logging if the resume button pressed.
+     * 
+     * @param view
+     *            not used
+     */
+    public void resumeBtn(View view) {
+        try {
+            ServiceConnector.getLoggerService().resumeLogging();
+            Button resume = (Button) findViewById(R.id.btn_newtrackActivity_resume);
+            resume.setVisibility(8);
+            Helper.startUserNotification(this,
+                    R.drawable.ic_notification_active, NewTrackActivity.class,
+                    true);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Method is called if startArea-ToggleButton pressed. Start and stop area
      * tracking.
      * 
@@ -566,10 +600,14 @@ public class NewTrackActivity extends TabActivity {
                 Helper.startUserNotification(this,
                         R.drawable.ic_notification_active,
                         NewTrackActivity.class, true);
+                Button resume = (Button) findViewById(R.id.btn_newtrackActivity_resume);
+                resume.setVisibility(8);
             } else {
                 Helper.startUserNotification(this,
                         R.drawable.ic_notification_pause,
                         NewTrackActivity.class, false);
+                Button resume = (Button) findViewById(R.id.btn_newtrackActivity_resume);
+                resume.setVisibility(1);
             }
         } catch (RemoteException e) {
 

@@ -548,6 +548,9 @@ public class LoadTrackActivity extends ListActivity {
                                         DataStorage.getInstance()
                                                 .setCurrentTrack(track);
                                         startActivity(intent);
+                                        overridePendingTransition(
+                                                R.anim.zoom_enter,
+                                                R.anim.zoom_exit);
                                         finish();
 
                                     }
@@ -567,6 +570,7 @@ public class LoadTrackActivity extends ListActivity {
             } else {
                 DataStorage.getInstance().setCurrentTrack(track);
                 startActivity(intent);
+                overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
             }
 
         } else {

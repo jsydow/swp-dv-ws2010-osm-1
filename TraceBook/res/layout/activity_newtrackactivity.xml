@@ -24,6 +24,12 @@
 						android:layout_height="wrap_content" android:scaleType="fitCenter"
 						android:layout_weight="1" />
 
+					<Button android:id="@+id/btn_newtrackActivity_resume"
+						android:text="@string/opt_mapsforgeActivity_resume"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:onClick="resumeBtn" android:minWidth="100dp"
+						android:visibility="invisible" />
+
 					<ToggleButton android:id="@+id/tbtn_newtrackActivity_startWay"
 						android:layout_width="fill_parent" android:layout_height="wrap_content"
 						android:textOn="@string/tbtn_newtrackActivity_streetOff"
