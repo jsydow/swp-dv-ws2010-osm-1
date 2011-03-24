@@ -28,6 +28,11 @@ The !TagDb class encapsulates the tag database. It provides easy access to the d
   * getTag: Given a keyword, get all !TagSearchResults where the keywords appears somewhere in the description.
   * getRowCountForLanguage: Pretty much self explaining. It retrieves the number of rows/entries of a language.
   * getDetails: Given a tag (key-value-pair) get the description of a it.
+  * initDbWithFile: Fills the database with tags from a map features XML file.
+
+=== Map features XML file === 
+
+The XML-file that contains all the information for all tags is parsed from the OSM wiki ([http://wiki.openstreetmap.org/wiki/Map_Features link]) using a ruby script. This script saves the gathered information in the XML file. The structure of the XML file is described in the article MapFeatures.
 
 == !HistoryDb ==
 
