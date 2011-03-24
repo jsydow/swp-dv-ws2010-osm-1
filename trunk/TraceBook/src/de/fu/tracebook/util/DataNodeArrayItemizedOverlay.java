@@ -45,7 +45,9 @@ public class DataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
                 context.getResources().getString(
                         R.string.cm_DataNodeArrayItemizedOverlay_tag),
                 context.getResources().getString(
-                        R.string.cm_DataNodeArrayItemizedOverlay_way_start) };
+                        R.string.cm_DataNodeArrayItemizedOverlay_way_start),
+                context.getResources().getString(
+                        R.string.cm_DataNodeArrayItemizedOverlay_area_start) };
         private final CharSequence[] items_way = {
                 context.getResources().getString(
                         R.string.cm_DataNodeArrayItemizedOverlay_tag),
@@ -84,9 +86,12 @@ public class DataNodeArrayItemizedOverlay extends ArrayItemizedOverlay {
                     Helper.handleNastyException(context, e, LOG_TAG);
                 }
                 break;
-            case 2: // add way point
+            case 2: // add way point / Start Area
                 try {
-                    ServiceConnector.getLoggerService().beginWay(true);
+                    if (tagging())
+                        ServiceConnector.getLoggerService().beginWay(true);
+                    else
+                        ServiceConnector.getLoggerService().beginArea(true);
                 } catch (RemoteException e) {
                     Helper.handleNastyException(context, e, LOG_TAG);
                 }

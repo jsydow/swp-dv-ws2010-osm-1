@@ -51,6 +51,7 @@
     <string name="cm_DataNodeArrayItemizedOverlay_way_add">Add waypoint</string>
     <string name="cm_DataNodeArrayItemizedOverlay_way_end">End way</string>
     <string name="cm_DataNodeArrayItemizedOverlay_way_start">Start way</string>
+    <string name="cm_DataNodeArrayItemizedOverlay_area_start">Start area</string>
     <string name="cm_addpointActivity_deleteTag">Tag l&#246;schen</string>
     <string name="cm_addpointActivity_renameTag">Tag &#228;ndern</string>
     <string name="cm_addpointActivity_title">MetaTag bearbeiten</string>
