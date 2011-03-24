@@ -244,7 +244,7 @@ public final class Helper {
     public static OverlayItem getOverlayItem(Context ctx) {
         if (defaultMarker == null)
             defaultMarker = ItemizedOverlay.boundCenterBottom(ctx
-                    .getResources().getDrawable(R.drawable.ic_marker_red));
+                    .getResources().getDrawable(R.drawable.card_marker_red));
         return new OverlayItem(null, null, null, defaultMarker);
     }
 
