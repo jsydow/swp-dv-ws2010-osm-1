@@ -36,6 +36,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -214,8 +215,6 @@ public class MapsForgeActivity extends MapActivity {
 
     private static final String LOG_TAG = "MapsForgeActivity";
     private GPSReceiver gpsReceiver;
-    private MapView mapView;
-
     private boolean useInternet = false;
 
     /**
@@ -227,6 +226,8 @@ public class MapsForgeActivity extends MapActivity {
      * MapController object to interact with the Map.
      */
     MapController mapController;
+
+    MapView mapView;
 
     /**
      * Overlay containing all POIs.
@@ -360,12 +361,6 @@ public class MapsForgeActivity extends MapActivity {
         }
     }
 
-    private void changeMapViewToOfflineRendering() {
-        String mapFile = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("mapsforgeMapFilePath", "/mnt/sdcard/default.map");
-        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(mapFile));
-    }
-
     private void fillOverlays() {
         for (DataNode n : Helper.currentTrack().getNodes()) {
             if (n.getOverlayItem() == null)
@@ -414,25 +409,8 @@ public class MapsForgeActivity extends MapActivity {
         // as this activity is destroyed when adding a POI, we get all POIs here
         fillOverlays();
 
-        mapView = new MapView(this);
-        mapView.setClickable(true);
-        mapView.setBuiltInZoomControls(true);
-        mapView.setScaleBar(true);
-
-        mapView.setMemoryCardCachePersistence(PreferenceManager
-                .getDefaultSharedPreferences(this).getBoolean(
-                        "check_activateLocalTitleMapCache", false));
-
-        mapView.getOverlays().add(routesOverlay);
-        mapView.getOverlays().add(pointsOverlay);
-
-        mapController = mapView.getController();
-
-        setContentView(mapView);
-
         gpsReceiver = new GPSReceiver();
 
-        changeMapViewToOfflineRendering();
     }
 
     @Override
@@ -459,6 +437,51 @@ public class MapsForgeActivity extends MapActivity {
         fillOverlays();
 
         registerReceiver(gpsReceiver, new IntentFilter(GpsMessage.TAG));
+
+        if (mapView == null) {
+            (new Thread() {
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    super.run();
+                    // with out looper it won't work
+                    Looper.prepare();
+                    try {
+                        // Give the Gui Thread some time to do its init stuff
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    mapView = new MapView(MapsForgeActivity.this);
+                    mapView.setClickable(true);
+                    mapView.setBuiltInZoomControls(true);
+                    mapView.setScaleBar(true);
+
+                    mapView.setMemoryCardCachePersistence(PreferenceManager
+                            .getDefaultSharedPreferences(MapsForgeActivity.this)
+                            .getBoolean("check_activateLocalTitleMapCache",
+                                    false));
+
+                    mapView.getOverlays().add(routesOverlay);
+                    mapView.getOverlays().add(pointsOverlay);
+
+                    mapController = mapView.getController();
+
+                    changeMapViewToOfflineRendering();
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            setContentView(mapView);
+
+                        }
+                    });
+
+                }
+
+            }).start();
+        }
     }
 
     /**
@@ -499,5 +522,11 @@ public class MapsForgeActivity extends MapActivity {
         mapView.setMapViewMode(modeLocal);
 
         gpsReceiver.centerOnCurrentPosition();
+    }
+
+    void changeMapViewToOfflineRendering() {
+        String mapFile = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("mapsforgeMapFilePath", "/mnt/sdcard/default.map");
+        changeMapViewMode(MapViewMode.CANVAS_RENDERER, new File(mapFile));
     }
 }
