@@ -1,4 +1,4 @@
-#summary This page describes the installation and usage of the !TraceBook import plugin for JOSM.
+#summary This page describes the installation and usage of the TraceBook import plugin for JOSM.
 
 = Introduction =
 
