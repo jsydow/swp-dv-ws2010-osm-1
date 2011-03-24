@@ -1,5 +1,3 @@
-#summary One-sentence summary of this page.
-
 = Introduction =
 
 After you have added your point of interest you can added one more meta tags to it.
@@ -27,4 +25,4 @@ Like this.
 
 You are not bounded to official tags. New tag value pairs can be also added. After you selected your tag and value you can added to your point by pressing the "Save" button. An can repeat adding tags by pressing the "Add" button in the previous dialog.
 
-Some time you it can happen that you do not exactly now which tag you can use for your point of interest. In this case you can 
+Some times it can happen that you do not exactly now which tag you can use for your point of interest. In this case you can perform a full text search based on the wiki descri 
