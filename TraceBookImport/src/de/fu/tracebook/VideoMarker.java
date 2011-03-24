@@ -17,7 +17,7 @@
  *
  =====================================================================*/
 
-package tracebook;
+package de.fu.tracebook;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
@@ -110,8 +110,7 @@ public class VideoMarker extends ButtonMarker {
         if (Desktop.isDesktopSupported()) {
             desktop = Desktop.getDesktop();
         } else {
-            Main
-                    .debug("Failed to get a Desktop to determine the file handler!");
+            Main.debug("Failed to get a Desktop to determine the file handler!");
             return;
         }
 

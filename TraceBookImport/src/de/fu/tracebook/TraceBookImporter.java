@@ -17,7 +17,7 @@
  *
  =====================================================================*/
 
-package tracebook;
+package de.fu.tracebook;
 
 import static org.openstreetmap.josm.tools.I18n.tr;
 

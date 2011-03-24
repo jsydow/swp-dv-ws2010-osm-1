@@ -17,7 +17,7 @@
  *
  =====================================================================*/
 
-package tracebook;
+package de.fu.tracebook;
 
 import org.openstreetmap.josm.actions.ExtensionFileFilter;
 import org.openstreetmap.josm.plugins.Plugin;
