@@ -1,0 +1,11 @@
+#summary This page describes the design decisions behind the use of the Map.
+
+= Introduction =
+
+We use [http://code.google.com/p/mapsforge/ MapsForge] to draw our map and overlay Ways and Points of interest. We use an _ItemizedOverlay_ to display all POIs, the current position and waypoints. A _WayOverlay_ serves as representation for all recorded ways and areas.
+
+= Details =
+
+Our _MapsForgeActivity_ extends the MapsForge _MapActivity_, not only to display a context menu but also to overwrite `dispatchTouchEvent()`, so that we can move Points around.
+We send notifications about different possible actions like adding way nodes, change of the current position, etc. as broadcast Intent, _GpsMessage_ provides methods for composing such Intends.
+MapsForgeActivity therefore registers a _GPSReceiver_, a _BroadcastReceiver_ that will receive these Intends. It will however only receive messages when the MapsForgeActivity is active. So we clear all overlays on resume an populate them again with all POIs and ways, this way we make sure not to miss anything. (It actually saves us from handling the case of adding a POI to the overlay by BroadCast intent as we have no means of adding a POI without rendering the MapActivity inactive.
