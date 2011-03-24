@@ -335,7 +335,7 @@ public class MapsForgeActivity extends MapActivity {
                     ServiceConnector.getLoggerService().pauseLogging();
                     Helper.startUserNotification(this,
                             R.drawable.ic_notification_pause,
-                            NewTrackActivity.class);
+                            NewTrackActivity.class, false);
                 } else {
                     item.setTitle(getResources().getString(
                             R.string.opt_mapsforgeActivity_pause));
@@ -343,7 +343,7 @@ public class MapsForgeActivity extends MapActivity {
                     ServiceConnector.getLoggerService().resumeLogging();
                     Helper.startUserNotification(this,
                             R.drawable.ic_notification_active,
-                            NewTrackActivity.class);
+                            NewTrackActivity.class, true);
                 }
             } catch (RemoteException ex) {
                 Helper.handleNastyException(this, ex, LOG_TAG);

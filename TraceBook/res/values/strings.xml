@@ -41,7 +41,8 @@
 	<string name="string_preferences_descGPS">Check whether GPS is enabled</string>
 	<string name="string_preferences_descStopGPS">When to turn off GPS if inactive?</string>
 	<string name="string_preferences_stopGPS">GPS timeout</string>
-	<string name="string_preferences_descShowStatusbar">Show status bar (description, button to preferences and details).</string>
+	<string name="string_preferences_descShowStatusbar">Show status bar (description, button to preferences
+		and details).</string>
 	<string name="string_preferences_showStatusbar">Show status bar</string>
 	<string name="string_preferences_displayOn">Never turn off display</string>
 	<string name="string_preferences_descDisplayOn">When enabled, display never is turned off.</string>
@@ -54,7 +55,8 @@
 	<string name="string_preferences_onlineTitleStyle">Rendering engine</string>
 	<string name="string_preferences_descOnlineTitleStyle">Choose your OSM rendering engine.</string>
 	<string name="string_preferences_maxHistorySize">History size</string>
-	<string name="string_preferences_descMaxHistorySize">Number of tags to be remembered in tag search.</string>
+	<string name="string_preferences_descMaxHistorySize">Number of tags to be remembered in tag search.
+	</string>
 	<string name="string_preferences_exportMail">Recipient for sending tracks to</string>
 	<string name="string_preferences_osmPassword">OSM password</string>
 	<string name="string_preferences_osmNickname">OSM user name</string>
@@ -63,7 +65,8 @@
 	<string name="string_preferences_setMaxAudioRecordingTime">Maximum audio length</string>
 	<string name="string_preferences_descSetMaxAudioRecordingTime"></string>
 	<string name="string_preferences_showMostRecentTagsInHistory">Show recently used tags</string>
-	<string name="string_preferences_descShowMostRecentTagsInHistory">Show your most recently used tags when adding a tag.</string>
+	<string name="string_preferences_descShowMostRecentTagsInHistory">Show your most recently used tags when adding a
+		tag.</string>
 	<string name="string_preferences_chooseMap">Choose your map file</string>
 	<string name="string_filepicker_error_invalid_path">Invalid path</string>
 
@@ -71,9 +74,12 @@
 	<string name="app_name">TraceBook</string>
 
 	<!-- Notification values -->
-	<string name="not_startActivity_tickerText">Tracking active</string>
-	<string name="not_startActivity_contentTitle">TraceBook</string>
-	<string name="not_startActivity_contentText">Currently tracking...</string>
+	<string name="not_startActivity_tickerTextActive">Tracking active</string>
+	<string name="not_startActivity_contentTitleActive">TraceBook</string>
+	<string name="not_startActivity_contentTextActive">Currently tracking...</string>
+	<string name="not_startActivity_tickerTextPause">Tracking pause</string>
+	<string name="not_startActivity_contentTitlePause">TraceBook</string>
+	<string name="not_startActivity_contentTextPause">Currently pause the tracking...</string>
 
 	<!-- TextViews values -->
 	<string name="tv_startActivity_welcome">Welcome to TraceBook</string>
@@ -122,27 +128,32 @@
 	<string name="tv_statusbar_loadtrackDesc">Resume your saved tracks here.</string>
 	<string name="tv_newtrackactivity_allElements">All saved track elements of this session.</string>
 	<string name="tv_filepicker_currdir">Current directory:</string>
-	
+
 	<!-- Edit Text values -->
 	<string name="et_fulltextsearchActivity_search">Search tags</string>
 
 	<!-- Toast values -->
 	<string name="toast_noTrackFound">Track could not be found.</string>
-	<string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from the internet.</string>
-	<string name="toast_noInternetAccess">You are currently not connected to the internet. The online map cannot be displayed.</string>
-	<string name="toast_applicationError">An error occurred. Please restart the application and try again.</string>
+	<string name="toast_loadingOnlineMap">Unable to open map file, fetching tiles from the
+		internet.</string>
+	<string name="toast_noInternetAccess">You are currently not connected to the internet.
+		The online map cannot be displayed.</string>
+	<string name="toast_applicationError">An error occurred. Please restart the application
+		and try again.</string>
 	<string name="toast_recordingFinished">Recording finished.</string>
 	<string name="toast_noneExistentNode">Node does not exist!</string>
 
 	<!-- AlertBox values -->
-	<string name="alert_addmemoactivity_progressdialog">Please wait.\nRecording is starting soon...</string>
+	<string name="alert_addmemoactivity_progressdialog">Please wait.\nRecording is starting soon...
+	</string>
 	<string name="alert_global_cancel">Cancel</string>
 	<string name="alert_global_ok">Ok</string>
 	<string name="alert_global_yes">Yes</string>
 	<string name="alert_global_no">No</string>
 	<string name="alert_global_addNotice">Add note</string>
 	<string name="alert_global_addedNotice">Added note:</string>
-	<string name="alert_global_exit">Do you want to end the current session and save your progress?</string>
+	<string name="alert_global_exit">Do you want to end the current session and save
+		your progress?</string>
 	<string name="alert_global_trackName">Track:</string>
 	<string name="alert_mapsforgeActivity_pause">Do you want to pause the current session?</string>
 	<string name="alert_newtrackActivity_rename">Rename node</string>
@@ -154,10 +165,11 @@
 	<string name="alert_loadtrackActivity_loadingTracks">Tracks are being loaded...</string>
 	<string name="alert_global_notSaveAndClose">Exit</string>
 	<string name="alert_loadtrackActivity_stopCurrentTrack">Close recent track and load new track?</string>
-	<string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track points, you have to enable it. Do you want to enable it?</string>
+	<string name="alert_NewTrackActivity_NoGpsMessage">Currently GPS is disabled. To be able to track
+		points, you have to enable it. Do you want to enable it?</string>
 	<string name="alert_NewTrackActivity_NoGpsTitle">GPS disabled</string>
 	<string name="alert_filepicker_message">Do you want to pick this file?</string>
-	
+
 	<!-- Option menu values -->
 	<string name="opt_startActivity_preferences">Preferences</string>
 	<string name="opt_startActivity_close">Close</string>

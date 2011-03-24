@@ -557,25 +557,42 @@ public final class Helper {
      * @param cls
      *            The class which will be called for the intent, if the user
      *            click at the notification.
+     * @param active
+     *            If tracking active (true) or pause (false), change the
+     *            notification text for the user.
      */
     public static void startUserNotification(Activity activity, int icon,
-            Class<?> cls) {
+            Class<?> cls, boolean active) {
+        CharSequence tickerText;
+        CharSequence contentTitle;
+        CharSequence contentText;
 
+        if (active) {
+            tickerText = activity.getResources().getString(
+                    R.string.not_startActivity_tickerTextActive);
+            contentTitle = activity.getResources().getString(
+                    R.string.not_startActivity_contentTitleActive);
+            contentText = activity.getResources().getString(
+                    R.string.not_startActivity_contentTextActive);
+
+        } else {
+            tickerText = activity.getResources().getString(
+                    R.string.not_startActivity_tickerTextPause);
+            contentTitle = activity.getResources().getString(
+                    R.string.not_startActivity_contentTitlePause);
+            contentText = activity.getResources().getString(
+                    R.string.not_startActivity_contentTextPause);
+        }
         // User notification
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) activity
                 .getSystemService(ns);
-        CharSequence tickerText = activity.getResources().getString(
-                R.string.not_startActivity_tickerText);
+
         long when = System.currentTimeMillis();
 
         Notification notification = new Notification(icon, tickerText, when);
 
         Context context = activity.getApplicationContext();
-        CharSequence contentTitle = activity.getResources().getString(
-                R.string.not_startActivity_contentTitle);
-        CharSequence contentText = activity.getResources().getString(
-                R.string.not_startActivity_contentText);
 
         Intent notificationIntent = new Intent(activity, cls);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

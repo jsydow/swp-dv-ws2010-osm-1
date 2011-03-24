@@ -66,9 +66,14 @@
     <string name="cm_mapsforgeActivity_editPoint">Punkt editieren</string>
     <string name="cm_mapsforgeActivity_movePoint">Punkt verschieben</string>
     <string name="et_fulltextsearchActivity_search">Suchen...</string>
-    <string name="not_startActivity_contentText">Ihr Tracking ist aktiv. Aktuelle Position:</string>
-    <string name="not_startActivity_contentTitle">Tracebook Tracking</string>
-    <string name="not_startActivity_tickerText">tracking active</string>
+	<!-- Notification values -->
+	<string name="not_startActivity_tickerTextActive">Tracking aktive</string>
+	<string name="not_startActivity_contentTitleActive">TraceBook</string>
+	<string name="not_startActivity_contentTextActive">Tracking ist derzeit aktiv...</string>
+	<string name="not_startActivity_tickerTextPause">Tracking pausiert</string>
+	<string name="not_startActivity_contentTitlePause">TraceBook</string>
+	<string name="not_startActivity_contentTextPause">Tracking ist derzeit nicht aktiv...</string>
+	
     <string name="opt_addpointmetaactivity_lastUsed">Zuletzt benutzte Tags</string>
     <string name="opt_addpointmetaactivity_mostUsed">Meist benutzte Tags</string>
     <string name="opt_loadtrack_sortByName">Nach Name sortieren</string>
