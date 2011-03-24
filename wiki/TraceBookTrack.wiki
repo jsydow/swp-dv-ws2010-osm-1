@@ -30,6 +30,7 @@ or
 }}}
 A node contains coordinates, a unique id and an editing version.
 A way contains only the unique id and the editing version.
+Note that all nodes must be before any way.
 
 Like in OSM xml format, each node and way can contain tags, with additional information for the special point or way.
 example:
