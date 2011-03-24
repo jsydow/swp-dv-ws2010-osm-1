@@ -136,8 +136,10 @@ public class DataPointsListArrayRouteOverlay extends ArrayWayOverlay {
      *            the overlay
      */
     public void addWays(List<DataPointsList> ways) {
-        for (DataPointsList l : ways)
+        for (DataPointsList l : ways) {
+            l.updateOverlayRoute();
             addWay(l, false);
+        }
     }
 
     /**
