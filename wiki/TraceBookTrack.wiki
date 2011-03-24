@@ -35,11 +35,12 @@ Like in OSM xml format, each node and way can contain tags, with additional info
 example:
  {{{
 <tag k="area" v="yes" />
-}}} for a way
-or
+}}} 
+for a way or
  {{{
 <tag k="amenity" v="postbox" />
-}}} for a node
+}}} 
+for a node
 Additionally, each node can contain media links to provide additional information for later editing.
 example:
  {{{
