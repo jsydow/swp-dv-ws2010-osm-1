@@ -177,11 +177,11 @@ public class RecordVideoActivity extends Activity implements
             if (ServiceConnector.getLoggerService().isLogging()) {
                 Helper.startUserNotification(this,
                         R.drawable.ic_notification_active,
-                        NewTrackActivity.class);
+                        NewTrackActivity.class, true);
             } else {
                 Helper.startUserNotification(this,
                         R.drawable.ic_notification_pause,
-                        NewTrackActivity.class);
+                        NewTrackActivity.class, false);
             }
         } catch (RemoteException e) {
 
