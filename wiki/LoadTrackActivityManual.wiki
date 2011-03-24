@@ -9,10 +9,10 @@ In this screen the user can view a list of all recorded tracks. The user can als
 
 The following screen shows the screen as it should appear to the user when he enters it:
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_full.png" height="40%" width="40%"/>
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_full.png" height="30%" width="30%"/>
 
 The large part of the screen contains a list of all recorded tracks. If there is no recorded track, then the list will be empty. For every track the name of the track is shown and below its name the comment that was saved for it.
 
 The text box at the top lets the user search for tracks. If he enters a part of a track name then only tracks that contain this part are displayed in the list below like this:
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_filter.png" height="40%" width="40%"/>
+<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_loadtrack_filter.png" height="30%" width="30%"/>
