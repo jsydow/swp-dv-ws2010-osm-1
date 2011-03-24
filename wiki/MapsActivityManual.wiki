@@ -1,4 +1,5 @@
 #summary This article contains the user manual for the map activity.
+#labels Phase-Support
 
 = Introduction =
 
