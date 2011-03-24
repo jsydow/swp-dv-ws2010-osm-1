@@ -28,7 +28,7 @@ _(advanced users only!)_
  * if you wish to build for a newer version of JOSM (>3966) replace the josm-tested.jar in "lib" with the newer one
  * if you meet all the requirements, navigate to the location where you checked out the source and type "ant install". The plugin will be automatically build and installed into your JOSM installation.
 
-*Final steps:*
+==Final steps:==
  * Start up JOSM
  * open the menu "edit->preferences"
  * open the tab "plugins"
