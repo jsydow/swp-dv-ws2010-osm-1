@@ -7,6 +7,7 @@ This is the developer information for the TraceBook import plugin. The user guid
 
 = Details =
 
+First, obtain the source like displayed [TraceBookPluginManual#2._Building/Installing_from_source here]
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
