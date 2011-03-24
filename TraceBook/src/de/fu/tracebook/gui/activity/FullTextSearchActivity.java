@@ -68,7 +68,7 @@ public class FullTextSearchActivity extends ListActivity {
     static class MyTextWatcher implements TextWatcher {
 
         /**
-         * The thread currently used for searching the DB
+         * The thread currently used for searching the DB.
          */
         private Thread searchThread = null;
 
@@ -249,12 +249,9 @@ public class FullTextSearchActivity extends ListActivity {
         setTitle(R.string.string_fulltextsearchActivity_title);
 
         // Set status bar
-        Helper.setStatusBar(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc),
+        Helper.setStatusBar(this, getResources().getString(
+                R.string.tv_statusbar_fulltextsearchTitle), getResources()
+                .getString(R.string.tv_statusbar_fulltextsearchDesc),
                 R.id.ly_fulltextsearchActivity_statusbar, true);
 
         EditText editBox = checkEditText();
@@ -310,12 +307,9 @@ public class FullTextSearchActivity extends ListActivity {
      *            not used
      */
     public void statusBarTitleBtn(View v) {
-        Helper.setActivityInfoDialog(
-                this,
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchTitle),
-                getResources().getString(
-                        R.string.tv_statusbar_fulltextsearchDesc));
+        Helper.setActivityInfoDialog(this, getResources().getString(
+                R.string.tv_statusbar_fulltextsearchTitle), getResources()
+                .getString(R.string.tv_statusbar_fulltextsearchDesc));
     }
 
     /**
