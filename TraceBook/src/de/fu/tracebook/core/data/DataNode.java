@@ -29,9 +29,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.location.Location;
 import de.fu.tracebook.gui.activity.MapsForgeActivity;
 import de.fu.tracebook.util.LogIt;
-import android.location.Location;
 
 /**
  * A node. A node can be a POI or an element of a list of way points that belong
@@ -63,8 +63,8 @@ public class DataNode extends DataMapObject {
         // get time stamp
         ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
         // get id
-        ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
-                .getNodeValue()));
+        // ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
+        // .getNodeValue()));
 
         // tags and media
         ret.deserializeMedia(nodenode);
