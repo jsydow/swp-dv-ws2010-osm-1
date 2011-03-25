@@ -59,8 +59,8 @@ public class DataPointsList extends DataMapObject {
         // get time stamp
         ret.setDatetime(nodeattributes.getNamedItem("timestamp").getNodeValue());
         // get id
-        ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
-                .getNodeValue()));
+        // ret.setId(Integer.parseInt(nodeattributes.getNamedItem("id")
+        // .getNodeValue()));
 
         // tags and media
         ret.deserializeMedia(waynode);
