@@ -26,21 +26,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.fu.tracebook.core.data.DataMapObject;
-import de.fu.tracebook.core.data.DataNode;
-import de.fu.tracebook.core.data.DataStorage;
-import de.fu.tracebook.core.data.db.TagDb;
-import de.fu.tracebook.core.data.db.TagSearchResult;
-import de.fu.tracebook.core.logger.ServiceConnector;
-import de.fu.tracebook.core.media.PictureRecorder;
-import de.fu.tracebook.core.media.Recorder;
-import de.fu.tracebook.gui.adapter.GenericAdapter;
-import de.fu.tracebook.gui.adapter.GenericAdapterData;
-import de.fu.tracebook.gui.adapter.GenericItemDescription;
-import de.fu.tracebook.util.GpsMessage;
-import de.fu.tracebook.util.Helper;
-import de.fu.tracebook.util.LogIt;
-import de.fu.tracebook.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -63,6 +48,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.fu.tracebook.R;
+import de.fu.tracebook.core.data.DataMapObject;
+import de.fu.tracebook.core.data.DataNode;
+import de.fu.tracebook.core.data.DataStorage;
+import de.fu.tracebook.core.data.db.TagDb;
+import de.fu.tracebook.core.data.db.TagSearchResult;
+import de.fu.tracebook.core.logger.ServiceConnector;
+import de.fu.tracebook.core.media.PictureRecorder;
+import de.fu.tracebook.core.media.Recorder;
+import de.fu.tracebook.gui.adapter.GenericAdapter;
+import de.fu.tracebook.gui.adapter.GenericAdapterData;
+import de.fu.tracebook.gui.adapter.GenericItemDescription;
+import de.fu.tracebook.util.GpsMessage;
+import de.fu.tracebook.util.Helper;
+import de.fu.tracebook.util.LogIt;
 
 /**
  * The purpose of this activity is to add and edit tags to an DataMapObject
@@ -289,7 +289,8 @@ public class AddPointActivity extends ListActivity {
     public void onDestroy() {
         // We do do not want to store empty nodes
         if (node != null && !node.hasAdditionalInfo()
-                && node instanceof DataNode) {
+                && node instanceof DataNode
+                && ((DataNode) node).getDataPointsList() == null) {
             LogIt.d("AddPoint", "POI is empty, will not keep it");
             Helper.currentTrack().deleteNode(node.getId());
             (new GpsMessage(this)).sendDiscardIntent();
