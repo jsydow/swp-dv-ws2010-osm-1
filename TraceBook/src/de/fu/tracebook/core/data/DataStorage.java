@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import de.fu.tracebook.util.LogIt;
 import android.os.Environment;
+import de.fu.tracebook.util.LogIt;
 
 /**
  * The class that holds all Data. The class has 0 to several Tracks. Each Track
@@ -231,7 +231,7 @@ public final class DataStorage {
      * @return A new unique id > 0.
      */
     public synchronized int getID() {
-        lastID++;
+        lastID--;
         return lastID;
     }
 
