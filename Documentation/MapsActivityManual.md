@@ -11,7 +11,7 @@ Details
 Upon acquiring the first GPS fix, your location on the map is shown as a
 green marker.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_newtrack_card_signal.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_newtrack_card_signal.png" height="30%" width="30%"/>
 
 By tapping on the map, you can zoom in and zoom out using the keys in
 the lower right corner.
@@ -29,14 +29,14 @@ your way/area, hit "End way/area" instead.
 Menu
 ====
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_newtrack_card_signal.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_newtrack_card_signal.png" height="30%" width="30%"/>
 
 In the menu, you can center the map to your current location, as well as
 switching to an on-line map display. You also can stop and pause
 tracking here. Saving your track explicitly is possible through the
 menu, too.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_newtrack_card_onclick.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_newtrack_card_onclick.png" height="30%" width="30%"/>
 
 Finally, you can toggle markers on the screen. When visible, you can tap
 on a marker and move it around on the map, add tags to the picked node,

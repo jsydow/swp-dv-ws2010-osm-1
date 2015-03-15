@@ -10,7 +10,7 @@ Details
 Here the screen you will see after you pressed the "Add" button in the
 "Add point of interest" dialog before.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_addmetapoin_empty.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_addmetapoin_empty.png" height="30%" width="30%"/>
 
 The advanced user can begin to type the tag and value to the
 corresponding input fields which are labeled tag and value.
@@ -21,14 +21,14 @@ show you possible official OpenStreeetMap tag.
 
 Like here.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_addmetapoin_empty_auto.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_addmetapoin_empty_auto.png" height="30%" width="30%"/>
 
 After you selected a tag you can use the same auto complete feature to
 select a value which is associated to the tag.
 
 Like this.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_addmetapoin_empty_auto2.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_addmetapoin_empty_auto2.png" height="30%" width="30%"/>
 
 You are not bounded to official tags. New tag value pairs can be also
 added. After you selected your tag and value you can added to your point

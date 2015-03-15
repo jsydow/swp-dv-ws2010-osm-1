@@ -45,12 +45,12 @@ Final steps:
 `* Start up JOSM`\
 `* open the menu "Edit -> Preferences"`
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/josm_preferences.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/josm_preferences.png" height="30%" width="30%"/>
 
 `* open the tab "Plugins"`\
 `* select !TraceBookPlugin`
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/josm_select_plugin.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/josm_select_plugin.png" height="30%" width="30%"/>
 
 `* click "OK" and restart JOSM`
 
@@ -69,7 +69,7 @@ currently changes can not be saved to the file. You can still manipulate
 and upload your data though. The media layer is read only too, and can
 be used as reference when tagging the osm data.
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/josm_sample_view.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/josm_sample_view.png" height="30%" width="30%"/>
 
 The text, audio and video markers will be opened by your default system
 viewer.

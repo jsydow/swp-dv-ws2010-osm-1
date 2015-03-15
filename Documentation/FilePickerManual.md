@@ -7,7 +7,7 @@ the map.
 Details
 =======
 
-<img src="http://swp-dv-ws2010-osm-1.googlecode.com/svn/wiki/img/manual_preferences_filepicker.png" height="30%" width="30%"/>
+<img src="https://raw.githubusercontent.com/jsydow/swp-dv-ws2010-osm-1/master/Documentation/img/manual_preferences_filepicker.png" height="30%" width="30%"/>
 
 The path of the current directory can be found at the top of the screen.
 Below it filling the large part of the screen is are all the map-files
